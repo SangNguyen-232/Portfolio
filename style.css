@@ -3891,3 +3891,192 @@ main>.section:nth-of-type(even){background:linear-gradient(180deg,transparent,rg
 .recruiter-bar{margin-top:calc(var(--nav-h) + 4px)}
 .hero{padding-top:36px}
 .toast.show{opacity:1;transform:translate(-50%,0)}
+
+
+/* ===== v6 UPGRADE: CV-ordered navigation, TOC, tokens, a11y, PCB dividers ===== */
+:root {
+  --text2: var(--muted);
+  --text3: var(--dim);
+}
+
+/* Sections: anchors land below the fixed nav */
+.section,
+.hero {
+  scroll-margin-top: calc(var(--nav-h) + 12px);
+}
+
+/* Single-card grids (Education / Certification are separate sections, as in the CV) */
+.edu-grid.single {
+  grid-template-columns: 1fr;
+}
+
+/* Sound toggle (button uses .sfx-toggle in the markup) */
+.sfx-toggle {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: 1px solid var(--border2);
+  background: var(--panel);
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  transition: color 0.25s, border-color 0.25s, background 0.25s, opacity 0.25s;
+}
+.sfx-toggle:hover {
+  color: var(--text);
+  border-color: var(--mint);
+}
+.sfx-toggle.muted {
+  opacity: 0.7;
+}
+.sfx-toggle .ic {
+  width: 18px;
+  height: 18px;
+}
+
+/* 8 menu items: tighter nav, earlier burger */
+.nav-links a {
+  padding: 8px 10px;
+  font-size: 13.5px;
+}
+@media (max-width: 1180px) {
+  .nav-right .resume-btn { display: none; }
+}
+@media (max-width: 1080px) {
+  .nav-links { display: none; }
+  .burger { display: grid; }
+}
+.mobile-menu nav a:nth-child(7) { transition-delay: 0.35s; }
+.mobile-menu nav a:nth-child(8) { transition-delay: 0.4s; }
+.mobile-menu nav { max-height: calc(100svh - 190px); overflow-y: auto; }
+.mobile-menu nav a { font-size: clamp(22px, 6vw, 32px); }
+.nav-links a[aria-current="location"] { color: var(--mint); }
+
+/* Table of contents rail (same order as CV) */
+.toc {
+  position: fixed;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 90;
+  display: none;
+  flex-direction: column;
+  gap: 2px;
+}
+@media (min-width: 1360px) {
+  .toc { display: flex; }
+}
+.toc a {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 6px 4px;
+  font: 500 11px var(--mono);
+  color: var(--dim);
+}
+.toc a span {
+  opacity: 0;
+  transform: translateX(6px);
+  padding: 2px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--border2);
+  background: rgba(6, 20, 24, 0.92);
+  color: var(--text);
+  transition: opacity 0.25s, transform 0.25s var(--ease);
+  pointer-events: none;
+}
+.toc a i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: 1.5px solid var(--dim);
+  transition: background 0.25s, border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+}
+.toc a:hover span,
+.toc a:focus-visible span,
+.toc a.active span {
+  opacity: 1;
+  transform: none;
+}
+.toc a:hover i { border-color: var(--mint); }
+.toc a.active i {
+  background: var(--mint);
+  border-color: var(--mint);
+  box-shadow: 0 0 10px var(--mint);
+  transform: scale(1.2);
+}
+
+/* PCB-trace divider between sections */
+.section + .section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: min(1180px, 100% - 48px);
+  height: 7px;
+  transform: translateX(-50%);
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 12% 50%, var(--mint) 0 2.5px, transparent 3.2px),
+    radial-gradient(circle at 88% 50%, var(--amber) 0 2.5px, transparent 3.2px),
+    linear-gradient(90deg, transparent, rgba(var(--mint-rgb), 0.38) 12%, rgba(var(--mint-rgb), 0.38) 88%, transparent) center / 100% 1px no-repeat;
+  opacity: 0.8;
+}
+
+/* Accessibility: stronger focus ring, bigger touch targets, readable small text */
+:focus-visible {
+  outline: 2px solid var(--mint);
+  outline-offset: 3px;
+}
+.btn-copy-quick,
+.recruiter-cv-link {
+  min-height: 36px;
+}
+.switch-btn,
+.ic-pin,
+.term-chip,
+.filter {
+  min-height: 32px;
+}
+.lang { min-width: 80px; }
+.recruiter-pill { font-size: 12.5px; }
+.pkt-ack { font-size: 10px; }
+
+/* Keep long task table readable on phones */
+@media (max-width: 640px) {
+  .telemetry-card, .analyzer-card { padding: 18px 16px; }
+  .analyzer-controls { flex-wrap: wrap; }
+  .eng-card-body { min-height: 0; }
+  .modal-dialog { max-height: 92vh; }
+  .modal-body { padding: 16px; }
+  .arch-pipeline { flex-direction: column; align-items: stretch; }
+  .arch-sep { transform: rotate(90deg); align-self: center; }
+  .pin-table { display: block; overflow-x: auto; white-space: nowrap; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toc a span,
+  .toc a i { transition: none; }
+  .section + .section::before { opacity: 0.5; }
+}
+
+/* Compact recruiter bar on phones: one scrollable row per group */
+@media (max-width: 700px) {
+  .recruiter-inner { gap: 8px; }
+  .recruiter-tags,
+  .recruiter-actions {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    width: 100%;
+    scrollbar-width: none;
+    padding-bottom: 2px;
+  }
+  .recruiter-tags::-webkit-scrollbar,
+  .recruiter-actions::-webkit-scrollbar { display: none; }
+  .recruiter-pill,
+  .btn-copy-quick,
+  .recruiter-cv-link { flex: none; white-space: nowrap; }
+}
+
+.cert > .pill { margin-left: auto; }

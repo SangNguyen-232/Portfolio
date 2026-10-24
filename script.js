@@ -21,7 +21,8 @@
      ===================================================================== */
   const i18n = {
     en: {
-      'nav.about': 'About',
+      'nav.about': 'Summary',
+      'nav.certification': 'Certification',
       'nav.telemetry': 'Telemetry',
       'nav.experience': 'Experience',
       'nav.projects': 'Projects',
@@ -42,7 +43,7 @@
       'stats.s2': 'Concurrent FreeRTOS Tasks',
       'stats.s3': 'Rows Synthetic Training Data',
       'stats.s4': 'On-Device Inference',
-      'about.title': 'About Me',
+      'about.title': 'Professional Summary',
       'about.sub': 'Interactive neural assistant & engineering profile',
       'about.userPrompt': "Give me a quick overview of Sang's engineering focus.",
       'about.meta': 'Summary based on CV.pdf',
@@ -78,7 +79,7 @@
       'filter.embedded': 'Embedded & IoT',
       'filter.fpga': 'FPGA & Digital',
       'filter.web': 'Web & Cloud',
-      'proj.title': 'Featured Projects',
+      'proj.title': 'Projects',
       'proj.sub': 'Verified hardware and software implementations',
       'proj.p1.title': 'Smart Agriculture Environmental Monitoring System',
       'proj.p1.sub': 'ESP32-S3 · FreeRTOS · TinyML · Cloud Platform',
@@ -106,8 +107,10 @@
       'skills.c4': 'FPGA & Digital Design',
       'skills.c5': 'Development Tools',
       'skills.c6': 'IoT Backend & Web',
-      'edu.title': 'Education & Credentials',
-      'edu.sub': 'Formal academic training and international certifications',
+      'edu.title': 'Education',
+      'edu.sub': 'Formal academic training and language proficiency',
+      'cert.secTitle': 'Certification',
+      'cert.secSub': 'International certifications and professional training',
       'edu.school': 'Ho Chi Minh City University of Technology — VNU-HCM',
       'edu.degree': 'Bachelor of Computer Engineering',
       'edu.period': 'Sep 2022 – Nov 2027 • Ho Chi Minh City, Vietnam',
@@ -130,7 +133,8 @@
       'toast.copied': 'Email copied to clipboard!'
     },
     vi: {
-      'nav.about': 'Giới thiệu',
+      'nav.about': 'Tóm tắt',
+      'nav.certification': 'Chứng chỉ',
       'nav.telemetry': 'Telemetry',
       'nav.experience': 'Kinh nghiệm',
       'nav.projects': 'Dự án',
@@ -151,7 +155,7 @@
       'stats.s2': 'Tác vụ FreeRTOS đồng thời',
       'stats.s3': 'Dòng dữ liệu huấn luyện tổng hợp',
       'stats.s4': 'Độ trễ suy luận tại biên',
-      'about.title': 'Về Tôi',
+      'about.title': 'Tóm Tắt Chuyên Môn',
       'about.sub': 'Trợ lý AI tương tác & hồ sơ kỹ thuật',
       'about.userPrompt': 'Tóm tắt nhanh định hướng kỹ thuật của Nguyễn Văn Sang.',
       'about.meta': 'Tóm tắt dựa trên CV.pdf',
@@ -187,7 +191,7 @@
       'filter.embedded': 'Hệ thống nhúng & IoT',
       'filter.fpga': 'FPGA & Mạch số',
       'filter.web': 'Web & Đám mây',
-      'proj.title': 'Dự Án Tiêu Biểu',
+      'proj.title': 'Dự Án',
       'proj.sub': 'Các dự án phần cứng và phần mềm đã được xác thực',
       'proj.p1.title': 'Hệ thống Giám sát Môi trường Nông nghiệp Thông minh',
       'proj.p1.sub': 'ESP32-S3 · FreeRTOS · TinyML · Nền tảng Đám mây',
@@ -215,8 +219,10 @@
       'skills.c4': 'FPGA & Thiết kế số',
       'skills.c5': 'Công cụ phát triển',
       'skills.c6': 'IoT Backend & Web',
-      'edu.title': 'Học Vấn & Chứng Chỉ',
-      'edu.sub': 'Đào tạo chính quy và các chứng chỉ tiêu chuẩn quốc tế',
+      'edu.title': 'Học Vấn',
+      'edu.sub': 'Đào tạo chính quy và trình độ ngoại ngữ',
+      'cert.secTitle': 'Chứng Chỉ',
+      'cert.secSub': 'Chứng chỉ quốc tế và quá trình đào tạo',
       'edu.school': 'Trường Đại học Bách khoa – ĐHQG-HCM',
       'edu.degree': 'Cử nhân Kỹ thuật Máy tính',
       'edu.period': 'Tháng 9/2022 – Tháng 11/2027 • TP. Hồ Chí Minh, Việt Nam',
@@ -305,6 +311,7 @@
     if (!sfxBtn) return;
 
     const updateSfxIcon = () => {
+      sfxBtn.setAttribute('aria-pressed', String(sfxEnabled));
       if (sfxEnabled) {
         sfxBtn.classList.remove('muted');
         sfxBtn.innerHTML = '<svg class="ic"><use href="#i-volume"/></svg>';
@@ -995,6 +1002,10 @@
     const chatSection = document.getElementById('chat');
 
     const reveals = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window)) {
+      reveals.forEach((r) => r.classList.add('in'));
+      return;
+    }
     const revealObserver = new IntersectionObserver(
       (entries, obs) => {
         entries.forEach((entry) => {
@@ -1049,12 +1060,11 @@
         }
       });
 
-      navLinks.forEach((link) => {
-        if (link.getAttribute('href') === `#${currentSectionId}`) {
-          link.classList.add('active');
-        } else {
-          link.classList.remove('active');
-        }
+      document.querySelectorAll('.nav-links a, .toc a').forEach((link) => {
+        const on = link.getAttribute('href') === `#${currentSectionId}`;
+        link.classList.toggle('active', on);
+        if (on) link.setAttribute('aria-current', 'location');
+        else link.removeAttribute('aria-current');
       });
     });
   };
@@ -1478,6 +1488,15 @@
       });
     });
 
+    backdrop.addEventListener('keydown', (e) => {
+      if (e.key !== 'Tab') return;
+      const f = [...dialog.querySelectorAll('a[href],button:not([disabled]),input,select,[tabindex]:not([tabindex="-1"])')];
+      if (!f.length) return;
+      const first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && (document.activeElement === first || document.activeElement === dialog)) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    });
+
     if (closeBtn) closeBtn.addEventListener('click', closeModal);
     if (footerClose) footerClose.addEventListener('click', closeModal);
 
@@ -1527,7 +1546,13 @@
         }
         if (shortcutsModal && shortcutsModal.classList.contains('open')) {
           shortcutsModal.classList.remove('open');
+          shortcutsModal.setAttribute('aria-hidden', 'true');
           document.body.style.overflow = '';
+        }
+        if (document.body.classList.contains('menu-open')) {
+          document.body.classList.remove('menu-open');
+          const b = document.getElementById('burger'); if (b) { b.setAttribute('aria-expanded', 'false'); b.focus(); }
+          const mm = document.getElementById('mobileMenu'); if (mm) mm.setAttribute('aria-hidden', 'true');
         }
       } else if (e.key.toLowerCase() === 'l') {
         const langToggle = document.getElementById('langToggle');
