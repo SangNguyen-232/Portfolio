@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<a class="skip" href="#about">Skip to content</a>
 
 <!-- SVG icon sprite -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -70,13 +71,9 @@
 </div>
 
 <!-- Ambient Dynamic Background Layers -->
-<canvas id="net" aria-hidden="true"></canvas>
 <div id="aurora" aria-hidden="true"></div>
 <div id="grid" aria-hidden="true"></div>
-<div id="spot" aria-hidden="true"></div>
-<div class="cursor-dot" aria-hidden="true"></div>
-<div class="cursor-ring" aria-hidden="true"></div>
-<div id="progress" aria-hidden="true"></div>
+<div class="scroll-progress" id="scrollProgress" aria-hidden="true"><div class="scroll-progress-bar" id="scrollProgressBar"></div></div>
 
 <!-- Header Navigation -->
 <header class="nav" id="nav">
@@ -87,17 +84,18 @@
     </a>
     <nav class="nav-links" aria-label="Primary">
       <a href="#about" data-i18n="nav.about" data-cursor>About</a>
-      <a href="#telemetry" data-i18n="nav.telemetry" data-cursor>Telemetry</a>
-      <a href="#experience" data-i18n="nav.experience" data-cursor>Experience</a>
       <a href="#projects" data-i18n="nav.projects" data-cursor>Projects</a>
+      <a href="#experience" data-i18n="nav.experience" data-cursor>Experience</a>
       <a href="#skills" data-i18n="nav.skills" data-cursor>Skills</a>
+      <a href="#telemetry" data-i18n="nav.telemetry" data-cursor>Telemetry</a>
       <a href="#education" data-i18n="nav.education" data-cursor>Education</a>
       <a href="#contact" data-i18n="nav.contact" data-cursor>Contact</a>
     </nav>
     <div class="nav-right">
-      <!-- Audio FX Button -->
-      <button class="sfx-btn muted" id="sfxToggle" type="button" aria-label="Toggle cyber audio effects" title="Toggle Sound FX" data-cursor>
-        <svg class="ic ic-vol"><use href="#i-volume"/></svg>
+      <!-- Sound FX Toggle -->
+      <button class="sfx-toggle" id="sfxToggle" type="button" aria-label="Toggle Cyber Sound Effects" data-cursor title="Toggle Sound">
+        <svg class="ic ic-vol-on"><use href="#i-volume"/></svg>
+        <svg class="ic ic-vol-off"><use href="#i-volume-x"/></svg>
       </button>
       <!-- Language Switcher -->
       <button class="lang" id="langToggle" type="button" aria-label="Switch language" data-cursor>
@@ -117,14 +115,48 @@
   </div>
 </header>
 
+<!-- Recruiter Fast-Track Executive Bar -->
+<aside class="recruiter-bar" id="recruiterBar" aria-label="Candidate Highlights">
+  <div class="container recruiter-inner">
+    <div class="recruiter-tags">
+      <span class="recruiter-pill">
+        <svg class="ic"><use href="#i-cap"/></svg>
+        <span><b>HCMUT (VNU-HCM)</b> • Computer Eng (GPA 2.8/4.0)</span>
+      </span>
+      <span class="recruiter-pill">
+        <svg class="ic"><use href="#i-award"/></svg>
+        <span><b>Viettel Group</b> • IoT Eng Intern (06–08/2026)</span>
+      </span>
+      <span class="recruiter-pill">
+        <svg class="ic"><use href="#i-chip"/></svg>
+        <span><b>Focus:</b> ESP32-S3 · FreeRTOS · TinyML &lt;1ms · Verilog HDL</span>
+      </span>
+    </div>
+    <div class="recruiter-actions">
+      <button class="btn-copy-quick mono small" type="button" id="quickCopyEmail" data-copy="sangnguyen230204@gmail.com" title="Copy Email">
+        <svg class="ic"><use href="#i-mail"/></svg>
+        <span>sangnguyen230204@gmail.com</span>
+      </button>
+      <button class="btn-copy-quick mono small" type="button" id="quickCopyPhone" data-copy="0383589877" title="Copy Phone">
+        <svg class="ic"><use href="#i-phone"/></svg>
+        <span>0383 589 877</span>
+      </button>
+      <a class="recruiter-cv-link mono small" href="CV.pdf" target="_blank" rel="noopener">
+        <svg class="ic"><use href="#i-download"/></svg>
+        <span>CV PDF</span>
+      </a>
+    </div>
+  </div>
+</aside>
+
 <!-- Mobile Menu Overlay -->
 <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
   <nav aria-label="Mobile">
     <a href="#about" data-i18n="nav.about">About</a>
-    <a href="#telemetry" data-i18n="nav.telemetry">Telemetry</a>
-    <a href="#experience" data-i18n="nav.experience">Experience</a>
     <a href="#projects" data-i18n="nav.projects">Projects</a>
+    <a href="#experience" data-i18n="nav.experience">Experience</a>
     <a href="#skills" data-i18n="nav.skills">Skills</a>
+    <a href="#telemetry" data-i18n="nav.telemetry">Telemetry</a>
     <a href="#education" data-i18n="nav.education">Education</a>
     <a href="#contact" data-i18n="nav.contact">Contact</a>
   </nav>
@@ -207,7 +239,7 @@
           </div>
           <div class="stat">
             <b class="count" data-to="21000">21,000</b>
-            <span data-i18n="stats.s3">Rows TinyML Dataset</span>
+            <span data-i18n="stats.s3">Rows Synthetic Training Data</span>
           </div>
           <div class="stat">
             <b>&lt; 1 ms</b>
@@ -216,48 +248,76 @@
         </div>
       </div>
 
-      <!-- Hero Visual — Holographic Card -->
+      <!-- Hero Visual — Hardware Engineer Credential & IC Explorer -->
       <div class="hero-visual reveal" style="--d:.2s">
-        <div class="holo tilt" id="holo">
-          <span class="hud tl"></span>
-          <span class="hud tr"></span>
-          <span class="hud bl"></span>
-          <span class="hud br"></span>
-          <div class="holo-frame">
-            <div class="holo-img">
-              <!-- Futuristic Microprocessor Chip Graphic -->
-              <svg class="holo-img-svg" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="25" y="25" width="150" height="150" rx="16" fill="#0B242B" stroke="#2A4A50" stroke-width="2"/>
-                <rect x="50" y="50" width="100" height="100" rx="10" fill="#07171C" stroke="#5FE3C8" stroke-width="1.8"/>
-                <circle cx="100" cy="100" r="28" fill="#13323A" stroke="#FFB547" stroke-width="2"/>
-                <text x="100" y="96" fill="#5FE3C8" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="14" text-anchor="middle">ESP32-S3</text>
-                <text x="100" y="112" fill="#C3D6D1" font-family="'JetBrains Mono', monospace" font-size="9" text-anchor="middle">XTENSA LX7</text>
-                <!-- Traces -->
-                <path d="M100 25v25M100 150v25M25 100h25M150 100h25M65 25v25M135 25v25M65 150v25M135 150v25M25 65h25M25 135h25M150 65h25M150 135h25" stroke="#5FE3C8" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
-                <!-- Corner Indicators -->
-                <circle cx="58" cy="58" r="3" fill="#FFB547"/>
-                <circle cx="142" cy="58" r="3" fill="#5FE3C8"/>
-                <circle cx="58" cy="142" r="3" fill="#5FE3C8"/>
-                <circle cx="142" cy="142" r="3" fill="#FFB547"/>
-              </svg>
-              <div class="scan"></div>
-              <div class="facebox">
-                <i></i><i></i><i></i><i></i>
-                <span class="mono">TARGET: ESP32-S3</span>
+        <div class="eng-card glass" id="engCard">
+          <div class="eng-card-head">
+            <div class="eng-badge-id">
+              <span class="status-dot"></span>
+              <span class="mono">HCMUT.VNU // ENG-ID: 232</span>
+            </div>
+            <div class="eng-card-switch">
+              <button type="button" class="switch-btn active mono" id="btnViewAvatar" data-view="avatar">Profile</button>
+              <button type="button" class="switch-btn mono" id="btnViewPinout" data-view="pinout">Pinout</button>
+            </div>
+          </div>
+          
+          <div class="eng-card-body">
+            <!-- View 1: Authentic Portrait Avatar with Cyber Overlay -->
+            <div class="eng-avatar-view active" id="engAvatarView">
+              <div class="avatar-frame">
+                <img class="avatar-photo" src="ảnh_thẻ_trắng.png" alt="Nguyen Van Sang — Embedded Software Engineer" loading="eager" width="764" height="1029">
+                <div class="avatar-overlay"></div>
+                <div class="avatar-hud-corners">
+                  <span class="hud-c tl"></span><span class="hud-c tr"></span>
+                  <span class="hud-c bl"></span><span class="hud-c br"></span>
+                </div>
+                <div class="avatar-badge mono">
+                  <span class="avatar-dot"></span>
+                  <span>SYSTEM READY • B.ENG 2027</span>
+                </div>
               </div>
-              <div class="holo-shade"></div>
-              <div class="holo-cap mono">
-                <svg class="ic"><use href="#i-cpu"/></svg>
-                <span>Dual-Core 240MHz • FreeRTOS</span>
+            </div>
+
+            <!-- View 2: Interactive ESP32-S3 IC Pinout Explorer -->
+            <div class="eng-pinout-view" id="engPinoutView">
+              <div class="ic-body">
+                <div class="ic-core">
+                  <span class="ic-label-main">ESP32-S3</span>
+                  <span class="ic-label-sub">XTENSA LX7 240MHz</span>
+                  <span class="ic-status mono">INTERACTIVE PINOUT</span>
+                </div>
+                <div class="ic-pins-left">
+                  <button class="ic-pin" type="button" data-pin="GPIO21" data-desc="I2C SDA • Sensor Bus Data (Wire0)">P21: SDA</button>
+                  <button class="ic-pin" type="button" data-pin="GPIO22" data-desc="I2C SCL • 400kHz Fast Mode Clock">P22: SCL</button>
+                  <button class="ic-pin" type="button" data-pin="GPIO18" data-desc="GPIO OUT • Pump Relay Safety Interlock">P18: RELAY</button>
+                  <button class="ic-pin" type="button" data-pin="GPIO0"  data-desc="ISR / BOOT • Tactical Push-Button Handler">P0: BTN</button>
+                </div>
+                <div class="ic-pins-right">
+                  <button class="ic-pin" type="button" data-pin="GPIO4"  data-desc="ADC1_CH3 • Soil Moisture Analog Sensor">P4: ADC</button>
+                  <button class="ic-pin" type="button" data-pin="TXD0"   data-desc="UART0 TX • 115200 Baud Diagnostic Log">TX: LOG</button>
+                  <button class="ic-pin" type="button" data-pin="RXD0"   data-desc="UART0 RX • AT Commands / Remote CLI">RX: CLI</button>
+                  <button class="ic-pin" type="button" data-pin="3V3"    data-desc="POWER • 3.3V LDO Regulated Rail">3V3: VCC</button>
+                </div>
+              </div>
+              <div class="pin-info mono" id="pinInfoBar">
+                <span class="arrow">›</span> <span id="pinInfoText">Hover/tap any pin to inspect peripheral muxing</span>
               </div>
             </div>
           </div>
-          <!-- Orbiting Chip Badges -->
-          <span class="chip c1 mono"><svg class="ic"><use href="#i-chip"/></svg>ESP32-S3</span>
-          <span class="chip c2 mono"><svg class="ic"><use href="#i-layers"/></svg>FreeRTOS</span>
-          <span class="chip c3 mono"><svg class="ic"><use href="#i-sparkle"/></svg>TinyML</span>
-          <span class="chip c4 mono"><svg class="ic"><use href="#i-cpu"/></svg>Verilog HDL</span>
-          <div class="orbit"><span></span></div>
+
+          <div class="eng-card-foot">
+            <div class="eng-foot-meta">
+              <b class="eng-name">Nguyen Van Sang</b>
+              <span class="eng-role mono">Embedded Software • IoT</span>
+            </div>
+            <div class="eng-quick-chips">
+              <span class="eng-chip">C/C++</span>
+              <span class="eng-chip">FreeRTOS</span>
+              <span class="eng-chip">TinyML</span>
+              <span class="eng-chip">Verilog</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -267,9 +327,7 @@
       <span data-i18n="hero.scroll">Scroll</span>
     </div>
   </section>
-
-  <!-- ===================== ABOUT SECTION ===================== -->
-  <section id="about" class="section">
+<section id="about" class="section">
     <div class="container">
       <div class="sec-head reveal">
         <span class="sec-num mono">01 //</span>
@@ -302,7 +360,7 @@
             </div>
           </div>
           <div class="chat-foot" id="chatFoot">
-            <span class="chat-meta mono" data-i18n="about.meta">Verified against CV.pdf &amp; GitHub evidence</span>
+            <span class="chat-meta mono" data-i18n="about.meta">Summary based on CV.pdf</span>
             <button class="regen mono" id="regenBtn" type="button" data-cursor>
               <svg class="ic"><use href="#i-refresh"/></svg>
               <span data-i18n="about.regen">Regenerate</span>
@@ -337,17 +395,17 @@
 
       <!-- What I Do 3-Column Glass Grid -->
       <div class="do-grid">
-        <div class="do glass spot tilt reveal" style="--d:.1s">
+        <div class="do glass spot reveal" style="--d:.1s">
           <div class="do-icon"><svg class="ic"><use href="#i-chip"/></svg></div>
           <h3 data-i18n="do.d1.title">Firmware &amp; RTOS</h3>
           <p data-i18n="do.d1.desc">Architecting robust concurrent firmware on ESP32/ESP32-S3 using FreeRTOS: semaphores, queues, event groups, task synchronization, and low-level peripheral drivers (I2C, GPIO, UART).</p>
         </div>
-        <div class="do glass spot tilt reveal" style="--d:.2s">
+        <div class="do glass spot reveal" style="--d:.2s">
           <div class="do-icon"><svg class="ic"><use href="#i-sparkle"/></svg></div>
           <h3 data-i18n="do.d2.title">Edge AI &amp; TinyML</h3>
           <p data-i18n="do.d2.desc">Deploying optimized TensorFlow Lite for Microcontrollers models on constrained MCUs. Sub-1 ms on-device inference with hardware safety interlocks for real-time sensor classification.</p>
         </div>
-        <div class="do glass spot tilt reveal" style="--d:.3s">
+        <div class="do glass spot reveal" style="--d:.3s">
           <div class="do-icon"><svg class="ic"><use href="#i-cpu"/></svg></div>
           <h3 data-i18n="do.d3.title">FPGA &amp; Digital Design</h3>
           <p data-i18n="do.d3.desc">Designing and synthesizing finite state machines (FSM) and digital logic with Verilog HDL on Xilinx Vivado, Cadence Xcelium, and Digilent Arty-Z7 FPGA hardware platforms.</p>
@@ -355,21 +413,378 @@
       </div>
     </div>
   </section>
+<section id="projects" class="section">
+    <div class="container">
+      <div class="sec-head reveal">
+        <span class="sec-num mono">04 //</span>
+        <div>
+          <h2 class="sec-title" data-i18n="proj.title">Featured Projects</h2>
+          <p class="sec-sub" data-i18n="proj.sub">Verified hardware and software implementations</p>
+        </div>
+      </div>
 
-  <!-- ===================== HARDWARE TELEMETRY & FREERTOS STUDIO ===================== -->
-  <section id="telemetry" class="section">
+      <!-- Category Filter Pills -->
+      <div class="filters reveal" id="projectFilters" role="group" aria-label="Filter projects">
+        <button class="filter active" data-filter="all" type="button" data-cursor data-i18n="filter.all">All Projects</button>
+        <button class="filter" data-filter="embedded" type="button" data-cursor data-i18n="filter.embedded">Embedded &amp; IoT</button>
+        <button class="filter" data-filter="fpga" type="button" data-cursor data-i18n="filter.fpga">FPGA &amp; Digital</button>
+        <button class="filter" data-filter="web" type="button" data-cursor data-i18n="filter.web">Web &amp; Cloud</button>
+      </div>
+
+      <div class="projects" id="projectGrid">
+        <!-- Project 1: Smart Agriculture -->
+        <article class="pcard glass spot reveal" data-cat="embedded">
+          <div class="pcard-top">
+            <div class="pcard-icon"><svg class="ic"><use href="#i-chip"/></svg></div>
+            <span class="pill glow mono">Jul – Nov 2026</span>
+          </div>
+          <h3 data-i18n="proj.p1.title">Smart Agriculture Environmental Monitoring System</h3>
+          <p class="pcard-sub mono" data-i18n="proj.p1.sub">ESP32-S3 · FreeRTOS · TinyML · Cloud Platform</p>
+          <ul>
+            <li data-i18n="proj.p1.b1">Engineered concurrent FreeRTOS firmware on ESP32-S3 with semaphore-guarded context coordinating 7 tasks (sampling, TinyML inference, pump relay, logging, reset button, LED indicator) across I2C, GPIO, and network.</li>
+            <li data-i18n="proj.p1.b2">Deployed a float32 TensorFlow Lite Micro classifier (temperature, humidity, soil moisture to 3-class risk) with sub-1 ms inference and hardware safety interlocks.</li>
+            <li data-i18n="proj.p1.b3">Implemented WiFi AP fallback with LittleFS-persisted networks, streaming telemetry via HTTP/WebSocket to a Dockerized Node.js/PostgreSQL fleet dashboard.</li>
+          </ul>
+          <div class="pcard-meta">
+            <span><svg class="ic"><use href="#i-layers"/></svg><b>Architecture:</b> 7 Concurrent FreeRTOS Tasks</span>
+            <span><svg class="ic"><use href="#i-sparkle"/></svg><b>TinyML:</b> 21,000-row Synthetic Dataset, &lt; 1 ms Latency</span>
+          </div>
+          <div class="tags">
+            <span class="tag">C/C++</span>
+            <span class="tag">FreeRTOS</span>
+            <span class="tag">ESP32-S3</span>
+            <span class="tag">TFLite Micro</span>
+            <span class="tag">Docker</span>
+            <span class="tag">PostgreSQL</span>
+          </div>
+          <div class="pcard-foot">
+            <button class="btn btn-ghost btn-sm btn-inspect mono" type="button" data-modal="modal-proj1" data-cursor>
+              <svg class="ic"><use href="#i-layers"/></svg>
+              <span data-i18n="proj.inspect">System Architecture</span>
+            </button>
+            <a href="https://github.com/SangNguyen-232/IoT-Env-Monitor" target="_blank" rel="noopener" class="pcard-link" data-cursor>
+              <svg class="ic"><use href="#i-github"/></svg>
+              <span>GitHub Repo</span>
+            </a>
+            <span class="pcard-period mono">Production Architecture</span>
+          </div>
+        </article>
+
+        <!-- Project 2: FPGA Vending Machine -->
+        <article class="pcard glass spot reveal" style="--d:.15s" data-cat="fpga">
+          <div class="pcard-top">
+            <div class="pcard-icon"><svg class="ic"><use href="#i-cpu"/></svg></div>
+            <span class="pill glow mono">Sep – Dec 2024</span>
+          </div>
+          <h3 data-i18n="proj.p2.title">FPGA Vending Machine Simulator</h3>
+          <p class="pcard-sub mono" data-i18n="proj.p2.sub">Verilog HDL · Xilinx Vivado · Arty-Z7 FPGA</p>
+          <ul>
+            <li data-i18n="proj.p2.b1">Designed and synthesized a complete Verilog FSM-based vending machine on Digilent Arty-Z7 FPGA board.</li>
+            <li data-i18n="proj.p2.b2">Engineered finite state machine logic handling synchronous product selection, coin validation, balance computation, and change dispensing.</li>
+            <li data-i18n="proj.p2.b3">Implemented real-time hardware interfaces for 16x2 alphanumeric LCD display, 7-segment LED counters, and debounced tactical switches.</li>
+          </ul>
+          <div class="pcard-meta">
+            <span><svg class="ic"><use href="#i-cpu"/></svg><b>Target Hardware:</b> Xilinx Zynq-7000 (Arty-Z7)</span>
+            <span><svg class="ic"><use href="#i-code"/></svg><b>Design Language:</b> Verilog HDL (RTL + FSM)</span>
+          </div>
+          <div class="tags">
+            <span class="tag">Verilog HDL</span>
+            <span class="tag">Xilinx Vivado</span>
+            <span class="tag">Arty-Z7</span>
+            <span class="tag">Cadence Xcelium</span>
+            <span class="tag">Digital Design</span>
+          </div>
+          <div class="pcard-foot">
+            <button class="btn btn-ghost btn-sm btn-inspect mono" type="button" data-modal="modal-proj2" data-cursor>
+              <svg class="ic"><use href="#i-cpu"/></svg>
+              <span data-i18n="proj.inspectFSM">FSM & Hardware RTL</span>
+            </button>
+            <a href="https://github.com/SangNguyen-232/FPGA-Vending-System" target="_blank" rel="noopener" class="pcard-link" data-cursor>
+              <svg class="ic"><use href="#i-github"/></svg>
+              <span>GitHub Repo</span>
+            </a>
+            <span class="pcard-period mono">Hardware Synthesis</span>
+          </div>
+        </article>
+
+        <!-- Project 3: Smart Campus Parking -->
+        <article class="pcard glass spot reveal" style="--d:.3s" data-cat="web">
+          <div class="pcard-top">
+            <div class="pcard-icon"><svg class="ic"><use href="#i-server"/></svg></div>
+            <span class="pill glow mono">Mar – May 2026</span>
+          </div>
+          <h3 data-i18n="proj.p3.title">Smart Campus Parking Management System</h3>
+          <p class="pcard-sub mono" data-i18n="proj.p3.sub">Next.js 16 · Express.js · PostgreSQL RLS · React Leaflet</p>
+          <ul>
+            <li data-i18n="proj.p3.b1">Engineered 6 RESTful APIs to synchronize real-time IoT sensor slot status across 6 parking zones with sub-second response times.</li>
+            <li data-i18n="proj.p3.b2">Integrated automated payment processing and balance management with BKPay payment gateway integration.</li>
+            <li data-i18n="proj.p3.b3">Developed an interactive 2D GPS map component using React Leaflet and enforced strict multi-role access via PostgreSQL Row-Level Security (RLS) for 5 user tiers.</li>
+          </ul>
+          <div class="pcard-meta">
+            <span><svg class="ic"><use href="#i-server"/></svg><b>Backend:</b> Express.js REST APIs + PostgreSQL RLS</span>
+            <span><svg class="ic"><use href="#i-layers"/></svg><b>Frontend:</b> Next.js 16 + React 19 + Tailwind</span>
+          </div>
+          <div class="tags">
+            <span class="tag">Next.js</span>
+            <span class="tag">TypeScript</span>
+            <span class="tag">PostgreSQL RLS</span>
+            <span class="tag">Leaflet</span>
+            <span class="tag">REST APIs</span>
+          </div>
+          <div class="pcard-foot">
+            <button class="btn btn-ghost btn-sm btn-inspect mono" type="button" data-modal="modal-proj3" data-cursor>
+              <svg class="ic"><use href="#i-server"/></svg>
+              <span data-i18n="proj.inspectCloud">Cloud & RLS Pipeline</span>
+            </button>
+            <a href="https://github.com/SangNguyen-232/ParkWise" target="_blank" rel="noopener" class="pcard-link" data-cursor>
+              <svg class="ic"><use href="#i-github"/></svg>
+              <span>GitHub Repo</span>
+            </a>
+            <span class="pcard-period mono">Cloud Platform</span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+<section id="experience" class="section">
+    <div class="container">
+      <div class="sec-head reveal">
+        <span class="sec-num mono">03 //</span>
+        <div>
+          <h2 class="sec-title" data-i18n="exp.title">Experience</h2>
+          <p class="sec-sub" data-i18n="exp.sub">Practical industry engineering and internships</p>
+        </div>
+      </div>
+
+      <div class="timeline">
+        <div class="tl-item current reveal">
+          <div class="tl-dot"></div>
+          <div class="tl-card glass spot">
+            <div class="tl-head">
+              <div>
+                <h3 class="tl-role" data-i18n="exp.role">IoT Intern</h3>
+                <div class="tl-company">
+                  <span data-i18n="exp.company">Viettel Dak Lak — Viettel Group</span>
+                  <span class="sep">•</span>
+                  <span class="pill violet" data-i18n="exp.type">On-site</span>
+                </div>
+              </div>
+              <div class="tl-meta">
+                <span class="pill glow mono">Jun 2026 – Aug 2026</span>
+              </div>
+            </div>
+            <ul>
+              <li data-i18n="exp.b1">Learned fundamentals of IoT architectures, industrial sensor interfacing, and low-level ESP32 programming.</li>
+              <li data-i18n="exp.b2">Explored enterprise IoT fleet management platforms and robust backend development with Node.js and PostgreSQL.</li>
+              <li data-i18n="exp.b3">Built an end-to-end IoT sensor solution integrating hardware telemetry with secure cloud logging.</li>
+            </ul>
+            <div class="tl-stack">
+              <span class="lbl mono">Tech Stack:</span>
+              <div class="tags">
+                <span class="tag">ESP32</span>
+                <span class="tag">Sensors</span>
+                <span class="tag">C/C++</span>
+                <span class="tag">Node.js</span>
+                <span class="tag">PostgreSQL</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+<section id="skills" class="section">
+    <div class="container">
+      <div class="sec-head reveal">
+        <span class="sec-num mono">05 //</span>
+        <div>
+          <h2 class="sec-title" data-i18n="skills.title">Technical Skills</h2>
+          <p class="sec-sub" data-i18n="skills.sub">Technologies verified from hardware implementations and CV</p>
+        </div>
+      </div>
+
+      <div class="skills">
+        <!-- 1. Languages -->
+        <div class="skill glass spot reveal" style="--d:.05s">
+          <div class="skill-head">
+            <div class="skill-icon"><svg class="ic"><use href="#i-code"/></svg></div>
+            <h3 data-i18n="skills.c1">Programming Languages</h3>
+          </div>
+          <div class="tags">
+            <span class="tag">C (C99/C11)</span>
+            <span class="tag">C++ (C++14/17)</span>
+            <span class="tag">Python</span>
+          </div>
+        </div>
+
+        <!-- 2. Embedded & RTOS -->
+        <div class="skill glass spot reveal" style="--d:.1s">
+          <div class="skill-head">
+            <div class="skill-icon"><svg class="ic"><use href="#i-chip"/></svg></div>
+            <h3 data-i18n="skills.c2">Embedded Systems &amp; RTOS</h3>
+          </div>
+          <div class="tags">
+            <span class="tag">ESP32</span>
+            <span class="tag">ESP32-S3</span>
+            <span class="tag">FreeRTOS</span>
+            <span class="tag">GPIO</span>
+            <span class="tag">I2C</span>
+            <span class="tag">UART</span>
+          </div>
+        </div>
+
+        <!-- 3. Edge AI -->
+        <div class="skill glass spot reveal" style="--d:.15s">
+          <div class="skill-head">
+            <div class="skill-icon"><svg class="ic"><use href="#i-sparkle"/></svg></div>
+            <h3 data-i18n="skills.c3">Edge AI &amp; TinyML</h3>
+          </div>
+          <div class="tags">
+            <span class="tag">TFLite Micro</span>
+            <span class="tag">On-Device Inference</span>
+            <span class="tag">Model Quantization</span>
+          </div>
+        </div>
+
+        <!-- 4. FPGA -->
+        <div class="skill glass spot reveal" style="--d:.2s">
+          <div class="skill-head">
+            <div class="skill-icon"><svg class="ic"><use href="#i-cpu"/></svg></div>
+            <h3 data-i18n="skills.c4">FPGA &amp; Digital Design</h3>
+          </div>
+          <div class="tags">
+            <span class="tag">Verilog HDL</span>
+            <span class="tag">Xilinx Vivado</span>
+            <span class="tag">Cadence Xcelium</span>
+            <span class="tag">Arty-Z7 Board</span>
+          </div>
+        </div>
+
+        <!-- 5. Tools -->
+        <div class="skill glass spot reveal" style="--d:.25s">
+          <div class="skill-head">
+            <div class="skill-icon"><svg class="ic"><use href="#i-layers"/></svg></div>
+            <h3 data-i18n="skills.c5">Development Tools</h3>
+          </div>
+          <div class="tags">
+            <span class="tag">PlatformIO</span>
+            <span class="tag">STM32CubeIDE</span>
+            <span class="tag">Linux</span>
+            <span class="tag">Git &amp; GitHub</span>
+            <span class="tag">Docker</span>
+          </div>
+        </div>
+
+        <!-- 6. IoT Backend -->
+        <div class="skill glass spot reveal" style="--d:.3s">
+          <div class="skill-head">
+            <div class="skill-icon"><svg class="ic"><use href="#i-server"/></svg></div>
+            <h3 data-i18n="skills.c6">IoT Backend &amp; Web</h3>
+          </div>
+          <div class="tags">
+            <span class="tag">Node.js</span>
+            <span class="tag">Express.js</span>
+            <span class="tag">PostgreSQL</span>
+            <span class="tag">Next.js</span>
+            <span class="tag">React</span>
+            <span class="tag">HTML/CSS</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Protocols & Hardware Bus Matrix Card -->
+      <div class="bus-matrix glass spot reveal">
+        <div class="bus-head">
+          <svg class="ic"><use href="#i-chip"/></svg>
+          <span data-i18n="bus.title">Hardware Protocols &amp; Embedded Bus Matrix</span>
+        </div>
+        <div class="bus-grid">
+          <div class="bus-item">
+            <b>I2C Protocol</b>
+            <span>100/400 kHz Fast Mode, Multi-sensor Bus (AHT20, BMP280)</span>
+          </div>
+          <div class="bus-item">
+            <b>UART Interface</b>
+            <span>115200 Baud, Hardware FIFO, AT Commands &amp; Telemetry</span>
+          </div>
+          <div class="bus-item">
+            <b>FreeRTOS IPC</b>
+            <span>Counting Semaphores, Mutexes, Event Groups, Task Queues</span>
+          </div>
+          <div class="bus-item">
+            <b>Memory &amp; Storage</b>
+            <span>8MB QIO Flash, LittleFS Partitioning, Wear-Leveling</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Infinite Marquee Running Tracks -->
+      <div class="marquee reveal" aria-hidden="true">
+        <div class="track">
+          <span class="mq"><i></i>ESP32-S3 Xtensa</span>
+          <span class="mq"><i></i>FreeRTOS Kernel</span>
+          <span class="mq"><i></i>TinyML TFLite Micro</span>
+          <span class="mq"><i></i>Verilog HDL RTL</span>
+          <span class="mq"><i></i>Embedded C/C++</span>
+          <span class="mq"><i></i>Xilinx Vivado</span>
+          <span class="mq"><i></i>PlatformIO</span>
+          <span class="mq"><i></i>PostgreSQL RLS</span>
+          <span class="mq"><i></i>Docker Containers</span>
+          <span class="mq"><i></i>I2C &amp; UART Peripherals</span>
+          <!-- Duplicate for seamless loop -->
+          <span class="mq"><i></i>ESP32-S3 Xtensa</span>
+          <span class="mq"><i></i>FreeRTOS Kernel</span>
+          <span class="mq"><i></i>TinyML TFLite Micro</span>
+          <span class="mq"><i></i>Verilog HDL RTL</span>
+          <span class="mq"><i></i>Embedded C/C++</span>
+          <span class="mq"><i></i>Xilinx Vivado</span>
+          <span class="mq"><i></i>PlatformIO</span>
+          <span class="mq"><i></i>PostgreSQL RLS</span>
+          <span class="mq"><i></i>Docker Containers</span>
+          <span class="mq"><i></i>I2C &amp; UART Peripherals</span>
+        </div>
+      </div>
+
+      <div class="marquee reverse reveal" aria-hidden="true" style="margin-top:10px;">
+        <div class="track">
+          <span class="mq"><i></i>Digilent Arty-Z7</span>
+          <span class="mq"><i></i>Cadence Xcelium</span>
+          <span class="mq"><i></i>STM32CubeIDE</span>
+          <span class="mq"><i></i>Node.js &amp; Express</span>
+          <span class="mq"><i></i>Next.js 16</span>
+          <span class="mq"><i></i>Linux Ubuntu</span>
+          <span class="mq"><i></i>Git &amp; GitHub CI</span>
+          <span class="mq"><i></i>React 19 &amp; Leaflet</span>
+          <span class="mq"><i></i>LittleFS Hot-Swap</span>
+          <span class="mq"><i></i>WebSocket Streaming</span>
+          <!-- Duplicate for seamless loop -->
+          <span class="mq"><i></i>Digilent Arty-Z7</span>
+          <span class="mq"><i></i>Cadence Xcelium</span>
+          <span class="mq"><i></i>STM32CubeIDE</span>
+          <span class="mq"><i></i>Node.js &amp; Express</span>
+          <span class="mq"><i></i>Next.js 16</span>
+          <span class="mq"><i></i>Linux Ubuntu</span>
+          <span class="mq"><i></i>Git &amp; GitHub CI</span>
+          <span class="mq"><i></i>React 19 &amp; Leaflet</span>
+          <span class="mq"><i></i>LittleFS Hot-Swap</span>
+          <span class="mq"><i></i>WebSocket Streaming</span>
+        </div>
+      </div>
+    </div>
+  </section>
+<section id="telemetry" class="section">
     <div class="container">
       <div class="sec-head reveal">
         <span class="sec-num mono">02 //</span>
         <div>
           <h2 class="sec-title" data-i18n="telemetry.title">Embedded Telemetry &amp; Hardware Studio</h2>
-          <p class="sec-sub" data-i18n="telemetry.sub">Real-time FreeRTOS task telemetry, semaphore IPC &amp; digital logic analyzer</p>
+          <p class="sec-sub" data-i18n="telemetry.sub">Interactive simulation of FreeRTOS task telemetry &amp; a logic analyzer (demo data)</p>
         </div>
       </div>
 
       <div class="telemetry-studio">
         <!-- FreeRTOS Live Task Table Monitor -->
-        <div class="telemetry-card glass spot tilt reveal">
+        <div class="telemetry-card glass spot reveal">
           <div class="telemetry-head">
             <div class="telemetry-title">
               <svg class="ic"><use href="#i-layers"/></svg>
@@ -469,7 +884,7 @@
         </div>
 
         <!-- Logic Analyzer & Signal Oscilloscope -->
-        <div class="analyzer-card glass spot tilt reveal" style="--d:.15s">
+        <div class="analyzer-card glass spot reveal" style="--d:.15s">
           <div class="telemetry-head">
             <div class="telemetry-title">
               <svg class="ic"><use href="#i-cpu"/></svg>
@@ -479,19 +894,45 @@
           </div>
 
           <div class="analyzer-screen">
+            <!-- Real-Time Protocol Packet Stream Overlay -->
+            <div class="protocol-stream mono" id="protocolStream">
+              <span class="protocol-tag">I2C DECODER:</span>
+              <span class="pkt-chip pkt-start">START</span>
+              <span class="pkt-chip pkt-addr">ADDR: 0x48 [W]</span>
+              <span class="pkt-chip pkt-ack">ACK</span>
+              <span class="pkt-chip pkt-reg">REG: 0x01 [TEMP]</span>
+              <span class="pkt-chip pkt-ack">ACK</span>
+              <span class="pkt-chip pkt-data">DATA: 0x24 [36.5°C]</span>
+              <span class="pkt-chip pkt-ack">ACK</span>
+              <span class="pkt-chip pkt-stop">STOP</span>
+            </div>
             <canvas id="analyzerCanvas"></canvas>
             <div class="analyzer-hud">
-              <span>CH1: I2C_SCL (400kHz)</span>
-              <span>50µs/div</span>
-              <span>CH2: I2C_SDA</span>
+              <span id="scopeCh1Label">CH1: I2C_SCL (400kHz)</span>
+              <span id="scopeTimebaseLabel">50µs/div</span>
+              <span id="scopeCh2Label">CH2: I2C_SDA</span>
             </div>
           </div>
 
           <div class="analyzer-controls">
-            <div style="display:flex;gap:6px;">
+            <div class="analyzer-btn-group">
               <button class="pill glow mono small" id="btnCh1" type="button" data-cursor>CH1: SCL</button>
               <button class="pill violet mono small" id="btnCh2" type="button" data-cursor>CH2: SDA</button>
               <button class="pill mono small" id="btnCh3" type="button" data-cursor>CH3: PWM</button>
+            </div>
+            <div class="analyzer-tune-group">
+              <label class="timebase-label mono small">
+                <span>Timebase:</span>
+                <select id="timebaseSelect" class="timebase-select mono small">
+                  <option value="50" selected>50 µs/div</option>
+                  <option value="100">100 µs/div</option>
+                  <option value="200">200 µs/div</option>
+                </select>
+              </label>
+              <label class="pwm-slider-label mono small">
+                <span>PWM Duty: <b id="pwmDutyVal">50%</b></span>
+                <input type="range" id="pwmSlider" min="10" max="90" value="50" step="5" class="pwm-range" aria-label="PWM Duty Cycle">
+              </label>
             </div>
             <button class="btn btn-ghost btn-sm" id="analyzerToggleBtn" type="button" data-cursor>
               <span id="scopeStateText">Pause Scope</span>
@@ -501,362 +942,7 @@
       </div>
     </div>
   </section>
-
-  <!-- ===================== EXPERIENCE SECTION ===================== -->
-  <section id="experience" class="section">
-    <div class="container">
-      <div class="sec-head reveal">
-        <span class="sec-num mono">03 //</span>
-        <div>
-          <h2 class="sec-title" data-i18n="exp.title">Experience</h2>
-          <p class="sec-sub" data-i18n="exp.sub">Practical industry engineering and internships</p>
-        </div>
-      </div>
-
-      <div class="timeline">
-        <div class="tl-item current reveal">
-          <div class="tl-dot"></div>
-          <div class="tl-card glass spot tilt">
-            <div class="tl-head">
-              <div>
-                <h3 class="tl-role" data-i18n="exp.role">IoT Intern</h3>
-                <div class="tl-company">
-                  <span data-i18n="exp.company">Viettel Dak Lak — Viettel Group</span>
-                  <span class="sep">•</span>
-                  <span class="pill violet" data-i18n="exp.type">On-site</span>
-                </div>
-              </div>
-              <div class="tl-meta">
-                <span class="pill glow mono">Jun 2026 – Aug 2026</span>
-              </div>
-            </div>
-            <ul>
-              <li data-i18n="exp.b1">Learned fundamentals of IoT architectures, industrial sensor interfacing, and low-level ESP32 programming.</li>
-              <li data-i18n="exp.b2">Explored enterprise IoT fleet management platforms and robust backend development with Node.js and PostgreSQL.</li>
-              <li data-i18n="exp.b3">Built an end-to-end IoT sensor solution integrating hardware telemetry with secure cloud logging.</li>
-            </ul>
-            <div class="tl-stack">
-              <span class="lbl mono">Tech Stack:</span>
-              <div class="tags">
-                <span class="tag">ESP32</span>
-                <span class="tag">Sensors</span>
-                <span class="tag">C/C++</span>
-                <span class="tag">Node.js</span>
-                <span class="tag">PostgreSQL</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================== PROJECTS SECTION ===================== -->
-  <section id="projects" class="section">
-    <div class="container">
-      <div class="sec-head reveal">
-        <span class="sec-num mono">04 //</span>
-        <div>
-          <h2 class="sec-title" data-i18n="proj.title">Featured Projects</h2>
-          <p class="sec-sub" data-i18n="proj.sub">Verified hardware and software implementations</p>
-        </div>
-      </div>
-
-      <!-- Category Filter Pills -->
-      <div class="filters reveal" id="projectFilters" role="group" aria-label="Filter projects">
-        <button class="filter active" data-filter="all" type="button" data-cursor data-i18n="filter.all">All Projects</button>
-        <button class="filter" data-filter="embedded" type="button" data-cursor data-i18n="filter.embedded">Embedded &amp; IoT</button>
-        <button class="filter" data-filter="fpga" type="button" data-cursor data-i18n="filter.fpga">FPGA &amp; Digital</button>
-        <button class="filter" data-filter="web" type="button" data-cursor data-i18n="filter.web">Web &amp; Cloud</button>
-      </div>
-
-      <div class="projects" id="projectGrid">
-        <!-- Project 1: Smart Agriculture -->
-        <article class="pcard glass spot tilt reveal" data-cat="embedded">
-          <div class="pcard-top">
-            <div class="pcard-icon"><svg class="ic"><use href="#i-chip"/></svg></div>
-            <span class="pill glow mono">Jul – Nov 2026</span>
-          </div>
-          <h3 data-i18n="proj.p1.title">Smart Agriculture Environmental Monitoring System</h3>
-          <p class="pcard-sub mono" data-i18n="proj.p1.sub">ESP32-S3 · FreeRTOS · TinyML · Cloud Platform</p>
-          <ul>
-            <li data-i18n="proj.p1.b1">Engineered concurrent FreeRTOS firmware on ESP32-S3 with semaphore-guarded context coordinating 7 tasks (sampling, TinyML inference, pump relay, logging, reset button, LED indicator) across I2C, GPIO, and network.</li>
-            <li data-i18n="proj.p1.b2">Deployed a float32 TensorFlow Lite Micro classifier (temperature, humidity, soil moisture to 3-class risk) with sub-1 ms inference and hardware safety interlocks.</li>
-            <li data-i18n="proj.p1.b3">Implemented WiFi AP fallback with LittleFS-persisted networks, streaming telemetry via HTTP/WebSocket to a Dockerized Node.js/PostgreSQL fleet dashboard.</li>
-          </ul>
-          <div class="pcard-meta">
-            <span><svg class="ic"><use href="#i-layers"/></svg><b>Architecture:</b> 7 Concurrent FreeRTOS Tasks</span>
-            <span><svg class="ic"><use href="#i-sparkle"/></svg><b>TinyML:</b> 21,000-row Dataset, &lt; 1 ms Latency</span>
-          </div>
-          <div class="tags">
-            <span class="tag">C/C++</span>
-            <span class="tag">FreeRTOS</span>
-            <span class="tag">ESP32-S3</span>
-            <span class="tag">TFLite Micro</span>
-            <span class="tag">Docker</span>
-            <span class="tag">PostgreSQL</span>
-          </div>
-          <div class="pcard-foot">
-            <a href="https://github.com/SangNguyen-232" target="_blank" rel="noopener" class="pcard-link" data-cursor>
-              <svg class="ic"><use href="#i-github"/></svg>
-              <span>GitHub Repo</span>
-            </a>
-            <span class="pcard-period mono">Production Architecture</span>
-          </div>
-        </article>
-
-        <!-- Project 2: FPGA Vending Machine -->
-        <article class="pcard glass spot tilt reveal" style="--d:.15s" data-cat="fpga">
-          <div class="pcard-top">
-            <div class="pcard-icon"><svg class="ic"><use href="#i-cpu"/></svg></div>
-            <span class="pill glow mono">Sep – Dec 2024</span>
-          </div>
-          <h3 data-i18n="proj.p2.title">FPGA Vending Machine Simulator</h3>
-          <p class="pcard-sub mono" data-i18n="proj.p2.sub">Verilog HDL · Xilinx Vivado · Arty-Z7 FPGA</p>
-          <ul>
-            <li data-i18n="proj.p2.b1">Designed and synthesized a complete Verilog FSM-based vending machine on Digilent Arty-Z7 FPGA board.</li>
-            <li data-i18n="proj.p2.b2">Engineered finite state machine logic handling synchronous product selection, coin validation, balance computation, and change dispensing.</li>
-            <li data-i18n="proj.p2.b3">Implemented real-time hardware interfaces for 16x2 alphanumeric LCD display, 7-segment LED counters, and debounced tactical switches.</li>
-          </ul>
-          <div class="pcard-meta">
-            <span><svg class="ic"><use href="#i-cpu"/></svg><b>Target Hardware:</b> Xilinx Zynq-7000 (Arty-Z7)</span>
-            <span><svg class="ic"><use href="#i-code"/></svg><b>Design Language:</b> Verilog HDL (RTL + FSM)</span>
-          </div>
-          <div class="tags">
-            <span class="tag">Verilog HDL</span>
-            <span class="tag">Xilinx Vivado</span>
-            <span class="tag">Arty-Z7</span>
-            <span class="tag">Cadence Xcelium</span>
-            <span class="tag">Digital Design</span>
-          </div>
-          <div class="pcard-foot">
-            <a href="https://github.com/SangNguyen-232" target="_blank" rel="noopener" class="pcard-link" data-cursor>
-              <svg class="ic"><use href="#i-github"/></svg>
-              <span>GitHub Repo</span>
-            </a>
-            <span class="pcard-period mono">Hardware Synthesis</span>
-          </div>
-        </article>
-
-        <!-- Project 3: Smart Campus Parking -->
-        <article class="pcard glass spot tilt reveal" style="--d:.3s" data-cat="web">
-          <div class="pcard-top">
-            <div class="pcard-icon"><svg class="ic"><use href="#i-server"/></svg></div>
-            <span class="pill glow mono">Mar – May 2026</span>
-          </div>
-          <h3 data-i18n="proj.p3.title">Smart Campus Parking Management System</h3>
-          <p class="pcard-sub mono" data-i18n="proj.p3.sub">Next.js 16 · Express.js · PostgreSQL RLS · React Leaflet</p>
-          <ul>
-            <li data-i18n="proj.p3.b1">Engineered 6 RESTful APIs to synchronize real-time IoT sensor slot status across 6 parking zones with sub-second response times.</li>
-            <li data-i18n="proj.p3.b2">Integrated automated payment processing and balance management with BKPay payment gateway integration.</li>
-            <li data-i18n="proj.p3.b3">Developed an interactive 2D GPS map component using React Leaflet and enforced strict multi-role access via PostgreSQL Row-Level Security (RLS) for 5 user tiers.</li>
-          </ul>
-          <div class="pcard-meta">
-            <span><svg class="ic"><use href="#i-server"/></svg><b>Backend:</b> Express.js REST APIs + PostgreSQL RLS</span>
-            <span><svg class="ic"><use href="#i-layers"/></svg><b>Frontend:</b> Next.js 16 + React 19 + Tailwind</span>
-          </div>
-          <div class="tags">
-            <span class="tag">Next.js</span>
-            <span class="tag">TypeScript</span>
-            <span class="tag">PostgreSQL RLS</span>
-            <span class="tag">Leaflet</span>
-            <span class="tag">REST APIs</span>
-          </div>
-          <div class="pcard-foot">
-            <a href="https://github.com/SangNguyen-232" target="_blank" rel="noopener" class="pcard-link" data-cursor>
-              <svg class="ic"><use href="#i-github"/></svg>
-              <span>GitHub Repo</span>
-            </a>
-            <span class="pcard-period mono">Cloud Platform</span>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================== SKILLS & HARDWARE BUS MATRIX ===================== -->
-  <section id="skills" class="section">
-    <div class="container">
-      <div class="sec-head reveal">
-        <span class="sec-num mono">05 //</span>
-        <div>
-          <h2 class="sec-title" data-i18n="skills.title">Technical Skills</h2>
-          <p class="sec-sub" data-i18n="skills.sub">Technologies verified from hardware implementations and CV</p>
-        </div>
-      </div>
-
-      <div class="skills">
-        <!-- 1. Languages -->
-        <div class="skill glass spot tilt reveal" style="--d:.05s">
-          <div class="skill-head">
-            <div class="skill-icon"><svg class="ic"><use href="#i-code"/></svg></div>
-            <h3 data-i18n="skills.c1">Programming Languages</h3>
-          </div>
-          <div class="tags">
-            <span class="tag">C (C99/C11)</span>
-            <span class="tag">C++ (C++14/17)</span>
-            <span class="tag">Python</span>
-          </div>
-        </div>
-
-        <!-- 2. Embedded & RTOS -->
-        <div class="skill glass spot tilt reveal" style="--d:.1s">
-          <div class="skill-head">
-            <div class="skill-icon"><svg class="ic"><use href="#i-chip"/></svg></div>
-            <h3 data-i18n="skills.c2">Embedded Systems &amp; RTOS</h3>
-          </div>
-          <div class="tags">
-            <span class="tag">ESP32</span>
-            <span class="tag">ESP32-S3</span>
-            <span class="tag">FreeRTOS</span>
-            <span class="tag">GPIO</span>
-            <span class="tag">I2C</span>
-            <span class="tag">UART</span>
-          </div>
-        </div>
-
-        <!-- 3. Edge AI -->
-        <div class="skill glass spot tilt reveal" style="--d:.15s">
-          <div class="skill-head">
-            <div class="skill-icon"><svg class="ic"><use href="#i-sparkle"/></svg></div>
-            <h3 data-i18n="skills.c3">Edge AI &amp; TinyML</h3>
-          </div>
-          <div class="tags">
-            <span class="tag">TFLite Micro</span>
-            <span class="tag">On-Device Inference</span>
-            <span class="tag">Model Quantization</span>
-          </div>
-        </div>
-
-        <!-- 4. FPGA -->
-        <div class="skill glass spot tilt reveal" style="--d:.2s">
-          <div class="skill-head">
-            <div class="skill-icon"><svg class="ic"><use href="#i-cpu"/></svg></div>
-            <h3 data-i18n="skills.c4">FPGA &amp; Digital Design</h3>
-          </div>
-          <div class="tags">
-            <span class="tag">Verilog HDL</span>
-            <span class="tag">Xilinx Vivado</span>
-            <span class="tag">Cadence Xcelium</span>
-            <span class="tag">Arty-Z7 Board</span>
-          </div>
-        </div>
-
-        <!-- 5. Tools -->
-        <div class="skill glass spot tilt reveal" style="--d:.25s">
-          <div class="skill-head">
-            <div class="skill-icon"><svg class="ic"><use href="#i-layers"/></svg></div>
-            <h3 data-i18n="skills.c5">Development Tools</h3>
-          </div>
-          <div class="tags">
-            <span class="tag">PlatformIO</span>
-            <span class="tag">STM32CubeIDE</span>
-            <span class="tag">Linux</span>
-            <span class="tag">Git &amp; GitHub</span>
-            <span class="tag">Docker</span>
-          </div>
-        </div>
-
-        <!-- 6. IoT Backend -->
-        <div class="skill glass spot tilt reveal" style="--d:.3s">
-          <div class="skill-head">
-            <div class="skill-icon"><svg class="ic"><use href="#i-server"/></svg></div>
-            <h3 data-i18n="skills.c6">IoT Backend &amp; Web</h3>
-          </div>
-          <div class="tags">
-            <span class="tag">Node.js</span>
-            <span class="tag">Express.js</span>
-            <span class="tag">PostgreSQL</span>
-            <span class="tag">Next.js</span>
-            <span class="tag">React</span>
-            <span class="tag">HTML/CSS</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Protocols & Hardware Bus Matrix Card -->
-      <div class="bus-matrix glass spot tilt reveal">
-        <div class="bus-head">
-          <svg class="ic"><use href="#i-chip"/></svg>
-          <span data-i18n="bus.title">Hardware Protocols &amp; Embedded Bus Matrix</span>
-        </div>
-        <div class="bus-grid">
-          <div class="bus-item">
-            <b>I2C Protocol</b>
-            <span>100/400 kHz Fast Mode, Multi-sensor Bus (AHT20, BMP280)</span>
-          </div>
-          <div class="bus-item">
-            <b>UART Interface</b>
-            <span>115200 Baud, Hardware FIFO, AT Commands &amp; Telemetry</span>
-          </div>
-          <div class="bus-item">
-            <b>FreeRTOS IPC</b>
-            <span>Counting Semaphores, Mutexes, Event Groups, Task Queues</span>
-          </div>
-          <div class="bus-item">
-            <b>Memory &amp; Storage</b>
-            <span>8MB QIO Flash, LittleFS Partitioning, Wear-Leveling</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Infinite Marquee Running Tracks -->
-      <div class="marquee reveal" aria-hidden="true">
-        <div class="track">
-          <span class="mq"><i></i>ESP32-S3 Xtensa</span>
-          <span class="mq"><i></i>FreeRTOS Kernel</span>
-          <span class="mq"><i></i>TinyML TFLite Micro</span>
-          <span class="mq"><i></i>Verilog HDL RTL</span>
-          <span class="mq"><i></i>Embedded C/C++</span>
-          <span class="mq"><i></i>Xilinx Vivado</span>
-          <span class="mq"><i></i>PlatformIO</span>
-          <span class="mq"><i></i>PostgreSQL RLS</span>
-          <span class="mq"><i></i>Docker Containers</span>
-          <span class="mq"><i></i>I2C &amp; UART Peripherals</span>
-          <!-- Duplicate for seamless loop -->
-          <span class="mq"><i></i>ESP32-S3 Xtensa</span>
-          <span class="mq"><i></i>FreeRTOS Kernel</span>
-          <span class="mq"><i></i>TinyML TFLite Micro</span>
-          <span class="mq"><i></i>Verilog HDL RTL</span>
-          <span class="mq"><i></i>Embedded C/C++</span>
-          <span class="mq"><i></i>Xilinx Vivado</span>
-          <span class="mq"><i></i>PlatformIO</span>
-          <span class="mq"><i></i>PostgreSQL RLS</span>
-          <span class="mq"><i></i>Docker Containers</span>
-          <span class="mq"><i></i>I2C &amp; UART Peripherals</span>
-        </div>
-      </div>
-
-      <div class="marquee reverse reveal" aria-hidden="true" style="margin-top:10px;">
-        <div class="track">
-          <span class="mq"><i></i>Digilent Arty-Z7</span>
-          <span class="mq"><i></i>Cadence Xcelium</span>
-          <span class="mq"><i></i>STM32CubeIDE</span>
-          <span class="mq"><i></i>Node.js &amp; Express</span>
-          <span class="mq"><i></i>Next.js 16</span>
-          <span class="mq"><i></i>Linux Ubuntu</span>
-          <span class="mq"><i></i>Git &amp; GitHub CI</span>
-          <span class="mq"><i></i>React 19 &amp; Leaflet</span>
-          <span class="mq"><i></i>LittleFS Hot-Swap</span>
-          <span class="mq"><i></i>WebSocket Streaming</span>
-          <!-- Duplicate for seamless loop -->
-          <span class="mq"><i></i>Digilent Arty-Z7</span>
-          <span class="mq"><i></i>Cadence Xcelium</span>
-          <span class="mq"><i></i>STM32CubeIDE</span>
-          <span class="mq"><i></i>Node.js &amp; Express</span>
-          <span class="mq"><i></i>Next.js 16</span>
-          <span class="mq"><i></i>Linux Ubuntu</span>
-          <span class="mq"><i></i>Git &amp; GitHub CI</span>
-          <span class="mq"><i></i>React 19 &amp; Leaflet</span>
-          <span class="mq"><i></i>LittleFS Hot-Swap</span>
-          <span class="mq"><i></i>WebSocket Streaming</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================== EDUCATION & CERTS ===================== -->
-  <section id="education" class="section">
+<section id="education" class="section">
     <div class="container">
       <div class="sec-head reveal">
         <span class="sec-num mono">06 //</span>
@@ -868,7 +954,7 @@
 
       <div class="edu-grid">
         <!-- University Degree Card -->
-        <div class="edu glass spot tilt reveal">
+        <div class="edu glass spot reveal">
           <div class="edu-icon"><svg class="ic"><use href="#i-cap"/></svg></div>
           <h3 data-i18n="edu.school">Ho Chi Minh City University of Technology — VNU-HCM</h3>
           <p class="edu-degree grad-text" data-i18n="edu.degree">Bachelor of Computer Engineering</p>
@@ -898,7 +984,7 @@
         </div>
 
         <!-- Certifications & Training Card -->
-        <div class="edu glass spot tilt reveal" style="--d:.15s">
+        <div class="edu glass spot reveal" style="--d:.15s">
           <div class="edu-icon"><svg class="ic"><use href="#i-award"/></svg></div>
           <h3 data-i18n="cert.title">Certifications &amp; Training</h3>
           <p class="muted small" data-i18n="cert.sub">Standardized certifications and industry internships</p>
@@ -910,7 +996,7 @@
                 <b data-i18n="cert.c1.name">TOEIC (Listening and Reading)</b>
                 <span data-i18n="cert.c1.date">Dec 2026 • Educational Testing Service (ETS)</span>
               </div>
-              <span class="pill mono">Verified</span>
+              <span class="pill mono">Scheduled</span>
             </div>
 
             <div class="cert">
@@ -935,11 +1021,9 @@
       </div>
     </div>
   </section>
-
-  <!-- ===================== CONTACT SECTION ===================== -->
-  <section id="contact" class="section contact">
+<section id="contact" class="section contact">
     <div class="container">
-      <div class="contact-card glass spot tilt reveal">
+      <div class="contact-card glass spot reveal">
         <div class="status">
           <span class="status-dot"></span>
           <span data-i18n="contact.status">Open to Fresher Opportunities</span>
@@ -981,7 +1065,64 @@
       </div>
     </div>
   </section>
+
 </main>
+
+<!-- ===================== ARCHITECTURE INSPECTOR MODAL SYSTEM ===================== -->
+<div class="modal-backdrop" id="modalBackdrop" aria-hidden="true">
+  <div class="modal-dialog glass" id="modalDialog" role="dialog" aria-modal="true" tabindex="-1">
+    <div class="modal-header">
+      <div class="modal-title-wrap">
+        <div class="modal-icon-badge" id="modalIconBadge"><svg class="ic"><use href="#i-layers"/></svg></div>
+        <div>
+          <h3 class="modal-title" id="modalTitle">System Architecture</h3>
+          <p class="modal-sub mono" id="modalSub">Hardware &amp; Firmware Deep-Dive</p>
+        </div>
+      </div>
+      <button class="modal-close" id="modalClose" type="button" aria-label="Close modal">
+        <svg class="ic"><use href="#i-close"/></svg>
+      </button>
+    </div>
+    
+    <div class="modal-body" id="modalBody">
+      <!-- Dynamic content injected by JavaScript based on project -->
+    </div>
+    
+    <div class="modal-footer">
+      <span class="mono small muted">Press <kbd>ESC</kbd> to exit inspector</span>
+      <button class="btn btn-ghost btn-sm" id="modalFooterClose" type="button">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== KEYBOARD SHORTCUTS MODAL ===================== -->
+<div class="modal-backdrop" id="shortcutsModal" aria-hidden="true">
+  <div class="modal-dialog glass shortcuts-dialog" role="dialog" aria-modal="true" tabindex="-1">
+    <div class="modal-header">
+      <div class="modal-title-wrap">
+        <div class="modal-icon-badge"><svg class="ic"><use href="#i-code"/></svg></div>
+        <div>
+          <h3 class="modal-title">Keyboard Shortcuts</h3>
+          <p class="modal-sub mono">Power-User Quick Navigation</p>
+        </div>
+      </div>
+      <button class="modal-close" id="shortcutsClose" type="button" aria-label="Close modal">
+        <svg class="ic"><use href="#i-close"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="shortcuts-grid mono">
+        <div class="shortcut-row"><kbd>L</kbd><span>Toggle Language (EN / VI)</span></div>
+        <div class="shortcut-row"><kbd>M</kbd><span>Toggle Cyber SFX Audio</span></div>
+        <div class="shortcut-row"><kbd>T</kbd><span>Jump &amp; Focus Firmware Terminal</span></div>
+        <div class="shortcut-row"><kbd>P</kbd><span>Navigate to Featured Projects</span></div>
+        <div class="shortcut-row"><kbd>S</kbd><span>Jump to Telemetry &amp; Logic Scope</span></div>
+        <div class="shortcut-row"><kbd>ESC</kbd><span>Close any Open Modal</span></div>
+        <div class="shortcut-row"><kbd>?</kbd><span>Show / Hide this Shortcuts Guide</span></div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- Footer -->
 <footer class="footer">
@@ -994,16 +1135,21 @@
         Thu Duc, Ho Chi Minh, Vietnam
       </span>
     </div>
-    <a href="#hero" class="totop mono" data-cursor aria-label="Back to top">
-      <span data-i18n="footer.totop">Back to Top</span>
-      <svg class="ic"><use href="#i-up"/></svg>
-    </a>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <button class="btn-shortcuts-helper mono small" id="shortcutsHelperBtn" type="button" aria-label="Keyboard Shortcuts" title="Keyboard Shortcuts [?]">
+        <kbd>?</kbd><span>Shortcuts</span>
+      </button>
+      <a href="#hero" class="totop mono" data-cursor aria-label="Back to top">
+        <span data-i18n="footer.totop">Back to Top</span>
+        <svg class="ic"><use href="#i-up"/></svg>
+      </a>
+    </div>
   </div>
 </footer>
 
 <!-- Toast notification popup -->
 <div class="toast" id="toast" role="status" aria-live="polite">
-  <span data-i18n="toast.copied">Email copied to clipboard!</span>
+  <span id="toastMsg" data-i18n="toast.copied">Email copied to clipboard!</span>
 </div>
 
 <script src="script.js"></script>
