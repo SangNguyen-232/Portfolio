@@ -1144,20 +1144,20 @@
     if (copyEmail) {
       copyEmail.addEventListener('click', () => {
         const text = copyEmail.getAttribute('data-copy') || 'sangnguyen230204@gmail.com';
-        navigator.clipboard.writeText(text).then(() => {
+        (navigator.clipboard ? navigator.clipboard.writeText(text) : Promise.reject()).then(() => {
           playCyberSound(1050, 0.06);
           showToast(currentLang === 'vi' ? 'Đã sao chép email: ' + text : 'Copied email: ' + text);
-        });
+        }).catch(() => window.prompt('Copy:', text));
       });
     }
 
     if (copyPhone) {
       copyPhone.addEventListener('click', () => {
         const text = copyPhone.getAttribute('data-copy') || '0383589877';
-        navigator.clipboard.writeText(text).then(() => {
+        (navigator.clipboard ? navigator.clipboard.writeText(text) : Promise.reject()).then(() => {
           playCyberSound(1050, 0.06);
           showToast(currentLang === 'vi' ? 'Đã sao chép SĐT: ' + text : 'Copied phone: ' + text);
-        });
+        }).catch(() => window.prompt('Copy:', text));
       });
     }
   };
@@ -1450,12 +1450,14 @@
       backdrop.classList.remove('open');
       backdrop.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
+      if (window.__modalOpener) window.__modalOpener.focus();
       playCyberSound(750, 0.04);
     };
 
     const openModal = (modalKey) => {
       const data = modalContentData[modalKey];
       if (!data) return;
+      window.__modalOpener = document.activeElement;
 
       const isVi = currentLang === 'vi';
       title.textContent = isVi ? data.title_vi : data.title_en;
@@ -1510,6 +1512,7 @@
 
     window.addEventListener('keydown', (e) => {
       if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) return;
+      if (e.ctrlKey || e.metaKey || e.altKey) return;
 
       if (e.key === '?' || (e.shiftKey && e.key === '/')) {
         e.preventDefault();
@@ -1518,7 +1521,9 @@
         const modalBackdrop = document.getElementById('modalBackdrop');
         if (modalBackdrop && modalBackdrop.classList.contains('open')) {
           modalBackdrop.classList.remove('open');
+          modalBackdrop.setAttribute('aria-hidden', 'true');
           document.body.style.overflow = '';
+          if (window.__modalOpener) window.__modalOpener.focus();
         }
         if (shortcutsModal && shortcutsModal.classList.contains('open')) {
           shortcutsModal.classList.remove('open');

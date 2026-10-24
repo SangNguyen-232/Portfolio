@@ -3885,3 +3885,9 @@ main>.section:nth-of-type(even){background:linear-gradient(180deg,transparent,rg
   }
 }
 
+
+/* ===== v3 fixes ===== */
+#progress{display:none!important}
+.recruiter-bar{margin-top:calc(var(--nav-h) + 4px)}
+.hero{padding-top:36px}
+.toast.show{opacity:1;transform:translate(-50%,0)}
