@@ -1,0 +1,11 @@
+/* =====================================================================
+   MAIN STYLESHEET ENTRYPOINT
+   Modular Architecture for Nguyen Van Sang's Portfolio
+   Senior Front-end & Embedded Engineering Standards
+   ===================================================================== */
+
+@import url('variables.css');
+@import url('base.css');
+@import url('components.css');
+@import url('sections.css');
+@import url('effects.css');

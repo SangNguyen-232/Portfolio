@@ -1,0 +1,284 @@
+/* =====================================================================
+   DYNAMIC EFFECTS, AMBIENT LAYERS, CURSOR & ANIMATIONS
+   ===================================================================== */
+
+/* Preloader */
+#loader {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: #040E10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.4s var(--ease), visibility 0.4s var(--ease);
+}
+
+#loader.done {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.loader-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: 280px;
+}
+
+.loader-logo {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 32px;
+  color: var(--mint);
+  letter-spacing: -0.04em;
+  position: relative;
+}
+
+.loader-bar {
+  width: 100%;
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(30, 59, 65, 0.6);
+  overflow: hidden;
+  position: relative;
+}
+
+.loader-bar span {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  background: linear-gradient(90deg, var(--mint), var(--amber));
+  animation: loadProgress 1.4s var(--ease) forwards;
+}
+
+@keyframes loadProgress {
+  0% { width: 0%; }
+  60% { width: 75%; }
+  100% { width: 100%; }
+}
+
+.loader-line {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--dim);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Ambient Canvas & Glow Layers */
+#net {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.75;
+}
+
+#spot {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(600px circle at var(--x, 50vw) var(--y, 40vh), rgba(var(--mint-rgb), 0.05), transparent 70%);
+}
+
+#grid {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background-image: 
+    linear-gradient(rgba(30, 59, 65, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(30, 59, 65, 0.12) 1px, transparent 1px);
+  background-size: 40px 40px;
+  opacity: 0.6;
+}
+
+#aurora {
+  position: fixed;
+  top: -20%;
+  left: -20%;
+  width: 140vw;
+  height: 80vh;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 40% 30%, rgba(var(--mint-rgb), 0.08) 0%, transparent 60%),
+              radial-gradient(ellipse at 70% 60%, rgba(var(--amber-rgb), 0.06) 0%, transparent 65%);
+  filter: blur(60px);
+}
+
+/* Neon Top Scroll Progress Bar */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: rgba(6, 20, 24, 0.6);
+  z-index: 5000;
+  pointer-events: none;
+}
+
+.scroll-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--mint), var(--amber), var(--cyan));
+  box-shadow: 0 0 10px rgba(var(--mint-rgb), 0.8), 0 0 20px rgba(var(--amber-rgb), 0.5);
+  transition: width 0.1s linear;
+}
+
+/* Custom Cyber Cursor */
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99999;
+  display: none;
+}
+
+body.cursor-on .cursor-dot,
+body.cursor-on .cursor-ring {
+  display: block;
+}
+
+.cursor-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--mint);
+  box-shadow: 0 0 8px var(--mint);
+  transition: transform 0.04s linear;
+}
+
+.cursor-ring {
+  width: 34px;
+  height: 34px;
+  border: 1.5px solid rgba(var(--mint-rgb), 0.6);
+  box-shadow: 0 0 10px rgba(var(--mint-rgb), 0.2);
+  transition: width 0.25s var(--ease), height 0.25s var(--ease), border-color 0.25s var(--ease), background 0.25s var(--ease);
+}
+
+body.cursor-hover .cursor-ring {
+  width: 48px;
+  height: 48px;
+  border-color: var(--amber);
+  background: rgba(var(--amber-rgb), 0.06);
+}
+
+body.cursor-down .cursor-ring {
+  transform: scale(0.75);
+  border-color: var(--mint);
+}
+
+/* 3D Tilt Class */
+.tilting {
+  transition: transform 0.08s linear !important;
+  transition-delay: 0s !important;
+}
+
+/* Button Ripple Effect */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  background: rgba(255, 255, 255, 0.4);
+  transform: scale(0);
+  animation: rippleFx 0.65s var(--ease) forwards;
+}
+
+@keyframes rippleFx {
+  to {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+/* Directional & Stagger Scroll Reveals */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s var(--ease), transform 0.6s var(--ease), filter 0.6s var(--ease);
+}
+
+.reveal.from-l {
+  transform: translateX(-36px);
+}
+
+.reveal.from-r {
+  transform: translateX(36px);
+}
+
+.reveal.zoom {
+  transform: translateY(18px) scale(0.94);
+}
+
+.reveal.in {
+  opacity: 1;
+  transform: none;
+}
+
+.reveal .tag {
+  opacity: 0;
+  transform: translateY(8px) scale(0.9);
+  transition: opacity 0.45s var(--ease), transform 0.45s var(--ease), color 0.25s, border-color 0.25s, background 0.25s;
+  transition-delay: calc(var(--i, 0) * 35ms + 0.15s);
+}
+
+.reveal.in .tag {
+  opacity: 1;
+  transform: none;
+}
+
+.pcard.pop {
+  animation: cardIn 0.5s var(--ease) var(--pd, 0s) backwards;
+}
+
+@keyframes cardIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.96);
+  }
+}
+
+/* Shimmer Animation for Gradient Text */
+@media (prefers-reduced-motion: no-preference) {
+  .hero-name {
+    animation: nameIn 1.2s var(--ease) 0.4s backwards;
+  }
+  @keyframes nameIn {
+    from {
+      letter-spacing: 0.12em;
+      filter: blur(8px);
+      opacity: 0;
+    }
+  }
+
+  .grad-text {
+    background-size: 200% 100%;
+    animation: shimmer 8s ease-in-out infinite alternate;
+  }
+  @keyframes shimmer {
+    to {
+      background-position: 100% 0;
+    }
+  }
+}
+
+/* Reduced Motion Fallback */
+@media (prefers-reduced-motion: reduce) {
+  #net, #aurora { display: none !important; }
+  .reveal { opacity: 1 !important; transform: none !important; }
+  .reveal .tag { opacity: 1 !important; transform: none !important; }
+  .timeline::before { transform: none !important; }
+  .tilt { transform: none !important; }
+}

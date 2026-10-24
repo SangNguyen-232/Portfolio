@@ -12,10 +12,10 @@
   <meta name="author" content="Nguyen Van Sang">
   <meta name="theme-color" content="#061418">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="anh-the-trang.png">
+  <meta property="og:image" content="assets/images/anh-the-trang.webp">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Nguyen Van Sang — Embedded Software Engineer">
-  <meta name="twitter:image" content="anh-the-trang.png">
+  <meta name="twitter:image" content="assets/images/anh-the-trang.webp">
   <meta property="og:title" content="Nguyen Van Sang — Embedded Software Engineer">
   <meta property="og:description"
     content="ESP32-S3 · FreeRTOS Multitasking · TinyML On-Device · FPGA Verilog · IoT Cloud">
@@ -32,9 +32,7 @@
   {"@context":"https://schema.org","@type":"Person","name":"Nguyen Van Sang","jobTitle":"Embedded Software Engineer (Fresher)","email":"mailto:sangnguyen230204@gmail.com","telephone":"+84383589877","address":{"@type":"PostalAddress","addressLocality":"Thu Duc, Ho Chi Minh","addressCountry":"VN"},"alumniOf":"Ho Chi Minh City University of Technology — VNU-HCM","sameAs":["https://github.com/SangNguyen-232","https://www.linkedin.com/in/sangnguyen232/"]}
   </script>
 
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="effects.css">
-  <link rel="stylesheet" href="motion.css">
+  <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
 <body>
@@ -181,6 +179,8 @@
   <!-- Ambient Dynamic Background Layers -->
   <div id="aurora" aria-hidden="true"></div>
   <div id="grid" aria-hidden="true"></div>
+  <div id="spot" aria-hidden="true"></div>
+  <canvas id="net" aria-hidden="true"></canvas>
   <div class="scroll-progress" id="scrollProgress" aria-hidden="true">
     <div class="scroll-progress-bar" id="scrollProgressBar"></div>
   </div>
@@ -219,7 +219,7 @@
           <span class="lang-opt" data-lang="en">EN</span>
           <span class="lang-opt" data-lang="vi">VI</span>
         </button>
-        <a class="btn btn-ghost btn-sm resume-btn" id="resumeBtn" href="CV.pdf" target="_blank" rel="noopener"
+        <a class="btn btn-ghost btn-sm resume-btn" id="resumeBtn" href="assets/docs/CV.pdf" target="_blank" rel="noopener"
           data-cursor>
           <svg class="ic">
             <use href="#i-download" />
@@ -239,49 +239,39 @@
     </div>
   </header>
 
-  <!-- Recruiter Fast-Track Executive Bar -->
-  <aside class="recruiter-bar" id="recruiterBar" aria-label="Candidate Highlights">
+  <!-- Contact Bar (Aligned with CV Header, Centered in Layout) -->
+  <aside class="recruiter-bar" id="recruiterBar" aria-label="Candidate Contact & Profiles">
     <div class="container recruiter-inner">
-      <div class="recruiter-tags">
-        <span class="recruiter-pill">
-          <svg class="ic">
-            <use href="#i-cap" />
-          </svg>
-          <!-- <span><b>HCMUT (VNU-HCM)</b> • Computer Engineering (GPA 2.8/4.0)</span> -->
-        </span>
-        <span class="recruiter-pill">
-          <svg class="ic">
-            <use href="#i-award" />
-          </svg>
-          <!-- <span><b>Viettel Dak Lak - Viettel Group</b> • IoT Intern (06–08/2026)</span> -->
-        </span>
-        <span class="recruiter-pill">
-          <svg class="ic">
-            <use href="#i-chip" />
-          </svg>
-          <!-- <span><b>Focus:</b> ESP32-S3 · FreeRTOS · TinyML &lt;1ms · Verilog HDL</span> -->
-        </span>
-      </div>
-      <div class="recruiter-actions">
-        <button class="btn-copy-quick mono small" type="button" id="quickCopyEmail"
-          data-copy="sangnguyen230204@gmail.com" title="Copy Email">
-          <svg class="ic">
-            <use href="#i-mail" />
-          </svg>
-          <span>sangnguyen230204@gmail.com</span>
-        </button>
-        <button class="btn-copy-quick mono small" type="button" id="quickCopyPhone" data-copy="0383589877"
-          title="Copy Phone">
+      <div class="cv-contact-bar">
+        <a class="cv-contact-item" href="tel:0383589877" id="quickCopyPhone" data-copy="0383589877" title="Phone / Click to copy: 0383 589 877">
           <svg class="ic">
             <use href="#i-phone" />
           </svg>
           <span>0383 589 877</span>
-        </button>
-        <a class="recruiter-cv-link mono small" href="CV.pdf" target="_blank" rel="noopener">
+        </a>
+        <a class="cv-contact-item" href="mailto:sangnguyen230204@gmail.com" id="quickCopyEmail" data-copy="sangnguyen230204@gmail.com" title="Email / Click to copy: sangnguyen230204@gmail.com">
           <svg class="ic">
-            <use href="#i-download" />
+            <use href="#i-mail" />
           </svg>
-          <span>CV PDF</span>
+          <span>sangnguyen230204@gmail.com</span>
+        </a>
+        <span class="cv-contact-item">
+          <svg class="ic">
+            <use href="#i-pin" />
+          </svg>
+          <span>Thu Duc, Ho Chi Minh</span>
+        </span>
+        <a class="cv-contact-item" href="https://github.com/SangNguyen-232" target="_blank" rel="noopener" title="GitHub: SangNguyen-232">
+          <svg class="ic">
+            <use href="#i-github" />
+          </svg>
+          <span>SangNguyen-232</span>
+        </a>
+        <a class="cv-contact-item" href="https://www.linkedin.com/in/sangnguyen232/" target="_blank" rel="noopener" title="LinkedIn: sangnguyen232">
+          <svg class="ic">
+            <use href="#i-linkedin" />
+          </svg>
+          <span>sangnguyen232</span>
         </a>
       </div>
     </div>
@@ -437,8 +427,8 @@
               <div class="eng-avatar-view active" id="engAvatarView">
                 <div class="avatar-frame">
                   <picture>
-                    <source srcset="anh-the-trang.webp" type="image/webp">
-                    <img class="avatar-photo" src="anh-the-trang.png" alt="Portrait of Nguyen Van Sang, Embedded Software Engineer"
+                    <source srcset="assets/images/anh-the-trang.webp" type="image/webp">
+                    <img class="avatar-photo" src="assets/images/anh-the-trang.webp" alt="Portrait of Nguyen Van Sang, Embedded Software Engineer"
                       loading="eager" fetchpriority="high" decoding="async" width="764" height="1029">
                   </picture>
                   <div class="avatar-overlay"></div>
@@ -1365,7 +1355,7 @@
               </svg>
               <span>0383 589 877</span>
             </a>
-            <a href="CV.pdf" target="_blank" rel="noopener" class="btn btn-ghost" data-cursor>
+            <a href="assets/docs/CV.pdf" target="_blank" rel="noopener" class="btn btn-ghost" data-cursor>
               <svg class="ic">
                 <use href="#i-download" />
               </svg>
@@ -1491,9 +1481,12 @@
     <span id="toastMsg" data-i18n="toast.copied">Email copied to clipboard!</span>
   </div>
 
-  <script src="script.js"></script>
-  <script src="effects.js" defer></script>
-  <script src="motion.js" defer></script>
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/audio.js"></script>
+  <script src="assets/js/scope.js"></script>
+  <script src="assets/js/telemetry.js"></script>
+  <script src="assets/js/terminal.js"></script>
+  <script src="assets/js/main.js"></script>
 </body>
 
 </html>
