@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nguyen Van Sang — Embedded Software Engineer</title>
+  <meta name="description" content="Portfolio of Nguyen Van Sang — Embedded Software Engineer (Fresher): ESP32, FreeRTOS, TinyML, FPGA and IoT backends.">
+  <meta name="theme-color" content="#061418">
+  
+  <!-- Preconnect and Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- External CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Preloader -->
+  <div id="loader" aria-hidden="true" hidden>
+    <div class="loader-inner">
+      <div class="loader-logo"><span>SV</span><i></i></div>
+      <div class="loader-bar"><span></span></div>
+      <p class="mono loader-text" data-step="1">Booting firmware…</p>
+      <p class="mono loader-text" data-step="2" hidden>Mounting LittleFS &amp; Flash…</p>
+      <p class="mono loader-text" data-step="3" hidden>Starting FreeRTOS kernel…</p>
+      <p class="mono loader-text" data-step="4" hidden>System ready.</p>
+    </div>
+  </div>
+
+  <!-- Ambient Dynamic Background Elements -->
+  <canvas id="net" aria-hidden="true"></canvas>
+  <div id="aurora" aria-hidden="true"></div>
+  <div id="grid" aria-hidden="true"></div>
+  <progress id="progress" value="0" max="100" aria-hidden="true"></progress>
+
+  <!-- Header Navigation -->
+  <header class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="#hero" class="logo">sang<b>.dev</b></a>
+      <nav class="nav-links" id="navLinks" aria-label="Primary">
+        <a href="#about">About</a>
+        <a href="#experience">Experience</a>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#education">Education</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="Open menu" data-open-label="Open menu" data-close-label="Close menu" hidden>Menu</button>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="status"><span class="dot"></span><span>Open to Fresher Embedded Software roles</span></div>
+          <p class="mono muted greet"><span class="accent">&gt;</span> Hi, I am</p>
+          <h1 class="hero-name">Nguyen Van Sang</h1>
+          <h2 class="hero-title grad-text">Embedded Software Engineer — Fresher</h2>
+          
+          <div class="term">
+            <div class="term-bar"><i></i><i></i><i></i><span class="mono">sang@esp32: ~</span></div>
+            <div class="term-body mono">
+              <div><span class="accent">$</span> <span id="cmd1">idf.py build &amp;&amp; esptool.py flash_id</span></div>
+              <div class="out" id="out1"><span class="amber">›</span> <span id="out1t">ESP32-S3 (Xtensa LX7 dual-core, 240MHz) • Flash: 8MB QIO</span></div>
+              <div><span class="accent">$</span> <span id="cmd2">freertos --status-all</span></div>
+              <div class="out" id="out2"><span class="amber">›</span> <span id="out2t">7 tasks active • TinyML: 0.84ms latency • Heap: 284KB free</span><span class="caret"></span></div>
+            </div>
+          </div>
+          
+          <p class="hero-tagline">I write firmware that runs on real hardware: concurrent FreeRTOS tasks, on-device TinyML, FPGA state machines, and the backends that collect the data.</p>
+          
+          <div class="hero-cta">
+            <a href="#projects" class="btn btn-primary">Explore projects</a>
+            <a href="#contact" class="btn btn-ghost">Get in touch</a>
+            <a class="icon-link" href="https://github.com/SangNguyen-232" target="_blank" rel="noopener">GitHub</a>
+            <a class="icon-link" href="https://www.linkedin.com/in/sangnguyen232/" target="_blank" rel="noopener">LinkedIn</a>
+          </div>
+          
+          <div class="stats">
+            <div class="stat"><b class="count" data-to="3">3</b><span>Projects shipped</span></div>
+            <div class="stat"><b class="count" data-to="7">7</b><span>FreeRTOS tasks in one firmware</span></div>
+            <div class="stat"><b class="count" data-to="21000">21,000</b><span>Rows to train the TinyML model</span></div>
+            <div class="stat"><b>&lt;1 ms</b><span>On-device inference</span></div>
+          </div>
+        </div>
+        
+        <div class="hero-visual">
+          <div class="holo">
+            <div class="holo-frame"><div class="holo-img"><span class="monogram">SV</span><div class="scan"></div></div></div>
+            <div class="chip c1 mono">ESP32-S3</div>
+            <div class="chip c2 mono">FreeRTOS</div>
+            <div class="chip c3 mono">TinyML</div>
+            <div class="chip c4 mono">Verilog</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+      <div class="container">
+        <header class="sec-head reveal">
+          <h2 class="sec-title">About me</h2>
+          <p class="sec-sub">Ask the assistant. It has read my CV.</p>
+        </header>
+        
+        <div class="about-grid">
+          <div class="chat glass reveal" id="chat">
+            <div class="chat-head"><span class="mono muted">sang.assistant</span><span class="mono ok"><span class="dot"></span>online</span></div>
+            <div class="chat-body">
+              <div class="msg user"><div class="bubble">Give me a quick overview of Sang.</div></div>
+              <div class="msg ai"><div class="avatar">AI</div><div class="bubble"><div class="typing" id="typing" aria-hidden="true"><i></i><i></i><i></i></div><p id="stream">Nguyen Van Sang is a Computer Engineering student at HCMUT (VNU-HCM), graduating in 2027. He specializes in embedded firmware development with ESP32-S3 and FreeRTOS, on-device TinyML inference with TensorFlow Lite Micro, FPGA digital logic with Verilog HDL, and end-to-end IoT cloud pipelines. Currently open to Fresher Embedded Software roles.</p></div></div>
+            </div>
+            <div class="chat-foot"><span class="mono muted small">generated from CV</span><button class="regen mono" id="regen" type="button" hidden>Regenerate</button></div>
+          </div>
+          
+          <div class="glass profile reveal delay-3">
+            <div class="profile-head mono muted">profile.json</div>
+            <pre class="json mono">{
+  <span class="k">"name"</span>: <span class="s">"Nguyen Van Sang"</span>,
+  <span class="k">"location"</span>: <span class="s">"Thu Duc, Ho Chi Minh"</span>,
+  <span class="k">"education"</span>: <span class="s">"B.Eng. Computer Engineering, HCMUT"</span>,
+  <span class="k">"focus"</span>: [<span class="s">"FreeRTOS"</span>, <span class="s">"TinyML"</span>, <span class="s">"FPGA"</span>, <span class="s">"IoT"</span>],
+  <span class="k">"languages"</span>: [<span class="s">"C"</span>, <span class="s">"C++"</span>, <span class="s">"Python"</span>],
+  <span class="k">"status"</span>: <span class="a">"open_to_work"</span>
+}</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="section">
+      <div class="container">
+        <header class="sec-head reveal">
+          <h2 class="sec-title">Experience</h2>
+          <p class="sec-sub">Where I have been building things.</p>
+        </header>
+        
+        <div class="timeline">
+          <div class="tl-item reveal">
+            <div class="tl-dot"></div>
+            <article class="glass tl-card">
+              <div class="tl-head">
+                <div>
+                  <h3>IoT Intern</h3>
+                  <p class="muted">Viettel Dak Lak, Viettel Group · On-site</p>
+                </div>
+                <span class="pill glow mono">Jun 2026 – Aug 2026</span>
+              </div>
+              <ul>
+                <li>Learned IoT and sensor fundamentals and programmed the ESP32.</li>
+                <li>Explored IoT platforms and backend development with Node.js and PostgreSQL.</li>
+                <li>Built an IoT solution with ESP32 and sensors.</li>
+              </ul>
+              <div class="tags">
+                <span class="tag">ESP32</span>
+                <span class="tag">Sensors</span>
+                <span class="tag">Node.js</span>
+                <span class="tag">PostgreSQL</span>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section">
+      <div class="container">
+        <header class="sec-head reveal">
+          <h2 class="sec-title">Projects</h2>
+          <p class="sec-sub">Selected work. Filter by area.</p>
+        </header>
+        
+        <div class="filters reveal" id="filters" role="group" aria-label="Filter projects" hidden>
+          <button class="filter active" data-filter="all" type="button" aria-controls="projectGrid" aria-pressed="true">All</button>
+          <button class="filter" data-filter="embedded" type="button" aria-controls="projectGrid" aria-pressed="false">Embedded &amp; IoT</button>
+          <button class="filter" data-filter="fpga" type="button" aria-controls="projectGrid" aria-pressed="false">FPGA</button>
+          <button class="filter" data-filter="web" type="button" aria-controls="projectGrid" aria-pressed="false">Web</button>
+        </div>
+        
+        <div class="projects" id="projectGrid">
+          <article class="pcard glass reveal" data-cat="embedded">
+            <span class="pill mono">Embedded &amp; IoT</span>
+            <h3>Smart Agriculture Environmental Monitoring System</h3>
+            <p class="sub">ESP32-S3 · FreeRTOS · TinyML · Jul – Nov 2026</p>
+            <ul>
+              <li>Concurrent FreeRTOS firmware on ESP32-S3: 7 tasks (sensor sampling, TinyML inference, pump control, database logging, reset button, LED indicators) over I2C, GPIO and network, with semaphore-guarded shared state.</li>
+              <li>Float32 TensorFlow Lite Micro classifier (temperature, humidity, soil moisture to 3-class risk) trained on 21,000 synthetic rows; under 1 ms inference with a hardware safety interlock for extreme readings.</li>
+              <li>WiFi AP fallback with LittleFS-persisted networks, streaming data over HTTP/WebSocket to a Node.js/Express/PostgreSQL fleet platform with live Chart.js and Leaflet dashboards, run in Docker Compose.</li>
+            </ul>
+            <div class="tags">
+              <span class="tag">C/C++</span>
+              <span class="tag">FreeRTOS</span>
+              <span class="tag">TFLite Micro</span>
+              <span class="tag">I2C</span>
+              <span class="tag">UART</span>
+              <span class="tag">Node.js</span>
+              <span class="tag">Docker</span>
+            </div>
+            <a class="plink" href="https://github.com/SangNguyen-232/IoT-Env-Monitor" target="_blank" rel="noopener">Source on GitHub</a>
+          </article>
+          
+          <article class="pcard glass reveal delay-2" data-cat="fpga">
+            <span class="pill mono">FPGA</span>
+            <h3>FPGA Vending Machine Simulator</h3>
+            <p class="sub">Verilog · Vivado · Arty-Z7 · Sep – Dec 2024</p>
+            <ul>
+              <li>Designed and synthesized a complete FSM-based vending machine in Verilog: product selection, transactions and change dispensing.</li>
+              <li>Built hardware interfaces for a 16x2 LCD, 7-segment displays and switches to show machine state in real time.</li>
+            </ul>
+            <div class="tags">
+              <span class="tag">Verilog HDL</span>
+              <span class="tag">Vivado</span>
+              <span class="tag">Arty-Z7</span>
+            </div>
+            <a class="plink" href="https://github.com/SangNguyen-232/FPGA-Vending-System" target="_blank" rel="noopener">Source on GitHub</a>
+          </article>
+          
+          <article class="pcard glass reveal delay-4" data-cat="web">
+            <span class="pill mono">Web</span>
+            <h3>Smart Campus Parking Management System</h3>
+            <p class="sub">Next.js · Express · PostgreSQL · Mar – May 2026</p>
+            <ul>
+              <li>Six REST APIs sync IoT data across 6 parking zones, process online payments and balances, with sub-second responses.</li>
+              <li>Interactive 2D GPS map with React Leaflet and BKPay gateway integration.</li>
+              <li>PostgreSQL Row-Level Security policies protect 5 user roles.</li>
+            </ul>
+            <div class="tags">
+              <span class="tag">Next.js</span>
+              <span class="tag">TypeScript</span>
+              <span class="tag">Express.js</span>
+              <span class="tag">PostgreSQL</span>
+              <span class="tag">Tailwind CSS</span>
+            </div>
+            <a class="plink" href="https://github.com/SangNguyen-232/ParkWise" target="_blank" rel="noopener">Source on GitHub</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="section">
+      <div class="container">
+        <header class="sec-head reveal">
+          <h2 class="sec-title">Skills</h2>
+          <p class="sec-sub">The toolbox I reach for.</p>
+        </header>
+        
+        <div class="skills">
+          <article class="glass skill reveal">
+            <h3>Languages</h3>
+            <div class="tags"><span class="tag">C</span><span class="tag">C++</span><span class="tag">Python</span></div>
+          </article>
+          
+          <article class="glass skill reveal delay-1">
+            <h3>Embedded systems</h3>
+            <div class="tags"><span class="tag">ESP32</span><span class="tag">ESP32-S3</span><span class="tag">FreeRTOS</span><span class="tag">GPIO</span><span class="tag">I2C</span><span class="tag">UART</span></div>
+          </article>
+          
+          <article class="glass skill reveal delay-3">
+            <h3>Edge AI and TinyML</h3>
+            <div class="tags"><span class="tag">TensorFlow Lite Micro</span><span class="tag">On-device inference</span></div>
+          </article>
+          
+          <article class="glass skill reveal">
+            <h3>FPGA and digital design</h3>
+            <div class="tags"><span class="tag">Verilog HDL</span><span class="tag">Xilinx Vivado</span><span class="tag">Cadence Xcelium</span><span class="tag">Arty-Z7</span></div>
+          </article>
+          
+          <article class="glass skill reveal delay-1">
+            <h3>Tools</h3>
+            <div class="tags"><span class="tag">PlatformIO</span><span class="tag">STM32CubeIDE</span><span class="tag">Linux</span><span class="tag">Git / GitHub</span><span class="tag">Docker</span></div>
+          </article>
+          
+          <article class="glass skill reveal delay-3">
+            <h3>IoT backend and web</h3>
+            <div class="tags"><span class="tag">Node.js</span><span class="tag">Express.js</span><span class="tag">Next.js</span><span class="tag">PostgreSQL</span><span class="tag">React</span></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education" class="section">
+      <div class="container">
+        <header class="sec-head reveal">
+          <h2 class="sec-title">Education</h2>
+          <p class="sec-sub">Foundations.</p>
+        </header>
+        
+        <article class="glass edu reveal">
+          <h3>Ho Chi Minh City University of Technology, VNU-HCM</h3>
+          <p class="grad-text edu-degree">Bachelor of Computer Engineering</p>
+          <p class="mono muted">Sep 2022 – 2027 · Ho Chi Minh City, Vietnam</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+      <div class="container">
+        <header class="sec-head center reveal">
+          <h2 class="sec-title">Let's build something</h2>
+          <p class="sec-sub">Hiring for an embedded role or internship? My inbox is open.</p>
+        </header>
+        
+        <div class="glass contact-card reveal">
+          <a class="email mono" href="mailto:sangnguyen230204@gmail.com">sangnguyen230204@gmail.com</a>
+          <div class="hero-cta center">
+            <a class="btn btn-primary" href="mailto:sangnguyen230204@gmail.com">Email me</a>
+            <button class="btn btn-ghost" id="copyBtn" type="button" data-success="✓ Copied:" data-fallback="Address:" hidden>Copy address</button>
+            <a class="btn btn-ghost" href="https://github.com/SangNguyen-232" target="_blank" rel="noopener">GitHub</a>
+            <a class="btn btn-ghost" href="https://www.linkedin.com/in/sangnguyen232/" target="_blank" rel="noopener">LinkedIn</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p class="mono small muted">© <span id="year">2026</span> · Nguyen Van Sang · Thu Duc, Ho Chi Minh</p>
+      <a href="#hero" class="mono small muted">Back to top</a>
+    </div>
+  </footer>
+
+  <!-- Toast Notification Container -->
+  <div id="toast" class="toast mono" role="status" aria-live="polite"></div>
+
+  <!-- External JavaScript -->
+  <script src="script.js" defer></script>
+</body>
+</html>
