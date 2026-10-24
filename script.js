@@ -3,7 +3,8 @@
  * PORTFOLIO CLIENT ENGINE
  * Nguyen Van Sang — Embedded Software Engineer
  * Vanilla JavaScript (ES6+) with full i18n, Canvas Particles,
- * Interactive Custom Cursor, 3D Tilt, Typing Terminal, and AI Stream
+ * Logic Analyzer Oscilloscope, FreeRTOS Live Telemetry,
+ * Web Audio Synthesizer, Interactive Terminal, 3D Tilt & AI Stream
  * =====================================================================
  */
 
@@ -13,6 +14,7 @@
   // State & Preferences
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   let currentLang = localStorage.getItem('sang_portfolio_lang') || 'en';
+  let sfxEnabled = localStorage.getItem('sang_portfolio_sfx') === 'true';
 
   /* =====================================================================
      1. INTERNATIONALIZATION (i18n) DICTIONARY
@@ -20,6 +22,7 @@
   const i18n = {
     en: {
       'nav.about': 'About',
+      'nav.telemetry': 'Telemetry',
       'nav.experience': 'Experience',
       'nav.projects': 'Projects',
       'nav.skills': 'Skills',
@@ -51,6 +54,18 @@
       'do.d2.desc': 'Deploying optimized TensorFlow Lite for Microcontrollers models on constrained MCUs. Sub-1 ms on-device inference with hardware safety interlocks for real-time sensor classification.',
       'do.d3.title': 'FPGA & Digital Design',
       'do.d3.desc': 'Designing and synthesizing finite state machines (FSM) and digital logic with Verilog HDL on Xilinx Vivado, Cadence Xcelium, and Digilent Arty-Z7 FPGA hardware platforms.',
+      'telemetry.title': 'Embedded Telemetry & Hardware Studio',
+      'telemetry.sub': 'Real-time FreeRTOS task telemetry, semaphore IPC & digital logic analyzer',
+      'telemetry.rtosTitle': 'FreeRTOS v10.5.1 Dual-Core Scheduler',
+      'telemetry.scopeTitle': 'Logic Analyzer & Bus Scope',
+      'task.name': 'Task Name',
+      'task.core': 'Core',
+      'task.prio': 'Prio',
+      'task.period': 'Period',
+      'task.state': 'State',
+      'task.stack': 'Stack Free',
+      'task.load': 'CPU Load',
+      'bus.title': 'Hardware Protocols & Embedded Bus Matrix',
       'exp.title': 'Experience',
       'exp.sub': 'Practical industry engineering and internships',
       'exp.role': 'IoT Intern',
@@ -113,6 +128,7 @@
     },
     vi: {
       'nav.about': 'Giới thiệu',
+      'nav.telemetry': 'Telemetry',
       'nav.experience': 'Kinh nghiệm',
       'nav.projects': 'Dự án',
       'nav.skills': 'Kỹ năng',
@@ -144,6 +160,18 @@
       'do.d2.desc': 'Triển khai mô hình TensorFlow Lite for Microcontrollers tối ưu hóa trên vi điều khiển. Suy luận thời gian thực dưới 1 ms kèm cơ chế khóa an toàn phần cứng khi cảm biến quá ngưỡng.',
       'do.d3.title': 'FPGA & Thiết kế số',
       'do.d3.desc': 'Thiết kế và tổng hợp mạch logic số, máy trạng thái FSM bằng ngôn ngữ Verilog HDL trên phần mềm Xilinx Vivado, Cadence Xcelium và bo mạch Digilent Arty-Z7 FPGA.',
+      'telemetry.title': 'Studio Đo lường Từ xa & Phần cứng',
+      'telemetry.sub': 'Đo lường tác vụ FreeRTOS thời gian thực, IPC semaphore & máy phân tích logic',
+      'telemetry.rtosTitle': 'Bộ lập lịch FreeRTOS v10.5.1 Lõi kép',
+      'telemetry.scopeTitle': 'Máy Phân tích Logic & Dao động ký Bus',
+      'task.name': 'Tên tác vụ',
+      'task.core': 'Lõi',
+      'task.prio': 'Ưu tiên',
+      'task.period': 'Chu kỳ',
+      'task.state': 'Trạng thái',
+      'task.stack': 'Bộ nhớ Stack rảnh',
+      'task.load': 'Tải CPU',
+      'bus.title': 'Giao thức Phần cứng & Ma trận Bus Nhúng',
       'exp.title': 'Kinh Nghiệm',
       'exp.sub': 'Kinh nghiệm kỹ thuật thực tế và thực tập doanh nghiệp',
       'exp.role': 'Thực tập sinh IoT',
@@ -227,7 +255,6 @@
       }
     });
 
-    // Update glitch text attribute
     const heroName = document.querySelector('.hero-name');
     if (heroName && dict['hero.name']) {
       heroName.setAttribute('data-text', dict['hero.name']);
@@ -235,7 +262,66 @@
   };
 
   /* =====================================================================
-     2. PRELOADER & INITIALIZATION
+     2. SYNTHESIZED CYBER AUDIO ENGINE (Web Audio API)
+     ===================================================================== */
+  let audioCtx = null;
+  const playCyberSound = (frequency = 800, duration = 0.05, type = 'sine') => {
+    if (!sfxEnabled || prefersReducedMotion) return;
+    try {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+
+      osc.type = type;
+      osc.frequency.setValueAtTime(frequency, audioCtx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(frequency * 0.5, audioCtx.currentTime + duration);
+
+      gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      osc.start();
+      osc.stop(audioCtx.currentTime + duration);
+    } catch (e) {
+      // Audio autoplay policy fallback
+    }
+  };
+
+  const initSoundToggle = () => {
+    const sfxBtn = document.getElementById('sfxToggle');
+    if (!sfxBtn) return;
+
+    const updateSfxIcon = () => {
+      if (sfxEnabled) {
+        sfxBtn.classList.remove('muted');
+        sfxBtn.innerHTML = '<svg class="ic"><use href="#i-volume"/></svg>';
+      } else {
+        sfxBtn.classList.add('muted');
+        sfxBtn.innerHTML = '<svg class="ic"><use href="#i-volume-x"/></svg>';
+      }
+    };
+
+    updateSfxIcon();
+
+    sfxBtn.addEventListener('click', () => {
+      sfxEnabled = !sfxEnabled;
+      localStorage.setItem('sang_portfolio_sfx', String(sfxEnabled));
+      updateSfxIcon();
+      if (sfxEnabled) {
+        playCyberSound(900, 0.08);
+      }
+    });
+  };
+
+  /* =====================================================================
+     3. PRELOADER & INITIALIZATION
      ===================================================================== */
   const initPreloader = () => {
     const loader = document.getElementById('loader');
@@ -266,7 +352,7 @@
   };
 
   /* =====================================================================
-     3. INTERACTIVE CANVAS PARTICLE NETWORK
+     4. INTERACTIVE CANVAS PARTICLE NETWORK
      ===================================================================== */
   const initCanvasNetwork = () => {
     const canvas = document.getElementById('net');
@@ -313,20 +399,17 @@
       for (let i = 0; i < particles.length; i++) {
         const p1 = particles[i];
 
-        // Move
         p1.x += p1.vx;
         p1.y += p1.vy;
 
         if (p1.x < 0 || p1.x > width) p1.vx *= -1;
         if (p1.y < 0 || p1.y > height) p1.vy *= -1;
 
-        // Draw particle
         ctx.beginPath();
         ctx.arc(p1.x, p1.y, p1.r, 0, Math.PI * 2);
         ctx.fillStyle = 'rgba(95, 227, 200, 0.4)';
         ctx.fill();
 
-        // Connect nearby
         for (let j = i + 1; j < particles.length; j++) {
           const p2 = particles[j];
           const dx = p1.x - p2.x;
@@ -343,7 +426,6 @@
           }
         }
 
-        // Connect with mouse
         const mdx = p1.x - mouse.x;
         const mdy = p1.y - mouse.y;
         const mdist = Math.hypot(mdx, mdy);
@@ -364,7 +446,7 @@
   };
 
   /* =====================================================================
-     4. CUSTOM INTERACTIVE CURSOR
+     5. CUSTOM INTERACTIVE CURSOR
      ===================================================================== */
   const initCustomCursor = () => {
     const dot = document.querySelector('.cursor-dot');
@@ -384,7 +466,6 @@
       mouseY = e.clientY;
       dot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
 
-      // Spotlight effect
       const spot = document.getElementById('spot');
       if (spot) {
         spot.style.setProperty('--x', `${mouseX}px`);
@@ -400,8 +481,7 @@
     };
     animateRing();
 
-    // Hover detection for interactive targets
-    const interactables = 'a, button, .tag, .filter, .pcard, .skill, .edu, .do, [data-cursor]';
+    const interactables = 'a, button, .tag, .filter, .pcard, .skill, .edu, .do, .term-chip, [data-cursor]';
     document.addEventListener('mouseover', (e) => {
       if (e.target.closest(interactables)) {
         document.body.classList.add('cursor-hover');
@@ -413,12 +493,15 @@
       }
     });
 
-    document.addEventListener('mousedown', () => document.body.classList.add('cursor-down'));
+    document.addEventListener('mousedown', () => {
+      document.body.classList.add('cursor-down');
+      playCyberSound(1100, 0.04);
+    });
     document.addEventListener('mouseup', () => document.body.classList.remove('cursor-down'));
   };
 
   /* =====================================================================
-     5. HERO TERMINAL TYPING SIMULATION
+     6. HERO TERMINAL & INTERACTIVE COMMAND ENGINE
      ===================================================================== */
   const startTerminalTyping = () => {
     const cmd1 = document.getElementById('cmd1');
@@ -450,13 +533,13 @@
       if (i < command1Str.length) {
         cmd1.textContent += command1Str.charAt(i);
         i++;
-        setTimeout(typeCmd1, 35);
+        setTimeout(typeCmd1, 32);
       } else {
         setTimeout(() => {
           out1.classList.add('on');
           out1t.textContent = output1Str;
-          setTimeout(typeCmd2, 400);
-        }, 150);
+          setTimeout(typeCmd2, 380);
+        }, 120);
       }
     };
 
@@ -465,20 +548,221 @@
       if (j < command2Str.length) {
         cmd2.textContent += command2Str.charAt(j);
         j++;
-        setTimeout(typeCmd2, 40);
+        setTimeout(typeCmd2, 38);
       } else {
         setTimeout(() => {
           out2.classList.add('on');
           out2t.textContent = output2Str;
-        }, 150);
+        }, 120);
       }
     };
 
     setTimeout(typeCmd1, 300);
   };
 
+  const initInteractiveTerminal = () => {
+    const termBody = document.getElementById('termBody');
+    const chips = document.querySelectorAll('#termChips .term-chip');
+    if (!termBody || !chips.length) return;
+
+    const commandOutputs = {
+      help: 'Commands: [tasks] FreeRTOS tasks  [tinyml] Sensor inference  [fpga] Vending FSM  [clear] Reset',
+      tasks: 'FreeRTOS: Task_Sensor(8.4%), Task_TinyML(12.1%), Task_Pump(2.3%), Task_WiFi(4.5%) • All Healthy',
+      tinyml: '[TFLite Micro] Temp=28.7°C Hum=72% Soil=41% -> CLASS: NORMAL (Risk: 11%, Latency: 0.82ms)',
+      fpga: 'Verilog FSM: [IDLE] -> [SELECT] -> [COIN_DETECT] -> [BALANCE_OK] -> [DISPENSE] -> [IDLE]',
+      clear: '__CLEAR__'
+    };
+
+    chips.forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const cmdKey = chip.dataset.cmd;
+        playCyberSound(950, 0.05);
+
+        if (cmdKey === 'clear') {
+          termBody.innerHTML = `
+            <div class="term-line"><span class="prompt">$</span> <span class="cmd">system --ready</span></div>
+            <div class="term-line out on"><span class="arrow">›</span> <span>Terminal cleared. Select a command chip below.</span><span class="caret"></span></div>
+          `;
+          return;
+        }
+
+        const outText = commandOutputs[cmdKey] || 'Command not found. Type "help".';
+        const lineBlock = document.createElement('div');
+        lineBlock.className = 'term-line';
+        lineBlock.innerHTML = `<span class="prompt">$</span> <span class="cmd">${chip.textContent.replace('$', '').trim()}</span>`;
+
+        const outBlock = document.createElement('div');
+        outBlock.className = 'term-line out on';
+        outBlock.innerHTML = `<span class="arrow">›</span> <span>${outText}</span>`;
+
+        termBody.appendChild(lineBlock);
+        termBody.appendChild(outBlock);
+
+        // Auto scroll to bottom of terminal
+        termBody.scrollTop = termBody.scrollHeight;
+      });
+    });
+  };
+
   /* =====================================================================
-     6. AI ASSISTANT CHAT STREAM SIMULATION
+     7. LOGIC ANALYZER & OSCILLOSCOPE WAVEFORM ENGINE
+     ===================================================================== */
+  const initLogicAnalyzer = () => {
+    const canvas = document.getElementById('analyzerCanvas');
+    const toggleBtn = document.getElementById('analyzerToggleBtn');
+    const btnCh1 = document.getElementById('btnCh1');
+    const btnCh2 = document.getElementById('btnCh2');
+    const btnCh3 = document.getElementById('btnCh3');
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let isRunning = true;
+    let ch1Active = true;
+    let ch2Active = true;
+    let ch3Active = true;
+
+    let width = (canvas.width = canvas.parentElement.clientWidth || 360);
+    let height = (canvas.height = 180);
+
+    window.addEventListener('resize', () => {
+      width = canvas.width = canvas.parentElement.clientWidth || 360;
+      height = canvas.height = 180;
+    });
+
+    let phase = 0;
+    const renderWaveforms = () => {
+      if (!isRunning) return;
+
+      ctx.fillStyle = '#040E10';
+      ctx.fillRect(0, 0, width, height);
+
+      // Draw subtle oscilloscope grid
+      ctx.strokeStyle = 'rgba(30, 59, 65, 0.35)';
+      ctx.lineWidth = 1;
+      for (let x = 0; x < width; x += 36) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, height);
+        ctx.stroke();
+      }
+      for (let y = 0; y < height; y += 30) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(width, y);
+        ctx.stroke();
+      }
+
+      phase += 0.08;
+
+      // CH1: I2C SCL (Square wave 400kHz simulated)
+      if (ch1Active) {
+        ctx.strokeStyle = '#5FE3C8';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        const yBase1 = 45;
+        const amp1 = 20;
+        for (let x = 0; x < width; x += 2) {
+          const square = Math.sin((x * 0.1) + phase) > 0 ? 1 : -1;
+          const y = yBase1 + (square * amp1);
+          if (x === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+      }
+
+      // CH2: I2C SDA (Data bursts)
+      if (ch2Active) {
+        ctx.strokeStyle = '#FFB547';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        const yBase2 = 100;
+        const amp2 = 18;
+        for (let x = 0; x < width; x += 2) {
+          const pseudoData = (Math.sin((x * 0.05) + (phase * 0.7)) + Math.cos((x * 0.12) - phase)) > 0.2 ? 1 : -1;
+          const y = yBase2 + (pseudoData * amp2);
+          if (x === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+      }
+
+      // CH3: PWM Motor driver
+      if (ch3Active) {
+        ctx.strokeStyle = '#BFF2E6';
+        ctx.lineWidth = 1.8;
+        ctx.beginPath();
+        const yBase3 = 150;
+        const amp3 = 15;
+        const duty = 0.4;
+        for (let x = 0; x < width; x += 2) {
+          const pwm = ((x * 0.08 + phase * 0.5) % 1) < duty ? 1 : -1;
+          const y = yBase3 + (pwm * amp3);
+          if (x === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+      }
+
+      requestAnimationFrame(renderWaveforms);
+    };
+
+    renderWaveforms();
+
+    // Toggle Run/Pause
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', () => {
+        isRunning = !isRunning;
+        playCyberSound(750, 0.05);
+        const textSpan = document.getElementById('scopeStateText');
+        if (textSpan) {
+          textSpan.textContent = isRunning ? 'Pause Scope' : 'Resume Scope';
+        }
+        if (isRunning) renderWaveforms();
+      });
+    }
+
+    // Channel toggles
+    const setupChBtn = (btn, getActive, setActive) => {
+      if (!btn) return;
+      btn.addEventListener('click', () => {
+        const next = !getActive();
+        setActive(next);
+        btn.style.opacity = next ? '1' : '0.4';
+        playCyberSound(900, 0.04);
+      });
+    };
+
+    setupChBtn(btnCh1, () => ch1Active, (v) => { ch1Active = v; });
+    setupChBtn(btnCh2, () => ch2Active, (v) => { ch2Active = v; });
+    setupChBtn(btnCh3, () => ch3Active, (v) => { ch3Active = v; });
+  };
+
+  /* =====================================================================
+     8. FREERTOS LIVE TASK TELEMETRY SIMULATION
+     ===================================================================== */
+  const initFreeRTOSTelemetry = () => {
+    const taskRows = document.querySelectorAll('#taskTable tbody tr');
+    if (!taskRows.length || prefersReducedMotion) return;
+
+    setInterval(() => {
+      // Pick random task to update CPU load slightly
+      const randomIdx = Math.floor(Math.random() * taskRows.length);
+      const row = taskRows[randomIdx];
+      const loadBar = row.querySelector('.load-bar span');
+      const loadCell = row.cells[6];
+      if (loadBar && loadCell) {
+        const currentVal = parseFloat(loadCell.textContent) || 8.0;
+        const delta = (Math.random() - 0.5) * 1.8;
+        const newVal = Math.max(0.4, Math.min(18.5, currentVal + delta)).toFixed(1);
+        loadCell.innerHTML = `<div class="load-bar"><span style="width: ${Math.min(100, newVal * 4)}%;"></span></div> ${newVal}%`;
+      }
+    }, 2400);
+  };
+
+  /* =====================================================================
+     9. AI ASSISTANT CHAT STREAM SIMULATION
      ===================================================================== */
   let streamRunning = false;
   const startChatStream = () => {
@@ -519,16 +803,15 @@
           streamRunning = false;
         }
       }, 16);
-    }, 700);
+    }, 650);
   };
 
   /* =====================================================================
-     7. 3D CARD TILT & SPOTLIGHT BORDER
+     10. 3D CARD TILT & SPOTLIGHT BORDER
      ===================================================================== */
   const initTiltAndSpotlight = () => {
     if (prefersReducedMotion) return;
 
-    // Spotlight gradient tracking mouse on .spot cards
     document.querySelectorAll('.spot').forEach((card) => {
       card.addEventListener('mousemove', (e) => {
         const rect = card.getBoundingClientRect();
@@ -539,7 +822,6 @@
       });
     });
 
-    // 3D Card tilt on .tilt elements
     document.querySelectorAll('.tilt').forEach((el) => {
       el.addEventListener('mousemove', (e) => {
         el.classList.add('tilting');
@@ -559,7 +841,6 @@
       });
     });
 
-    // Holographic card 3D tilt tracking hero movement
     const hero = document.getElementById('hero');
     const holo = document.getElementById('holo');
     if (hero && holo) {
@@ -578,7 +859,7 @@
   };
 
   /* =====================================================================
-     8. STAT COUNTERS ANIMATION
+     11. STAT COUNTERS ANIMATION
      ===================================================================== */
   const initStatCounters = () => {
     const stats = document.querySelectorAll('.stat b.count');
@@ -624,7 +905,7 @@
   };
 
   /* =====================================================================
-     9. PROJECT FILTERING
+     12. PROJECT FILTERING
      ===================================================================== */
   const initProjectFilters = () => {
     const filters = document.querySelectorAll('#projectFilters .filter');
@@ -633,6 +914,7 @@
 
     filters.forEach((btn) => {
       btn.addEventListener('click', () => {
+        playCyberSound(900, 0.04);
         filters.forEach((b) => b.classList.remove('active'));
         btn.classList.add('active');
 
@@ -649,14 +931,13 @@
   };
 
   /* =====================================================================
-     10. SCROLL REVEALS & ACTIVE NAVIGATION SPY
+     13. SCROLL REVEALS & ACTIVE NAVIGATION SPY
      ===================================================================== */
   const initScrollHandling = () => {
     const nav = document.getElementById('nav');
     const progressBar = document.getElementById('progress');
     const chatSection = document.getElementById('chat');
 
-    // Reveal on scroll
     const reveals = document.querySelectorAll('.reveal');
     const revealObserver = new IntersectionObserver(
       (entries, obs) => {
@@ -671,7 +952,6 @@
     );
     reveals.forEach((r) => revealObserver.observe(r));
 
-    // Chat section stream trigger
     if (chatSection) {
       const chatObserver = new IntersectionObserver(
         (entries, obs) => {
@@ -685,7 +965,6 @@
       chatObserver.observe(chatSection);
     }
 
-    // Scroll progress & sticky nav styling
     window.addEventListener('scroll', () => {
       const scrollTop = window.scrollY;
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
@@ -703,13 +982,12 @@
         }
       }
 
-      // Active nav link highlight
       const sections = document.querySelectorAll('section[id]');
       const navLinks = document.querySelectorAll('.nav-links a');
       let currentSectionId = '';
 
       sections.forEach((sec) => {
-        const top = sec.offsetTop - 120;
+        const top = sec.offsetTop - 130;
         if (scrollTop >= top) {
           currentSectionId = sec.getAttribute('id');
         }
@@ -726,7 +1004,7 @@
   };
 
   /* =====================================================================
-     11. CLIPBOARD COPY & TOAST NOTIFICATION
+     14. CLIPBOARD COPY & TOAST NOTIFICATION
      ===================================================================== */
   const initClipboard = () => {
     const copyBtn = document.getElementById('copyEmailBtn');
@@ -735,6 +1013,7 @@
 
     copyBtn.addEventListener('click', async () => {
       const email = 'sangnguyen230204@gmail.com';
+      playCyberSound(1200, 0.08);
       try {
         await navigator.clipboard.writeText(email);
         if (toast) {
@@ -744,14 +1023,13 @@
           }, 3200);
         }
       } catch (err) {
-        // Fallback prompt
         window.prompt('Copy email address:', email);
       }
     });
   };
 
   /* =====================================================================
-     12. MOBILE MENU & INTERACTIVE EVENTS
+     15. MOBILE MENU & INTERACTIVE EVENTS
      ===================================================================== */
   const initMobileMenu = () => {
     const burger = document.getElementById('burger');
@@ -759,6 +1037,7 @@
     if (!burger || !mobileMenu) return;
 
     const toggleMenu = () => {
+      playCyberSound(800, 0.05);
       const isOpen = document.body.classList.toggle('menu-open');
       burger.setAttribute('aria-expanded', String(isOpen));
       mobileMenu.setAttribute('aria-hidden', String(!isOpen));
@@ -766,7 +1045,6 @@
 
     burger.addEventListener('click', toggleMenu);
 
-    // Close mobile menu on clicking any navigation link
     mobileMenu.querySelectorAll('a').forEach((link) => {
       link.addEventListener('click', () => {
         document.body.classList.remove('menu-open');
@@ -777,16 +1055,16 @@
   };
 
   /* =====================================================================
-     13. INITIALIZE ENGINE ON DOM READY
+     16. INITIALIZE CLIENT ENGINE ON DOM READY
      ===================================================================== */
   document.addEventListener('DOMContentLoaded', () => {
     // 1. Language Toggle
     const langToggle = document.getElementById('langToggle');
     if (langToggle) {
       langToggle.addEventListener('click', () => {
+        playCyberSound(1000, 0.05);
         const nextLang = currentLang === 'en' ? 'vi' : 'en';
         applyTranslations(nextLang);
-        // If chat stream is currently visible, update it
         startChatStream();
       });
     }
@@ -796,15 +1074,20 @@
     const regenBtn = document.getElementById('regenBtn');
     if (regenBtn) {
       regenBtn.addEventListener('click', () => {
+        playCyberSound(900, 0.05);
         streamRunning = false;
         startChatStream();
       });
     }
 
     // 3. Components & Systems
+    initSoundToggle();
     initPreloader();
     initCanvasNetwork();
     initCustomCursor();
+    initInteractiveTerminal();
+    initLogicAnalyzer();
+    initFreeRTOSTelemetry();
     initTiltAndSpotlight();
     initStatCounters();
     initProjectFilters();

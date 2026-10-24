@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Nguyen Van Sang — Embedded Software Engineer</title>
-  <meta name="description" content="Portfolio of Nguyen Van Sang — Embedded Software Engineer (Fresher) specializing in ESP32-S3, FreeRTOS, TinyML on-device inference, FPGA Verilog, and IoT cloud pipelines.">
+  <meta name="description" content="Portfolio of Nguyen Van Sang — Embedded Software Engineer (Fresher) specializing in ESP32-S3, FreeRTOS concurrent multitasking, TinyML on-device inference, FPGA Verilog, and IoT cloud pipelines.">
   <meta name="author" content="Nguyen Van Sang">
   <meta name="theme-color" content="#061418">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Nguyen Van Sang — Embedded Software Engineer">
-  <meta property="og:description" content="ESP32-S3 · FreeRTOS · TinyML On-Device · FPGA Verilog · IoT Cloud">
+  <meta property="og:description" content="ESP32-S3 · FreeRTOS Multitasking · TinyML On-Device · FPGA Verilog · IoT Cloud">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%235FE3C8'/%3E%3Cstop offset='1' stop-color='%23FFB547'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='%23061418'/%3E%3Crect x='14' y='14' width='36' height='36' rx='6' fill='none' stroke='url(%23g)' stroke-width='3'/%3E%3Ccircle cx='32' cy='32' r='7' fill='url(%23g)'/%3E%3Cpath d='M32 6v8M32 50v8M6 32h8M50 32h8M19 6v8M45 6v8M19 50v8M45 50v8' stroke='url(%23g)' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E">
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -53,6 +53,8 @@
   <symbol id="i-send" viewBox="0 0 24 24"><path d="M22 2L11 13"/><path d="M22 2L15 22l-4-9-9-4 20-7z"/></symbol>
   <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-2.6-6.4"/><path d="M21 3v6h-6"/></symbol>
   <symbol id="i-sparkle" viewBox="0 0 24 24"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3z"/><path d="M19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8L19 16z"/></symbol>
+  <symbol id="i-volume" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></symbol>
+  <symbol id="i-volume-x" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></symbol>
 </svg>
 
 <!-- Preloader -->
@@ -85,6 +87,7 @@
     </a>
     <nav class="nav-links" aria-label="Primary">
       <a href="#about" data-i18n="nav.about" data-cursor>About</a>
+      <a href="#telemetry" data-i18n="nav.telemetry" data-cursor>Telemetry</a>
       <a href="#experience" data-i18n="nav.experience" data-cursor>Experience</a>
       <a href="#projects" data-i18n="nav.projects" data-cursor>Projects</a>
       <a href="#skills" data-i18n="nav.skills" data-cursor>Skills</a>
@@ -92,6 +95,11 @@
       <a href="#contact" data-i18n="nav.contact" data-cursor>Contact</a>
     </nav>
     <div class="nav-right">
+      <!-- Audio FX Button -->
+      <button class="sfx-btn muted" id="sfxToggle" type="button" aria-label="Toggle cyber audio effects" title="Toggle Sound FX" data-cursor>
+        <svg class="ic ic-vol"><use href="#i-volume"/></svg>
+      </button>
+      <!-- Language Switcher -->
       <button class="lang" id="langToggle" type="button" aria-label="Switch language" data-cursor>
         <span class="lang-pill"></span>
         <span class="lang-opt" data-lang="en">EN</span>
@@ -113,6 +121,7 @@
 <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
   <nav aria-label="Mobile">
     <a href="#about" data-i18n="nav.about">About</a>
+    <a href="#telemetry" data-i18n="nav.telemetry">Telemetry</a>
     <a href="#experience" data-i18n="nav.experience">Experience</a>
     <a href="#projects" data-i18n="nav.projects">Projects</a>
     <a href="#skills" data-i18n="nav.skills">Skills</a>
@@ -149,11 +158,19 @@
             <i></i><i></i><i></i>
             <span class="term-title mono">sang@esp32s3: ~</span>
           </div>
-          <div class="term-body mono">
+          <div class="term-body mono" id="termBody">
             <div class="term-line"><span class="prompt">$</span> <span class="cmd" id="cmd1"></span></div>
             <div class="term-line out" id="out1"><span class="arrow">›</span> <span id="out1t"></span></div>
             <div class="term-line" id="line2"><span class="prompt">$</span> <span class="cmd" id="cmd2"></span></div>
             <div class="term-line out" id="out2"><span class="arrow">›</span> <span id="out2t"></span><span class="caret" id="caret"></span></div>
+          </div>
+          <!-- Quick Command Interactive Chips -->
+          <div class="term-chips" id="termChips">
+            <button class="term-chip" type="button" data-cmd="help" data-cursor>$ help</button>
+            <button class="term-chip" type="button" data-cmd="tasks" data-cursor>$ freertos -t</button>
+            <button class="term-chip" type="button" data-cmd="tinyml" data-cursor>$ tinyml --infer</button>
+            <button class="term-chip" type="button" data-cmd="fpga" data-cursor>$ fpga --fsm</button>
+            <button class="term-chip" type="button" data-cmd="clear" data-cursor>$ clear</button>
           </div>
         </div>
 
@@ -339,11 +356,157 @@
     </div>
   </section>
 
+  <!-- ===================== HARDWARE TELEMETRY & FREERTOS STUDIO ===================== -->
+  <section id="telemetry" class="section">
+    <div class="container">
+      <div class="sec-head reveal">
+        <span class="sec-num mono">02 //</span>
+        <div>
+          <h2 class="sec-title" data-i18n="telemetry.title">Embedded Telemetry &amp; Hardware Studio</h2>
+          <p class="sec-sub" data-i18n="telemetry.sub">Real-time FreeRTOS task telemetry, semaphore IPC &amp; digital logic analyzer</p>
+        </div>
+      </div>
+
+      <div class="telemetry-studio">
+        <!-- FreeRTOS Live Task Table Monitor -->
+        <div class="telemetry-card glass spot tilt reveal">
+          <div class="telemetry-head">
+            <div class="telemetry-title">
+              <svg class="ic"><use href="#i-layers"/></svg>
+              <span data-i18n="telemetry.rtosTitle">FreeRTOS v10.5.1 Dual-Core Scheduler</span>
+            </div>
+            <span class="pill glow mono"><span class="status-dot"></span>ACTIVE 240MHz</span>
+          </div>
+
+          <div class="task-table-wrapper">
+            <table class="task-table" id="taskTable">
+              <thead>
+                <tr>
+                  <th data-i18n="task.name">Task Name</th>
+                  <th data-i18n="task.core">Core</th>
+                  <th data-i18n="task.prio">Prio</th>
+                  <th data-i18n="task.period">Period</th>
+                  <th data-i18n="task.state">State</th>
+                  <th data-i18n="task.stack">Stack Free</th>
+                  <th data-i18n="task.load">CPU Load</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>Task_SensorSampling</code></td>
+                  <td>0</td>
+                  <td>3</td>
+                  <td>50ms</td>
+                  <td><span class="state-badge running">RUNNING</span></td>
+                  <td>1.8 KB</td>
+                  <td><div class="load-bar"><span style="width: 28%;"></span></div> 8.4%</td>
+                </tr>
+                <tr>
+                  <td><code>Task_TinyMLInference</code></td>
+                  <td>1</td>
+                  <td>4</td>
+                  <td>100ms</td>
+                  <td><span class="state-badge ready">READY</span></td>
+                  <td>3.2 KB</td>
+                  <td><div class="load-bar"><span style="width: 42%;"></span></div> 12.1%</td>
+                </tr>
+                <tr>
+                  <td><code>Task_PumpSafety</code></td>
+                  <td>0</td>
+                  <td>5</td>
+                  <td>Event</td>
+                  <td><span class="state-badge blocked">BLOCKED</span></td>
+                  <td>1.4 KB</td>
+                  <td><div class="load-bar"><span style="width: 10%;"></span></div> 2.3%</td>
+                </tr>
+                <tr>
+                  <td><code>Task_WiFiWebSocket</code></td>
+                  <td>1</td>
+                  <td>2</td>
+                  <td>Stream</td>
+                  <td><span class="state-badge blocked">BLOCKED</span></td>
+                  <td>4.1 KB</td>
+                  <td><div class="load-bar"><span style="width: 15%;"></span></div> 4.5%</td>
+                </tr>
+                <tr>
+                  <td><code>Task_DbLogger</code></td>
+                  <td>0</td>
+                  <td>1</td>
+                  <td>Async</td>
+                  <td><span class="state-badge ready">READY</span></td>
+                  <td>2.0 KB</td>
+                  <td><div class="load-bar"><span style="width: 8%;"></span></div> 1.8%</td>
+                </tr>
+                <tr>
+                  <td><code>Task_ButtonISR</code></td>
+                  <td>0</td>
+                  <td>6</td>
+                  <td>ISR</td>
+                  <td><span class="state-badge blocked">BLOCKED</span></td>
+                  <td>1.1 KB</td>
+                  <td><div class="load-bar"><span style="width: 4%;"></span></div> 0.4%</td>
+                </tr>
+                <tr>
+                  <td><code>Task_StatusLED</code></td>
+                  <td>0</td>
+                  <td>1</td>
+                  <td>500ms</td>
+                  <td><span class="state-badge ready">READY</span></td>
+                  <td>0.9 KB</td>
+                  <td><div class="load-bar"><span style="width: 6%;"></span></div> 1.0%</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-top:auto;">
+            <span class="pill mono small" style="color:var(--mint);border-color:rgba(95,227,200,0.3);">
+              <svg class="ic" style="width:12px;height:12px;"><use href="#i-check"/></svg>
+              <span>Context Guard: xSemaphoreCreateMutex() • Zero Race Conditions</span>
+            </span>
+            <span class="mono small muted">Total Heap Free: <b>284 KB</b></span>
+          </div>
+        </div>
+
+        <!-- Logic Analyzer & Signal Oscilloscope -->
+        <div class="analyzer-card glass spot tilt reveal" style="--d:.15s">
+          <div class="telemetry-head">
+            <div class="telemetry-title">
+              <svg class="ic"><use href="#i-cpu"/></svg>
+              <span data-i18n="telemetry.scopeTitle">Logic Analyzer &amp; Bus Scope</span>
+            </div>
+            <span class="live-indicator"><span class="status-dot"></span>LIVE 400kHz</span>
+          </div>
+
+          <div class="analyzer-screen">
+            <canvas id="analyzerCanvas"></canvas>
+            <div class="analyzer-hud">
+              <span>CH1: I2C_SCL (400kHz)</span>
+              <span>50µs/div</span>
+              <span>CH2: I2C_SDA</span>
+            </div>
+          </div>
+
+          <div class="analyzer-controls">
+            <div style="display:flex;gap:6px;">
+              <button class="pill glow mono small" id="btnCh1" type="button" data-cursor>CH1: SCL</button>
+              <button class="pill violet mono small" id="btnCh2" type="button" data-cursor>CH2: SDA</button>
+              <button class="pill mono small" id="btnCh3" type="button" data-cursor>CH3: PWM</button>
+            </div>
+            <button class="btn btn-ghost btn-sm" id="analyzerToggleBtn" type="button" data-cursor>
+              <span id="scopeStateText">Pause Scope</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ===================== EXPERIENCE SECTION ===================== -->
   <section id="experience" class="section">
     <div class="container">
       <div class="sec-head reveal">
-        <span class="sec-num mono">02 //</span>
+        <span class="sec-num mono">03 //</span>
         <div>
           <h2 class="sec-title" data-i18n="exp.title">Experience</h2>
           <p class="sec-sub" data-i18n="exp.sub">Practical industry engineering and internships</p>
@@ -392,7 +555,7 @@
   <section id="projects" class="section">
     <div class="container">
       <div class="sec-head reveal">
-        <span class="sec-num mono">03 //</span>
+        <span class="sec-num mono">04 //</span>
         <div>
           <h2 class="sec-title" data-i18n="proj.title">Featured Projects</h2>
           <p class="sec-sub" data-i18n="proj.sub">Verified hardware and software implementations</p>
@@ -511,11 +674,11 @@
     </div>
   </section>
 
-  <!-- ===================== SKILLS SECTION ===================== -->
+  <!-- ===================== SKILLS & HARDWARE BUS MATRIX ===================== -->
   <section id="skills" class="section">
     <div class="container">
       <div class="sec-head reveal">
-        <span class="sec-num mono">04 //</span>
+        <span class="sec-num mono">05 //</span>
         <div>
           <h2 class="sec-title" data-i18n="skills.title">Technical Skills</h2>
           <p class="sec-sub" data-i18n="skills.sub">Technologies verified from hardware implementations and CV</p>
@@ -611,6 +774,32 @@
         </div>
       </div>
 
+      <!-- Protocols & Hardware Bus Matrix Card -->
+      <div class="bus-matrix glass spot tilt reveal">
+        <div class="bus-head">
+          <svg class="ic"><use href="#i-chip"/></svg>
+          <span data-i18n="bus.title">Hardware Protocols &amp; Embedded Bus Matrix</span>
+        </div>
+        <div class="bus-grid">
+          <div class="bus-item">
+            <b>I2C Protocol</b>
+            <span>100/400 kHz Fast Mode, Multi-sensor Bus (AHT20, BMP280)</span>
+          </div>
+          <div class="bus-item">
+            <b>UART Interface</b>
+            <span>115200 Baud, Hardware FIFO, AT Commands &amp; Telemetry</span>
+          </div>
+          <div class="bus-item">
+            <b>FreeRTOS IPC</b>
+            <span>Counting Semaphores, Mutexes, Event Groups, Task Queues</span>
+          </div>
+          <div class="bus-item">
+            <b>Memory &amp; Storage</b>
+            <span>8MB QIO Flash, LittleFS Partitioning, Wear-Leveling</span>
+          </div>
+        </div>
+      </div>
+
       <!-- Infinite Marquee Running Tracks -->
       <div class="marquee reveal" aria-hidden="true">
         <div class="track">
@@ -670,7 +859,7 @@
   <section id="education" class="section">
     <div class="container">
       <div class="sec-head reveal">
-        <span class="sec-num mono">05 //</span>
+        <span class="sec-num mono">06 //</span>
         <div>
           <h2 class="sec-title" data-i18n="edu.title">Education &amp; Credentials</h2>
           <p class="sec-sub" data-i18n="edu.sub">Formal academic training and international certifications</p>
