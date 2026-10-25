@@ -121,7 +121,7 @@
   color: var(--mint);
 }
 
-.pill.violet {
+.pill.amber {
   background: rgba(var(--amber-rgb), 0.08);
   border-color: rgba(var(--amber-rgb), 0.3);
   color: var(--amber);

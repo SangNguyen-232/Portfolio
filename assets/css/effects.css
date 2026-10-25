@@ -136,6 +136,12 @@
 }
 
 /* Custom Cyber Cursor */
+body.cursor-on,
+body.cursor-on a,
+body.cursor-on button {
+  cursor: none;
+}
+
 .cursor-dot,
 .cursor-ring {
   position: fixed;
@@ -208,6 +214,7 @@ body.cursor-down .cursor-ring {
   opacity: 0;
   transform: translateY(24px);
   transition: opacity 0.6s var(--ease), transform 0.6s var(--ease), filter 0.6s var(--ease);
+  transition-delay: var(--d, 0s);
 }
 
 .reveal.from-l {
@@ -237,17 +244,6 @@ body.cursor-down .cursor-ring {
 .reveal.in .tag {
   opacity: 1;
   transform: none;
-}
-
-.pcard.pop {
-  animation: cardIn 0.5s var(--ease) var(--pd, 0s) backwards;
-}
-
-@keyframes cardIn {
-  from {
-    opacity: 0;
-    transform: translateY(18px) scale(0.96);
-  }
 }
 
 /* Shimmer Animation for Gradient Text */

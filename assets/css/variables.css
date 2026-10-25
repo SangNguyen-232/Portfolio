@@ -21,8 +21,8 @@
   --text: #E8F3F0;
   --text2: #C3D6D1;
   --text3: #93AEA8;
-  --muted: #C3D6D1;
-  --dim: #93AEA8;
+  --muted: #A9C0BA;
+  --dim: #9FBAB3;
 
   /* Accent Hardware & Logic Palette */
   --mint: #5FE3C8;       /* Primary Logic High / Cyan */
@@ -35,10 +35,6 @@
   /* Semantic Aliases */
   --cyan: var(--mint);
   --cyan-rgb: var(--mint-rgb);
-  --violet: var(--amber);
-  --violet-rgb: var(--amber-rgb);
-  --pink: var(--pale);
-  --pink-rgb: var(--pale-rgb);
   --green: var(--mint);
 
   /* Gradients */

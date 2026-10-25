@@ -1,0 +1,213 @@
+/* =====================================================================
+   UPGRADE LAYER — CONTINUOUS RUNNING LED BORDER FRAMES
+   Preserves original layout frame border styles while adding an elegant,
+   fluid, continuous LED light running seamlessly along the perimeter.
+   GPU-accelerated, responsive, synchronized, and glare-free.
+   ===================================================================== */
+
+/* Register custom angle property for smooth hardware-accelerated conic rotation */
+@property --led-a {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes ledSpin {
+  to {
+    --led-a: 360deg;
+  }
+}
+
+@keyframes traceRun {
+  from { background-position: 0% 0; }
+  to   { background-position: 100% 0; }
+}
+
+/* ---------------------------------------------------------------------
+   1. LED RUNNING LIGHT BORDER — APPLIED TO ALL MAIN LAYOUT FRAMES
+   Preserves exact original border format while overlaying a fluid,
+   synchronized dual-pulse LED beam along the exact perimeter track.
+   --------------------------------------------------------------------- */
+:is(.glass, .nav-inner, .term, .stat, .pcard-visual) {
+  position: relative;
+  --led-c1: var(--mint-rgb);     /* Primary logic high / cyan (95, 227, 200) */
+  --led-c2: var(--amber-rgb);    /* Secondary spark / amber (255, 181, 71) */
+  --led-t: 5.8s;                 /* Coordinated synchronous cycle duration */
+}
+
+/* Synchronized running LED light strip */
+:is(.glass, .nav-inner, .term, .stat, .pcard-visual)::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  box-sizing: border-box;
+  padding: 1.5px;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 2;
+  will-change: transform;
+  transform: translateZ(0);
+
+  /* Dual-pulse continuous flowing LED beam with luminous white core & amber tips */
+  background: conic-gradient(
+    from var(--led-a),
+    /* First Comet Pulse */
+    transparent 0deg,
+    transparent 55deg,
+    rgba(var(--led-c1), 0.06) 75deg,
+    rgba(var(--led-c1), 0.28) 110deg,
+    rgba(var(--led-c1), 0.72) 142deg,
+    rgba(var(--led-c1), 0.96) 164deg,
+    #ffffff 173deg,
+    rgba(var(--led-c2), 0.98) 178deg,
+    transparent 180deg,
+    /* Second Synchronized Comet Pulse (180deg opposite) */
+    transparent 235deg,
+    rgba(var(--led-c1), 0.06) 255deg,
+    rgba(var(--led-c1), 0.28) 290deg,
+    rgba(var(--led-c1), 0.72) 322deg,
+    rgba(var(--led-c1), 0.96) 344deg,
+    #ffffff 353deg,
+    rgba(var(--led-c2), 0.98) 358deg,
+    transparent 360deg
+  );
+
+  /* Precise border-ring mask: preserves inner card content, reveals only 1.5px track */
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+
+  /* Ambient glow: focused sharp LED core + gentle atmospheric halo */
+  filter: drop-shadow(0 0 3px rgba(var(--led-c1), 0.75))
+          drop-shadow(0 0 7px rgba(var(--led-c1), 0.3));
+  opacity: 0.85;
+
+  /* Native animation running immediately and synchronously */
+  animation: ledSpin var(--led-t) linear infinite;
+  transition: opacity 0.35s var(--ease), filter 0.35s var(--ease);
+}
+
+/* Hover: subtle intensification of brightness and glow without blinding */
+:is(.glass, .pcard-visual, .term, .stat):hover::before {
+  opacity: 1;
+  filter: drop-shadow(0 0 4.5px rgba(var(--led-c1), 0.95))
+          drop-shadow(0 0 11px rgba(var(--led-c1), 0.5));
+}
+
+/* Color variant: Featured project & alternating cards use amber-led logic */
+.pcard.featured,
+.edu:nth-of-type(even),
+.contact-card {
+  --led-c1: var(--amber-rgb);
+  --led-c2: var(--mint-rgb);
+}
+
+/* Navbar: slightly calmer tempo to maintain reading focus */
+.nav-inner {
+  --led-t: 8s;
+}
+.nav-inner::before {
+  padding: 1.25px;
+  opacity: 0.8;
+}
+
+/* Hero stats: compact, crisp border */
+.stat::before {
+  padding: 1.25px;
+  opacity: 0.78;
+}
+
+/* User toggled LED off via shortcut [B] */
+html.no-led :is(.glass, .nav-inner, .term, .stat, .pcard-visual)::before,
+html.no-led .section + .section::after,
+html.no-led .sec-head .sec-title::after {
+  display: none !important;
+}
+
+/* ---------------------------------------------------------------------
+   2. PCB ACCENT TRACES BETWEEN SECTIONS
+   --------------------------------------------------------------------- */
+.section + .section::after {
+  content: '';
+  position: absolute;
+  top: 2.5px;
+  left: 50%;
+  width: min(1180px, 100% - 48px);
+  height: 2px;
+  transform: translateX(-50%);
+  pointer-events: none;
+  border-radius: 2px;
+  background:
+    linear-gradient(90deg,
+      transparent,
+      rgba(var(--mint-rgb), 0.95) 35%,
+      #fff 60%,
+      rgba(var(--amber-rgb), 0.95) 85%,
+      transparent) 0 0 / 18% 100% no-repeat;
+  filter: drop-shadow(0 0 6px rgba(var(--mint-rgb), 0.85));
+  animation: traceRun 6s linear infinite;
+}
+
+.sec-head .sec-title::after {
+  content: '';
+  display: block;
+  width: 72px;
+  height: 3px;
+  margin-top: 10px;
+  border-radius: 3px;
+  background:
+    linear-gradient(90deg, transparent, #fff, var(--amber), transparent) 0 0 / 40% 100% no-repeat,
+    rgba(var(--mint-rgb), 0.35);
+  animation: traceRun 2.8s ease-in-out infinite alternate;
+}
+
+/* Pause off-screen or background tab animations for optimal performance */
+.led-off::before,
+.section.led-off::after,
+.sec-head .sec-title.led-off::after,
+html.led-paused :is(.glass, .nav-inner, .term, .stat, .pcard-visual)::before,
+html.led-paused .section + .section::after,
+html.led-paused .sec-head .sec-title::after {
+  animation-play-state: paused;
+}
+
+/* ---------------------------------------------------------------------
+   3. UI / UX REFINEMENTS (Preserving original borders & cards)
+   --------------------------------------------------------------------- */
+
+/* Hover elevation: subtle lift without modifying base borders */
+.glass:hover {
+  box-shadow: 0 22px 50px -18px rgba(0, 0, 0, 0.65), 0 0 30px -12px rgba(var(--mint-rgb), 0.35);
+}
+
+/* Touch targets */
+@media (pointer: coarse) {
+  .ic-pin, .term-chip, .switch-btn, .regen { min-height: 44px; }
+  .switch-btn { padding-inline: 14px; }
+}
+
+/* Hero typography rhythm */
+.hero-name { letter-spacing: -0.035em; text-wrap: balance; }
+.sec-sub, .hero-tagline, .do p { text-wrap: pretty; }
+
+/* Responsive mobile adjustments */
+@media (max-width: 700px) {
+  .glass { backdrop-filter: none; -webkit-backdrop-filter: none; }
+  :is(.glass, .nav-inner, .term, .stat, .pcard-visual)::before {
+    --led-t: 7s;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   4. ACCESSIBILITY: REDUCED MOTION PREFERENCE
+   --------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  :is(.glass, .nav-inner, .term, .stat, .pcard-visual)::before {
+    animation: none;
+    --led-a: 135deg;
+    opacity: 0.55;
+  }
+  .section + .section::after,
+  .sec-head .sec-title::after { animation: none; }
+}

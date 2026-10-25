@@ -518,39 +518,13 @@ a.cv-contact-item:hover .ic {
   transform: translateY(-1px);
 }
 
-/* Hero CTA & Socials */
+/* Hero CTA */
 .hero-cta {
   display: flex;
   align-items: center;
   gap: 16px;
   flex-wrap: wrap;
   margin-top: 4px;
-}
-
-.hero-socials {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-left: auto;
-}
-
-.hero-socials a {
-  width: 42px;
-  height: 42px;
-  border-radius: var(--r-sm);
-  border: 1px solid var(--border);
-  background: var(--panel);
-  display: grid;
-  place-items: center;
-  color: var(--text2);
-  transition: all 0.25s var(--ease);
-}
-
-.hero-socials a:hover {
-  border-color: var(--mint);
-  color: var(--mint);
-  background: rgba(var(--mint-rgb), 0.1);
-  transform: translateY(-2px);
 }
 
 /* Stats Counter Grid */
@@ -1072,11 +1046,6 @@ a.cv-contact-item:hover .ic {
   background: rgba(6, 20, 24, 0.6);
 }
 
-.chat-meta {
-  font-size: 11.5px;
-  color: var(--dim);
-}
-
 .regen {
   display: inline-flex;
   align-items: center;
@@ -1300,7 +1269,7 @@ a.cv-contact-item:hover .ic {
 }
 
 /* =====================================================================
-   7. TECHNICAL SKILLS & BUS MATRIX
+   7. TECHNICAL SKILLS
    ===================================================================== */
 .skills {
   display: grid;
@@ -1489,34 +1458,8 @@ a.cv-contact-item:hover .ic {
 }
 
 /* =====================================================================
-   9. PROJECTS SECTION & FILTERING
+   9. PROJECTS SECTION
    ===================================================================== */
-.filters {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 28px;
-  flex-wrap: wrap;
-}
-
-.filter {
-  padding: 8px 18px;
-  border-radius: 999px;
-  font-size: 13.5px;
-  font-family: var(--mono);
-  background: rgba(15, 42, 48, 0.6);
-  border: 1px solid var(--border);
-  color: var(--text2);
-  min-height: 36px;
-  transition: all 0.25s var(--ease);
-}
-
-.filter:hover,
-.filter.active {
-  background: rgba(var(--mint-rgb), 0.15);
-  border-color: var(--mint);
-  color: var(--mint);
-}
-
 .projects {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -1530,14 +1473,18 @@ a.cv-contact-item:hover .ic {
   transition: all 0.35s var(--ease);
 }
 
-.pcard.out {
-  display: none !important;
-}
-
 .pcard.featured {
   grid-column: 1 / -1;
   border-color: rgba(var(--amber-rgb), 0.35);
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  column-gap: 36px;
+  align-content: start;
 }
+
+.pcard.featured > * { grid-column: 1; }
+.pcard.featured > .pcard-visual { grid-column: 2; grid-row: 1 / span 4; align-self: stretch; }
+.pcard.featured > .stack { grid-column: 1 / -1; }
 
 .pcard-top {
   display: flex;
@@ -1569,12 +1516,6 @@ a.cv-contact-item:hover .ic {
   margin-bottom: 6px;
 }
 
-.pcard-sub {
-  font-size: 13px;
-  color: var(--amber);
-  margin-bottom: 16px;
-}
-
 .pcard ul {
   margin: 0 0 20px;
   padding: 0;
@@ -1582,12 +1523,6 @@ a.cv-contact-item:hover .ic {
   display: flex;
   flex-direction: column;
   gap: 12px;
-}
-
-.pcard.featured ul {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
 }
 
 .pcard li {
@@ -1598,13 +1533,6 @@ a.cv-contact-item:hover .ic {
   padding-left: 20px;
 }
 
-.pcard.featured li {
-  padding: 14px 14px 14px 28px;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  background: rgba(6, 20, 24, 0.4);
-}
-
 .pcard li::before {
   content: '›';
   position: absolute;
@@ -1613,11 +1541,6 @@ a.cv-contact-item:hover .ic {
   color: var(--mint);
   font-weight: bold;
   font-size: 16px;
-}
-
-.pcard.featured li::before {
-  left: 12px;
-  top: 14px;
 }
 
 .pcard-meta {
@@ -1685,9 +1608,38 @@ a.cv-contact-item:hover .ic {
   color: var(--dim);
 }
 
+.pcard-visual {
+  display: flex; flex-direction: column; gap: 18px; justify-content: center;
+  padding: 22px; border-radius: var(--r-sm);
+  background: #040E10; border: 1px solid rgba(var(--mint-rgb), 0.25);
+  background-image: linear-gradient(rgba(var(--mint-rgb), .05) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(var(--mint-rgb), .05) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+.pv-metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.pv-metrics div { display: flex; flex-direction: column; gap: 4px; padding: 12px; border: 1px solid var(--border); border-radius: 12px; background: rgba(6, 20, 24, .7); }
+.pv-metrics b { font: 700 24px var(--mono); color: var(--amber); letter-spacing: -0.03em; }
+.pv-metrics span { font-size: 12px; color: var(--muted); line-height: 1.35; }
+.pv-flow { display: flex; flex-direction: column; gap: 0; }
+.pv-node {
+  position: relative; display: flex; justify-content: space-between; align-items: baseline;
+  padding: 9px 14px; border: 1px solid var(--border2); border-radius: 10px;
+  background: rgba(15, 42, 48, .7); font-size: 13px; color: var(--text);
+}
+.pv-node small { font-size: 11px; color: var(--dim); }
+.pv-node + .pv-node { margin-top: 14px; }
+.pv-node + .pv-node::before { content: ''; position: absolute; left: 24px; top: -14px; height: 14px; width: 2px; background: var(--mint); opacity: .6; }
+.pv-node.hot { border-color: var(--mint); box-shadow: 0 0 18px -4px rgba(var(--mint-rgb), .55); }
+.pv-node.hot small { color: var(--mint); }
+
 @media (max-width: 1000px) {
   .projects { grid-template-columns: 1fr; }
-  .pcard.featured ul { grid-template-columns: 1fr; }
+  .pcard.featured { display: flex; }
+  .pcard-visual { order: 5; margin-bottom: 20px; }
+}
+
+@media (max-width: 480px) {
+  .pv-metrics { grid-template-columns: 1fr; }
 }
 
 /* =====================================================================
@@ -1798,56 +1750,6 @@ a.cv-contact-item:hover .ic {
   transform: translateY(-2px);
 }
 
-
-/* =====================================================================
-   12. REDESIGN PATCH: featured project, hierarchy, motion fixes
-   ===================================================================== */
-:root { --muted: #A9C0BA; }               /* restores hierarchy: text > text2 > muted > dim */
-body.cursor-on, body.cursor-on a, body.cursor-on button { cursor: none; }
-.reveal { transition-delay: var(--d, 0s); }  /* makes inline --d stagger work */
-
-.pcard.featured {
-  display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
-  column-gap: 36px;
-  align-content: start;
-}
-.pcard.featured > * { grid-column: 1; }
-.pcard.featured > .pcard-visual { grid-column: 2; grid-row: 1 / span 4; align-self: stretch; }
-.pcard.featured > .stack { grid-column: 1 / -1; }
-.pcard.featured ul { display: flex; flex-direction: column; gap: 12px; grid-template-columns: none; }
-.pcard.featured li { padding: 0 0 0 20px; border: 0; background: none; border-radius: 0; }
-.pcard.featured li::before { left: 6px; top: 0; }
-
-.pcard-visual {
-  display: flex; flex-direction: column; gap: 18px; justify-content: center;
-  padding: 22px; border-radius: var(--r-sm);
-  background: #040E10; border: 1px solid rgba(var(--mint-rgb), 0.25);
-  background-image: linear-gradient(rgba(var(--mint-rgb), .05) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(var(--mint-rgb), .05) 1px, transparent 1px);
-  background-size: 24px 24px;
-}
-.pv-metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-.pv-metrics div { display: flex; flex-direction: column; gap: 4px; padding: 12px; border: 1px solid var(--border); border-radius: 12px; background: rgba(6, 20, 24, .7); }
-.pv-metrics b { font: 700 24px var(--mono); color: var(--amber); letter-spacing: -0.03em; }
-.pv-metrics span { font-size: 12px; color: var(--muted); line-height: 1.35; }
-.pv-flow { display: flex; flex-direction: column; gap: 0; }
-.pv-node {
-  position: relative; display: flex; justify-content: space-between; align-items: baseline;
-  padding: 9px 14px; border: 1px solid var(--border2); border-radius: 10px;
-  background: rgba(15, 42, 48, .7); font-size: 13px; color: var(--text);
-}
-.pv-node small { font-size: 11px; color: var(--dim); }
-.pv-node + .pv-node { margin-top: 14px; }
-.pv-node + .pv-node::before { content: ''; position: absolute; left: 24px; top: -14px; height: 14px; width: 2px; background: var(--mint); opacity: .6; }
-.pv-node.hot { border-color: var(--mint); box-shadow: 0 0 18px -4px rgba(var(--mint-rgb), .55); }
-.pv-node.hot small { color: var(--mint); }
-
-@media (max-width: 1000px) {
-  .pcard.featured { display: flex; }
-  .pcard-visual { order: 5; margin-bottom: 20px; }
-}
-@media (max-width: 480px) { .pv-metrics { grid-template-columns: 1fr; } }
 
 /* Shared Tech Stack layout for Experience and Projects */
 .tl-stack,

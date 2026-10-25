@@ -12,10 +12,11 @@
   <meta name="author" content="Nguyen Van Sang">
   <meta name="theme-color" content="#061418">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="assets/images/anh-the-trang.webp">
+  <meta property="og:url" content="https://sangnguyen-232.github.io/Portfolio/">
+  <meta property="og:image" content="https://sangnguyen-232.github.io/Portfolio/assets/images/anh-the-trang.webp">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Nguyen Van Sang — Embedded Software Engineer">
-  <meta name="twitter:image" content="assets/images/anh-the-trang.webp">
+  <meta name="twitter:image" content="https://sangnguyen-232.github.io/Portfolio/assets/images/anh-the-trang.webp">
   <meta property="og:title" content="Nguyen Van Sang — Embedded Software Engineer">
   <meta property="og:description"
     content="ESP32-S3 · FreeRTOS Multitasking · TinyML On-Device · FPGA Verilog · IoT Cloud">
@@ -199,7 +200,7 @@
       <nav class="nav-links" aria-label="Primary">
         <a href="#about" data-i18n="nav.about" data-cursor>Summary</a>
         <a href="#education" data-i18n="nav.education" data-cursor>Education</a>
-        <a href="#certification" data-i18n="nav.certification" data-cursor>Certification</a>
+        <a href="#certification" data-i18n="nav.certification" data-cursor>Languages</a>
         <a href="#skills" data-i18n="nav.skills" data-cursor>Skills</a>
         <a href="#experience" data-i18n="nav.experience" data-cursor>Experience</a>
         <a href="#projects" data-i18n="nav.projects" data-cursor>Projects</a>
@@ -377,7 +378,7 @@
           <div class="stats reveal" style="--d:.4s" id="stats">
             <div class="stat">
               <b class="count" data-to="3">3</b>
-              <span data-i18n="stats.s1">Projects Shipped</span>
+              <span data-i18n="stats.s1">Hardware &amp; Cloud Projects</span>
             </div>
             <div class="stat">
               <b class="count" data-to="7">7</b>
@@ -861,7 +862,7 @@
                   <div class="tl-company">
                     <span data-i18n="exp.company">Viettel Dak Lak — Viettel Group</span>
                     <span class="sep">•</span>
-                    <span class="pill violet" data-i18n="exp.type">On-site</span>
+                    <span class="pill amber" data-i18n="exp.type">On-site</span>
                   </div>
                 </div>
                 <div class="tl-meta">
@@ -1088,200 +1089,6 @@
       </div>
     </section>
 
-    <section id="telemetry" class="section" aria-labelledby="telemetry-title" hidden>
-      <div class="container">
-        <div class="sec-head reveal">
-          <span class="sec-num mono">07 //</span>
-          <div>
-            <h2 class="sec-title" id="telemetry-title" data-i18n="telemetry.title">Embedded Telemetry &amp; Hardware Studio</h2>
-            <p class="sec-sub" data-i18n="telemetry.sub">Interactive simulation of FreeRTOS task telemetry &amp; a logic
-              analyzer (demo data)</p>
-          </div>
-        </div>
-
-        <div class="telemetry-studio">
-          <!-- FreeRTOS Live Task Table Monitor -->
-          <div class="telemetry-card glass spot reveal">
-            <div class="telemetry-head">
-              <div class="telemetry-title">
-                <svg class="ic">
-                  <use href="#i-layers" />
-                </svg>
-                <span data-i18n="telemetry.rtosTitle">FreeRTOS v10.5.1 Dual-Core Scheduler</span>
-              </div>
-              <span class="pill glow mono"><span class="status-dot"></span>ACTIVE 240MHz</span>
-            </div>
-
-            <div class="task-table-wrapper">
-              <table class="task-table" id="taskTable">
-                <thead>
-                  <tr>
-                    <th data-i18n="task.name">Task Name</th>
-                    <th data-i18n="task.core">Core</th>
-                    <th data-i18n="task.prio">Prio</th>
-                    <th data-i18n="task.period">Period</th>
-                    <th data-i18n="task.state">State</th>
-                    <th data-i18n="task.stack">Stack Free</th>
-                    <th data-i18n="task.load">CPU Load</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><code>Task_SensorSampling</code></td>
-                    <td>0</td>
-                    <td>3</td>
-                    <td>50ms</td>
-                    <td><span class="state-badge running">RUNNING</span></td>
-                    <td>1.8 KB</td>
-                    <td>
-                      <div class="load-bar"><span style="width: 28%;"></span></div> 8.4%
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><code>Task_TinyMLInference</code></td>
-                    <td>1</td>
-                    <td>4</td>
-                    <td>100ms</td>
-                    <td><span class="state-badge ready">READY</span></td>
-                    <td>3.2 KB</td>
-                    <td>
-                      <div class="load-bar"><span style="width: 42%;"></span></div> 12.1%
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><code>Task_PumpSafety</code></td>
-                    <td>0</td>
-                    <td>5</td>
-                    <td>Event</td>
-                    <td><span class="state-badge blocked">BLOCKED</span></td>
-                    <td>1.4 KB</td>
-                    <td>
-                      <div class="load-bar"><span style="width: 10%;"></span></div> 2.3%
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><code>Task_WiFiWebSocket</code></td>
-                    <td>1</td>
-                    <td>2</td>
-                    <td>Stream</td>
-                    <td><span class="state-badge blocked">BLOCKED</span></td>
-                    <td>4.1 KB</td>
-                    <td>
-                      <div class="load-bar"><span style="width: 15%;"></span></div> 4.5%
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><code>Task_DbLogger</code></td>
-                    <td>0</td>
-                    <td>1</td>
-                    <td>Async</td>
-                    <td><span class="state-badge ready">READY</span></td>
-                    <td>2.0 KB</td>
-                    <td>
-                      <div class="load-bar"><span style="width: 8%;"></span></div> 1.8%
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><code>Task_ButtonISR</code></td>
-                    <td>0</td>
-                    <td>6</td>
-                    <td>ISR</td>
-                    <td><span class="state-badge blocked">BLOCKED</span></td>
-                    <td>1.1 KB</td>
-                    <td>
-                      <div class="load-bar"><span style="width: 4%;"></span></div> 0.4%
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><code>Task_StatusLED</code></td>
-                    <td>0</td>
-                    <td>1</td>
-                    <td>500ms</td>
-                    <td><span class="state-badge ready">READY</span></td>
-                    <td>0.9 KB</td>
-                    <td>
-                      <div class="load-bar"><span style="width: 6%;"></span></div> 1.0%
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <div
-              style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-top:auto;">
-              <span class="pill mono small" style="color:var(--mint);border-color:rgba(95,227,200,0.3);">
-                <svg class="ic" style="width:12px;height:12px;">
-                  <use href="#i-check" />
-                </svg>
-                <span>Context Guard: xSemaphoreCreateMutex() • Zero Race Conditions</span>
-              </span>
-              <span class="mono small muted">Total Heap Free: <b>284 KB</b></span>
-            </div>
-          </div>
-
-          <!-- Logic Analyzer & Signal Oscilloscope -->
-          <div class="analyzer-card glass spot reveal" style="--d:.15s">
-            <div class="telemetry-head">
-              <div class="telemetry-title">
-                <svg class="ic">
-                  <use href="#i-cpu" />
-                </svg>
-                <span data-i18n="telemetry.scopeTitle">Logic Analyzer &amp; Bus Scope</span>
-              </div>
-              <span class="live-indicator"><span class="status-dot"></span>LIVE 400kHz</span>
-            </div>
-
-            <div class="analyzer-screen">
-              <!-- Real-Time Protocol Packet Stream Overlay -->
-              <div class="protocol-stream mono" id="protocolStream">
-                <span class="protocol-tag">I2C DECODER:</span>
-                <span class="pkt-chip pkt-start">START</span>
-                <span class="pkt-chip pkt-addr">ADDR: 0x48 [W]</span>
-                <span class="pkt-chip pkt-ack">ACK</span>
-                <span class="pkt-chip pkt-reg">REG: 0x01 [TEMP]</span>
-                <span class="pkt-chip pkt-ack">ACK</span>
-                <span class="pkt-chip pkt-data">DATA: 0x24 [36.5°C]</span>
-                <span class="pkt-chip pkt-ack">ACK</span>
-                <span class="pkt-chip pkt-stop">STOP</span>
-              </div>
-              <canvas id="analyzerCanvas"></canvas>
-              <div class="analyzer-hud">
-                <span id="scopeCh1Label">CH1: I2C_SCL (400kHz)</span>
-                <span id="scopeTimebaseLabel">50µs/div</span>
-                <span id="scopeCh2Label">CH2: I2C_SDA</span>
-              </div>
-            </div>
-
-            <div class="analyzer-controls">
-              <div class="analyzer-btn-group">
-                <button class="pill glow mono small" id="btnCh1" type="button" data-cursor>CH1: SCL</button>
-                <button class="pill violet mono small" id="btnCh2" type="button" data-cursor>CH2: SDA</button>
-                <button class="pill mono small" id="btnCh3" type="button" data-cursor>CH3: PWM</button>
-              </div>
-              <div class="analyzer-tune-group">
-                <label class="timebase-label mono small">
-                  <span>Timebase:</span>
-                  <select id="timebaseSelect" class="timebase-select mono small">
-                    <option value="50" selected>50 µs/div</option>
-                    <option value="100">100 µs/div</option>
-                    <option value="200">200 µs/div</option>
-                  </select>
-                </label>
-                <label class="pwm-slider-label mono small">
-                  <span>PWM Duty: <b id="pwmDutyVal">50%</b></span>
-                  <input type="range" id="pwmSlider" min="10" max="90" value="50" step="5" class="pwm-range"
-                    aria-label="PWM Duty Cycle">
-                </label>
-              </div>
-              <button class="btn btn-ghost btn-sm" id="analyzerToggleBtn" type="button" data-cursor>
-                <span id="scopeStateText">Pause Scope</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <section id="contact" class="section contact" aria-labelledby="contact-title">
       <div class="container">
         <div class="contact-card glass spot reveal">
@@ -1394,6 +1201,7 @@
         <div class="shortcuts-grid mono">
           <div class="shortcut-row"><kbd>L</kbd><span>Toggle Language (EN / VI)</span></div>
           <div class="shortcut-row"><kbd>M</kbd><span>Toggle Cyber SFX Audio</span></div>
+          <div class="shortcut-row"><kbd>B</kbd><span data-i18n="shortcut.led">Toggle LED borders</span></div>
           <div class="shortcut-row"><kbd>T</kbd><span>Jump &amp; Focus Firmware Terminal</span></div>
           <div class="shortcut-row"><kbd>P</kbd><span>Navigate to Featured Projects</span></div>
           <div class="shortcut-row"><kbd>ESC</kbd><span>Close any Open Modal</span></div>
@@ -1443,6 +1251,7 @@
   <script src="assets/js/terminal.js"></script>
   <script src="assets/js/main.js"></script>
   <script src="assets/js/enhance.js"></script>
+  <script src="assets/js/upgrade.js"></script>
 </body>
 
 </html>
