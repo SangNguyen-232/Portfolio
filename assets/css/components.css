@@ -437,69 +437,189 @@ kbd {
   pointer-events: auto;
 }
 
-/* Table of Contents Rail (Desktop) */
+/* Table of Contents Rail & Luminous Constellation Circuit (Desktop) */
 .toc {
   position: fixed;
-  right: 14px;
+  right: 18px;
   top: 50%;
   transform: translateY(-50%);
   z-index: 90;
   display: none;
   flex-direction: column;
-  gap: 2px;
+  width: 234px;
 }
 
 @media (min-width: 1360px) {
   .toc { display: flex; }
 }
 
+.toc-circuit {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: visible;
+}
+
+.toc-track-line {
+  stroke: rgba(var(--mint-rgb), 0.18);
+  stroke-width: 1.5;
+  stroke-dasharray: 3 3;
+  transition: stroke 0.3s ease;
+}
+
+.toc-laser-line {
+  stroke: url(#tocLaserGrad);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 0 3px rgba(var(--mint-rgb), 0.95))
+          drop-shadow(0 0 8px rgba(var(--mint-rgb), 0.65))
+          drop-shadow(0 0 16px rgba(var(--mint-rgb), 0.35));
+  transition: stroke-dashoffset 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: stroke-dashoffset;
+}
+
+.toc-photon-head {
+  pointer-events: none;
+  opacity: 0;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+  will-change: transform;
+}
+
+.toc-photon-head .photon-halo {
+  animation: photonPulse 1.8s ease-in-out infinite alternate;
+  transform-origin: center;
+}
+
+.toc-photon-head .photon-ring {
+  animation: photonSpin 4s linear infinite;
+  transform-origin: center;
+}
+
+@keyframes photonPulse {
+  0% { transform: scale(0.85); opacity: 0.75; }
+  100% { transform: scale(1.3); opacity: 1; }
+}
+
+@keyframes photonSpin {
+  0% { stroke-dasharray: 2 6; transform: rotate(0deg); }
+  50% { stroke-dasharray: 6 3; }
+  100% { stroke-dasharray: 2 6; transform: rotate(360deg); }
+}
+
 .toc a {
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: flex-end;
   gap: 10px;
-  padding: 6px 4px;
+  height: 34px;
+  padding: 0 4px;
+  border-radius: 8px;
   font: 500 11px var(--mono);
   color: var(--dim);
+  text-decoration: none;
+  cursor: pointer;
+  align-self: flex-end;
+  transition: color 0.25s ease;
 }
+
+/* Precise constellation layout matching the visual screenshot */
+.toc a:nth-of-type(1) { width: 174px; } /* Professional Summary (dot at ~70px) */
+.toc a:nth-of-type(2) { width: 95px; }  /* Projects (dot at ~149px) */
+.toc a:nth-of-type(3) { width: 82px; }  /* Skills (dot at ~162px) */
+.toc a:nth-of-type(4) { width: 108px; } /* Experience (dot at ~136px) */
+.toc a:nth-of-type(5) { width: 207px; } /* Education & Certification (dot at ~37px) */
+.toc a:nth-of-type(6) { width: 88px; }  /* Contact (dot at ~156px) */
 
 .toc a span {
   opacity: 0;
-  transform: translateX(6px);
-  padding: 2px 8px;
+  transform: translateX(4px);
+  padding: 3px 9px;
   border-radius: 6px;
   border: 1px solid var(--border2);
-  background: rgba(6, 20, 24, 0.92);
+  background: rgba(6, 20, 24, 0.94);
   color: var(--text);
-  transition: opacity 0.25s, transform 0.25s var(--ease);
+  white-space: nowrap;
   pointer-events: none;
-}
-
-.toc a i {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  border: 1.5px solid var(--dim);
-  transition: background 0.25s, border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+  transition: opacity 0.25s ease, transform 0.25s var(--ease), border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 .toc a:hover span,
 .toc a:focus-visible span,
 .toc a.active span {
   opacity: 1;
-  transform: none;
+  transform: translateX(0);
+}
+
+.toc a.active span {
+  border-color: rgba(var(--mint-rgb), 0.6);
+  box-shadow: 0 0 12px rgba(var(--mint-rgb), 0.22);
+  color: #fff;
+}
+
+.toc a i {
+  position: relative;
+  flex: 0 0 10px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1.5px solid var(--dim);
+  background: var(--bg);
+  transition: background 0.25s, border-color 0.25s, box-shadow 0.25s, transform 0.25s;
 }
 
 .toc a:hover i {
   border-color: var(--mint);
+  box-shadow: 0 0 8px rgba(var(--mint-rgb), 0.6);
+}
+
+.toc a.passed i {
+  background: rgba(var(--mint-rgb), 0.35);
+  border-color: var(--mint);
+  box-shadow: 0 0 6px rgba(var(--mint-rgb), 0.5);
 }
 
 .toc a.active i {
   background: var(--mint);
-  border-color: var(--mint);
-  box-shadow: 0 0 10px var(--mint);
-  transform: scale(1.2);
+  border-color: #fff;
+  box-shadow: 0 0 12px var(--mint), 0 0 22px rgba(var(--mint-rgb), 0.55);
+  transform: scale(1.25);
 }
+
+.toc a.active i::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1.5px solid var(--mint);
+  animation: pingRipple 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+  pointer-events: none;
+}
+
+@keyframes pingRipple {
+  0% { transform: scale(0.9); opacity: 0.9; }
+  75%, 100% { transform: scale(2.2); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toc-laser-line,
+  .toc-photon-head,
+  .toc-photon-head .photon-halo,
+  .toc-photon-head .photon-ring,
+  .toc a span,
+  .toc a i,
+  .toc a.active i::after {
+    transition: none;
+    animation: none;
+  }
+}
+
+
 
 /* PCB-Trace Section Divider */
 .section + .section::before {

@@ -196,8 +196,85 @@
     const nav = document.getElementById('nav');
     const progressBar = document.getElementById('scrollProgressBar');
     const timeline = document.querySelector('.timeline');
-    const sections = document.querySelectorAll('main > section[id]');
-    const navLinks = document.querySelectorAll('.nav-links a, .toc a');
+    const sections = [...document.querySelectorAll('.nav-links a[href^="#"]')]
+      .map((link) => document.getElementById(link.getAttribute('href').slice(1)))
+      .filter(Boolean);
+    const navLinks = document.querySelectorAll('.nav-links a, #mobileMenu nav a, .toc a');
+    const toc = document.getElementById('toc');
+    const tocLinks = toc ? [...toc.querySelectorAll('a')] : [];
+    const trackLine = document.getElementById('tocTrackLine');
+    const laserLine = document.getElementById('tocLaserLine');
+    const photonHead = document.getElementById('tocPhotonHead');
+    let activeSectionId = null;
+
+    const updateTocBeam = (activeId) => {
+      if (!toc || !tocLinks.length || !trackLine || !laserLine || !photonHead) return;
+      if (!toc.getClientRects().length) return;
+
+      const tocRect = toc.getBoundingClientRect();
+      if (tocRect.width === 0 || tocRect.height === 0) return;
+
+      const points = tocLinks.map((link) => {
+        const icon = link.querySelector('i');
+        const r = icon.getBoundingClientRect();
+        return {
+          x: r.left + r.width / 2 - tocRect.left,
+          y: r.top + r.height / 2 - tocRect.top
+        };
+      });
+
+      const pathD = points.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join(' ');
+      trackLine.setAttribute('d', pathD);
+      laserLine.setAttribute('d', pathD);
+
+      const activeIndex = tocLinks.findIndex((link) => link.getAttribute('href') === `#${activeId}`);
+      toc.classList.toggle('has-active', activeIndex >= 0);
+
+      tocLinks.forEach((link, index) => {
+        link.classList.toggle('passed', index < activeIndex);
+        link.classList.toggle('active', index === activeIndex);
+      });
+
+      let totalLength = 0;
+      for (let i = 0; i < points.length - 1; i++) {
+        totalLength += Math.hypot(points[i + 1].x - points[i].x, points[i + 1].y - points[i].y);
+      }
+
+      if (activeIndex < 0) {
+        laserLine.style.strokeDasharray = `${totalLength} ${totalLength}`;
+        laserLine.style.strokeDashoffset = `${totalLength}`;
+        photonHead.style.opacity = '0';
+        return;
+      }
+
+      let activeLength = 0;
+      for (let i = 0; i < activeIndex; i++) {
+        activeLength += Math.hypot(points[i + 1].x - points[i].x, points[i + 1].y - points[i].y);
+      }
+
+      laserLine.style.strokeDasharray = `${totalLength} ${totalLength}`;
+      laserLine.style.strokeDashoffset = `${Math.max(0, totalLength - activeLength)}`;
+
+      const activePt = points[activeIndex];
+      photonHead.style.transform = `translate(${activePt.x.toFixed(1)}px, ${activePt.y.toFixed(1)}px)`;
+      photonHead.style.opacity = '1';
+    };
+
+    // Responsive click handling with instantaneous laser feedback
+    tocLinks.forEach((link) => {
+      link.addEventListener('click', (e) => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+          const target = document.getElementById(href.slice(1));
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth' });
+            activeSectionId = href.slice(1);
+            updateTocBeam(activeSectionId);
+          }
+        }
+      });
+    });
     const reveals = document.querySelectorAll('.reveal');
     const chatSection = document.getElementById('chat');
 
@@ -270,13 +347,18 @@
       }
 
       // 4. Active Section Spy
-      let activeId = '';
+      let activeId = sections.length ? sections[0].id : '';
+      const scrollPadding = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
       sections.forEach((sec) => {
-        const top = sec.offsetTop - 140;
+        const scrollMargin = parseFloat(getComputedStyle(sec).scrollMarginTop) || 0;
+        const top = sec.getBoundingClientRect().top + scrollY - scrollPadding - scrollMargin - 1;
         if (scrollY >= top) {
-          activeId = sec.getAttribute('id');
+          activeId = sec.id;
         }
       });
+      if (sections.length && docHeight > 0 && scrollY >= docHeight - 1) {
+        activeId = sections[sections.length - 1].id;
+      }
 
       navLinks.forEach((link) => {
         const href = link.getAttribute('href');
@@ -285,10 +367,26 @@
         if (isActive) link.setAttribute('aria-current', 'location');
         else link.removeAttribute('aria-current');
       });
+
+      if (activeSectionId !== activeId) {
+        activeSectionId = activeId;
+        updateTocBeam(activeId);
+      }
     };
 
     window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', () => {
+      updateTocBeam(activeSectionId);
+      onScroll();
+    }, { passive: true });
+    if (document.fonts) {
+      document.fonts.ready.then(() => {
+        updateTocBeam(activeSectionId);
+        onScroll();
+      });
+    }
     updateScroll();
+    requestAnimationFrame(() => updateTocBeam(activeSectionId));
   };
 
   /* =====================================================================

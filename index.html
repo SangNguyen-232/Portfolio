@@ -188,6 +188,7 @@
         <span class="logo-text">sang<b>.dev</b></span>
       </a>
       <nav class="nav-links" aria-label="Primary">
+        <a href="#about" data-i18n="nav.about" data-cursor>Professional Summary</a>
         <a href="#projects" data-i18n="nav.projects" data-cursor>Projects</a>
         <a href="#skills" data-i18n="nav.skills" data-cursor>Skills</a>
         <a href="#experience" data-i18n="nav.experience" data-cursor>Experience</a>
@@ -262,6 +263,7 @@
   <!-- Mobile Menu Overlay -->
   <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
     <nav aria-label="Mobile">
+      <a href="#about" data-i18n="nav.about">Professional Summary</a>
       <a href="#projects" data-i18n="nav.projects">Projects</a>
       <a href="#skills" data-i18n="nav.skills">Skills</a>
       <a href="#experience" data-i18n="nav.experience">Experience</a>
@@ -284,6 +286,29 @@
 
   <!-- Table of contents (main section order) -->
   <nav class="toc" id="toc" aria-label="Table of contents">
+    <svg class="toc-circuit" id="tocCircuit" aria-hidden="true">
+      <defs>
+        <linearGradient id="tocLaserGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#5FE3C8" stop-opacity="0.85" />
+          <stop offset="50%" stop-color="#ffffff" stop-opacity="1" />
+          <stop offset="100%" stop-color="#5FE3C8" stop-opacity="0.95" />
+        </linearGradient>
+        <radialGradient id="photonGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#ffffff" stop-opacity="1" />
+          <stop offset="35%" stop-color="#5FE3C8" stop-opacity="0.85" />
+          <stop offset="70%" stop-color="rgba(95, 227, 200, 0.4)" />
+          <stop offset="100%" stop-color="rgba(95, 227, 200, 0)" />
+        </radialGradient>
+      </defs>
+      <path class="toc-track-line" id="tocTrackLine" fill="none" />
+      <path class="toc-laser-line" id="tocLaserLine" fill="none" />
+      <g class="toc-photon-head" id="tocPhotonHead">
+        <circle class="photon-halo" r="11" fill="url(#photonGlow)" />
+        <circle class="photon-ring" r="7" fill="none" stroke="#5FE3C8" stroke-width="1.2" />
+        <circle class="photon-core" r="3" fill="#ffffff" />
+      </g>
+    </svg>
+    <a href="#about"><i></i><span data-i18n="nav.about">Professional Summary</span></a>
     <a href="#projects"><i></i><span data-i18n="nav.projects">Projects</span></a>
     <a href="#skills"><i></i><span data-i18n="nav.skills">Skills</span></a>
     <a href="#experience"><i></i><span data-i18n="nav.experience">Experience</span></a>
@@ -298,7 +323,7 @@
         <div class="hero-copy">
           <div class="status reveal" style="--d:.05s">
             <span class="status-dot"></span>
-            <span data-i18n="hero.status">Open to Fresher Embedded Software roles</span>
+            <span data-i18n="hero.status">Looking for a Fresher Embedded Software Engineer role</span>
           </div>
           <p class="hero-greet mono reveal" style="--d:.1s">
             <span class="prompt">&gt;</span> <span data-i18n="hero.greet">Hi, I am</span>
@@ -332,39 +357,36 @@
             </div>
           </div>
 
-          <p class="hero-tagline reveal" style="--d:.3s" data-i18n="hero.tagline">
-            I engineer production-ready firmware on real hardware: concurrent FreeRTOS tasks, on-device TinyML, FPGA
-            state machines, and end-to-end IoT cloud pipelines.
-          </p>
+          <p class="hero-tagline reveal" style="--d:.3s" data-i18n="hero.tagline">Computer Engineering student at HCMUT. I build firmware for the ESP32-S3: FreeRTOS multitasking, TinyML running on the microcontroller, FPGA state machines in Verilog, and IoT backends that collect sensor data in the cloud.</p>
 
           <div class="hero-cta reveal" style="--d:.35s">
             <a href="#projects" class="btn btn-primary" data-cursor>
-              <span data-i18n="hero.cta1">Explore projects</span>
+              <span data-i18n="hero.cta1">View projects</span>
               <svg class="ic">
                 <use href="#i-arrow" />
               </svg>
             </a>
             <a href="#contact" class="btn btn-ghost" data-cursor>
-              <span data-i18n="hero.cta2">Get in touch</span>
+              <span data-i18n="hero.cta2">Contact me</span>
             </a>
           </div>
 
           <div class="stats reveal" style="--d:.4s" id="stats">
             <div class="stat">
               <b class="count" data-to="3">3</b>
-              <span data-i18n="stats.s1">Hardware &amp; Cloud Projects</span>
+              <span data-i18n="stats.s1">Projects on GitHub</span>
             </div>
             <div class="stat">
               <b class="count" data-to="7">7</b>
-              <span data-i18n="stats.s2">Concurrent FreeRTOS Tasks</span>
+              <span data-i18n="stats.s2">FreeRTOS tasks in one firmware</span>
             </div>
             <div class="stat">
               <b class="count" data-to="21000">21,000</b>
-              <span data-i18n="stats.s3">Rows Synthetic Training Data</span>
+              <span data-i18n="stats.s3">Synthetic training samples</span>
             </div>
             <div class="stat">
               <b>&lt; 1 ms</b>
-              <span data-i18n="stats.s4">On-Device Inference</span>
+              <span data-i18n="stats.s4">TinyML inference time</span>
             </div>
           </div>
         </div>
@@ -399,7 +421,7 @@
 
             <div>
               <h2 class="sec-title" id="about-title" data-i18n="about.title">Professional Summary</h2>
-              <p class="sec-sub" data-i18n="about.sub">Interactive neural assistant &amp; engineering profile</p>
+              <p class="sec-sub" data-i18n="about.sub">Who I am and what I work on</p>
             </div>
           </div>
 
@@ -471,26 +493,21 @@
                   <use href="#i-chip" />
                 </svg></div>
               <h3 data-i18n="do.d1.title">Firmware &amp; RTOS</h3>
-              <p data-i18n="do.d1.desc">Architecting robust concurrent firmware on ESP32/ESP32-S3 using FreeRTOS:
-                semaphores, queues, event groups, task synchronization, and low-level peripheral drivers (I2C, GPIO,
-                UART).</p>
+              <p data-i18n="do.d1.desc">Concurrent firmware for ESP32 and ESP32-S3 on FreeRTOS: tasks, queues, mutexes and event groups, with drivers for I2C, GPIO and UART.</p>
             </div>
             <div class="do glass spot reveal" style="--d:.2s">
               <div class="do-icon"><svg class="ic">
                   <use href="#i-sparkle" />
                 </svg></div>
               <h3 data-i18n="do.d2.title">Edge AI &amp; TinyML</h3>
-              <p data-i18n="do.d2.desc">Deploying optimized TensorFlow Lite for Microcontrollers models on constrained
-                MCUs. Sub-1 ms on-device inference with hardware safety interlocks for real-time sensor classification.
-              </p>
+              <p data-i18n="do.d2.desc">A small TensorFlow Lite Micro classifier running on the microcontroller, with a hardware interlock so the pump relay only switches on when conditions allow.</p>
             </div>
             <div class="do glass spot reveal" style="--d:.3s">
               <div class="do-icon"><svg class="ic">
                   <use href="#i-cpu" />
                 </svg></div>
               <h3 data-i18n="do.d3.title">FPGA &amp; Digital Design</h3>
-              <p data-i18n="do.d3.desc">Designing and synthesizing finite state machines (FSM) and digital logic with
-                Verilog HDL on Xilinx Vivado, Cadence Xcelium, and Digilent Arty-Z7 FPGA hardware platforms.</p>
+              <p data-i18n="do.d3.desc">Finite state machines and digital logic in Verilog, built with Vivado and Cadence Xcelium and running on a Digilent Arty-Z7 board.</p>
             </div>
           </div>
         </div>
@@ -503,7 +520,7 @@
 
           <div>
             <h2 class="sec-title" id="projects-title" data-i18n="proj.title">Projects</h2>
-            <p class="sec-sub" data-i18n="proj.sub">Verified hardware and software implementations</p>
+            <p class="sec-sub" data-i18n="proj.sub">Embedded, FPGA and full-stack work, each with source code on GitHub</p>
           </div>
         </div>
 
@@ -514,7 +531,7 @@
               <div class="pv-metrics">
                 <div><b>7</b><span data-i18n="proj.m1">FreeRTOS tasks</span></div>
                 <div><b>&lt; 1 ms</b><span data-i18n="proj.m2">TinyML inference</span></div>
-                <div><b>21k</b><span data-i18n="proj.m3">training rows</span></div>
+                <div><b>21k</b><span data-i18n="proj.m3">training samples</span></div>
               </div>
               <div class="pv-flow mono" aria-hidden="true">
                 <span class="pv-node">Sensors<small>I2C · ADC</small></span>
@@ -530,15 +547,11 @@
                 </svg></div>
               <span class="pill glow mono">Jul 2026 – Present</span>
             </div>
-            <h3 data-i18n="proj.p1.title">Smart Agriculture Environmental Monitoring System</h3>
+            <h3 data-i18n="proj.p1.title">Smart Agriculture Monitoring System</h3>
             <ul>
-              <li data-i18n="proj.p1.b1">Engineered concurrent FreeRTOS firmware on ESP32-S3 with semaphore-guarded
-                context coordinating 7 tasks (sampling, TinyML inference, pump relay, logging, reset button, LED
-                indicator) across I2C, GPIO, and network.</li>
-              <li data-i18n="proj.p1.b2">Deployed a float32 TensorFlow Lite Micro classifier (temperature, humidity,
-                soil moisture to 3-class risk) with sub-1 ms inference and hardware safety interlocks.</li>
-              <li data-i18n="proj.p1.b3">Implemented WiFi AP fallback with LittleFS-persisted networks, streaming
-                telemetry via HTTP/WebSocket to a Dockerized Node.js/PostgreSQL fleet dashboard.</li>
+              <li data-i18n="proj.p1.b1">Wrote FreeRTOS firmware for the ESP32-S3 with 7 tasks (sensor sampling, TinyML inference, pump relay, logging, reset button, status LED) that share state through a semaphore-protected context, across I2C, GPIO and the network.</li>
+              <li data-i18n="proj.p1.b2">Ran a float32 TensorFlow Lite Micro model that classifies temperature, humidity and soil moisture into 3 risk levels in under 1 ms per inference, with hardware interlocks on the pump.</li>
+              <li data-i18n="proj.p1.b3">Added a Wi-Fi access-point fallback with known networks saved in LittleFS, and streamed telemetry over HTTP/WebSocket to a Node.js and PostgreSQL dashboard running in Docker.</li>
             </ul>
             <div class="pcard-meta">
               <span><svg class="ic">
@@ -570,7 +583,7 @@
                 <svg class="ic">
                   <use href="#i-layers" />
                 </svg>
-                <span data-i18n="proj.inspect">System Architecture</span>
+                <span data-i18n="proj.inspect">System architecture</span>
               </button>
               <a href="https://github.com/SangNguyen-232/IoT-Env-Monitor" target="_blank" rel="noopener"
                 class="pcard-link" data-cursor>
@@ -593,12 +606,9 @@
             </div>
             <h3 data-i18n="proj.p2.title">FPGA Vending Machine Simulator</h3>
             <ul>
-              <li data-i18n="proj.p2.b1">Designed and synthesized a complete Verilog FSM-based vending machine on
-                Digilent Arty-Z7 FPGA board.</li>
-              <li data-i18n="proj.p2.b2">Engineered finite state machine logic handling synchronous product selection,
-                coin validation, balance computation, and change dispensing.</li>
-              <li data-i18n="proj.p2.b3">Implemented real-time hardware interfaces for 16x2 alphanumeric LCD display,
-                7-segment LED counters, and debounced tactical switches.</li>
+              <li data-i18n="proj.p2.b1">Designed a vending machine as a Verilog finite state machine and implemented it on a Digilent Arty-Z7 board.</li>
+              <li data-i18n="proj.p2.b2">The state machine handles product selection, coin validation, balance calculation and change return.</li>
+              <li data-i18n="proj.p2.b3">Wrote the hardware interfaces for a 16x2 LCD, 7-segment displays and debounced push buttons.</li>
             </ul>
             <div class="pcard-meta">
               <span><svg class="ic">
@@ -622,7 +632,7 @@
                 <svg class="ic">
                   <use href="#i-cpu" />
                 </svg>
-                <span data-i18n="proj.inspectFSM">FSM & Hardware RTL</span>
+                <span data-i18n="proj.inspectFSM">FSM &amp; RTL design</span>
               </button>
               <a href="https://github.com/SangNguyen-232/FPGA-Vending-System" target="_blank" rel="noopener"
                 class="pcard-link" data-cursor>
@@ -645,12 +655,9 @@
             </div>
             <h3 data-i18n="proj.p3.title">Smart Campus Parking Management System</h3>
             <ul>
-              <li data-i18n="proj.p3.b1">Engineered 6 RESTful APIs to synchronize real-time IoT sensor slot status
-                across 6 parking zones with sub-second response times.</li>
-              <li data-i18n="proj.p3.b2">Integrated automated payment processing and balance management with BKPay
-                payment gateway integration.</li>
-              <li data-i18n="proj.p3.b3">Developed an interactive 2D GPS map component using React Leaflet and enforced
-                strict multi-role access via PostgreSQL Row-Level Security (RLS) for 5 user tiers.</li>
+              <li data-i18n="proj.p3.b1">Built 6 REST APIs that keep parking-slot status from IoT sensors in sync across 6 zones.</li>
+              <li data-i18n="proj.p3.b2">Integrated the BKPay payment gateway for online payments and balance management.</li>
+              <li data-i18n="proj.p3.b3">Built a 2D GPS map with React Leaflet and restricted access for 5 user roles with PostgreSQL Row-Level Security.</li>
             </ul>
             <div class="pcard-meta">
               <span><svg class="ic">
@@ -677,7 +684,7 @@
                 <svg class="ic">
                   <use href="#i-server" />
                 </svg>
-                <span data-i18n="proj.inspectCloud">Cloud & RLS Pipeline</span>
+                <span data-i18n="proj.inspectCloud">Cloud &amp; RLS design</span>
               </button>
               <a href="https://github.com/SangNguyen-232/ParkWise" target="_blank" rel="noopener" class="pcard-link"
                 data-cursor>
@@ -699,7 +706,7 @@
 
           <div>
             <h2 class="sec-title" id="skills-title" data-i18n="skills.title">Technical Skills</h2>
-            <p class="sec-sub" data-i18n="skills.sub">Technologies verified from hardware implementations and CV</p>
+            <p class="sec-sub" data-i18n="skills.sub">Tools and technologies I have used in the projects below</p>
           </div>
         </div>
 
@@ -867,7 +874,7 @@
 
           <div>
             <h2 class="sec-title" id="experience-title" data-i18n="exp.title">Experience</h2>
-            <p class="sec-sub" data-i18n="exp.sub">Practical industry engineering and internships</p>
+            <p class="sec-sub" data-i18n="exp.sub">Internship experience</p>
           </div>
         </div>
 
@@ -889,12 +896,9 @@
                 </div>
               </div>
               <ul>
-                <li data-i18n="exp.b1">Learned fundamentals of IoT architectures, industrial sensor interfacing, and
-                  low-level ESP32 programming.</li>
-                <li data-i18n="exp.b2">Explored enterprise IoT fleet management platforms and robust backend development
-                  with Node.js and PostgreSQL.</li>
-                <li data-i18n="exp.b3">Built an end-to-end IoT sensor solution integrating hardware telemetry with
-                  secure cloud logging.</li>
+                <li data-i18n="exp.b1">Studied IoT architecture, industrial sensor interfacing and low-level ESP32 programming.</li>
+                <li data-i18n="exp.b2">Explored an enterprise IoT device-management platform and backend development with Node.js and PostgreSQL.</li>
+                <li data-i18n="exp.b3">Built an IoT sensor solution that sends hardware readings to a cloud backend and logs them.</li>
               </ul>
               <div class="tl-stack">
                 <span class="lbl mono">Tech Stack:</span>
@@ -926,7 +930,7 @@
 
               <div>
                 <h3 class="sec-title" id="education-details-title" data-i18n="edu.title">Education</h3>
-                <p class="sec-sub" data-i18n="edu.sub">Formal academic training</p>
+                <p class="sec-sub" data-i18n="edu.sub">Where I study</p>
               </div>
             </div>
 
@@ -951,7 +955,7 @@
 
               <div>
                 <h3 class="sec-title" id="certification-title" data-i18n="cert.secTitle">Languages &amp; Certification</h3>
-                <p class="sec-sub" data-i18n="cert.secSub">English proficiency and standardized certification</p>
+                <p class="sec-sub" data-i18n="cert.secSub">English level and upcoming TOEIC test</p>
               </div>
             </div>
 
@@ -962,7 +966,7 @@
                     <use href="#i-award" />
                   </svg></div>
                 <h3 data-i18n="cert.title">Language Certification</h3>
-                <p class="muted small" data-i18n="cert.sub">Standardized English listening and reading assessment</p>
+                <p class="muted small" data-i18n="cert.sub">Listening and Reading</p>
 
                 <div class="certs">
                   <div class="cert">
@@ -971,7 +975,7 @@
                       </svg></div>
                     <div>
                       <b data-i18n="cert.c1.name">TOEIC (Listening &amp; Reading)</b>
-                      <span data-i18n="cert.c1.date">Dec 2026 • Educational Testing Service (ETS)</span>
+                      <span data-i18n="cert.c1.date">Test scheduled for Dec 2026 • ETS</span>
                     </div>
                     <span class="pill mono">Scheduled</span>
                   </div>
@@ -1007,13 +1011,10 @@
         <div class="contact-card glass spot reveal">
           <div class="status">
             <span class="status-dot"></span>
-            <span data-i18n="contact.status">Open to Fresher Opportunities</span>
+            <span data-i18n="contact.status">Open to fresher opportunities</span>
           </div>
-          <h2 class="sec-title" id="contact-title" data-i18n="contact.title">Let's Build Something Together</h2>
-          <p class="sec-sub" style="max-width:54ch;" data-i18n="contact.desc">
-            I am actively seeking a Fresher Embedded Software Engineer role in Ho Chi Minh City or remote. Feel free to
-            reach out via email, phone, or LinkedIn.
-          </p>
+          <h2 class="sec-title" id="contact-title" data-i18n="contact.title">Let’s talk</h2>
+          <p class="sec-sub" style="max-width:54ch;" data-i18n="contact.desc">I’m looking for a Fresher Embedded Software Engineer role in Ho Chi Minh City or remote. You can reach me by email, phone or LinkedIn.</p>
 
           <a href="mailto:sangnguyen230204@gmail.com" class="email" id="emailLink" data-cursor>
             sangnguyen230204@gmail.com

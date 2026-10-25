@@ -10,7 +10,7 @@ window.PortfolioData = (() => {
 
   const i18n = {
     en: {
-      'nav.about': 'Summary',
+      'nav.about': 'Professional Summary',
       'nav.certification': 'Languages',
       'nav.experience': 'Experience',
       'nav.projects': 'Projects',
@@ -19,59 +19,59 @@ window.PortfolioData = (() => {
       'nav.contact': 'Contact',
       'nav.resume': 'View CV',
       'loader.text': 'Booting ESP32-S3 firmware',
-      'hero.status': 'Open to Fresher Embedded Software roles',
+      'hero.status': 'Looking for a Fresher Embedded Software Engineer role',
       'hero.greet': 'Hi, I am',
       'hero.name': 'Nguyen Van Sang',
       'hero.title': 'Embedded Software Engineer — Fresher',
-      'hero.tagline': 'I engineer production-ready firmware on real hardware: concurrent FreeRTOS tasks, on-device TinyML, FPGA state machines, and end-to-end IoT cloud pipelines.',
-      'hero.cta1': 'Explore projects',
-      'hero.cta2': 'Get in touch',
+      'hero.tagline': 'Computer Engineering student at HCMUT. I build firmware for the ESP32-S3: FreeRTOS multitasking, TinyML running on the microcontroller, FPGA state machines in Verilog, and IoT backends that collect sensor data in the cloud.',
+      'hero.cta1': 'View projects',
+      'hero.cta2': 'Contact me',
       'hero.scroll': 'Scroll',
-      'stats.s1': 'Hardware & Cloud Projects',
-      'stats.s2': 'Concurrent FreeRTOS Tasks',
-      'stats.s3': 'Rows Synthetic Training Data',
-      'stats.s4': 'On-Device Inference',
+      'stats.s1': 'Projects on GitHub',
+      'stats.s2': 'FreeRTOS tasks in one firmware',
+      'stats.s3': 'Synthetic training samples',
+      'stats.s4': 'TinyML inference time',
       'about.title': 'Professional Summary',
-      'about.sub': 'Interactive neural assistant & engineering profile',
+      'about.sub': 'Who I am and what I work on',
       'about.userPrompt': "Tell me more about Sang",
       'about.regen': 'Regenerate',
-      'about.streamText': "Nguyen Van Sang is a final-year Computer Engineering student specializing in IoT and Embedded Systems. He has gained practical experience through academic projects and an on-site internship at Viettel Dak Lak (Viettel Group). He is seeking a Fresher Embedded Software Engineer position to further develop his technical skills, gain industry experience, and grow alongside experienced engineers in a professional environment.",
+      'about.streamText': "Nguyen Van Sang is a Computer Engineering student at Ho Chi Minh City University of Technology (HCMUT), focused on embedded systems and IoT. He has written FreeRTOS firmware for the ESP32-S3, run a TinyML model on a microcontroller, designed a vending machine as a Verilog state machine on an FPGA, and built a backend that collects sensor data. In summer 2026 he interned on IoT sensor solutions at Viettel Dak Lak. He is looking for a Fresher Embedded Software Engineer role where he can learn from experienced engineers and ship firmware that runs on real hardware.",
       'do.d1.title': 'Firmware & RTOS',
-      'do.d1.desc': 'Architecting robust concurrent firmware on ESP32/ESP32-S3 using FreeRTOS: semaphores, queues, event groups, task synchronization, and low-level peripheral drivers (I2C, GPIO, UART).',
+      'do.d1.desc': 'Concurrent firmware for ESP32 and ESP32-S3 on FreeRTOS: tasks, queues, mutexes and event groups, with drivers for I2C, GPIO and UART.',
       'do.d2.title': 'Edge AI & TinyML',
-      'do.d2.desc': 'Deploying optimized TensorFlow Lite for Microcontrollers models on constrained MCUs. Sub-1 ms on-device inference with hardware safety interlocks for real-time sensor classification.',
+      'do.d2.desc': 'A small TensorFlow Lite Micro classifier running on the microcontroller, with a hardware interlock so the pump relay only switches on when conditions allow.',
       'do.d3.title': 'FPGA & Digital Design',
-      'do.d3.desc': 'Designing and synthesizing finite state machines (FSM) and digital logic with Verilog HDL on Xilinx Vivado, Cadence Xcelium, and Digilent Arty-Z7 FPGA hardware platforms.',
+      'do.d3.desc': 'Finite state machines and digital logic in Verilog, built with Vivado and Cadence Xcelium and running on a Digilent Arty-Z7 board.',
       'exp.title': 'Experience',
-      'exp.sub': 'Practical industry engineering and internships',
+      'exp.sub': 'Internship experience',
       'exp.role': 'IoT Intern',
       'exp.company': 'Viettel Dak Lak — Viettel Group',
       'exp.type': 'On-site',
-      'exp.b1': 'Learned fundamentals of IoT architectures, industrial sensor interfacing, and low-level ESP32 programming.',
-      'exp.b2': 'Explored enterprise IoT fleet management platforms and robust backend development with Node.js and PostgreSQL.',
-      'exp.b3': 'Built an end-to-end IoT sensor solution integrating hardware telemetry with secure cloud logging.',
+      'exp.b1': 'Studied IoT architecture, industrial sensor interfacing and low-level ESP32 programming.',
+      'exp.b2': 'Explored an enterprise IoT device-management platform and backend development with Node.js and PostgreSQL.',
+      'exp.b3': 'Built an IoT sensor solution that sends hardware readings to a cloud backend and logs them.',
       'proj.title': 'Projects',
-      'proj.sub': 'Verified hardware and software implementations',
-      'proj.p1.title': 'Smart Agriculture Environmental Monitoring System',
-      'proj.p1.b1': 'Engineered concurrent FreeRTOS firmware on ESP32-S3 with semaphore-guarded context coordinating 7 tasks (sampling, TinyML inference, pump relay, logging, reset button, LED indicator) across I2C, GPIO, and network.',
-      'proj.p1.b2': 'Deployed a float32 TensorFlow Lite Micro classifier (temperature, humidity, soil moisture to 3-class risk) with sub-1 ms inference and hardware safety interlocks.',
-      'proj.p1.b3': 'Implemented WiFi AP fallback with LittleFS-persisted networks, streaming telemetry via HTTP/WebSocket to a Dockerized Node.js/PostgreSQL fleet dashboard.',
+      'proj.sub': 'Embedded, FPGA and full-stack work, each with source code on GitHub',
+      'proj.p1.title': 'Smart Agriculture Monitoring System',
+      'proj.p1.b1': 'Wrote FreeRTOS firmware for the ESP32-S3 with 7 tasks (sensor sampling, TinyML inference, pump relay, logging, reset button, status LED) that share state through a semaphore-protected context, across I2C, GPIO and the network.',
+      'proj.p1.b2': 'Ran a float32 TensorFlow Lite Micro model that classifies temperature, humidity and soil moisture into 3 risk levels in under 1 ms per inference, with hardware interlocks on the pump.',
+      'proj.p1.b3': 'Added a Wi-Fi access-point fallback with known networks saved in LittleFS, and streamed telemetry over HTTP/WebSocket to a Node.js and PostgreSQL dashboard running in Docker.',
       'proj.p2.title': 'FPGA Vending Machine Simulator',
-      'proj.p2.b1': 'Designed and synthesized a complete Verilog FSM-based vending machine on Digilent Arty-Z7 FPGA board.',
-      'proj.p2.b2': 'Engineered finite state machine logic handling synchronous product selection, coin validation, balance computation, and change dispensing.',
-      'proj.p2.b3': 'Implemented real-time hardware interfaces for 16x2 alphanumeric LCD display, 7-segment LED counters, and debounced tactical switches.',
+      'proj.p2.b1': 'Designed a vending machine as a Verilog finite state machine and implemented it on a Digilent Arty-Z7 board.',
+      'proj.p2.b2': 'The state machine handles product selection, coin validation, balance calculation and change return.',
+      'proj.p2.b3': 'Wrote the hardware interfaces for a 16x2 LCD, 7-segment displays and debounced push buttons.',
       'proj.p3.title': 'Smart Campus Parking Management System',
-      'proj.p3.b1': 'Engineered 6 RESTful APIs to synchronize real-time IoT sensor slot status across 6 parking zones with sub-second response times.',
-      'proj.p3.b2': 'Integrated automated payment processing and balance management with BKPay payment gateway integration.',
-      'proj.p3.b3': 'Developed an interactive 2D GPS map component using React Leaflet and enforced strict multi-role access via PostgreSQL Row-Level Security (RLS) for 5 user tiers.',
-      'proj.inspect': 'System Architecture',
+      'proj.p3.b1': 'Built 6 REST APIs that keep parking-slot status from IoT sensors in sync across 6 zones.',
+      'proj.p3.b2': 'Integrated the BKPay payment gateway for online payments and balance management.',
+      'proj.p3.b3': 'Built a 2D GPS map with React Leaflet and restricted access for 5 user roles with PostgreSQL Row-Level Security.',
+      'proj.inspect': 'System architecture',
       'proj.m1': 'FreeRTOS tasks',
       'proj.m2': 'TinyML inference',
-      'proj.m3': 'training rows',
-      'proj.inspectFSM': 'FSM & Hardware RTL',
-      'proj.inspectCloud': 'Cloud & RLS Pipeline',
+      'proj.m3': 'training samples',
+      'proj.inspectFSM': 'FSM & RTL design',
+      'proj.inspectCloud': 'Cloud & RLS design',
       'skills.title': 'Technical Skills',
-      'skills.sub': 'Technologies verified from hardware implementations and CV',
+      'skills.sub': 'Tools and technologies I have used in the projects below',
       'skills.c1': 'Programming Languages',
       'skills.c2': 'Embedded Systems & RTOS',
       'skills.c3': 'Edge AI & TinyML',
@@ -80,9 +80,9 @@ window.PortfolioData = (() => {
       'skills.c6': 'IoT Backend & Web',
       'edu.sectionTitle': 'Education & Certification',
       'edu.title': 'Education',
-      'edu.sub': 'Formal academic training',
-      'cert.secTitle': 'ertification',
-      'cert.secSub': 'English proficiency and standardized certification',
+      'edu.sub': 'Where I study',
+      'cert.secTitle': 'Certification',
+      'cert.secSub': 'English level and upcoming TOEIC test',
       'edu.school': 'Ho Chi Minh City University of Technology — VNU-HCM',
       'edu.degree': 'Bachelor of Computer Engineering',
       'edu.period': 'Sep 2022 – Nov 2027 • Ho Chi Minh City, Vietnam',
@@ -92,19 +92,19 @@ window.PortfolioData = (() => {
       'lang.levelEn': 'B1 Intermediate',
       'lang.levelVi': 'Native',
       'cert.title': 'Language Certification',
-      'cert.sub': 'Standardized English listening and reading assessment',
+      'cert.sub': 'Listening and Reading',
       'cert.c1.name': 'TOEIC (Listening & Reading)',
-      'cert.c1.date': 'Dec 2026 • Educational Testing Service (ETS)',
-      'contact.status': 'Open to Fresher Opportunities',
-      'contact.title': "Let's Build Something Together",
-      'contact.desc': 'I am actively seeking a Fresher Embedded Software Engineer role in Ho Chi Minh City or remote. Feel free to reach out via email, phone, or LinkedIn.',
+      'cert.c1.date': 'Test scheduled for Dec 2026 • ETS',
+      'contact.status': 'Open to fresher opportunities',
+      'contact.title': "Let’s talk",
+      'contact.desc': 'I’m looking for a Fresher Embedded Software Engineer role in Ho Chi Minh City or remote. You can reach me by email, phone or LinkedIn.',
       'contact.copy': 'Copy Email',
       'shortcut.led': 'Toggle LED borders',
       'footer.totop': 'Back to Top',
       'toast.copied': 'Email copied to clipboard!'
     },
     vi: {
-      'nav.about': 'Tóm tắt',
+      'nav.about': 'Tóm tắt chuyên môn',
       'nav.certification': 'Ngoại ngữ',
       'nav.experience': 'Kinh nghiệm',
       'nav.projects': 'Dự án',
@@ -113,59 +113,59 @@ window.PortfolioData = (() => {
       'nav.contact': 'Liên hệ',
       'nav.resume': 'Xem CV',
       'loader.text': 'Đang khởi động firmware ESP32-S3',
-      'hero.status': 'Sẵn sàng ứng tuyển Fresher Embedded Software',
+      'hero.status': 'Đang tìm vị trí Fresher Embedded Software Engineer',
       'hero.greet': 'Xin chào, tôi là',
       'hero.name': 'Nguyễn Văn Sang',
       'hero.title': 'Kỹ sư Phần mềm Nhúng — Fresher',
-      'hero.tagline': 'Tôi phát triển firmware chạy trực tiếp trên phần cứng thực tế: đa nhiệm FreeRTOS đồng thời, suy luận TinyML tại biên, máy trạng thái FPGA, và nền tảng đám mây thu thập dữ liệu IoT.',
-      'hero.cta1': 'Xem các dự án',
-      'hero.cta2': 'Liên hệ ngay',
+      'hero.tagline': 'Sinh viên Kỹ thuật Máy tính tại ĐH Bách khoa TP.HCM. Tôi viết firmware cho ESP32-S3: đa nhiệm FreeRTOS, TinyML chạy trực tiếp trên vi điều khiển, máy trạng thái FPGA bằng Verilog và backend IoT thu thập dữ liệu cảm biến lên cloud.',
+      'hero.cta1': 'Xem dự án',
+      'hero.cta2': 'Liên hệ',
       'hero.scroll': 'Cuộn xuống',
-      'stats.s1': 'Dự án phần cứng & cloud',
-      'stats.s2': 'Tác vụ FreeRTOS đồng thời',
-      'stats.s3': 'Dòng dữ liệu huấn luyện tổng hợp',
-      'stats.s4': 'Độ trễ suy luận tại biên',
+      'stats.s1': 'Dự án có mã nguồn trên GitHub',
+      'stats.s2': 'Tác vụ FreeRTOS trong một firmware',
+      'stats.s3': 'Mẫu dữ liệu huấn luyện tổng hợp',
+      'stats.s4': 'Thời gian suy luận TinyML',
       'about.title': 'Tóm Tắt Chuyên Môn',
-      'about.sub': 'Trợ lý AI tương tác & hồ sơ kỹ thuật',
-      'about.userPrompt': 'Tóm tắt nhanh định hướng kỹ thuật của Nguyễn Văn Sang.',
+      'about.sub': 'Giới thiệu ngắn về tôi và hướng chuyên môn',
+      'about.userPrompt': 'Hãy giới thiệu về Sang',
       'about.regen': 'Phát lại',
-      'about.streamText': "Nguyễn Văn Sang là sinh viên năm cuối ngành Kỹ thuật Máy tính, chuyên sâu về IoT và Hệ thống Nhúng. Anh đã tích lũy kinh nghiệm thực tế qua các dự án học thuật và kỳ thực tập trực tiếp tại Viettel Đắk Lắk (Tập đoàn Viettel). Anh đang tìm kiếm vị trí Fresher Embedded Software Engineer để tiếp tục phát triển kỹ năng kỹ thuật, tích lũy kinh nghiệm trong ngành và trưởng thành cùng các kỹ sư giàu kinh nghiệm trong môi trường chuyên nghiệp.",
+      'about.streamText': "Nguyễn Văn Sang là sinh viên Kỹ thuật Máy tính tại Trường Đại học Bách khoa – ĐHQG-HCM, tập trung vào hệ thống nhúng và IoT. Anh đã viết firmware FreeRTOS cho ESP32-S3, chạy mô hình TinyML trên vi điều khiển, thiết kế máy bán hàng tự động bằng FSM Verilog trên FPGA và xây dựng backend thu thập dữ liệu cảm biến. Mùa hè năm 2026, anh thực tập về giải pháp cảm biến IoT tại Viettel Đắk Lắk. Anh đang tìm vị trí Fresher Embedded Software Engineer để học hỏi từ các kỹ sư giàu kinh nghiệm và làm ra firmware chạy trên phần cứng thật.",
       'do.d1.title': 'Firmware & RTOS',
-      'do.d1.desc': 'Thiết kế kiến trúc firmware đa nhiệm mạnh mẽ trên ESP32/ESP32-S3 sử dụng FreeRTOS: semaphore, queue, event group, đồng bộ hóa tác vụ và lập trình ngoại vi cấp thấp (I2C, GPIO, UART).',
+      'do.d1.desc': 'Firmware đa nhiệm cho ESP32 và ESP32-S3 trên FreeRTOS: task, queue, mutex, event group, kèm driver cho I2C, GPIO và UART.',
       'do.d2.title': 'Edge AI & TinyML',
-      'do.d2.desc': 'Triển khai mô hình TensorFlow Lite for Microcontrollers tối ưu hóa trên vi điều khiển. Suy luận thời gian thực dưới 1 ms kèm cơ chế khóa an toàn phần cứng khi cảm biến quá ngưỡng.',
+      'do.d2.desc': 'Mô hình TensorFlow Lite Micro nhỏ chạy trực tiếp trên vi điều khiển, kèm khóa an toàn phần cứng để rơ-le bơm chỉ bật khi điều kiện cho phép.',
       'do.d3.title': 'FPGA & Thiết kế số',
-      'do.d3.desc': 'Thiết kế và tổng hợp mạch logic số, máy trạng thái FSM bằng ngôn ngữ Verilog HDL trên phần mềm Xilinx Vivado, Cadence Xcelium và bo mạch Digilent Arty-Z7 FPGA.',
+      'do.d3.desc': 'Máy trạng thái hữu hạn và logic số viết bằng Verilog, dùng Vivado và Cadence Xcelium, chạy trên bo Digilent Arty-Z7.',
       'exp.title': 'Kinh Nghiệm',
-      'exp.sub': 'Kinh nghiệm kỹ thuật thực tế và thực tập doanh nghiệp',
+      'exp.sub': 'Kinh nghiệm thực tập',
       'exp.role': 'Thực tập sinh IoT',
-      'exp.company': 'Viettel Đắk Lắk — Tập đoàn Công nghiệp – Viễn thông Quân đội (Viettel)',
-      'exp.type': 'Trực tiếp (On-site)',
-      'exp.b1': 'Học hỏi và nắm vững nguyên lý cơ bản về IoT, giao tiếp cảm biến công nghiệp và lập trình vi điều khiển ESP32.',
-      'exp.b2': 'Nghiên cứu kiến trúc nền tảng IoT và phát triển hệ thống backend xử lý dữ liệu với Node.js và PostgreSQL.',
-      'exp.b3': 'Xây dựng giải pháp IoT hoàn chỉnh kết nối thiết bị cảm biến ESP32 và truyền dữ liệu an toàn lên máy chủ.',
+      'exp.company': 'Viettel Đắk Lắk — Tập đoàn Viettel',
+      'exp.type': 'Trực tiếp',
+      'exp.b1': 'Tìm hiểu kiến trúc IoT, giao tiếp cảm biến công nghiệp và lập trình cấp thấp cho ESP32.',
+      'exp.b2': 'Tìm hiểu nền tảng quản lý thiết bị IoT doanh nghiệp và phát triển backend với Node.js, PostgreSQL.',
+      'exp.b3': 'Xây dựng giải pháp cảm biến IoT gửi dữ liệu từ phần cứng lên backend cloud và lưu nhật ký.',
       'proj.title': 'Dự Án',
-      'proj.sub': 'Các dự án phần cứng và phần mềm đã được xác thực',
-      'proj.p1.title': 'Hệ thống Giám sát Môi trường Nông nghiệp Thông minh',
-      'proj.p1.b1': 'Phát triển firmware FreeRTOS đồng thời trên ESP32-S3 với context dùng chung bảo vệ bằng semaphore, điều phối 7 tác vụ (đọc cảm biến, suy luận TinyML, kích rơ-le máy bơm, ghi nhật ký, nút nhấn reset, đèn LED) qua I2C, GPIO và mạng.',
-      'proj.p1.b2': 'Triển khai mô hình phân loại float32 TensorFlow Lite Micro (nhiệt độ, độ ẩm, độ ẩm đất thành 3 cấp rủi ro) với thời gian suy luận dưới 1 ms và chốt an toàn phần cứng.',
-      'proj.p1.b3': 'Tích hợp cơ chế WiFi AP dự phòng lưu cấu hình LittleFS, truyền dữ liệu thời gian thực qua HTTP/WebSocket đến hệ thống quản lý hạm đội Node.js/PostgreSQL đóng gói Docker.',
-      'proj.p2.title': 'Mô phỏng Máy bán hàng Tự động trên FPGA',
-      'proj.p2.b1': 'Thiết kế và tổng hợp hoàn chỉnh máy bán hàng tự động dựa trên FSM bằng Verilog trên bo mạch Digilent Arty-Z7 FPGA.',
-      'proj.p2.b2': 'Lập trình logic máy trạng thái xử lý đồng bộ việc chọn mặt hàng, nhận diện mệnh giá tiền xu, tính số dư và trả lại tiền thừa.',
-      'proj.p2.b3': 'Hiện thực giao tiếp phần cứng thời gian thực cho màn hình LCD ký tự 16x2, LED 7 đoạn hiển thị số tiền và hệ thống nút gạt chống rung phím.',
-      'proj.p3.title': 'Hệ thống Quản lý Bãi đỗ xe Khuôn viên Đại học Thông minh',
-      'proj.p3.b1': 'Xây dựng 6 API RESTful đồng bộ hóa trạng thái vị trí đỗ xe từ cảm biến IoT theo thời gian thực qua 6 phân khu với độ trễ dưới một giây.',
-      'proj.p3.b2': 'Tích hợp quy trình thanh toán trực tuyến tự động và quản lý số dư qua cổng thanh toán BKPay.',
-      'proj.p3.b3': 'Phát triển giao diện bản đồ GPS 2D tương tác bằng React Leaflet và kiểm soát phân quyền đa người dùng qua chính sách bảo mật Row-Level Security (RLS) của PostgreSQL.',
+      'proj.sub': 'Dự án nhúng, FPGA và full-stack, đều có mã nguồn trên GitHub',
+      'proj.p1.title': 'Hệ thống giám sát nông nghiệp thông minh',
+      'proj.p1.b1': 'Viết firmware FreeRTOS cho ESP32-S3 gồm 7 task (đọc cảm biến, suy luận TinyML, rơ-le bơm, ghi log, nút reset, LED trạng thái) dùng chung trạng thái qua semaphore, giao tiếp I2C, GPIO và mạng.',
+      'proj.p1.b2': 'Chạy mô hình float32 TensorFlow Lite Micro phân loại nhiệt độ, độ ẩm và độ ẩm đất thành 3 mức rủi ro, mỗi lần suy luận dưới 1 ms, kèm khóa an toàn phần cứng cho máy bơm.',
+      'proj.p1.b3': 'Thêm chế độ Wi-Fi access point dự phòng, lưu các mạng đã biết trong LittleFS, và truyền telemetry qua HTTP/WebSocket tới dashboard Node.js + PostgreSQL chạy trong Docker.',
+      'proj.p2.title': 'Mô phỏng máy bán hàng tự động trên FPGA',
+      'proj.p2.b1': 'Thiết kế máy bán hàng tự động bằng FSM Verilog và triển khai trên bo Digilent Arty-Z7.',
+      'proj.p2.b2': 'FSM xử lý chọn sản phẩm, nhận diện tiền xu, tính số dư và trả tiền thừa.',
+      'proj.p2.b3': 'Viết giao tiếp phần cứng cho LCD 16x2, LED 7 đoạn và nút nhấn có chống dội.',
+      'proj.p3.title': 'Hệ thống quản lý bãi đỗ xe thông minh trong khuôn viên trường',
+      'proj.p3.b1': 'Xây dựng 6 REST API đồng bộ trạng thái chỗ đỗ từ cảm biến IoT trên 6 khu vực.',
+      'proj.p3.b2': 'Tích hợp cổng thanh toán BKPay để thanh toán trực tuyến và quản lý số dư.',
+      'proj.p3.b3': 'Làm bản đồ GPS 2D bằng React Leaflet và phân quyền cho 5 nhóm người dùng bằng PostgreSQL Row-Level Security.',
       'proj.inspect': 'Kiến trúc hệ thống',
       'proj.m1': 'tác vụ FreeRTOS',
       'proj.m2': 'suy luận TinyML',
-      'proj.m3': 'dòng dữ liệu huấn luyện',
-      'proj.inspectFSM': 'FSM & Thiết kế RTL',
-      'proj.inspectCloud': 'Hạ tầng Cloud & RLS',
+      'proj.m3': 'mẫu huấn luyện',
+      'proj.inspectFSM': 'Thiết kế FSM & RTL',
+      'proj.inspectCloud': 'Thiết kế Cloud & RLS',
       'skills.title': 'Kỹ Năng Chuyên Môn',
-      'skills.sub': 'Các công nghệ được xác minh qua dự án phần cứng thực tế và CV',
+      'skills.sub': 'Công cụ và công nghệ tôi đã dùng trong các dự án bên dưới',
       'skills.c1': 'Ngôn ngữ lập trình',
       'skills.c2': 'Hệ thống nhúng & RTOS',
       'skills.c3': 'Edge AI & TinyML',
@@ -174,9 +174,9 @@ window.PortfolioData = (() => {
       'skills.c6': 'IoT Backend & Web',
       'edu.sectionTitle': 'Học Vấn & Chứng Chỉ',
       'edu.title': 'Học Vấn',
-      'edu.sub': 'Đào tạo chính quy',
+      'edu.sub': 'Nơi tôi đang theo học',
       'cert.secTitle': 'Ngoại Ngữ & Chứng Chỉ',
-      'cert.secSub': 'Trình độ tiếng Anh và chứng chỉ chuẩn hóa',
+      'cert.secSub': 'Trình độ tiếng Anh và kỳ thi TOEIC sắp tới',
       'edu.school': 'Trường Đại học Bách khoa – ĐHQG-HCM',
       'edu.degree': 'Cử nhân Kỹ thuật Máy tính',
       'edu.period': 'Tháng 9/2022 – Tháng 11/2027 • TP. Hồ Chí Minh, Việt Nam',
@@ -186,12 +186,12 @@ window.PortfolioData = (() => {
       'lang.levelEn': 'Trung cấp (B1)',
       'lang.levelVi': 'Bản ngữ',
       'cert.title': 'Chứng chỉ ngoại ngữ',
-      'cert.sub': 'Đánh giá chuẩn hóa kỹ năng Nghe và Đọc tiếng Anh',
+      'cert.sub': 'Kỹ năng Nghe và Đọc',
       'cert.c1.name': 'TOEIC (Kỹ năng Nghe & Đọc)',
-      'cert.c1.date': 'Tháng 12/2026 • Viện Khảo thí Giáo dục Hoa Kỳ (ETS)',
-      'contact.status': 'Sẵn sàng đón nhận cơ hội nghề nghiệp',
-      'contact.title': 'Cùng Nhau Tạo Nên Giá Trị Thực',
-      'contact.desc': 'Tôi đang tích cực tìm kiếm cơ hội Kỹ sư Phần mềm Nhúng Fresher tại TP. Hồ Chí Minh hoặc làm việc từ xa. Rất mong được kết nối qua email, điện thoại hoặc LinkedIn.',
+      'cert.c1.date': 'Dự kiến thi tháng 12/2026 • ETS',
+      'contact.status': 'Đang tìm cơ hội Fresher',
+      'contact.title': 'Cùng trao đổi',
+      'contact.desc': 'Tôi đang tìm vị trí Fresher Embedded Software Engineer tại TP. Hồ Chí Minh hoặc làm việc từ xa. Bạn có thể liên hệ qua email, điện thoại hoặc LinkedIn.',
       'contact.copy': 'Sao chép Email',
       'shortcut.led': 'Bật/tắt viền LED',
       'footer.totop': 'Lên Đầu Trang',
@@ -209,7 +209,7 @@ window.PortfolioData = (() => {
         <div class="arch-card">
           <div class="arch-card-title">
             <svg class="ic" style="width:16px;height:16px;color:var(--mint);"><use href="#i-layers"/></svg>
-            <span>FreeRTOS Task Concurrency & Semaphore IPC Pipeline</span>
+            <span>FreeRTOS tasks and how they communicate</span>
           </div>
           <div class="arch-pipeline">
             <div class="arch-step"><b>Task_SensorSampling</b><span>Core 0 • Period: 50ms</span></div>
@@ -218,17 +218,17 @@ window.PortfolioData = (() => {
             <span class="arch-sep">➔</span>
             <div class="arch-step"><b>Task_TinyMLInference</b><span>Core 1 • &lt;1ms TFLite</span></div>
             <span class="arch-sep">➔</span>
-            <div class="arch-step"><b>xSemaphoreMutex</b><span>Zero Race Conditions</span></div>
+            <div class="arch-step"><b>xSemaphoreMutex</b><span>Guards shared state</span></div>
             <span class="arch-sep">➔</span>
             <div class="arch-step"><b>Task_PumpSafety</b><span>Core 0 • Relay Safe Interlock</span></div>
           </div>
-          <p class="muted small" style="margin:0;">Inter-task communication is synchronized via FreeRTOS Queues and protected by mutex semaphores, ensuring zero data races between hardware sensors and network streaming.</p>
+          <p class="muted small" style="margin:0;">Tasks pass data through FreeRTOS queues, and shared state is guarded by a mutex so sensor sampling and network streaming do not overwrite each other.</p>
         </div>
 
         <div class="arch-card">
           <div class="arch-card-title">
             <svg class="ic" style="width:16px;height:16px;color:var(--amber);"><use href="#i-chip"/></svg>
-            <span>Hardware GPIO & Peripheral Allocation Matrix</span>
+            <span>Pin and peripheral allocation</span>
           </div>
           <table class="pin-table">
             <thead>
@@ -248,16 +248,16 @@ window.PortfolioData = (() => {
         <div class="arch-card" style="margin-bottom:0;">
           <div class="arch-card-title">
             <svg class="ic" style="width:16px;height:16px;color:var(--cyan);"><use href="#i-server"/></svg>
-            <span>Fail-Safe WiFi SoftAP Fallback & Cloud Fleet Telemetry</span>
+            <span>Wi-Fi fallback and cloud telemetry</span>
           </div>
-          <p class="small" style="color:var(--text2);margin:0 0 8px;">If the primary farm WiFi gateway drops out, ESP32-S3 automatically shifts into SoftAP mode via LittleFS credentials, serving an onboard emergency captive portal. When reconnected, queued telemetry syncs via WebSocket/HTTP to a Dockerized Node.js & PostgreSQL fleet dashboard.</p>
+          <p class="small" style="color:var(--text2);margin:0 0 8px;">If none of the saved Wi-Fi networks is available, the ESP32-S3 starts its own access point and serves a setup page. Known networks are stored in LittleFS. Once connected, it streams telemetry over HTTP/WebSocket to a Node.js and PostgreSQL dashboard running in Docker.</p>
         </div>
       `,
       body_vi: `
         <div class="arch-card">
           <div class="arch-card-title">
             <svg class="ic" style="width:16px;height:16px;color:var(--mint);"><use href="#i-layers"/></svg>
-            <span>Đa nhiệm Tác vụ FreeRTOS & Luồng IPC Semaphore</span>
+            <span>Các task FreeRTOS và cách chúng giao tiếp</span>
           </div>
           <div class="arch-pipeline">
             <div class="arch-step"><b>Task_SensorSampling</b><span>Lõi 0 • Chu kỳ: 50ms</span></div>
@@ -266,17 +266,17 @@ window.PortfolioData = (() => {
             <span class="arch-sep">➔</span>
             <div class="arch-step"><b>Task_TinyMLInference</b><span>Lõi 1 • &lt;1ms TFLite</span></div>
             <span class="arch-sep">➔</span>
-            <div class="arch-step"><b>xSemaphoreMutex</b><span>Khóa Mutex loại bỏ xung đột</span></div>
+            <div class="arch-step"><b>xSemaphoreMutex</b><span>Bảo vệ dữ liệu dùng chung</span></div>
             <span class="arch-sep">➔</span>
             <div class="arch-step"><b>Task_PumpSafety</b><span>Lõi 0 • Điều khiển Relay Bơm</span></div>
           </div>
-          <p class="muted small" style="margin:0;">Giao tiếp giữa các tác vụ độc lập được đồng bộ hóa hoàn toàn qua hàng đợi FreeRTOS Queue và khóa Mutex Semaphore, đảm bảo không có hiện tượng Race Condition giữa cảm biến và luồng phát sóng mạng.</p>
+          <p class="muted small" style="margin:0;">Các task trao đổi dữ liệu qua queue của FreeRTOS, còn trạng thái dùng chung được bảo vệ bằng mutex để việc đọc cảm biến và truyền dữ liệu qua mạng không ghi đè lên nhau.</p>
         </div>
 
         <div class="arch-card">
           <div class="arch-card-title">
             <svg class="ic" style="width:16px;height:16px;color:var(--amber);"><use href="#i-chip"/></svg>
-            <span>Ma trận Phân bổ Chân Phần cứng GPIO</span>
+            <span>Phân bổ chân và ngoại vi</span>
           </div>
           <table class="pin-table">
             <thead>
@@ -296,9 +296,9 @@ window.PortfolioData = (() => {
         <div class="arch-card" style="margin-bottom:0;">
           <div class="arch-card-title">
             <svg class="ic" style="width:16px;height:16px;color:var(--cyan);"><use href="#i-server"/></svg>
-            <span>Cơ chế Dự phòng WiFi SoftAP & Đồng bộ Đám mây</span>
+            <span>Wi-Fi dự phòng và telemetry lên cloud</span>
           </div>
-          <p class="small" style="color:var(--text2);margin:0 0 8px;">Khi mất kết nối Router trang trại, ESP32-S3 tự động chuyển sang chế độ SoftAP phát wifi nội bộ đọc từ LittleFS, mở trang cấu hình cục bộ. Khi có mạng trở lại, hệ thống đẩy hàng đợi telemetry lên máy chủ Docker Node.js & PostgreSQL.</p>
+          <p class="small" style="color:var(--text2);margin:0 0 8px;">Nếu không có mạng Wi-Fi nào đã lưu khả dụng, ESP32-S3 tự phát access point riêng và mở trang cấu hình. Các mạng đã biết được lưu trong LittleFS. Khi đã kết nối, thiết bị truyền telemetry qua HTTP/WebSocket tới dashboard Node.js + PostgreSQL chạy trong Docker.</p>
         </div>
       `
     },
@@ -324,7 +324,7 @@ window.PortfolioData = (() => {
             <span class="arch-sep">➔</span>
             <div class="arch-step"><b>S_RETURN_CHG</b><span>Calculate & Return Change</span></div>
           </div>
-          <p class="muted small" style="margin:0;">Synchronous Moore-Mealy hybrid state machine synthesized on Xilinx Zynq-7000 FPGA logic fabric, clocked at 100MHz with glitch-free state transitions.</p>
+          <p class="muted small" style="margin:0;">A synchronous state machine implemented on the Xilinx Zynq-7000 logic fabric and clocked at 100 MHz.</p>
         </div>
 
         <div class="arch-card" style="margin-bottom:0;">
@@ -337,8 +337,8 @@ window.PortfolioData = (() => {
               <tr><th>Submodule</th><th>Clock Domain</th><th>Hardware Interface</th><th>Function</th></tr>
             </thead>
             <tbody>
-              <tr><td><b>clk_divider</b></td><td>100MHz ➔ 1kHz</td><td>Internal Phase Lock</td><td>Debounce sampling & display refresh timing</td></tr>
-              <tr><td><b>button_debouncer</b></td><td>1kHz Sample</td><td>Tactical Push Switches</td><td>4-stage shift register eliminates bounce jitter</td></tr>
+              <tr><td><b>clk_divider</b></td><td>100MHz ➔ 1kHz</td><td>Internal clock</td><td>Debounce sampling & display refresh timing</td></tr>
+              <tr><td><b>button_debouncer</b></td><td>1kHz Sample</td><td>Tactical Push Switches</td><td>4-stage shift register filters switch bounce</td></tr>
               <tr><td><b>lcd1602_ctrl</b></td><td>Synchronous</td><td>4-bit Parallel Bus</td><td>Initializes LCD, renders balance & product names</td></tr>
               <tr><td><b>seg7_multiplexer</b></td><td>500Hz Scan</td><td>4-Digit Common Anode</td><td>High-frequency time-multiplexed balance readout</td></tr>
             </tbody>
@@ -362,7 +362,7 @@ window.PortfolioData = (() => {
             <span class="arch-sep">➔</span>
             <div class="arch-step"><b>S_RETURN_CHG</b><span>Tính toán & Trả tiền thừa</span></div>
           </div>
-          <p class="muted small" style="margin:0;">Mô hình máy trạng thái đồng bộ lai Moore-Mealy được tổng hợp trên vi mạch FPGA Xilinx Zynq-7000 với tần số dao động 100MHz, chuyển trạng thái không nhiễu glitch.</p>
+          <p class="muted small" style="margin:0;">Máy trạng thái đồng bộ được triển khai trên phần logic của Xilinx Zynq-7000, xung nhịp 100 MHz.</p>
         </div>
 
         <div class="arch-card" style="margin-bottom:0;">
@@ -376,7 +376,7 @@ window.PortfolioData = (() => {
             </thead>
             <tbody>
               <tr><td><b>clk_divider</b></td><td>100MHz ➔ 1kHz</td><td>Bộ chia tần nội</td><td>Tạo xung nhịp chống dội và quét màn hình</td></tr>
-              <tr><td><b>button_debouncer</b></td><td>Lấy mẫu 1kHz</td><td>Phím bấm cơ học</td><td>Thanh ghi dịch 4 tầng triệt tiêu nhiễu rung phím</td></tr>
+              <tr><td><b>button_debouncer</b></td><td>Lấy mẫu 1kHz</td><td>Phím bấm cơ học</td><td>Thanh ghi dịch 4 tầng lọc nhiễu rung phím</td></tr>
               <tr><td><b>lcd1602_ctrl</b></td><td>Đồng bộ</td><td>Bus song song 4-bit</td><td>Khởi tạo LCD 16x2, hiển thị số dư và tên món</td></tr>
               <tr><td><b>seg7_multiplexer</b></td><td>Quét 500Hz</td><td>4 LED 7 đoạn Anode chung</td><td>Quét ghép kênh thời gian hiển thị số tiền tức thì</td></tr>
             </tbody>
@@ -398,7 +398,7 @@ window.PortfolioData = (() => {
           <div class="arch-pipeline">
             <div class="arch-step"><b>Barrier / Slot Sensors</b><span>IoT Trigger Nodes</span></div>
             <span class="arch-sep">➔</span>
-            <div class="arch-step"><b>Express REST APIs</b><span>6 Endpoints (&lt;200ms)</span></div>
+            <div class="arch-step"><b>Express REST APIs</b><span>6 REST endpoints</span></div>
             <span class="arch-sep">➔</span>
             <div class="arch-step"><b>PostgreSQL RLS</b><span>Database Security Layer</span></div>
             <span class="arch-sep">➔</span>
@@ -411,7 +411,7 @@ window.PortfolioData = (() => {
         <div class="arch-card" style="margin-bottom:0;">
           <div class="arch-card-title">
             <svg class="ic" style="width:16px;height:16px;color:var(--amber);"><use href="#i-award"/></svg>
-            <span>5-Tier Security Matrix with PostgreSQL Row-Level Security</span>
+            <span>Access control for 5 roles with PostgreSQL Row-Level Security</span>
           </div>
           <table class="pin-table">
             <thead>
@@ -436,7 +436,7 @@ window.PortfolioData = (() => {
           <div class="arch-pipeline">
             <div class="arch-step"><b>Cảm biến Barrier / Ô đỗ</b><span>Nút kích hoạt IoT</span></div>
             <span class="arch-sep">➔</span>
-            <div class="arch-step"><b>Express REST APIs</b><span>6 Endpoints phản hồi &lt;200ms</span></div>
+            <div class="arch-step"><b>Express REST APIs</b><span>6 REST endpoint</span></div>
             <span class="arch-sep">➔</span>
             <div class="arch-step"><b>PostgreSQL RLS</b><span>Bảo mật hàng tại tầng Database</span></div>
             <span class="arch-sep">➔</span>
@@ -449,7 +449,7 @@ window.PortfolioData = (() => {
         <div class="arch-card" style="margin-bottom:0;">
           <div class="arch-card-title">
             <svg class="ic" style="width:16px;height:16px;color:var(--amber);"><use href="#i-award"/></svg>
-            <span>Ma trận Bảo mật 5 Cấp với PostgreSQL Row-Level Security</span>
+            <span>Phân quyền 5 nhóm người dùng bằng PostgreSQL Row-Level Security</span>
           </div>
           <table class="pin-table">
             <thead>
