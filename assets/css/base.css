@@ -163,17 +163,6 @@ main > .section:nth-of-type(even) {
   margin-bottom: clamp(32px, 5vw, 48px);
 }
 
-.sec-num {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--amber);
-  background: rgba(var(--amber-rgb), 0.1);
-  border: 1px solid rgba(var(--amber-rgb), 0.3);
-  border-radius: 8px;
-  padding: 4px 10px;
-  flex-shrink: 0;
-}
-
 .sec-title {
   font-size: clamp(28px, 4.4vw, 44px);
   color: var(--text);

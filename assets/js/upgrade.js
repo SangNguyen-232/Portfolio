@@ -56,7 +56,7 @@
   document.addEventListener('visibilitychange', updateVisibility);
   updateVisibility();
 
-  // Keyboard shortcut [B] to toggle running LED borders with audio feedback
+  // Keyboard shortcut [B] to toggle running LED borders
   window.addEventListener('keydown', (event) => {
     if (event.defaultPrevented || event.repeat || event.isComposing) return;
     if (event.ctrlKey || event.metaKey || event.altKey || event.key.toLowerCase() !== 'b') return;
@@ -71,9 +71,5 @@
     try {
       localStorage.setItem(KEY, off ? 'off' : 'on');
     } catch (_) {}
-
-    if (window.AudioEngine && typeof window.AudioEngine.playCyberSound === 'function') {
-      window.AudioEngine.playCyberSound(off ? 750 : 1100, 0.05);
-    }
   });
 })();

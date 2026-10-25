@@ -90,7 +90,6 @@ window.TerminalEngine = (() => {
     chips.forEach((chip) => {
       chip.addEventListener('click', () => {
         const cmdKey = chip.dataset.cmd;
-        if (window.AudioEngine) window.AudioEngine.playCyberSound(950, 0.05);
 
         if (cmdKey === 'clear') {
           termBody.innerHTML = `

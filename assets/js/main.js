@@ -196,7 +196,7 @@
     const nav = document.getElementById('nav');
     const progressBar = document.getElementById('scrollProgressBar');
     const timeline = document.querySelector('.timeline');
-    const sections = document.querySelectorAll('section[id]');
+    const sections = document.querySelectorAll('main > section[id]');
     const navLinks = document.querySelectorAll('.nav-links a, .toc a');
     const reveals = document.querySelectorAll('.reveal');
     const chatSection = document.getElementById('chat');
@@ -376,7 +376,7 @@
       backgroundState.clear();
     };
 
-    const openDialog = (modalBackdrop, modalDialog, frequency) => {
+    const openDialog = (modalBackdrop, modalDialog) => {
       if (!modalBackdrop || !modalDialog) return;
       const previousModal = activeModal;
       const opener = previousModal ? previousModal.opener : document.activeElement;
@@ -400,7 +400,6 @@
         backgroundState.set(el, el.inert);
         el.inert = true;
       });
-      if (window.AudioEngine) window.AudioEngine.playCyberSound(frequency, 0.06);
     };
 
     const closeDialog = () => {
@@ -416,7 +415,6 @@
       closingModal.dialog.style.visibility = '';
       closingModal.backdrop.classList.remove('open');
       closingModal.backdrop.setAttribute('aria-hidden', 'true');
-      if (window.AudioEngine) window.AudioEngine.playCyberSound(750, 0.04);
     };
 
     const openModal = (modalKey) => {
@@ -426,12 +424,12 @@
       title.textContent = isVi ? data.title_vi : data.title_en;
       sub.textContent = isVi ? data.sub_vi : data.sub_en;
       body.innerHTML = isVi ? data.body_vi : data.body_en;
-      openDialog(backdrop, dialog, 1150);
+      openDialog(backdrop, dialog);
     };
 
     const toggleShortcutsModal = () => {
       if (activeModal && activeModal.backdrop === shortcutsModal) closeDialog();
-      else openDialog(shortcutsModal, shortcutsDialog, 1100);
+      else openDialog(shortcutsModal, shortcutsDialog);
     };
 
     inspectBtns.forEach((btn) => {
@@ -512,9 +510,6 @@
       if (e.key.toLowerCase() === 'l') {
         const langToggle = document.getElementById('langToggle');
         if (langToggle) langToggle.click();
-      } else if (e.key.toLowerCase() === 'm') {
-        const sfxToggle = document.getElementById('sfxToggle');
-        if (sfxToggle) sfxToggle.click();
       } else if (e.key.toLowerCase() === 't') {
         const term = document.getElementById('term');
         if (term) term.scrollIntoView({ behavior: 'smooth' });
@@ -548,7 +543,6 @@
     const copyText = (text, successMsg) => {
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(text).then(() => {
-          if (window.AudioEngine) window.AudioEngine.playCyberSound(1050, 0.06);
           showToast(successMsg);
         }).catch(() => window.prompt('Copy:', text));
       } else {
@@ -583,7 +577,6 @@
     if (!burger || !mobileMenu) return;
 
     const toggleMenu = () => {
-      if (window.AudioEngine) window.AudioEngine.playCyberSound(800, 0.05);
       const isOpen = document.body.classList.toggle('menu-open');
       burger.setAttribute('aria-expanded', String(isOpen));
       mobileMenu.setAttribute('aria-hidden', String(!isOpen));
@@ -613,7 +606,6 @@
     const langToggle = document.getElementById('langToggle');
     if (langToggle && window.PortfolioData) {
       langToggle.addEventListener('click', () => {
-        if (window.AudioEngine) window.AudioEngine.playCyberSound(1000, 0.05);
         const activeLang = localStorage.getItem('sang_portfolio_lang') || 'en';
         const nextLang = activeLang === 'en' ? 'vi' : 'en';
         window.PortfolioData.applyTranslations(nextLang);
@@ -628,34 +620,24 @@
     const regenBtn = document.getElementById('regenBtn');
     if (regenBtn && window.TerminalEngine) {
       regenBtn.addEventListener('click', () => {
-        if (window.AudioEngine) window.AudioEngine.playCyberSound(900, 0.05);
         window.TerminalEngine.resetStream();
         window.TerminalEngine.startChatStream();
       });
     }
 
-    // 3. Audio Engine
-    if (window.AudioEngine) {
-      window.AudioEngine.initSoundToggle();
-    }
-
-    // 4. Preloader
+    // 3. Preloader
     initPreloader();
 
-    // 5. Hardware & Canvas Modules
+    // 4. Hardware & Canvas Modules
     if (window.ScopeEngine) {
       window.ScopeEngine.initNeuralNetwork();
-    }
-
-    if (window.TelemetryEngine) {
-      window.TelemetryEngine.initHeroEngineerCard();
     }
 
     if (window.TerminalEngine) {
       window.TerminalEngine.initInteractiveTerminal();
     }
 
-    // 6. Interaction Systems
+    // 5. Interaction Systems
     initCustomCursor();
     initTiltAndSpotlight();
     initButtonRipple();
