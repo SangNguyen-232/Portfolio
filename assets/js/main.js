@@ -175,7 +175,7 @@
     // Directional tag stagger
     document.querySelectorAll('.projects .pcard').forEach((el, i) => el.classList.add(i % 2 ? 'from-r' : 'from-l'));
     document.querySelectorAll('.edu-grid .edu').forEach((el, i) => el.classList.add(i ? 'from-r' : 'from-l'));
-    document.querySelectorAll('.skills .skill, .do-grid .do, .bus-matrix').forEach((el) => el.classList.add('zoom'));
+    document.querySelectorAll('.skills .skill, .do-grid .do').forEach((el) => el.classList.add('zoom'));
     reveals.forEach((card) => {
       card.querySelectorAll('.tag').forEach((t, i) => t.style.setProperty('--i', i));
     });
