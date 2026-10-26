@@ -1,0 +1,133 @@
+/* =====================================================================
+   REDESIGN LAYER — "Silicon Blueprint"
+   Nạp cuối cùng trong style.css. Điểm nhấn duy nhất: thẻ chân dung
+   được thiết kế như một con chip trên PCB; phần còn lại giữ yên tĩnh.
+   ===================================================================== */
+
+:root { color-scheme: dark; }
+html { scrollbar-color: var(--border2) var(--bg); }
+
+/* ---------------------------------------------------------------------
+   1. HERO: thẻ chân dung = chip trên PCB (nhãn lụa silkscreen)
+   --------------------------------------------------------------------- */
+.eng-card { position: relative; }
+.eng-card-head,
+.eng-card-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  font: 500 12px var(--mono);
+  letter-spacing: 0.04em;
+  color: var(--dim);
+}
+.eng-card-head {
+  justify-content: flex-end;
+}
+.eng-card-head::after {
+  content: '●  Online';
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 14px 5px 12px;
+  border-radius: 999px;
+  font: 700 11px/1.2 var(--mono);
+  letter-spacing: 0.12em;
+  color: var(--mint);
+  background: rgba(var(--mint-rgb), 0.08);
+  border: 1px solid rgba(var(--mint-rgb), 0.35);
+  box-shadow: 0 0 12px rgba(var(--mint-rgb), 0.2), inset 0 0 6px rgba(var(--mint-rgb), 0.08);
+  text-shadow: 0 0 8px rgba(var(--mint-rgb), 0.8);
+  transform-origin: right center;
+  animation: onlinePulse 1.8s ease-in-out infinite;
+  margin-left: auto;
+}
+
+@keyframes onlinePulse {
+  0%, 100% {
+    border-color: rgba(var(--mint-rgb), 0.35);
+    background: rgba(var(--mint-rgb), 0.08);
+    box-shadow: 0 0 0 0 rgba(var(--mint-rgb), 0.5),
+                0 0 10px rgba(var(--mint-rgb), 0.2),
+                inset 0 0 6px rgba(var(--mint-rgb), 0.08);
+    text-shadow: 0 0 8px rgba(var(--mint-rgb), 0.8);
+    color: var(--mint);
+    transform: scale(1);
+  }
+  50% {
+    border-color: rgba(var(--mint-rgb), 0.9);
+    background: rgba(var(--mint-rgb), 0.2);
+    box-shadow: 0 0 0 6px rgba(var(--mint-rgb), 0),
+                0 0 22px rgba(var(--mint-rgb), 0.5),
+                inset 0 0 12px rgba(var(--mint-rgb), 0.25);
+    text-shadow: 0 0 12px rgba(var(--mint-rgb), 1),
+                 0 0 22px rgba(var(--mint-rgb), 0.6);
+    color: #ffffff;
+    transform: scale(1.05);
+  }
+}
+.eng-card-foot::before { content: 'rev 2026.10'; }
+
+.avatar-frame {
+  box-shadow: 0 0 0 6px rgba(var(--mint-rgb), 0.05),
+              0 0 36px rgba(var(--mint-rgb), 0.22);
+}
+
+/* ---------------------------------------------------------------------
+   2. TERMINAL: scanline mảnh + viền phát sáng khi focus bằng phím [T]
+   --------------------------------------------------------------------- */
+.term-body {
+  background-image: repeating-linear-gradient(
+    180deg, rgba(var(--mint-rgb), 0.025) 0 1px, transparent 1px 3px);
+}
+.term-chip { position: relative; overflow: hidden; } /* sửa lỗi ripple lệch vị trí */
+
+/* ---------------------------------------------------------------------
+   3. ĐIỀU HƯỚNG
+   --------------------------------------------------------------------- */
+.nav-links a { position: relative; }
+.nav-links a.active::after {
+  content: '';
+  position: absolute;
+  left: 12px; right: 12px; bottom: 3px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--grad2);
+}
+
+/* Thanh liên hệ: cuộn ngang trên màn hình nhỏ thay vì xuống 4–5 dòng */
+@media (max-width: 700px) {
+  .cv-contact-bar {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding: 2px 16px;
+    scrollbar-width: none;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 16px, #000 calc(100% - 16px), transparent);
+            mask-image: linear-gradient(90deg, transparent, #000 16px, #000 calc(100% - 16px), transparent);
+  }
+  .cv-contact-bar::-webkit-scrollbar { display: none; }
+  .cv-contact-item { flex: 0 0 auto; white-space: nowrap; }
+}
+
+/* TOC bên phải đè lên nội dung ở 1360–1559px → chỉ hiện khi đủ chỗ */
+@media (min-width: 1360px) { .toc { display: none; } }
+@media (min-width: 1560px) { .toc { display: flex; } }
+
+/* ---------------------------------------------------------------------
+   4. KHỐI NỘI DUNG
+   --------------------------------------------------------------------- */
+.tl-item.current .tl-dot { animation: pulseDot 2.2s infinite; }
+.pcard:hover { box-shadow: 0 22px 50px -18px rgba(0, 0, 0, 0.65), 0 0 34px -14px rgba(var(--amber-rgb), 0.35); }
+.pcard.featured:hover { border-color: rgba(var(--amber-rgb), 0.6); }
+.marquee:hover .track { animation-play-state: paused; }
+
+/* ---------------------------------------------------------------------
+   5. TRUY CẬP: tôn trọng "giảm chuyển động" ở các hiệu ứng còn sót
+   --------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .marquee .track { animation: none; flex-wrap: wrap; width: auto; }
+  .status-dot, .caret, .typing i, .stream.live::after,
+  .eng-card-head::after, .tl-item.current .tl-dot,
+  .loader-bar span { animation: none; }
+  html { scroll-behavior: auto; }
+}

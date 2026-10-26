@@ -33,7 +33,13 @@
   {"@context":"https://schema.org","@type":"Person","name":"Nguyen Van Sang","jobTitle":"Embedded Software Engineer (Fresher)","email":"mailto:sangnguyen230204@gmail.com","telephone":"+84383589877","address":{"@type":"PostalAddress","addressLocality":"Thu Duc, Ho Chi Minh","addressCountry":"VN"},"alumniOf":"Ho Chi Minh City University of Technology — VNU-HCM","sameAs":["https://github.com/SangNguyen-232","https://www.linkedin.com/in/sangnguyen232/"]}
   </script>
 
-  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/variables.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/sections.css">
+  <link rel="stylesheet" href="assets/css/effects.css">
+  <link rel="stylesheet" href="assets/css/upgrade.css">
+  <link rel="stylesheet" href="assets/css/redesign.css">
 </head>
 
 <body>
@@ -269,6 +275,7 @@
       <a href="#experience" data-i18n="nav.experience">Experience</a>
       <a href="#education" data-i18n="nav.education">Education &amp; Certification</a>
       <a href="#contact" data-i18n="nav.contact">Contact</a>
+      <a href="assets/docs/CV.pdf" target="_blank" rel="noopener" data-i18n="nav.resume">View CV</a>
       </nav>
     <div class="mobile-socials">
       <a href="https://github.com/SangNguyen-232" target="_blank" rel="noopener" aria-label="GitHub"><svg class="ic">
@@ -335,7 +342,7 @@
           </h2>
 
           <!-- Interactive Terminal -->
-          <div class="term reveal" style="--d:.25s" id="term" aria-live="polite">
+          <div class="term reveal" style="--d:.25s" id="term">
             <div class="term-bar">
               <i></i><i></i><i></i>
               <span class="term-title mono">sang@esp32s3: ~</span>
@@ -415,7 +422,9 @@
         </div>
       </div>
 
-      <section id="about" class="section hero-summary" aria-labelledby="about-title">
+      </section>
+
+    <section id="about" class="section hero-summary" aria-labelledby="about-title">
         <div class="container">
           <div class="sec-head reveal">
 
@@ -512,7 +521,6 @@
           </div>
         </div>
       </section>
-    </section>
 
     <section id="projects" class="section" aria-labelledby="projects-title">
       <div class="container">
@@ -1157,6 +1165,7 @@
     <span id="toastMsg" data-i18n="toast.copied">Email copied to clipboard!</span>
   </div>
 
+  <script src="assets/js/patch.js"></script>
   <script src="assets/js/i18n.js"></script>
   <script src="assets/js/scope.js"></script>
   <script src="assets/js/terminal.js"></script>

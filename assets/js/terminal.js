@@ -10,6 +10,17 @@ window.TerminalEngine = (() => {
 
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   let streamRunning = false;
+  let streamTimeout = null;
+  let streamInterval = null;
+
+  const clearStreamTimers = () => {
+    clearTimeout(streamTimeout);
+    clearInterval(streamInterval);
+    streamTimeout = null;
+    streamInterval = null;
+  };
+
+  const getLang = () => (document.documentElement.lang === 'vi' ? 'vi' : 'en');
 
   /* =====================================================================
      1. HERO TERMINAL BOOT TYPING ANIMATION
@@ -22,7 +33,7 @@ window.TerminalEngine = (() => {
     const out2 = document.getElementById('out2');
     const out2t = document.getElementById('out2t');
 
-    if (!cmd1 || !out1 || !cmd2 || !out2) return;
+    if (!cmd1 || !out1 || !out1t || !cmd2 || !out2 || !out2t) return;
 
     const command1Str = 'idf.py build && esptool.py flash_id';
     const output1Str = 'ESP32-S3 (Xtensa LX7 dual-core, 240MHz) • Flash: 8MB QIO';
@@ -80,11 +91,30 @@ window.TerminalEngine = (() => {
     if (!termBody || !chips.length) return;
 
     const commandOutputs = {
-      help: 'Commands: [tasks] FreeRTOS tasks  [tinyml] Sensor inference  [fpga] Vending FSM  [clear] Reset',
+      help: 'Commands: [freertos -t] tasks  [tinyml --infer] inference  [fpga --fsm] vending FSM  [clear] reset',
       tasks: 'FreeRTOS: Task_Sensor(8.4%), Task_TinyML(12.1%), Task_Pump(2.3%), Task_WiFi(4.5%) • All Healthy',
       tinyml: '[TFLite Micro] Temp=28.7°C Hum=72% Soil=41% -> CLASS: NORMAL (Risk: 11%, Latency: 0.82ms)',
-      fpga: 'Verilog FSM: [IDLE] -> [SELECT] -> [COIN_DETECT] -> [BALANCE_OK] -> [DISPENSE] -> [IDLE]',
-      clear: '__CLEAR__'
+      fpga: 'Verilog FSM: [IDLE] -> [SELECT] -> [COIN_DETECT] -> [BALANCE_OK] -> [DISPENSE] -> [IDLE]'
+    };
+
+    // Build a terminal line with textContent only (no innerHTML injection)
+    const makeLine = (symbolClass, symbol, text, extraClass, withCaret) => {
+      const line = document.createElement('div');
+      line.className = `term-line${extraClass ? ` ${extraClass}` : ''}`;
+      const sym = document.createElement('span');
+      sym.className = symbolClass;
+      sym.textContent = symbol;
+      line.append(sym, ' ');
+      const body = document.createElement('span');
+      if (symbolClass === 'prompt') body.className = 'cmd';
+      body.textContent = text;
+      line.append(body);
+      if (withCaret) {
+        const caret = document.createElement('span');
+        caret.className = 'caret';
+        line.append(caret);
+      }
+      return line;
     };
 
     chips.forEach((chip) => {
@@ -92,24 +122,19 @@ window.TerminalEngine = (() => {
         const cmdKey = chip.dataset.cmd;
 
         if (cmdKey === 'clear') {
-          termBody.innerHTML = `
-            <div class="term-line"><span class="prompt">$</span> <span class="cmd">system --ready</span></div>
-            <div class="term-line out on"><span class="arrow">›</span> <span>Terminal cleared. Select a command chip below.</span><span class="caret"></span></div>
-          `;
+          termBody.replaceChildren(
+            makeLine('prompt', '$', 'system --ready'),
+            makeLine('arrow', '›', 'Terminal cleared. Select a command chip below.', 'out on', true)
+          );
           return;
         }
 
         const outText = commandOutputs[cmdKey] || 'Command not found. Type "help".';
-        const lineBlock = document.createElement('div');
-        lineBlock.className = 'term-line';
-        lineBlock.innerHTML = `<span class="prompt">$</span> <span class="cmd">${chip.textContent.replace('$', '').trim()}</span>`;
-
-        const outBlock = document.createElement('div');
-        outBlock.className = 'term-line out on';
-        outBlock.innerHTML = `<span class="arrow">›</span> <span>${outText}</span>`;
-
-        termBody.appendChild(lineBlock);
-        termBody.appendChild(outBlock);
+        const cmdText = chip.textContent.replace('$', '').trim();
+        termBody.append(
+          makeLine('prompt', '$', cmdText),
+          makeLine('arrow', '›', outText, 'out on')
+        );
         termBody.scrollTop = termBody.scrollHeight;
       });
     });
@@ -124,16 +149,17 @@ window.TerminalEngine = (() => {
     const chatFoot = document.getElementById('chatFoot');
     if (!typing || !stream || streamRunning) return;
 
+    const dict = (window.PortfolioData && (window.PortfolioData.i18n[getLang()] || window.PortfolioData.i18n.en)) || null;
+    const fullText = dict && dict['about.streamText'];
+    if (!fullText) return;
+
+    clearStreamTimers();
     streamRunning = true;
     stream.textContent = '';
     stream.classList.remove('on', 'live');
     typing.classList.add('on');
 
-    const currentLang = localStorage.getItem('sang_portfolio_lang') || 'en';
-    const dict = (window.PortfolioData && window.PortfolioData.i18n[currentLang]) || (window.PortfolioData && window.PortfolioData.i18n.en);
-    const fullText = dict['about.streamText'];
-
-    setTimeout(() => {
+    streamTimeout = setTimeout(() => {
       typing.classList.remove('on');
       stream.classList.add('on', 'live');
 
@@ -146,12 +172,12 @@ window.TerminalEngine = (() => {
       }
 
       let charIndex = 0;
-      const interval = setInterval(() => {
+      streamInterval = setInterval(() => {
         if (charIndex < fullText.length) {
           stream.textContent += fullText.charAt(charIndex);
           charIndex++;
         } else {
-          clearInterval(interval);
+          clearStreamTimers();
           stream.classList.remove('live');
           if (chatFoot) chatFoot.classList.add('on');
           streamRunning = false;
@@ -160,7 +186,9 @@ window.TerminalEngine = (() => {
     }, 650);
   };
 
+  // Stops any running stream completely (timers included) so a new one starts clean
   const resetStream = () => {
+    clearStreamTimers();
     streamRunning = false;
   };
 

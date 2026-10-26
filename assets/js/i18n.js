@@ -81,7 +81,7 @@ window.PortfolioData = (() => {
       'edu.sectionTitle': 'Education & Certification',
       'edu.title': 'Education',
       'edu.sub': 'Where I study',
-      'cert.secTitle': 'Certification',
+      'cert.secTitle': 'Languages & Certification',
       'cert.secSub': 'English level and upcoming TOEIC test',
       'edu.school': 'Ho Chi Minh City University of Technology — VNU-HCM',
       'edu.degree': 'Bachelor of Computer Engineering',
@@ -283,7 +283,7 @@ window.PortfolioData = (() => {
               <tr><th>Chân</th><th>Ngoại vi</th><th>Giao tiếp Thiết bị</th><th>Chế độ hoạt động</th></tr>
             </thead>
             <tbody>
-              <tr><td><b>GPIO 21</b></td><td>I2C0 SDA</td><td>Cảm biến môi trường SHT31</td><td>Kéo lên 4.7kΩ, 400kHz</td></tr>
+              <tr><td><b>GPIO 21</b></td><td>I2C0 SDA</td><td>Cảm biến môi trường SHT31 / BME280</td><td>Kéo lên 4.7kΩ, 400kHz</td></tr>
               <tr><td><b>GPIO 22</b></td><td>I2C0 SCL</td><td>Đường xung nhịp phần cứng</td><td>Xung nhịp Master Clock</td></tr>
               <tr><td><b>GPIO 4</b></td><td>ADC1_CH3</td><td>Cảm biến đo độ ẩm đất điện dung</td><td>Độ phân giải 12-bit (0–3.3V)</td></tr>
               <tr><td><b>GPIO 18</b></td><td>Digital Out</td><td>Module Relay Kích Bơm Nước 5V</td><td>Cách ly Quang Optocoupler</td></tr>
