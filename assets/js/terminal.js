@@ -8,7 +8,10 @@
 window.TerminalEngine = (() => {
   'use strict';
 
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let bootStarted = false;
+  let bootTimeout = null;
+  let terminalInitialized = false;
   let streamRunning = false;
   let streamTimeout = null;
   let streamInterval = null;
@@ -21,11 +24,18 @@ window.TerminalEngine = (() => {
   };
 
   const getLang = () => (document.documentElement.lang === 'vi' ? 'vi' : 'en');
+  const scheduleBoot = (callback, delay) => {
+    bootTimeout = setTimeout(() => {
+      bootTimeout = null;
+      callback();
+    }, delay);
+  };
 
   /* =====================================================================
      1. HERO TERMINAL BOOT TYPING ANIMATION
      ===================================================================== */
   const startTerminalTyping = () => {
+    if (bootStarted) return;
     const cmd1 = document.getElementById('cmd1');
     const out1 = document.getElementById('out1');
     const out1t = document.getElementById('out1t');
@@ -34,52 +44,71 @@ window.TerminalEngine = (() => {
     const out2t = document.getElementById('out2t');
 
     if (!cmd1 || !out1 || !out1t || !cmd2 || !out2 || !out2t) return;
+    bootStarted = true;
 
     const command1Str = 'idf.py build && esptool.py flash_id';
     const output1Str = 'ESP32-S3 (Xtensa LX7 dual-core, 240MHz) • Flash: 8MB QIO';
     const command2Str = 'freertos --status-all';
     const output2Str = '7 tasks active • TinyML: 0.84ms latency • Heap: 284KB free';
 
-    if (prefersReducedMotion) {
+    const finishBoot = () => {
+      clearTimeout(bootTimeout);
+      bootTimeout = null;
       cmd1.textContent = command1Str;
       out1.classList.add('on');
       out1t.textContent = output1Str;
       cmd2.textContent = command2Str;
       out2.classList.add('on');
       out2t.textContent = output2Str;
+    };
+
+    if (motionQuery.matches) {
+      finishBoot();
       return;
     }
 
     let i = 0;
     const typeCmd1 = () => {
+      if (motionQuery.matches) {
+        finishBoot();
+        return;
+      }
       if (i < command1Str.length) {
         cmd1.textContent += command1Str.charAt(i);
         i++;
-        setTimeout(typeCmd1, 32);
+        scheduleBoot(typeCmd1, 32);
       } else {
-        setTimeout(() => {
+        scheduleBoot(() => {
+          if (motionQuery.matches) {
+            finishBoot();
+            return;
+          }
           out1.classList.add('on');
           out1t.textContent = output1Str;
-          setTimeout(typeCmd2, 380);
+          scheduleBoot(typeCmd2, 380);
         }, 120);
       }
     };
 
     let j = 0;
     const typeCmd2 = () => {
+      if (motionQuery.matches) {
+        finishBoot();
+        return;
+      }
       if (j < command2Str.length) {
         cmd2.textContent += command2Str.charAt(j);
         j++;
-        setTimeout(typeCmd2, 38);
+        scheduleBoot(typeCmd2, 38);
       } else {
-        setTimeout(() => {
+        scheduleBoot(() => {
           out2.classList.add('on');
           out2t.textContent = output2Str;
         }, 120);
       }
     };
 
-    setTimeout(typeCmd1, 300);
+    scheduleBoot(typeCmd1, 300);
   };
 
   /* =====================================================================
@@ -88,11 +117,12 @@ window.TerminalEngine = (() => {
   const initInteractiveTerminal = () => {
     const termBody = document.getElementById('termBody');
     const chips = document.querySelectorAll('#termChips .term-chip');
-    if (!termBody || !chips.length) return;
+    if (!termBody || !chips.length || terminalInitialized) return;
+    terminalInitialized = true;
 
     const commandOutputs = {
       help: 'Commands: [freertos -t] tasks  [tinyml --infer] inference  [fpga --fsm] vending FSM  [clear] reset',
-      tasks: 'FreeRTOS: Task_Sensor(8.4%), Task_TinyML(12.1%), Task_Pump(2.3%), Task_WiFi(4.5%) • All Healthy',
+      tasks: 'FreeRTOS: temp_humi_monitor, tiny_ml_task, task_pump, task_database, Task_Toogle_BOOT, led_blinky, neo_blinky • 7 simulated tasks',
       tinyml: '[TFLite Micro] Temp=28.7°C Hum=72% Soil=41% -> CLASS: NORMAL (Risk: 11%, Latency: 0.82ms)',
       fpga: 'Verilog FSM: [IDLE] -> [SELECT] -> [COIN_DETECT] -> [BALANCE_OK] -> [DISPENSE] -> [IDLE]'
     };
@@ -122,19 +152,26 @@ window.TerminalEngine = (() => {
         const cmdKey = chip.dataset.cmd;
 
         if (cmdKey === 'clear') {
+          // Clear can run before the preloader starts the boot animation.
+          bootStarted = true;
+          clearTimeout(bootTimeout);
+          bootTimeout = null;
           termBody.replaceChildren(
             makeLine('prompt', '$', 'system --ready'),
-            makeLine('arrow', '›', 'Terminal cleared. Select a command chip below.', 'out on', true)
+            makeLine('arrow', '›', getLang() === 'vi' ? 'Đã xóa terminal. Chọn một lệnh bên dưới.' : 'Terminal cleared. Select a command chip below.', 'out on', true)
           );
           return;
         }
 
-        const outText = commandOutputs[cmdKey] || 'Command not found. Type "help".';
+        const outText = commandOutputs[cmdKey] || (getLang() === 'vi' ? 'Không tìm thấy lệnh. Chọn "help".' : 'Command not found. Select "help".');
         const cmdText = chip.textContent.replace('$', '').trim();
         termBody.append(
           makeLine('prompt', '$', cmdText),
           makeLine('arrow', '›', outText, 'out on')
         );
+        while (termBody.children.length > 120) {
+          termBody.firstElementChild.remove();
+        }
         termBody.scrollTop = termBody.scrollHeight;
       });
     });
@@ -159,20 +196,25 @@ window.TerminalEngine = (() => {
     stream.classList.remove('on', 'live');
     typing.classList.add('on');
 
+    if (motionQuery.matches) {
+      typing.classList.remove('on');
+      stream.classList.add('on');
+      stream.textContent = fullText;
+      if (chatFoot) chatFoot.classList.add('on');
+      streamRunning = false;
+      return;
+    }
+
     streamTimeout = setTimeout(() => {
       typing.classList.remove('on');
       stream.classList.add('on', 'live');
 
-      if (prefersReducedMotion) {
-        stream.textContent = fullText;
-        stream.classList.remove('live');
-        if (chatFoot) chatFoot.classList.add('on');
-        streamRunning = false;
-        return;
-      }
-
       let charIndex = 0;
       streamInterval = setInterval(() => {
+        if (motionQuery.matches) {
+          stream.textContent = fullText;
+          charIndex = fullText.length;
+        }
         if (charIndex < fullText.length) {
           stream.textContent += fullText.charAt(charIndex);
           charIndex++;
@@ -190,6 +232,10 @@ window.TerminalEngine = (() => {
   const resetStream = () => {
     clearStreamTimers();
     streamRunning = false;
+    const typing = document.getElementById('typing');
+    const stream = document.getElementById('stream');
+    if (typing) typing.classList.remove('on');
+    if (stream) stream.classList.remove('live');
   };
 
   return {

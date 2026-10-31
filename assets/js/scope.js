@@ -8,18 +8,20 @@
 window.ScopeEngine = (() => {
   'use strict';
 
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
   const isFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  let initialized = false;
 
   /* =====================================================================
      1. NEURAL PARTICLE NETWORK CANVAS (#net)
      ===================================================================== */
   const initNeuralNetwork = () => {
     const canvas = document.getElementById('net');
-    if (!canvas || prefersReducedMotion) return;
+    if (!canvas || initialized) return;
 
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
+    initialized = true;
 
     const C = [[95, 227, 200], [255, 181, 71], [191, 242, 230]];
     const col = (c, a) => `rgba(${c[0]},${c[1]},${c[2]},${a})`;
@@ -65,6 +67,8 @@ window.ScopeEngine = (() => {
     });
 
     const draw = (t) => {
+      rafId = null;
+      if (document.hidden || motionQuery.matches) return;
       rafId = requestAnimationFrame(draw);
       if (t - lastTime < 32) return; // ~30fps lock for smooth battery saving
       lastTime = t;
@@ -153,16 +157,21 @@ window.ScopeEngine = (() => {
 
     const aLerp = (a, b, t) => a + (b - a) * t;
 
-    resize();
-    rafId = requestAnimationFrame(draw);
-
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden) {
+    const syncAnimation = () => {
+      if (document.hidden || motionQuery.matches) {
         cancelAnimationFrame(rafId);
-      } else {
+        rafId = null;
+        ctx.clearRect(0, 0, W, H);
+      } else if (rafId === null) {
+        lastTime = 0;
         rafId = requestAnimationFrame(draw);
       }
-    });
+    };
+
+    resize();
+    syncAnimation();
+    document.addEventListener('visibilitychange', syncAnimation);
+    motionQuery.addEventListener('change', syncAnimation);
   };
 
   return {

@@ -10,6 +10,26 @@ window.PortfolioData = (() => {
 
   const i18n = {
     en: {
+      'skip.content': 'Skip to content',
+      'terminal.simulation': 'Simulated diagnostics',
+      'cert.scheduled': 'Scheduled',
+      'modal.close': 'Close',
+      'modal.exit': 'Press ESC to exit inspector',
+      'shortcuts.title': 'Keyboard Shortcuts',
+      'shortcuts.sub': 'Quick navigation',
+      'shortcut.language': 'Toggle Language (EN / VI)',
+      'shortcut.terminal': 'Jump & Focus Firmware Terminal',
+      'shortcut.projects': 'Navigate to Featured Projects',
+      'shortcut.close': 'Close any Open Modal',
+      'shortcut.help': 'Show / Hide this Shortcuts Guide',
+      'shortcuts.helper': 'Shortcuts',
+      'a11y.language': 'Chuyển sang tiếng Việt',
+      'a11y.menuOpen': 'Open menu',
+      'a11y.menuClose': 'Close menu',
+      'a11y.home': 'Home',
+      'a11y.backTop': 'Back to top',
+      'a11y.portrait': 'Portrait of Nguyen Van Sang',
+      'a11y.terminal': 'Simulated firmware terminal',
       'nav.about': 'Professional Summary',
       'nav.certification': 'Languages',
       'nav.experience': 'Experience',
@@ -104,6 +124,26 @@ window.PortfolioData = (() => {
       'toast.copied': 'Email copied to clipboard!'
     },
     vi: {
+      'skip.content': 'Chuyển đến nội dung',
+      'terminal.simulation': 'Chẩn đoán mô phỏng',
+      'cert.scheduled': 'Đã lên lịch',
+      'modal.close': 'Đóng',
+      'modal.exit': 'Nhấn ESC để đóng cửa sổ chi tiết',
+      'shortcuts.title': 'Phím tắt',
+      'shortcuts.sub': 'Điều hướng nhanh',
+      'shortcut.language': 'Đổi ngôn ngữ (EN / VI)',
+      'shortcut.terminal': 'Chuyển đến và chọn terminal firmware',
+      'shortcut.projects': 'Chuyển đến các dự án nổi bật',
+      'shortcut.close': 'Đóng cửa sổ đang mở',
+      'shortcut.help': 'Hiện / Ẩn hướng dẫn phím tắt',
+      'shortcuts.helper': 'Phím tắt',
+      'a11y.language': 'Switch to English',
+      'a11y.menuOpen': 'Mở menu',
+      'a11y.menuClose': 'Đóng menu',
+      'a11y.home': 'Trang đầu',
+      'a11y.backTop': 'Lên đầu trang',
+      'a11y.portrait': 'Ảnh chân dung Nguyễn Văn Sang',
+      'a11y.terminal': 'Terminal firmware mô phỏng',
       'nav.about': 'Tóm tắt chuyên môn',
       'nav.certification': 'Ngoại ngữ',
       'nav.experience': 'Kinh nghiệm',
@@ -212,17 +252,17 @@ window.PortfolioData = (() => {
             <span>FreeRTOS tasks and how they communicate</span>
           </div>
           <div class="arch-pipeline">
-            <div class="arch-step"><b>Task_SensorSampling</b><span>Core 0 • Period: 50ms</span></div>
+            <div class="arch-step"><b>temp_humi_monitor</b><span>DHT20 and soil moisture readings</span></div>
             <span class="arch-sep">➔</span>
-            <div class="arch-step"><b>xQueueSendToBack</b><span>Sensor Data Packet Queue</span></div>
+            <div class="arch-step"><b>SharedContext</b><span>Mutex-protected sensor state</span></div>
             <span class="arch-sep">➔</span>
-            <div class="arch-step"><b>Task_TinyMLInference</b><span>Core 1 • &lt;1ms TFLite</span></div>
+            <div class="arch-step"><b>tiny_ml_task</b><span>TFLite Micro inference</span></div>
             <span class="arch-sep">➔</span>
-            <div class="arch-step"><b>xSemaphoreMutex</b><span>Guards shared state</span></div>
+            <div class="arch-step"><b>SharedContext</b><span>Sensor readings and risk level</span></div>
             <span class="arch-sep">➔</span>
-            <div class="arch-step"><b>Task_PumpSafety</b><span>Core 0 • Relay Safe Interlock</span></div>
+            <div class="arch-step"><b>task_pump</b><span>Safety interlocks and relay control</span></div>
           </div>
-          <p class="muted small" style="margin:0;">Tasks pass data through FreeRTOS queues, and shared state is guarded by a mutex so sensor sampling and network streaming do not overwrite each other.</p>
+          <p class="muted small" style="margin:0;">Sensor, inference and pump tasks exchange state through a mutex-protected SharedContext. Binary semaphores notify LED and database tasks when updates are needed.</p>
         </div>
 
         <div class="arch-card">
@@ -235,11 +275,11 @@ window.PortfolioData = (() => {
               <tr><th>Pin</th><th>Peripheral</th><th>Device Interface</th><th>Operating Mode</th></tr>
             </thead>
             <tbody>
-              <tr><td><b>GPIO 21</b></td><td>I2C0 SDA</td><td>SHT31 / BME280 Sensor Bus</td><td>4.7kΩ Pull-Up, 400kHz</td></tr>
-              <tr><td><b>GPIO 22</b></td><td>I2C0 SCL</td><td>Hardware Clock Line</td><td>Master Clock Output</td></tr>
-              <tr><td><b>GPIO 4</b></td><td>ADC1_CH3</td><td>Capacitive Soil Moisture Probe</td><td>12-bit Resolution (0–3.3V)</td></tr>
-              <tr><td><b>GPIO 18</b></td><td>Digital Out</td><td>5V Submersible Pump Relay</td><td>Active-HIGH Optocoupler</td></tr>
-              <tr><td><b>GPIO 0</b></td><td>Ext Interrupt</td><td>Factory Reset / SoftAP Toggle</td><td>FALLING Edge ISR Trigger</td></tr>
+              <tr><td><b>GPIO 11</b></td><td>I2C SDA</td><td>DHT20 temperature / humidity sensor</td><td>Sensor data</td></tr>
+              <tr><td><b>GPIO 12</b></td><td>I2C SCL</td><td>DHT20 sensor clock</td><td>I2C clock</td></tr>
+              <tr><td><b>GPIO 2</b></td><td>ADC1_CH1</td><td>Soil moisture probe</td><td>Analog input</td></tr>
+              <tr><td><b>GPIO 6</b></td><td>Digital Out</td><td>Pump relay control</td><td>Output with safety interlocks</td></tr>
+              <tr><td><b>GPIO 0</b></td><td>Polled input</td><td>BOOT button / Wi-Fi setup</td><td>Hold for more than 2 seconds</td></tr>
               <tr><td><b>TXD0/RXD0</b></td><td>UART0</td><td>Firmware Diagnostics Shell</td><td>115200 Baud 8N1</td></tr>
             </tbody>
           </table>
@@ -260,17 +300,17 @@ window.PortfolioData = (() => {
             <span>Các task FreeRTOS và cách chúng giao tiếp</span>
           </div>
           <div class="arch-pipeline">
-            <div class="arch-step"><b>Task_SensorSampling</b><span>Lõi 0 • Chu kỳ: 50ms</span></div>
+            <div class="arch-step"><b>temp_humi_monitor</b><span>Đọc DHT20 và độ ẩm đất</span></div>
             <span class="arch-sep">➔</span>
-            <div class="arch-step"><b>xQueueSendToBack</b><span>Hàng đợi Gói dữ liệu</span></div>
+            <div class="arch-step"><b>SharedContext</b><span>Dữ liệu cảm biến được bảo vệ bằng mutex</span></div>
             <span class="arch-sep">➔</span>
-            <div class="arch-step"><b>Task_TinyMLInference</b><span>Lõi 1 • &lt;1ms TFLite</span></div>
+            <div class="arch-step"><b>tiny_ml_task</b><span>Suy luận TFLite Micro</span></div>
             <span class="arch-sep">➔</span>
-            <div class="arch-step"><b>xSemaphoreMutex</b><span>Bảo vệ dữ liệu dùng chung</span></div>
+            <div class="arch-step"><b>SharedContext</b><span>Dữ liệu cảm biến và mức rủi ro</span></div>
             <span class="arch-sep">➔</span>
-            <div class="arch-step"><b>Task_PumpSafety</b><span>Lõi 0 • Điều khiển Relay Bơm</span></div>
+            <div class="arch-step"><b>task_pump</b><span>Khóa an toàn và điều khiển rơ-le</span></div>
           </div>
-          <p class="muted small" style="margin:0;">Các task trao đổi dữ liệu qua queue của FreeRTOS, còn trạng thái dùng chung được bảo vệ bằng mutex để việc đọc cảm biến và truyền dữ liệu qua mạng không ghi đè lên nhau.</p>
+          <p class="muted small" style="margin:0;">Các task cảm biến, suy luận và điều khiển bơm trao đổi trạng thái qua SharedContext được bảo vệ bằng mutex. Semaphore nhị phân thông báo cho các task LED và cơ sở dữ liệu khi cần cập nhật.</p>
         </div>
 
         <div class="arch-card">
@@ -283,11 +323,11 @@ window.PortfolioData = (() => {
               <tr><th>Chân</th><th>Ngoại vi</th><th>Giao tiếp Thiết bị</th><th>Chế độ hoạt động</th></tr>
             </thead>
             <tbody>
-              <tr><td><b>GPIO 21</b></td><td>I2C0 SDA</td><td>Cảm biến môi trường SHT31 / BME280</td><td>Kéo lên 4.7kΩ, 400kHz</td></tr>
-              <tr><td><b>GPIO 22</b></td><td>I2C0 SCL</td><td>Đường xung nhịp phần cứng</td><td>Xung nhịp Master Clock</td></tr>
-              <tr><td><b>GPIO 4</b></td><td>ADC1_CH3</td><td>Cảm biến đo độ ẩm đất điện dung</td><td>Độ phân giải 12-bit (0–3.3V)</td></tr>
-              <tr><td><b>GPIO 18</b></td><td>Digital Out</td><td>Module Relay Kích Bơm Nước 5V</td><td>Cách ly Quang Optocoupler</td></tr>
-              <tr><td><b>GPIO 0</b></td><td>Ngắt ngoài ISR</td><td>Nút bấm Reset / Chuyển SoftAP</td><td>Kích hoạt sườn âm (FALLING)</td></tr>
+              <tr><td><b>GPIO 11</b></td><td>I2C SDA</td><td>Cảm biến nhiệt độ / độ ẩm DHT20</td><td>Dữ liệu cảm biến</td></tr>
+              <tr><td><b>GPIO 12</b></td><td>I2C SCL</td><td>Xung nhịp cảm biến DHT20</td><td>Xung nhịp I2C</td></tr>
+              <tr><td><b>GPIO 2</b></td><td>ADC1_CH1</td><td>Cảm biến độ ẩm đất</td><td>Đầu vào tương tự</td></tr>
+              <tr><td><b>GPIO 6</b></td><td>Digital Out</td><td>Điều khiển rơ-le máy bơm</td><td>Đầu ra có khóa an toàn</td></tr>
+              <tr><td><b>GPIO 0</b></td><td>Đọc nút theo chu kỳ</td><td>Nút BOOT / Cấu hình Wi-Fi</td><td>Giữ hơn 2 giây</td></tr>
               <tr><td><b>TXD0/RXD0</b></td><td>UART0</td><td>Console Nhật ký & Gỡ lỗi Firmware</td><td>115200 Baud 8N1</td></tr>
             </tbody>
           </table>
@@ -469,20 +509,33 @@ window.PortfolioData = (() => {
   };
 
   const applyTranslations = (lang) => {
-    localStorage.setItem('sang_portfolio_lang', lang);
+    lang = lang === 'vi' ? 'vi' : 'en';
+    try {
+      (window.PortfolioStorage || window.localStorage).setItem('sang_portfolio_lang', lang);
+    } catch (_) {
+      // Translation still works when the browser disallows persistent storage.
+    }
     document.documentElement.lang = lang;
 
     const langToggle = document.getElementById('langToggle');
     if (langToggle) {
       langToggle.dataset.lang = lang;
+      langToggle.setAttribute('aria-label', lang === 'vi' ? 'Switch to English' : 'Chuyển sang tiếng Việt');
     }
 
-    const dict = i18n[lang] || i18n.en;
+    const dict = i18n[lang];
     document.querySelectorAll('[data-i18n]').forEach((el) => {
       const key = el.getAttribute('data-i18n');
       if (dict[key]) {
         el.textContent = dict[key];
       }
+    });
+
+    ['aria-label', 'alt'].forEach((attribute) => {
+      document.querySelectorAll(`[data-i18n-${attribute}]`).forEach((el) => {
+        const key = el.getAttribute(`data-i18n-${attribute}`);
+        if (dict[key]) el.setAttribute(attribute, dict[key]);
+      });
     });
 
     const heroName = document.querySelector('.hero-name');

@@ -84,10 +84,18 @@
 
 #spot {
   position: fixed;
-  inset: 0;
-  z-index: 1;
+  top: 0;
+  left: 0;
+  width: 700px;
+  height: 700px;
+  margin-top: -350px;
+  margin-left: -350px;
+  border-radius: 50%;
   pointer-events: none;
-  background: radial-gradient(600px circle at var(--x, 50vw) var(--y, 40vh), rgba(var(--mint-rgb), 0.05), transparent 70%);
+  background: radial-gradient(circle, rgba(var(--mint-rgb), 0.055) 0%, transparent 70%);
+  transform: translate3d(50vw, 40vh, 0);
+  will-change: transform;
+  z-index: 1;
 }
 
 #grid {
@@ -142,6 +150,12 @@ body.cursor-on button {
   cursor: none;
 }
 
+body.cursor-on input,
+body.cursor-on textarea,
+body.cursor-on select {
+  cursor: auto;
+}
+
 .cursor-dot,
 .cursor-ring {
   position: fixed;
@@ -162,34 +176,63 @@ body.cursor-on .cursor-ring {
   width: 6px;
   height: 6px;
   background: var(--mint);
-  box-shadow: 0 0 8px var(--mint);
-  transition: transform 0.04s linear;
+  box-shadow: 0 0 8px var(--mint), 0 0 16px rgba(var(--mint-rgb), 0.4);
+  will-change: transform;
+  transition: opacity 0.2s var(--ease), background-color 0.15s, box-shadow 0.15s;
 }
 
 .cursor-ring {
-  width: 34px;
-  height: 34px;
-  border: 1.5px solid rgba(var(--mint-rgb), 0.6);
-  box-shadow: 0 0 10px rgba(var(--mint-rgb), 0.2);
-  transition: width 0.25s var(--ease), height 0.25s var(--ease), border-color 0.25s var(--ease), background 0.25s var(--ease);
+  width: 36px;
+  height: 36px;
+  border: 1.5px solid rgba(var(--mint-rgb), 0.55);
+  box-shadow: 0 0 12px rgba(var(--mint-rgb), 0.2);
+  will-change: transform;
+  transition: border-color 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.22s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 body.cursor-hover .cursor-ring {
-  width: 48px;
-  height: 48px;
   border-color: var(--amber);
-  background: rgba(var(--amber-rgb), 0.06);
+  background: rgba(var(--amber-rgb), 0.08);
+  box-shadow: 0 0 18px rgba(var(--amber-rgb), 0.35);
 }
 
 body.cursor-down .cursor-ring {
-  transform: scale(0.75);
   border-color: var(--mint);
+  background: rgba(var(--mint-rgb), 0.2);
+  box-shadow: 0 0 22px rgba(var(--mint-rgb), 0.6), inset 0 0 8px rgba(var(--mint-rgb), 0.35);
+}
+
+body.cursor-down .cursor-dot {
+  background: #ffffff;
+  box-shadow: 0 0 12px #ffffff, 0 0 22px var(--mint);
 }
 
 /* 3D Tilt Class */
 .tilting {
-  transition: transform 0.08s linear !important;
-  transition-delay: 0s !important;
+  transition: none !important;
+  will-change: transform;
+}
+
+/* Magnetic Interaction Active Class */
+.magnetic-active {
+  transition: transform 0.08s ease-out !important;
+  will-change: transform;
+}
+
+/* Tactile Active States on Click */
+.btn:active,
+.social:active,
+.totop:active,
+.term-chip:active,
+.regen:active,
+.pcard-link:active,
+.btn-shortcuts-helper:active,
+.lang:active,
+.burger:active {
+  transform: scale(0.96) !important;
+  transition: transform 0.08s var(--ease) !important;
 }
 
 /* Button Ripple Effect */
@@ -197,13 +240,18 @@ body.cursor-down .cursor-ring {
   position: absolute;
   border-radius: 50%;
   pointer-events: none;
-  background: rgba(255, 255, 255, 0.4);
+  background: radial-gradient(circle, rgba(var(--mint-rgb), 0.4) 0%, rgba(var(--mint-rgb), 0.12) 50%, transparent 75%);
   transform: scale(0);
-  animation: rippleFx 0.65s var(--ease) forwards;
+  animation: rippleFx 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform, opacity;
 }
 
 @keyframes rippleFx {
-  to {
+  0% {
+    transform: scale(0);
+    opacity: 0.9;
+  }
+  100% {
     transform: scale(1);
     opacity: 0;
   }
@@ -244,6 +292,56 @@ body.cursor-down .cursor-ring {
 .reveal.in .tag {
   opacity: 1;
   transform: none;
+}
+
+/* Keep native content and navigation usable when scripting is unavailable. */
+.no-js #loader,
+.no-js #net,
+.no-js .term,
+.no-js .lang,
+.no-js .burger,
+.no-js .btn-inspect,
+.no-js #shortcutsHelperBtn,
+.no-js #copyEmailBtn,
+.no-js .typing,
+.no-js .chat-foot {
+  display: none;
+}
+
+.no-js .reveal,
+.no-js .reveal .tag {
+  opacity: 1;
+  transform: none;
+}
+
+.no-js .stream {
+  display: block;
+}
+
+.no-js .timeline::before {
+  transform: none;
+}
+
+.no-js .nav {
+  position: static;
+}
+
+.no-js .nav-inner {
+  height: auto;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 12px 18px;
+}
+
+.no-js .nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  order: 2;
+  width: 100%;
+}
+
+.no-js .recruiter-bar {
+  margin-top: 12px;
 }
 
 /* Shimmer Animation for Gradient Text */

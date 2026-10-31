@@ -12,7 +12,7 @@
 
   // Restore user LED preference from localStorage if available
   try {
-    root.classList.toggle('no-led', localStorage.getItem(KEY) === 'off');
+    root.classList.toggle('no-led', !!(window.PortfolioStorage && window.PortfolioStorage.getItem(KEY) === 'off'));
   } catch (_) {}
 
   // Safely register CSS custom angle property for smooth hardware conic rotation
@@ -69,7 +69,7 @@
 
     const off = root.classList.toggle('no-led');
     try {
-      localStorage.setItem(KEY, off ? 'off' : 'on');
+      if (window.PortfolioStorage) window.PortfolioStorage.setItem(KEY, off ? 'off' : 'on');
     } catch (_) {}
   });
 })();

@@ -185,13 +185,16 @@ body.menu-open .burger .ic-open { display: none; }
   justify-content: center;
   padding: 90px 32px 40px;
   opacity: 0;
+  visibility: hidden;
   pointer-events: none;
-  transition: opacity 0.3s var(--ease);
+  transition: opacity 0.3s var(--ease), visibility 0.3s var(--ease);
 }
 
 body.menu-open .mobile-menu {
   opacity: 1;
+  visibility: visible;
   pointer-events: auto;
+  transition-property: opacity;
 }
 
 .mobile-menu nav {
@@ -1341,7 +1344,7 @@ a.cv-contact-item:hover .ic {
   padding: 28px;
   display: flex;
   flex-direction: column;
-  transition: all 0.35s var(--ease);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s var(--ease), border-color 0.35s var(--ease);
 }
 
 .pcard.featured {
@@ -1530,6 +1533,8 @@ a.cv-contact-item:hover .ic {
   font-family: var(--mono);
   font-size: clamp(18px, 3.2vw, 28px);
   font-weight: 700;
+  max-width: 100%;
+  overflow-wrap: anywhere;
   color: var(--mint);
   margin: 20px 0 28px;
   transition: all 0.25s var(--ease);

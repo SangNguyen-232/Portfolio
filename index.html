@@ -4,7 +4,6 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script>document.documentElement.classList.remove("no-js")</script>
   <meta name="color-scheme" content="dark">
   <title>Nguyen Van Sang — Embedded Software Engineer</title>
   <meta name="description"
@@ -43,7 +42,7 @@
 </head>
 
 <body>
-  <a class="skip" href="#about">Skip to content</a>
+  <a class="skip" href="#main" data-i18n="skip.content">Skip to content</a>
 
   <!-- SVG icon sprite -->
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -189,7 +188,7 @@
   <!-- Header Navigation -->
   <header class="nav" id="nav">
     <div class="nav-inner">
-      <a href="#hero" class="logo" data-cursor aria-label="Home">
+      <a href="#hero" class="logo" data-cursor aria-label="Home" data-i18n-aria-label="a11y.home">
         <span class="logo-mark"><i></i><i></i><i></i></span>
         <span class="logo-text">sang<b>.dev</b></span>
       </a>
@@ -203,7 +202,7 @@
       </nav>
       <div class="nav-right">
         <!-- Language Switcher -->
-        <button class="lang" id="langToggle" type="button" aria-label="Switch language" data-cursor>
+        <button class="lang" id="langToggle" type="button" aria-label="Switch language" data-i18n-aria-label="a11y.language" data-cursor>
           <span class="lang-pill"></span>
           <span class="lang-opt" data-lang="en">EN</span>
           <span class="lang-opt" data-lang="vi">VI</span>
@@ -216,7 +215,7 @@
           <span data-i18n="nav.resume">View CV</span>
         </a>
         <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="mobileMenu"
-          aria-label="Open menu" data-cursor>
+          aria-label="Open menu" data-i18n-aria-label="a11y.menuOpen" data-cursor>
           <svg class="ic ic-open">
             <use href="#i-menu" />
           </svg>
@@ -232,7 +231,7 @@
   <aside class="recruiter-bar" id="recruiterBar" aria-label="Candidate Contact & Profiles">
     <div class="container recruiter-inner">
       <div class="cv-contact-bar">
-        <a class="cv-contact-item" href="tel:0383589877" id="quickCopyPhone" data-copy="0383589877" title="Phone / Click to copy: 0383 589 877">
+        <a class="cv-contact-item" href="tel:0383589877" title="Call: 0383 589 877">
           <svg class="ic">
             <use href="#i-phone" />
           </svg>
@@ -323,7 +322,7 @@
     <a href="#contact"><i></i><span data-i18n="nav.contact">Contact</span></a>
   </nav>
 
-  <main id="main">
+  <main id="main" tabindex="-1">
     <!-- ===================== HERO SECTION ===================== -->
     <section id="hero" class="hero">
       <div class="container hero-grid">
@@ -342,10 +341,10 @@
           </h2>
 
           <!-- Interactive Terminal -->
-          <div class="term reveal" style="--d:.25s" id="term">
+          <div class="term reveal" style="--d:.25s" id="term" role="region" tabindex="-1" aria-label="Firmware terminal" data-i18n-aria-label="a11y.terminal">
             <div class="term-bar">
               <i></i><i></i><i></i>
-              <span class="term-title mono">sang@esp32s3: ~</span>
+              <span class="term-title mono">sang@esp32s3: ~ · <span data-i18n="terminal.simulation">Simulated diagnostics</span></span>
             </div>
             <div class="term-body mono" id="termBody">
               <div class="term-line"><span class="prompt">$</span> <span class="cmd" id="cmd1"></span></div>
@@ -407,7 +406,7 @@
                 <picture>
                   <source srcset="assets/images/anh-the-trang.webp" type="image/webp">
                   <img class="avatar-photo" src="assets/images/anh-the-trang.webp"
-                    alt="Portrait of Nguyen Van Sang" loading="eager" fetchpriority="high" decoding="async"
+                    alt="Portrait of Nguyen Van Sang" data-i18n-alt="a11y.portrait" loading="eager" fetchpriority="high" decoding="async"
                     width="764" height="1029">
                 </picture>
                 <div class="avatar-overlay" aria-hidden="true"></div>
@@ -454,7 +453,7 @@
                     <div class="typing" id="typing" aria-hidden="true">
                       <i></i><i></i><i></i>
                     </div>
-                    <div class="stream" id="stream"></div>
+                    <div class="stream on" id="stream">Nguyen Van Sang is a Computer Engineering student at Ho Chi Minh City University of Technology (HCMUT), focused on embedded systems and IoT. He has written FreeRTOS firmware for the ESP32-S3, run a TinyML model on a microcontroller, designed a vending machine as a Verilog state machine on an FPGA, and built a backend that collects sensor data. In summer 2026 he interned on IoT sensor solutions at Viettel Dak Lak. He is looking for a Fresher Embedded Software Engineer role where he can learn from experienced engineers and ship firmware that runs on real hardware.</div>
                   </div>
                 </div>
               </div>
@@ -542,10 +541,10 @@
               </div>
               <div class="pv-flow mono" aria-hidden="true">
                 <span class="pv-node">Sensors<small>I2C · ADC</small></span>
-                <span class="pv-node">Queue<small>Core 0</small></span>
-                <span class="pv-node hot">TinyML<small>Core 1</small></span>
-                <span class="pv-node">Mutex<small>IPC</small></span>
-                <span class="pv-node">Pump<small>Relay</small></span>
+                <span class="pv-node">SharedContext<small>Mutex</small></span>
+                <span class="pv-node hot">TinyML<small>Inference</small></span>
+                <span class="pv-node">Safety<small>Interlock</small></span>
+                <span class="pv-node">Pump<small>GPIO 6</small></span>
               </div>
             </div>
             <div class="pcard-top">
@@ -984,7 +983,7 @@
                       <b data-i18n="cert.c1.name">TOEIC (Listening &amp; Reading)</b>
                       <span data-i18n="cert.c1.date">Test scheduled for Dec 2026 • ETS</span>
                     </div>
-                    <span class="pill mono">Scheduled</span>
+                    <span class="pill mono" data-i18n="cert.scheduled">Scheduled</span>
                   </div>
                 </div>
                 <!-- Language proficiency -->
@@ -1024,7 +1023,7 @@
           <p class="sec-sub" style="max-width:54ch;" data-i18n="contact.desc">I’m looking for a Fresher Embedded Software Engineer role in Ho Chi Minh City or remote. You can reach me by email, phone or LinkedIn.</p>
 
           <a href="mailto:sangnguyen230204@gmail.com" class="email" id="emailLink" data-cursor>
-            sangnguyen230204@gmail.com
+            sangnguyen230204@<wbr>gmail.com
           </a>
 
           <div class="contact-actions">
@@ -1070,7 +1069,7 @@
 
   <!-- ===================== ARCHITECTURE INSPECTOR MODAL SYSTEM ===================== -->
   <div class="modal-backdrop" id="modalBackdrop" aria-hidden="true">
-    <div class="modal-dialog glass" id="modalDialog" role="dialog" aria-modal="true" tabindex="-1">
+    <div class="modal-dialog glass" id="modalDialog" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalSub" tabindex="-1">
       <div class="modal-header">
         <div class="modal-title-wrap">
           <div class="modal-icon-badge" id="modalIconBadge"><svg class="ic">
@@ -1081,51 +1080,51 @@
             <p class="modal-sub mono" id="modalSub">Hardware &amp; Firmware Deep-Dive</p>
           </div>
         </div>
-        <button class="modal-close" id="modalClose" type="button" aria-label="Close modal">
+        <button class="modal-close" id="modalClose" type="button" aria-label="Close modal" data-i18n-aria-label="modal.close">
           <svg class="ic">
             <use href="#i-close" />
           </svg>
         </button>
       </div>
 
-      <div class="modal-body" id="modalBody">
+      <div class="modal-body" id="modalBody" tabindex="0">
         <!-- Dynamic content injected by JavaScript based on project -->
       </div>
 
       <div class="modal-footer">
-        <span class="mono small muted">Press <kbd>ESC</kbd> to exit inspector</span>
-        <button class="btn btn-ghost btn-sm" id="modalFooterClose" type="button">Close</button>
+        <span class="mono small muted" data-i18n="modal.exit">Press ESC to exit inspector</span>
+        <button class="btn btn-ghost btn-sm" id="modalFooterClose" type="button" data-i18n="modal.close">Close</button>
       </div>
     </div>
   </div>
 
   <!-- ===================== KEYBOARD SHORTCUTS MODAL ===================== -->
   <div class="modal-backdrop" id="shortcutsModal" aria-hidden="true">
-    <div class="modal-dialog glass shortcuts-dialog" role="dialog" aria-modal="true" tabindex="-1">
+    <div class="modal-dialog glass shortcuts-dialog" role="dialog" aria-modal="true" aria-labelledby="shortcutsTitle" aria-describedby="shortcutsSub" tabindex="-1">
       <div class="modal-header">
         <div class="modal-title-wrap">
           <div class="modal-icon-badge"><svg class="ic">
               <use href="#i-code" />
             </svg></div>
           <div>
-            <h3 class="modal-title">Keyboard Shortcuts</h3>
-            <p class="modal-sub mono">Power-User Quick Navigation</p>
+            <h3 class="modal-title" id="shortcutsTitle" data-i18n="shortcuts.title">Keyboard Shortcuts</h3>
+            <p class="modal-sub mono" id="shortcutsSub" data-i18n="shortcuts.sub">Quick navigation</p>
           </div>
         </div>
-        <button class="modal-close" id="shortcutsClose" type="button" aria-label="Close modal">
+        <button class="modal-close" id="shortcutsClose" type="button" aria-label="Close modal" data-i18n-aria-label="modal.close">
           <svg class="ic">
             <use href="#i-close" />
           </svg>
         </button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" tabindex="0">
         <div class="shortcuts-grid mono">
-          <div class="shortcut-row"><kbd>L</kbd><span>Toggle Language (EN / VI)</span></div>
+          <div class="shortcut-row"><kbd>L</kbd><span data-i18n="shortcut.language">Toggle Language (EN / VI)</span></div>
           <div class="shortcut-row"><kbd>B</kbd><span data-i18n="shortcut.led">Toggle LED borders</span></div>
-          <div class="shortcut-row"><kbd>T</kbd><span>Jump &amp; Focus Firmware Terminal</span></div>
-          <div class="shortcut-row"><kbd>P</kbd><span>Navigate to Featured Projects</span></div>
-          <div class="shortcut-row"><kbd>ESC</kbd><span>Close any Open Modal</span></div>
-          <div class="shortcut-row"><kbd>?</kbd><span>Show / Hide this Shortcuts Guide</span></div>
+          <div class="shortcut-row"><kbd>T</kbd><span data-i18n="shortcut.terminal">Jump &amp; Focus Firmware Terminal</span></div>
+          <div class="shortcut-row"><kbd>P</kbd><span data-i18n="shortcut.projects">Navigate to Featured Projects</span></div>
+          <div class="shortcut-row"><kbd>ESC</kbd><span data-i18n="shortcut.close">Close any Open Modal</span></div>
+          <div class="shortcut-row"><kbd>?</kbd><span data-i18n="shortcut.help">Show / Hide this Shortcuts Guide</span></div>
         </div>
       </div>
     </div>
@@ -1146,10 +1145,10 @@
       </div>
       <div style="display:flex;align-items:center;gap:12px;">
         <button class="btn-shortcuts-helper mono small" id="shortcutsHelperBtn" type="button"
-          aria-label="Keyboard Shortcuts" title="Keyboard Shortcuts [?]">
-          <kbd>?</kbd><span>Shortcuts</span>
+          aria-label="Keyboard Shortcuts" data-i18n-aria-label="shortcuts.title" title="Keyboard Shortcuts [?]">
+          <kbd>?</kbd><span data-i18n="shortcuts.helper">Shortcuts</span>
         </button>
-        <a href="#hero" class="totop mono" data-cursor aria-label="Back to top">
+        <a href="#hero" class="totop mono" data-cursor aria-label="Back to top" data-i18n-aria-label="a11y.backTop">
           <span data-i18n="footer.totop">Back to Top</span>
           <svg class="ic">
             <use href="#i-up" />

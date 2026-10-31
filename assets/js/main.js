@@ -9,8 +9,13 @@
 (() => {
   'use strict';
 
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let reducedMotionState = motionQuery.matches;
+  motionQuery.addEventListener('change', (event) => { reducedMotionState = event.matches; });
+  const prefersReducedMotion = () => reducedMotionState;
   const isFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const scrollBehavior = () => prefersReducedMotion() ? 'auto' : 'smooth';
+  let closeMobileMenu = () => {};
 
   /* =====================================================================
      1. PRELOADER & INITIALIZATION
@@ -22,7 +27,7 @@
       return;
     }
 
-    if (prefersReducedMotion) {
+    if (prefersReducedMotion()) {
       loader.classList.add('done');
       if (window.TerminalEngine) window.TerminalEngine.startTerminalTyping();
       return;
@@ -38,7 +43,7 @@
      2. CUSTOM CYBER CURSOR & SPOTLIGHT
      ===================================================================== */
   const initCustomCursor = () => {
-    if (!isFinePointer || prefersReducedMotion) return;
+    if (!isFinePointer) return;
 
     let dot = document.querySelector('.cursor-dot');
     let ring = document.querySelector('.cursor-ring');
@@ -52,71 +57,134 @@
       document.body.append(dot, ring);
     }
 
-    document.body.classList.add('cursor-on');
+    document.body.classList.toggle('cursor-on', !prefersReducedMotion());
 
     let mouseX = -100, mouseY = -100;
     let ringX = -100, ringY = -100;
     let spotX = window.innerWidth / 2, spotY = window.innerHeight / 3;
     let rafId = null;
     let hasPointer = false;
+    let isHovered = false;
+    let isDown = false;
+    let ringScale = 1.0;
+    let targetScale = 1.0;
 
     const lerp = (a, b, t) => a + (b - a) * t;
+
+    const updateDotPosition = () => {
+      dot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%) scale(${isDown ? 0.75 : 1})`;
+    };
+
     const positionCursor = () => {
-      dot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
-      ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`;
+      updateDotPosition();
+      ring.style.transform = `translate3d(${ringX.toFixed(2)}px, ${ringY.toFixed(2)}px, 0) translate(-50%, -50%) scale(${ringScale.toFixed(3)})`;
       if (spot) {
-        spot.style.setProperty('--x', `${spotX}px`);
-        spot.style.setProperty('--y', `${spotY}px`);
+        spot.style.transform = `translate3d(${spotX.toFixed(1)}px, ${spotY.toFixed(1)}px, 0)`;
+        spot.style.setProperty('--x', `${spotX.toFixed(1)}px`);
+        spot.style.setProperty('--y', `${spotY.toFixed(1)}px`);
       }
     };
 
     const renderCursor = () => {
       rafId = null;
-      if (document.hidden) return;
+      if (document.hidden || prefersReducedMotion()) return;
 
-      ringX = lerp(ringX, mouseX, 0.2);
-      ringY = lerp(ringY, mouseY, 0.2);
+      ringX = lerp(ringX, mouseX, 0.22);
+      ringY = lerp(ringY, mouseY, 0.22);
+      ringScale = lerp(ringScale, targetScale, 0.28);
+
       if (spot) {
-        spotX = lerp(spotX, mouseX, 0.08);
-        spotY = lerp(spotY, mouseY, 0.08);
+        spotX = lerp(spotX, mouseX, 0.12);
+        spotY = lerp(spotY, mouseY, 0.12);
       }
 
-      const settled = Math.abs(ringX - mouseX) < 0.1 && Math.abs(ringY - mouseY) < 0.1 &&
-        (!spot || (Math.abs(spotX - mouseX) < 0.1 && Math.abs(spotY - mouseY) < 0.1));
-      if (settled) {
-        ringX = spotX = mouseX;
-        ringY = spotY = mouseY;
+      const ringSettled = Math.abs(ringX - mouseX) < 0.15 &&
+        Math.abs(ringY - mouseY) < 0.15 &&
+        Math.abs(ringScale - targetScale) < 0.005;
+      const spotSettled = !spot || (Math.abs(spotX - mouseX) < 0.2 && Math.abs(spotY - mouseY) < 0.2);
+
+      if (ringSettled) {
+        ringX = mouseX;
+        ringY = mouseY;
+        ringScale = targetScale;
       }
+      if (spotSettled && spot) {
+        spotX = mouseX;
+        spotY = mouseY;
+      }
+
       positionCursor();
-      if (!settled) rafId = requestAnimationFrame(renderCursor);
+
+      if (!ringSettled || !spotSettled) {
+        rafId = requestAnimationFrame(renderCursor);
+      }
     };
 
     const scheduleCursor = () => {
-      if (rafId === null && !document.hidden) rafId = requestAnimationFrame(renderCursor);
+      if (rafId === null && !document.hidden && !prefersReducedMotion()) {
+        rafId = requestAnimationFrame(renderCursor);
+      }
     };
 
     window.addEventListener('pointermove', (e) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
       hasPointer = true;
+      if (prefersReducedMotion()) return;
 
-      const isHovering = !!(e.target.closest && e.target.closest('a, button, [data-cursor], .tag, .pill, .pcard, .skill, .term-chip'));
-      document.body.classList.toggle('cursor-hover', isHovering);
+      updateDotPosition();
+
+      const hovering = !!(e.target && e.target.closest && e.target.closest('a, button, [data-cursor], .tag, .pill, .pcard, .skill, .term-chip'));
+      if (hovering !== isHovered) {
+        isHovered = hovering;
+        targetScale = isDown ? 0.75 : (isHovered ? 1.35 : 1.0);
+        document.body.classList.toggle('cursor-hover', isHovered);
+      }
       scheduleCursor();
     }, { passive: true });
 
-    window.addEventListener('pointerdown', () => document.body.classList.add('cursor-down'));
-    window.addEventListener('pointerup', () => document.body.classList.remove('cursor-down'));
+    window.addEventListener('pointerdown', () => {
+      isDown = true;
+      targetScale = 0.75;
+      if (!prefersReducedMotion()) {
+        document.body.classList.add('cursor-down');
+        updateDotPosition();
+        scheduleCursor();
+      }
+    });
+
+    window.addEventListener('pointerup', () => {
+      isDown = false;
+      targetScale = isHovered ? 1.35 : 1.0;
+      document.body.classList.remove('cursor-down');
+      if (!prefersReducedMotion()) {
+        updateDotPosition();
+        scheduleCursor();
+      }
+    });
+
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) {
         if (rafId !== null) cancelAnimationFrame(rafId);
         rafId = null;
+        isDown = false;
         document.body.classList.remove('cursor-down');
       } else if (hasPointer) {
         scheduleCursor();
       }
     });
 
+    motionQuery.addEventListener('change', () => {
+      document.body.classList.toggle('cursor-on', !prefersReducedMotion());
+      if (prefersReducedMotion()) {
+        if (rafId !== null) cancelAnimationFrame(rafId);
+        rafId = null;
+        isDown = false;
+        document.body.classList.remove('cursor-hover', 'cursor-down');
+      } else if (hasPointer) {
+        scheduleCursor();
+      }
+    });
     positionCursor();
   };
 
@@ -126,40 +194,91 @@
   const initTiltAndSpotlight = () => {
     // Spotlight border on glass cards
     document.querySelectorAll('.spot').forEach((card) => {
+      let rect = null;
+      card.addEventListener('pointerenter', () => {
+        rect = card.getBoundingClientRect();
+      }, { passive: true });
       card.addEventListener('pointermove', (e) => {
-        const rect = card.getBoundingClientRect();
-        card.style.setProperty('--mx', `${e.clientX - rect.left}px`);
-        card.style.setProperty('--my', `${e.clientY - rect.top}px`);
+        if (prefersReducedMotion()) return;
+        if (!rect) rect = card.getBoundingClientRect();
+        card.style.setProperty('--mx', `${(e.clientX - rect.left).toFixed(1)}px`);
+        card.style.setProperty('--my', `${(e.clientY - rect.top).toFixed(1)}px`);
+      }, { passive: true });
+      card.addEventListener('pointerleave', () => {
+        rect = null;
       }, { passive: true });
     });
 
-    if (!isFinePointer || prefersReducedMotion) return;
+    if (!isFinePointer) return;
 
     // 3D Tilt on Cards
-    document.querySelectorAll('.pcard, .skill, .do, .edu, .tl-card').forEach((el) => {
+    const tiltTargets = document.querySelectorAll('.pcard, .skill, .do, .edu, .tl-card');
+    tiltTargets.forEach((el) => {
+      let rect = null;
+      let tiltRaf = null;
+
+      el.addEventListener('pointerenter', () => {
+        rect = el.getBoundingClientRect();
+        el.classList.add('tilting');
+      });
+
       el.addEventListener('pointermove', (e) => {
-        const rect = el.getBoundingClientRect();
+        if (prefersReducedMotion()) return;
+        if (!rect) rect = el.getBoundingClientRect();
         const x = (e.clientX - rect.left) / rect.width - 0.5;
         const y = (e.clientY - rect.top) / rect.height - 0.5;
         el.classList.add('tilting');
-        el.style.transform = `perspective(1000px) rotateX(${(-y * 6).toFixed(2)}deg) rotateY(${(x * 6).toFixed(2)}deg) translateY(-3px)`;
+
+        if (tiltRaf) cancelAnimationFrame(tiltRaf);
+        tiltRaf = requestAnimationFrame(() => {
+          el.style.transform = `perspective(1000px) rotateX(${(-y * 6).toFixed(2)}deg) rotateY(${(x * 6).toFixed(2)}deg) translateY(-3px)`;
+        });
       });
 
       el.addEventListener('pointerleave', () => {
+        if (tiltRaf) cancelAnimationFrame(tiltRaf);
+        rect = null;
         el.classList.remove('tilting');
         el.style.transform = '';
       });
     });
 
     // Magnetic Micro-Interactions on Interactive Elements
-    document.querySelectorAll('.btn, .social, .totop, .mobile-socials a').forEach((el) => {
-      el.addEventListener('pointermove', (e) => {
-        const rect = el.getBoundingClientRect();
-        const x = (e.clientX - rect.left - rect.width / 2) * 0.2;
-        const y = (e.clientY - rect.top - rect.height / 2) * 0.2;
-        el.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px)`;
+    const magneticTargets = document.querySelectorAll('.btn, .social, .totop, .mobile-socials a');
+    magneticTargets.forEach((el) => {
+      let rect = null;
+      let magRaf = null;
+
+      el.addEventListener('pointerenter', () => {
+        rect = el.getBoundingClientRect();
+        el.classList.add('magnetic-active');
       });
+
+      el.addEventListener('pointermove', (e) => {
+        if (prefersReducedMotion()) return;
+        if (!rect) rect = el.getBoundingClientRect();
+        const x = (e.clientX - rect.left - rect.width / 2) * 0.18;
+        const y = (e.clientY - rect.top - rect.height / 2) * 0.18;
+        el.classList.add('magnetic-active');
+
+        if (magRaf) cancelAnimationFrame(magRaf);
+        magRaf = requestAnimationFrame(() => {
+          el.style.transform = `translate(${x.toFixed(1)}px, ${(y - 2).toFixed(1)}px)`;
+        });
+      });
+
       el.addEventListener('pointerleave', () => {
+        if (magRaf) cancelAnimationFrame(magRaf);
+        rect = null;
+        el.classList.remove('magnetic-active');
+        el.style.transform = '';
+      });
+    });
+
+    motionQuery.addEventListener('change', () => {
+      if (!prefersReducedMotion()) return;
+      [...tiltTargets, ...magneticTargets].forEach((el) => {
+        el.classList.remove('tilting', 'magnetic-active');
         el.style.transform = '';
       });
     });
@@ -169,10 +288,12 @@
      4. BUTTON RIPPLE EFFECT
      ===================================================================== */
   const initButtonRipple = () => {
-    if (prefersReducedMotion) return;
-
+    motionQuery.addEventListener('change', () => {
+      if (prefersReducedMotion()) document.querySelectorAll('.ripple').forEach((el) => el.remove());
+    });
     document.addEventListener('pointerdown', (e) => {
-      const btn = e.target.closest && e.target.closest('.btn, .term-chip, .btn-copy-quick');
+      if (prefersReducedMotion()) return;
+      const btn = e.target.closest && e.target.closest('.btn, .term-chip, .btn-copy-quick, .pcard-link, .regen');
       if (!btn) return;
 
       const rect = btn.getBoundingClientRect();
@@ -185,7 +306,7 @@
       ripple.style.top = `${e.clientY - rect.top - size / 2}px`;
 
       btn.appendChild(ripple);
-      setTimeout(() => ripple.remove(), 700);
+      setTimeout(() => ripple.remove(), 600);
     });
   };
 
@@ -262,13 +383,12 @@
 
     // Responsive click handling with instantaneous laser feedback
     tocLinks.forEach((link) => {
-      link.addEventListener('click', (e) => {
+      link.addEventListener('click', () => {
         const href = link.getAttribute('href');
         if (href && href.startsWith('#')) {
           const target = document.getElementById(href.slice(1));
           if (target) {
-            e.preventDefault();
-            target.scrollIntoView({ behavior: 'smooth' });
+            // Preserve native anchor navigation, focus, and browser history.
             activeSectionId = href.slice(1);
             updateTocBeam(activeSectionId);
           }
@@ -310,6 +430,7 @@
       }
     } else {
       reveals.forEach((r) => r.classList.add('in'));
+      if (chatSection && window.TerminalEngine) window.TerminalEngine.startChatStream();
     }
 
     // Single Optimized Scroll Listener
@@ -393,11 +514,20 @@
      6. SECTION TITLE SCRAMBLE EFFECT
      ===================================================================== */
   const initScrambleTitles = () => {
-    if (prefersReducedMotion) return;
-
+    const running = new Map();
+    motionQuery.addEventListener('change', () => {
+      if (!prefersReducedMotion()) return;
+      running.forEach(({ rafId, text, language }, el) => {
+        cancelAnimationFrame(rafId);
+        if (document.documentElement.lang === language) el.textContent = text;
+      });
+      running.clear();
+    });
     const chars = '!<>-_/[]{}=+*^?#01';
     const scramble = (el) => {
+      if (prefersReducedMotion()) return;
       const text = el.textContent;
+      const language = document.documentElement.lang;
       let frame = 0;
       const queue = [...text].map((c, i) => ({
         c,
@@ -407,6 +537,11 @@
       }));
 
       const step = () => {
+        // Translation may replace the title while its reveal is animating.
+        if (document.documentElement.lang !== language) {
+          running.delete(el);
+          return;
+        }
         let output = '', complete = 0;
         for (const item of queue) {
           if (frame >= item.end) {
@@ -424,8 +559,9 @@
         el.innerHTML = output;
         if (complete < queue.length) {
           frame++;
-          requestAnimationFrame(step);
+          running.set(el, { rafId: requestAnimationFrame(step), text, language });
         } else {
+          running.delete(el);
           el.textContent = text;
         }
       };
@@ -476,6 +612,7 @@
 
     const openDialog = (modalBackdrop, modalDialog) => {
       if (!modalBackdrop || !modalDialog) return;
+      closeMobileMenu(false);
       const previousModal = activeModal;
       const opener = previousModal ? previousModal.opener : document.activeElement;
       if (!previousModal) previousOverflow = document.body.style.overflow;
@@ -518,10 +655,12 @@
     const openModal = (modalKey) => {
       const data = window.PortfolioData && window.PortfolioData.modalContentData[modalKey];
       if (!data || !backdrop || !dialog || !body || !title || !sub) return;
-      const isVi = localStorage.getItem('sang_portfolio_lang') === 'vi';
+      const isVi = document.documentElement.lang === 'vi';
       title.textContent = isVi ? data.title_vi : data.title_en;
       sub.textContent = isVi ? data.sub_vi : data.sub_en;
       body.innerHTML = isVi ? data.body_vi : data.body_en;
+      // Explicit stops keep native scroll-container focus in the dialog's Tab cycle.
+      body.querySelectorAll('.arch-card').forEach((card) => { card.tabIndex = 0; });
       openDialog(backdrop, dialog);
     };
 
@@ -584,14 +723,8 @@
           e.preventDefault();
           closeDialog();
         } else if (document.body.classList.contains('menu-open')) {
-          document.body.classList.remove('menu-open');
-          const mobileMenu = document.getElementById('mobileMenu');
-          const burger = document.getElementById('burger');
-          if (mobileMenu) mobileMenu.setAttribute('aria-hidden', 'true');
-          if (burger) {
-            burger.setAttribute('aria-expanded', 'false');
-            burger.focus();
-          }
+          e.preventDefault();
+          closeMobileMenu();
         }
         return;
       }
@@ -609,11 +742,16 @@
         const langToggle = document.getElementById('langToggle');
         if (langToggle) langToggle.click();
       } else if (e.key.toLowerCase() === 't') {
+        closeMobileMenu(false);
         const term = document.getElementById('term');
-        if (term) term.scrollIntoView({ behavior: 'smooth' });
+        if (term) {
+          term.scrollIntoView({ behavior: scrollBehavior() });
+          term.focus({ preventScroll: true });
+        }
       } else if (e.key.toLowerCase() === 'p') {
+        closeMobileMenu(false);
         const proj = document.getElementById('projects');
-        if (proj) proj.scrollIntoView({ behavior: 'smooth' });
+        if (proj) proj.scrollIntoView({ behavior: scrollBehavior() });
       }
     });
   };
@@ -651,7 +789,7 @@
     if (copyBtn) {
       copyBtn.addEventListener('click', () => {
         const email = 'sangnguyen230204@gmail.com';
-        const isVi = localStorage.getItem('sang_portfolio_lang') === 'vi';
+        const isVi = document.documentElement.lang === 'vi';
         copyText(email, isVi ? 'Đã sao chép email: ' + email : 'Copied email: ' + email);
       });
     }
@@ -660,7 +798,7 @@
       quickCopyEmail.addEventListener('click', (e) => {
         e.preventDefault();
         const email = quickCopyEmail.dataset.copy || 'sangnguyen230204@gmail.com';
-        const isVi = localStorage.getItem('sang_portfolio_lang') === 'vi';
+        const isVi = document.documentElement.lang === 'vi';
         copyText(email, isVi ? 'Đã sao chép email: ' + email : 'Copied email: ' + email);
       });
     }
@@ -674,21 +812,59 @@
     const mobileMenu = document.getElementById('mobileMenu');
     if (!burger || !mobileMenu) return;
 
-    const toggleMenu = () => {
-      const isOpen = document.body.classList.toggle('menu-open');
-      burger.setAttribute('aria-expanded', String(isOpen));
-      mobileMenu.setAttribute('aria-hidden', String(!isOpen));
+    let previousOverflow = '';
+    const updateLabel = () => {
+      const isOpen = document.body.classList.contains('menu-open');
+      const lang = document.documentElement.lang === 'vi' ? 'vi' : 'en';
+      const dict = window.PortfolioData && window.PortfolioData.i18n[lang];
+      const key = isOpen ? 'a11y.menuClose' : 'a11y.menuOpen';
+      burger.setAttribute('aria-label', (dict && dict[key]) || (isOpen ? 'Close menu' : 'Open menu'));
     };
-
-    burger.addEventListener('click', toggleMenu);
+    const setMenu = (isOpen, restoreFocus = true) => {
+      const wasOpen = document.body.classList.contains('menu-open');
+      if (isOpen && !wasOpen) previousOverflow = document.body.style.overflow;
+      document.body.classList.toggle('menu-open', isOpen);
+      burger.setAttribute('aria-expanded', String(isOpen));
+      // Move focus before hiding the active menu subtree.
+      if (!isOpen && wasOpen && (restoreFocus || mobileMenu.contains(document.activeElement))) {
+        burger.focus({ preventScroll: true });
+      }
+      mobileMenu.inert = !isOpen;
+      mobileMenu.setAttribute('aria-hidden', String(!isOpen));
+      if (isOpen) {
+        document.body.style.overflow = 'hidden';
+        const firstLink = mobileMenu.querySelector('a');
+        if (firstLink) firstLink.focus({ preventScroll: true });
+      } else if (wasOpen) {
+        document.body.style.overflow = previousOverflow;
+      }
+      updateLabel();
+    };
+    closeMobileMenu = (restoreFocus = true) => setMenu(false, restoreFocus);
+    setMenu(false, false);
+    burger.addEventListener('click', () => setMenu(!document.body.classList.contains('menu-open')));
 
     mobileMenu.querySelectorAll('a').forEach((link) => {
-      link.addEventListener('click', () => {
-        document.body.classList.remove('menu-open');
-        burger.setAttribute('aria-expanded', 'false');
-        mobileMenu.setAttribute('aria-hidden', 'true');
-      });
+      link.addEventListener('click', () => closeMobileMenu(false));
     });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.defaultPrevented || e.key !== 'Tab' || !document.body.classList.contains('menu-open')) return;
+      // The header stays visible above the drawer, including its language control.
+      const focusable = [...document.querySelectorAll('#nav a[href], #nav button, #mobileMenu a[href]')]
+        .filter((el) => !el.matches(':disabled') && el.getClientRects().length > 0 &&
+          getComputedStyle(el).visibility !== 'hidden');
+      const currentIndex = focusable.indexOf(document.activeElement);
+      const nextIndex = (currentIndex + (e.shiftKey ? -1 : 1) + focusable.length) % focusable.length;
+      e.preventDefault();
+      focusable[nextIndex].focus();
+    });
+    window.addEventListener('resize', () => {
+      if (document.body.classList.contains('menu-open') && getComputedStyle(burger).display === 'none') {
+        closeMobileMenu(false);
+      }
+    }, { passive: true });
+    new MutationObserver(updateLabel).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
   };
 
   /* =====================================================================
@@ -696,7 +872,7 @@
      ===================================================================== */
   document.addEventListener('DOMContentLoaded', () => {
     // 1. Language Init & Toggle
-    const currentLang = localStorage.getItem('sang_portfolio_lang') || 'en';
+    const currentLang = (window.PortfolioStorage && window.PortfolioStorage.getItem('sang_portfolio_lang')) || 'en';
     if (window.PortfolioData) {
       window.PortfolioData.applyTranslations(currentLang);
     }
@@ -704,7 +880,7 @@
     const langToggle = document.getElementById('langToggle');
     if (langToggle && window.PortfolioData) {
       langToggle.addEventListener('click', () => {
-        const activeLang = localStorage.getItem('sang_portfolio_lang') || 'en';
+        const activeLang = document.documentElement.lang;
         const nextLang = activeLang === 'en' ? 'vi' : 'en';
         window.PortfolioData.applyTranslations(nextLang);
         if (window.TerminalEngine) {
@@ -744,5 +920,6 @@
     initModalsAndShortcuts();
     initClipboard();
     initMobileMenu();
+    document.documentElement.classList.remove('no-js');
   });
 })();

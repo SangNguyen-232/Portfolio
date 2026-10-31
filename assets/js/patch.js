@@ -1,31 +1,34 @@
-/**
- * PATCH — nạp TRƯỚC i18n.js.
- * 1) localStorage bị chặn (Safari riêng tư, chặn cookie) sẽ ném lỗi và làm
- *    dừng toàn bộ main.js. Shim này thay bằng bộ nhớ tạm để trang vẫn chạy.
- * 2) Menu mobile đang đóng không được nhận focus bàn phím.
- */
+/** Safe preference storage. Load before the application modules. */
 (() => {
   'use strict';
 
-  try {
-    window.localStorage.getItem('__probe');
-  } catch (_) {
-    const mem = {};
-    Object.defineProperty(window, 'localStorage', {
-      configurable: true,
-      value: {
-        getItem: (k) => (Object.prototype.hasOwnProperty.call(mem, k) ? mem[k] : null),
-        setItem: (k, v) => { mem[k] = String(v); },
-        removeItem: (k) => { delete mem[k]; }
+  // Keep writes in memory too: reads can succeed while writes fail (quota or
+  // privacy settings), and must not restore an older persisted preference.
+  const memory = new Map();
+  window.PortfolioStorage = {
+    getItem(key) {
+      key = String(key);
+      if (memory.has(key)) return memory.get(key);
+      try {
+        return window.localStorage.getItem(key);
+      } catch (_) {
+        return null;
       }
-    });
-  }
-
-  document.addEventListener('DOMContentLoaded', () => {
-    const menu = document.getElementById('mobileMenu');
-    if (!menu) return;
-    const sync = () => { menu.inert = !document.body.classList.contains('menu-open'); };
-    new MutationObserver(sync).observe(document.body, { attributes: true, attributeFilter: ['class'] });
-    sync();
-  });
+    },
+    setItem(key, value) {
+      key = String(key);
+      value = String(value);
+      memory.set(key, value);
+      try {
+        window.localStorage.setItem(key, value);
+      } catch (_) {}
+    },
+    removeItem(key) {
+      key = String(key);
+      memory.set(key, null);
+      try {
+        window.localStorage.removeItem(key);
+      } catch (_) {}
+    }
+  };
 })();
