@@ -1,0 +1,164 @@
+/* =====================================================================
+   REDESIGN 3D LAYER — nạp SAU redesign.css
+   Mục tiêu: để nền 3D (#net) lộ rõ qua các thẻ kính, đồng bộ toàn diện
+   với ngôn ngữ bo mạch chủ vi xử lý & khoa học máy tính (Silicon Motherboard).
+   ===================================================================== */
+
+/* Canvas 3D: rõ nét, hài hòa với lưới tọa độ và hào quang */
+#net {
+  opacity: 0.96;
+  transition: opacity 0.4s var(--ease);
+}
+#grid {
+  opacity: 0.24;
+}
+#aurora {
+  opacity: 0.75;
+}
+
+/* Thẻ kính trong hơn → thấy chiều sâu cấu trúc bus phía sau, vẫn tương phản cao */
+:root {
+  --grad-card: linear-gradient(180deg, rgba(14, 38, 44, 0.62), rgba(10, 28, 33, 0.76));
+}
+.glass {
+  backdrop-filter: blur(14px) saturate(1.25);
+  -webkit-backdrop-filter: blur(14px) saturate(1.25);
+}
+.education-shell .edu.glass {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+} /* tránh blur lồng blur */
+
+/* Nền xen kẽ giữa các section thông suốt với nền 3D */
+main > .section:nth-of-type(even) {
+  background: linear-gradient(180deg, transparent, rgba(11, 31, 36, 0.22) 20%, rgba(11, 31, 36, 0.22) 80%, transparent);
+}
+
+/* Đánh số section theo chuẩn kiến trúc mạch vi điều khiển: 01 // … */
+main { counter-reset: sec; }
+main > .section > .container > .sec-head { counter-increment: sec; }
+main > .section > .container > .sec-head .sec-title::before {
+  content: '0' counter(sec) ' // ' attr(data-tag);
+  display: block;
+  margin-bottom: 8px;
+  font: 600 11.5px/1 var(--mono);
+  letter-spacing: 0.22em;
+  color: var(--amber);
+  text-shadow: 0 0 10px rgba(var(--amber-rgb), 0.5);
+}
+
+/* Hero: tên có lớp sáng neon nổi trên nền vi mạch 3D */
+.hero-name {
+  text-shadow: 0 0 40px rgba(var(--mint-rgb), 0.22), 0 0 80px rgba(var(--mint-rgb), 0.08);
+}
+
+/* =====================================================================
+   CÁC THẺ NỘI DUNG ĐÓNG VAI TRÒ VI MẠCH (IC CHIP SUB-SYSTEMS)
+   Liên kết không gian 3D thực với góc nghiêng (3D Preserve-3D & Z-Depth)
+   ===================================================================== */
+
+.pcard,
+.skill,
+.do,
+.edu,
+.tl-card,
+.term,
+.eng-card,
+.chat,
+.contact-card {
+  transform-style: preserve-3d;
+  will-change: transform;
+  position: relative;
+}
+
+/* Dấu căn tọa độ Silkscreen vi mạch PCB (+) ở góc thẻ */
+.pcard::before,
+.skill::before,
+.term::before,
+.eng-card::before,
+.tl-card::before {
+  content: '+';
+  position: absolute;
+  top: 8px;
+  left: 10px;
+  font: 700 10px/1 var(--mono);
+  color: rgba(var(--mint-rgb), 0.35);
+  pointer-events: none;
+  letter-spacing: 0;
+  z-index: 2;
+  transition: color 0.3s var(--ease), text-shadow 0.3s var(--ease);
+}
+
+/* Tầng chiều sâu Z-Space khi rê chuột nghiêng 3D (Layered Microarchitecture) */
+.tilting .pcard-icon,
+.tilting .skill-icon,
+.tilting .pcard-top,
+.tilting .skill-head {
+  transform: translateZ(14px);
+  transition: transform 0.18s ease-out;
+}
+
+.tilting h3,
+.tilting .pcard h3,
+.tilting .skill-head h3,
+.tilting .tl-role {
+  transform: translateZ(10px);
+  transition: transform 0.18s ease-out;
+}
+
+.tilting .pcard-visual,
+.tilting .tags,
+.tilting .pcard-meta,
+.tilting .tl-stack {
+  transform: translateZ(6px);
+  transition: transform 0.18s ease-out;
+}
+
+/* Trạng thái vi mạch được chọn qua đường Bus (/CS Chip Select Active) */
+.chip-active {
+  border-color: rgba(var(--mint-rgb), 0.55) !important;
+  box-shadow: 0 20px 48px -14px rgba(0, 0, 0, 0.75), 0 0 30px -6px rgba(var(--mint-rgb), 0.32) !important;
+}
+
+.chip-active.featured {
+  border-color: rgba(var(--amber-rgb), 0.75) !important;
+  box-shadow: 0 24px 54px -14px rgba(0, 0, 0, 0.78), 0 0 36px -6px rgba(var(--amber-rgb), 0.42) !important;
+}
+
+.chip-active::before {
+  color: var(--amber) !important;
+  text-shadow: 0 0 8px rgba(var(--amber-rgb), 0.9);
+}
+
+/* Cổng chân hàn Pin Header phát quang ở mép vi mạch tiếp xúc với bus */
+.pcard.chip-active::after,
+.skill.chip-active::after,
+.tl-card.chip-active::after {
+  content: '';
+  position: absolute;
+  left: -3px;
+  top: calc(50% - 18px);
+  width: 3px;
+  height: 36px;
+  background: var(--amber);
+  box-shadow: 0 0 14px var(--amber), 0 0 4px #ffffff;
+  border-radius: 2px;
+  z-index: 3;
+  animation: pinPulse 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes pinPulse {
+  0% { opacity: 0.7; transform: scaleY(0.9); }
+  100% { opacity: 1; transform: scaleY(1.1); box-shadow: 0 0 20px var(--amber), 0 0 6px #ffffff; }
+}
+
+/* Thiết bị yếu / cảm ứng: bỏ blur để giữ FPS cao nhất cho canvas 3D */
+@media (max-width: 700px), (pointer: coarse) {
+  .glass {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  #grid {
+    display: none;
+  }
+}

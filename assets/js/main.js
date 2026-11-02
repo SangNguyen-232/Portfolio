@@ -212,14 +212,15 @@
     if (!isFinePointer) return;
 
     // 3D Tilt on Cards
-    const tiltTargets = document.querySelectorAll('.pcard, .skill, .do, .edu, .tl-card');
+    const tiltTargets = document.querySelectorAll('.pcard, .skill, .do, .edu, .tl-card, .term, .eng-card, .chat, .contact-card');
     tiltTargets.forEach((el) => {
       let rect = null;
       let tiltRaf = null;
 
       el.addEventListener('pointerenter', () => {
         rect = el.getBoundingClientRect();
-        el.classList.add('tilting');
+        el.classList.add('tilting', 'chip-active');
+        if (window.ScopeEngine) window.ScopeEngine.setHoveredCard(el, true);
       });
 
       el.addEventListener('pointermove', (e) => {
@@ -228,6 +229,7 @@
         const x = (e.clientX - rect.left) / rect.width - 0.5;
         const y = (e.clientY - rect.top) / rect.height - 0.5;
         el.classList.add('tilting');
+        if (window.ScopeEngine) window.ScopeEngine.setHoverCoords(x, y);
 
         if (tiltRaf) cancelAnimationFrame(tiltRaf);
         tiltRaf = requestAnimationFrame(() => {
@@ -238,8 +240,9 @@
       el.addEventListener('pointerleave', () => {
         if (tiltRaf) cancelAnimationFrame(tiltRaf);
         rect = null;
-        el.classList.remove('tilting');
+        el.classList.remove('tilting', 'chip-active');
         el.style.transform = '';
+        if (window.ScopeEngine) window.ScopeEngine.setHoveredCard(null, false);
       });
     });
 
@@ -492,6 +495,7 @@
       if (activeSectionId !== activeId) {
         activeSectionId = activeId;
         updateTocBeam(activeId);
+        if (window.ScopeEngine) window.ScopeEngine.setActiveSection(activeId);
       }
     };
 

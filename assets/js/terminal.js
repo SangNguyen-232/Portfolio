@@ -75,6 +75,7 @@ window.TerminalEngine = (() => {
       }
       if (i < command1Str.length) {
         cmd1.textContent += command1Str.charAt(i);
+        if (window.ScopeEngine) window.ScopeEngine.pulseDMA(0.25);
         i++;
         scheduleBoot(typeCmd1, 32);
       } else {
@@ -98,6 +99,7 @@ window.TerminalEngine = (() => {
       }
       if (j < command2Str.length) {
         cmd2.textContent += command2Str.charAt(j);
+        if (window.ScopeEngine) window.ScopeEngine.pulseDMA(0.25);
         j++;
         scheduleBoot(typeCmd2, 38);
       } else {
@@ -150,6 +152,12 @@ window.TerminalEngine = (() => {
     chips.forEach((chip) => {
       chip.addEventListener('click', () => {
         const cmdKey = chip.dataset.cmd;
+        if (window.ScopeEngine) {
+          window.ScopeEngine.pulseDMA(1.4);
+          if (cmdKey === 'tasks') window.ScopeEngine.triggerModule('rtos');
+          else if (cmdKey === 'tinyml') window.ScopeEngine.triggerModule('tinyml');
+          else if (cmdKey === 'fpga') window.ScopeEngine.triggerModule('fpga');
+        }
 
         if (cmdKey === 'clear') {
           // Clear can run before the preloader starts the boot animation.
@@ -217,6 +225,7 @@ window.TerminalEngine = (() => {
         }
         if (charIndex < fullText.length) {
           stream.textContent += fullText.charAt(charIndex);
+        if (window.ScopeEngine && Math.random() < 0.22) window.ScopeEngine.pulseDMA(0.18);
           charIndex++;
         } else {
           clearStreamTimers();
