@@ -4,16 +4,17 @@
    với ngôn ngữ bo mạch chủ vi xử lý & khoa học máy tính (Silicon Motherboard).
    ===================================================================== */
 
-/* Canvas 3D: rõ nét, hài hòa với lưới tọa độ và hào quang */
+/* Canvas 3D: Mạng nơ-ron 3D và Lưới 3D hiển thị trực tiếp trên #net */
 #net {
   opacity: 0.96;
   transition: opacity 0.4s var(--ease);
 }
+/* Ẩn lưới 2D phẳng tĩnh để hiển thị Lưới 3D phối cảnh chuyển động trên Canvas */
 #grid {
-  opacity: 0.24;
+  display: none !important;
 }
 #aurora {
-  opacity: 0.75;
+  opacity: 0.8;
 }
 
 /* Thẻ kính trong hơn → thấy chiều sâu cấu trúc bus phía sau, vẫn tương phản cao */
