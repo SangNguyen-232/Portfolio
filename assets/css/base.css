@@ -105,9 +105,6 @@ code, pre, kbd, .mono {
   color: var(--muted);
 }
 
-.dim {
-  color: var(--dim);
-}
 
 /* Container */
 .container {

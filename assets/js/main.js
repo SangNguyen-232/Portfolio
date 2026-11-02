@@ -9,6 +9,41 @@
 (() => {
   'use strict';
 
+  // Safe preference storage
+  const memoryStorage = new Map();
+  window.PortfolioStorage = {
+    getItem(key) {
+      key = String(key);
+      if (memoryStorage.has(key)) return memoryStorage.get(key);
+      try {
+        return window.localStorage.getItem(key);
+      } catch (_) {
+        return null;
+      }
+    },
+    setItem(key, value) {
+      key = String(key);
+      value = String(value);
+      memoryStorage.set(key, value);
+      try {
+        window.localStorage.setItem(key, value);
+      } catch (_) {}
+    },
+    removeItem(key) {
+      key = String(key);
+      memoryStorage.set(key, null);
+      try {
+        window.localStorage.removeItem(key);
+      } catch (_) {}
+    }
+  };
+
+  const root = document.documentElement;
+  const LED_KEY = 'sang_portfolio_led';
+  try {
+    root.classList.toggle('no-led', !!(window.PortfolioStorage.getItem(LED_KEY) === 'off'));
+  } catch (_) {}
+
   const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
   let reducedMotionState = motionQuery.matches;
   motionQuery.addEventListener('change', (event) => { reducedMotionState = event.matches; });
@@ -162,6 +197,12 @@
         scheduleCursor();
       }
     });
+
+    const updateVisibility = () => {
+      root.classList.toggle('led-paused', document.hidden);
+    };
+    document.addEventListener('visibilitychange', updateVisibility);
+    updateVisibility();
 
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) {
@@ -745,6 +786,11 @@
       if (e.key.toLowerCase() === 'l') {
         const langToggle = document.getElementById('langToggle');
         if (langToggle) langToggle.click();
+      } else if (e.key.toLowerCase() === 'b') {
+        const off = root.classList.toggle('no-led');
+        try {
+          window.PortfolioStorage.setItem(LED_KEY, off ? 'off' : 'on');
+        } catch (_) {}
       } else if (e.key.toLowerCase() === 't') {
         closeMobileMenu(false);
         const term = document.getElementById('term');
@@ -872,7 +918,67 @@
   };
 
   /* =====================================================================
-     10. BOOTSTRAP CLIENT APPLICATION
+     10. SYNCHRONIZED LED BORDER CONTROLLER
+     ===================================================================== */
+  const initLedController = () => {
+    if (window.CSS && typeof window.CSS.registerProperty === 'function') {
+      try {
+        window.CSS.registerProperty({
+          name: '--led-a',
+          syntax: '<angle>',
+          inherits: false,
+          initialValue: '0deg',
+        });
+      } catch (_) {}
+    }
+
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(({ target, isIntersecting }) => {
+          target.classList.toggle('led-off', !isIntersecting);
+        });
+      }, { rootMargin: '100px' });
+
+      const targets = new Set([
+        ...document.querySelectorAll('.glass, .nav-inner, .term, .stat, .pcard-visual'),
+        ...document.querySelectorAll('.section, .sec-head .sec-title')
+      ]);
+
+      targets.forEach((el) => {
+        if (!el.classList.contains('nav-inner')) {
+          observer.observe(el);
+        }
+      });
+    }
+  };
+
+  /* =====================================================================
+     11. HERO STATS COUNT-UP ANIMATION
+     ===================================================================== */
+  const initStatsCountUp = () => {
+    const els = document.querySelectorAll('.count[data-to]');
+    if (!els.length || prefersReducedMotion() || !('IntersectionObserver' in window)) return;
+    const run = (el) => {
+      const to = +el.dataset.to, t0 = performance.now(), dur = 1200;
+      const tick = (t) => {
+        if (prefersReducedMotion()) {
+          el.textContent = to.toLocaleString('en-US');
+          return;
+        }
+        const p = Math.min((t - t0) / dur, 1), e = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(to * e).toLocaleString('en-US');
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    };
+    const io = new IntersectionObserver((es) => es.forEach((en) => {
+      if (en.isIntersecting) { io.unobserve(en.target); run(en.target); }
+    }), { threshold: 0.6 });
+    els.forEach((el) => io.observe(el));
+  };
+
+  /* =====================================================================
+     12. BOOTSTRAP CLIENT APPLICATION
      ===================================================================== */
   document.addEventListener('DOMContentLoaded', () => {
     // 1. Language Init & Toggle
@@ -924,6 +1030,8 @@
     initModalsAndShortcuts();
     initClipboard();
     initMobileMenu();
+    initLedController();
+    initStatsCountUp();
     document.documentElement.classList.remove('no-js');
   });
 })();

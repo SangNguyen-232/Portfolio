@@ -183,8 +183,7 @@ html.led-paused .sec-head .sec-title::after {
 
 /* Touch targets */
 @media (pointer: coarse) {
-  .ic-pin, .term-chip, .switch-btn, .regen { min-height: 44px; }
-  .switch-btn { padding-inline: 14px; }
+  .term-chip, .regen { min-height: 44px; }
 }
 
 /* Hero typography rhythm */

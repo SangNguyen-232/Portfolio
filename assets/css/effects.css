@@ -374,5 +374,5 @@ body.cursor-down .cursor-dot {
   .reveal { opacity: 1 !important; transform: none !important; }
   .reveal .tag { opacity: 1 !important; transform: none !important; }
   .timeline::before { transform: none !important; }
-  .tilt { transform: none !important; }
+  .tilting { transform: none !important; }
 }
