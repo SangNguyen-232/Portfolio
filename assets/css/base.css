@@ -150,7 +150,7 @@ code, pre, kbd, .mono {
 }
 
 main > .section:nth-of-type(even) {
-  background: linear-gradient(180deg, transparent, rgba(11, 31, 36, 0.45) 20%, rgba(11, 31, 36, 0.45) 80%, transparent);
+  background: linear-gradient(180deg, transparent, rgba(11, 31, 36, 0.22) 20%, rgba(11, 31, 36, 0.22) 80%, transparent);
 }
 
 .sec-head {

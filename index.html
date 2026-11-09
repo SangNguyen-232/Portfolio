@@ -151,7 +151,6 @@
 
   <!-- Ambient Dynamic Background Layers -->
   <div id="aurora" aria-hidden="true"></div>
-  <div id="grid" aria-hidden="true"></div>
   <div id="spot" aria-hidden="true"></div>
   <canvas id="net" aria-hidden="true"></canvas>
   <div class="scroll-progress" id="scrollProgress" aria-hidden="true">
@@ -307,7 +306,7 @@
           <p class="hero-greet mono reveal" style="--d:.1s">
             <span class="prompt">&gt;</span> <span data-i18n="hero.greet">Hi, I am</span>
           </p>
-          <h1 class="hero-name glitch reveal" style="--d:.15s" data-text="Nguyen Van Sang" data-i18n="hero.name">Nguyen
+          <h1 class="hero-name reveal" style="--d:.15s" data-i18n="hero.name">Nguyen
             Van Sang</h1>
           <h2 class="hero-title reveal" style="--d:.2s">
             <span class="grad-text" data-i18n="hero.title">Embedded Software Engineer — Fresher</span>
@@ -336,7 +335,7 @@
             </div>
           </div>
 
-          <p class="hero-tagline reveal" style="--d:.3s" data-i18n="hero.tagline">Computer Engineering student at HCMUT. I build firmware for the ESP32-S3: FreeRTOS multitasking, TinyML running on the microcontroller, FPGA state machines in Verilog, and IoT backends that collect sensor data in the cloud.</p>
+          <p class="hero-tagline reveal" style="--d:.3s" data-i18n="hero.tagline">Computer Engineering student at HCMUT. I work on ESP32-S3 firmware with FreeRTOS and TinyML, Verilog RTL for an FPGA vending prototype, and IoT backends that collect sensor data in the cloud.</p>
 
           <div class="hero-cta reveal" style="--d:.35s">
             <a href="#projects" class="btn btn-primary" data-cursor>
@@ -426,7 +425,7 @@
                     <div class="typing" id="typing" aria-hidden="true">
                       <i></i><i></i><i></i>
                     </div>
-                    <div class="stream on" id="stream">Nguyen Van Sang is a Computer Engineering student at Ho Chi Minh City University of Technology (HCMUT), focused on embedded systems and IoT. He has written FreeRTOS firmware for the ESP32-S3, run a TinyML model on a microcontroller, designed a vending machine as a Verilog state machine on an FPGA, and built a backend that collects sensor data. In summer 2026 he interned on IoT sensor solutions at Viettel Dak Lak. He is looking for a Fresher Embedded Software Engineer role where he can learn from experienced engineers and ship firmware that runs on real hardware.</div>
+                    <div class="stream on" id="stream">Nguyen Van Sang is a Computer Engineering student at Ho Chi Minh City University of Technology (HCMUT), focused on embedded systems and IoT. He has written FreeRTOS firmware for the ESP32-S3, run a TinyML model on a microcontroller, developed Verilog RTL for an FPGA vending prototype with an LCD controller FSM, and built a backend that collects sensor data. In summer 2026 he interned on IoT sensor solutions at Viettel Dak Lak. He is looking for a Fresher Embedded Software Engineer role where he can learn from experienced engineers and ship firmware that runs on real hardware.</div>
                   </div>
                 </div>
               </div>
@@ -487,7 +486,7 @@
                   <use href="#i-cpu" />
                 </svg></div>
               <h3 data-i18n="do.d3.title">FPGA &amp; Digital Design</h3>
-              <p data-i18n="do.d3.desc">Finite state machines and digital logic in Verilog, built with Vivado and Cadence Xcelium and running on a Digilent Arty-Z7 board.</p>
+              <p data-i18n="do.d3.desc">Verilog RTL for a vending prototype targeting Digilent Arty-Z7-20: User/Admin logic, an LCD controller state machine, button debounce and board pin/clock constraints for Vivado.</p>
             </div>
           </div>
         </div>
@@ -581,29 +580,29 @@
               <div class="pcard-icon"><svg class="ic">
                   <use href="#i-cpu" />
                 </svg></div>
-              <span class="pill glow mono">Sep – Dec 2024</span>
+              <span class="pill glow mono" data-i18n="proj.p2.context">CO3091 · Logic Design Project</span>
             </div>
-            <h3 data-i18n="proj.p2.title">FPGA Vending Machine Simulator</h3>
+            <h3 data-i18n="proj.p2.title">FPGA Vending Machine Prototype</h3>
             <ul>
-              <li data-i18n="proj.p2.b1">Designed a vending machine as a Verilog finite state machine and implemented it on a Digilent Arty-Z7 board.</li>
-              <li data-i18n="proj.p2.b2">The state machine handles product selection, coin validation, balance calculation and change return.</li>
-              <li data-i18n="proj.p2.b3">Wrote the hardware interfaces for a 16x2 LCD, 7-segment displays and debounced push buttons.</li>
+              <li data-i18n="proj.p2.b1">Developed Verilog RTL for a 4-product vending prototype targeting Digilent Arty-Z7-20, with separate User and Admin modes.</li>
+              <li data-i18n="proj.p2.b2">Implemented button-based credit (+5/+10), quantity selection, stock checks and balance deduction; Admin mode adjusts prices and restocks products.</li>
+              <li data-i18n="proj.p2.b3">Added counter-based button debounce, an 8-bit 16×2 LCD interface with a 9-state controller FSM, and four 4-bit digit outputs for a 7-segment display interface.</li>
             </ul>
             <div class="pcard-meta">
               <span><svg class="ic">
                   <use href="#i-cpu" />
-                </svg><b>Target Hardware:</b> Xilinx Zynq-7000 (Arty-Z7)</span>
+                </svg><span data-i18n="proj.p2.hardware">Target: Digilent Arty-Z7-20 · XDC clock constraint: 125 MHz</span></span>
               <span><svg class="ic">
                   <use href="#i-code" />
-                </svg><b>Design Language:</b> Verilog HDL (RTL + FSM)</span>
+                </svg><span data-i18n="proj.p2.design">Verilog RTL · User/Admin logic · LCD controller FSM</span></span>
             </div>
             <div class="stack">
               <span class="lbl mono">Tech Stack:</span>
               <div class="tags">
                 <span class="tag">Verilog HDL</span>
                 <span class="tag">Xilinx Vivado</span>
-                <span class="tag">Arty-Z7</span>
-                <span class="tag">Cadence Xcelium</span>
+                <span class="tag">Arty-Z7-20</span>
+                <span class="tag">Verilog Testbench</span>
               </div>
             </div>
             <div class="pcard-foot">
@@ -611,7 +610,7 @@
                 <svg class="ic">
                   <use href="#i-cpu" />
                 </svg>
-                <span data-i18n="proj.inspectFSM">FSM &amp; RTL design</span>
+                <span data-i18n="proj.inspectFSM">RTL &amp; LCD controller</span>
               </button>
               <a href="https://github.com/SangNguyen-232/FPGA-Vending-System" target="_blank" rel="noopener"
                 class="pcard-link" data-cursor>
@@ -620,7 +619,7 @@
                 </svg>
                 <span>GitHub Repo</span>
               </a>
-              <span class="pcard-period mono">Hardware Synthesis</span>
+              <span class="pcard-period mono" data-i18n="proj.p2.stage">RTL prototype</span>
             </div>
           </article>
 
@@ -630,29 +629,29 @@
               <div class="pcard-icon"><svg class="ic">
                   <use href="#i-server" />
                 </svg></div>
-              <span class="pill glow mono">Mar – May 2026</span>
+              <span class="pill glow mono" data-i18n="proj.p3.context">Full-stack prototype</span>
             </div>
-            <h3 data-i18n="proj.p3.title">Smart Campus Parking Management System</h3>
+            <h3 data-i18n="proj.p3.title">ParkWise — Campus Parking Prototype</h3>
             <ul>
-              <li data-i18n="proj.p3.b1">Built 6 REST APIs that keep parking-slot status from IoT sensors in sync across 6 zones.</li>
-              <li data-i18n="proj.p3.b2">Integrated the BKPay payment gateway for online payments and balance management.</li>
-              <li data-i18n="proj.p3.b3">Built a 2D GPS map with React Leaflet and restricted access for 5 user roles with PostgreSQL Row-Level Security.</li>
+              <li data-i18n="proj.p3.b1">Built a Next.js 16 / React 19 prototype for 6 parking zones, with TypeScript, Tailwind CSS, Express mock APIs and Next.js API routes.</li>
+              <li data-i18n="proj.p3.b2">Simulated entry/exit, BKPay-style fees and balance management, payment history, incident reports, gate exceptions, IoT health and reconciliation reports.</li>
+              <li data-i18n="proj.p3.b3">Created an SVG/CSS parking map with slot selection and route simulation, plus UI access rules for 5 demo roles; browser state is stored in localStorage.</li>
+              <li data-i18n="proj.p3.b4">Includes PostgreSQL schema/seed scripts. Live database, BKPay, IoT and backend authorization integrations remain future work.</li>
             </ul>
             <div class="pcard-meta">
               <span><svg class="ic">
                   <use href="#i-server" />
-                </svg><b>Backend:</b> Express.js REST APIs + PostgreSQL RLS</span>
+                </svg><span data-i18n="proj.p3.backend">Data: Express + Next.js mock APIs · localStorage · in-memory state</span></span>
               <span><svg class="ic">
                   <use href="#i-layers" />
-                </svg><b>Frontend:</b> Next.js 16 + React 19 + Tailwind</span>
+                </svg><span data-i18n="proj.p3.frontend">UI: Next.js 16 · React 19 · TypeScript · Tailwind CSS</span></span>
             </div>
             <div class="stack">
               <span class="lbl mono">Tech Stack:</span>
               <div class="tags">
                 <span class="tag">Next.js</span>
                 <span class="tag">TypeScript</span>
-                <span class="tag">PostgreSQL</span>
-                <span class="tag">Linux</span>
+                <span class="tag">PostgreSQL Schema</span>
                 <span class="tag">Tailwind CSS</span>
                 <span class="tag">Express.js</span>
                 <span class="tag">REST APIs</span>
@@ -663,7 +662,7 @@
                 <svg class="ic">
                   <use href="#i-server" />
                 </svg>
-                <span data-i18n="proj.inspectCloud">Cloud &amp; RLS design</span>
+                <span data-i18n="proj.inspectCloud">Prototype architecture</span>
               </button>
               <a href="https://github.com/SangNguyen-232/ParkWise" target="_blank" rel="noopener" class="pcard-link"
                 data-cursor>
@@ -672,7 +671,7 @@
                 </svg>
                 <span>GitHub Repo</span>
               </a>
-              <span class="pcard-period mono">Cloud Platform</span>
+              <span class="pcard-period mono" data-i18n="proj.p3.stage">Mock-data demo</span>
             </div>
           </article>
         </div>
@@ -749,8 +748,8 @@
             <div class="tags">
               <span class="tag">Verilog HDL</span>
               <span class="tag">Xilinx Vivado</span>
-              <span class="tag">Cadence Xcelium</span>
-              <span class="tag">Arty-Z7 Board</span>
+              <span class="tag">Verilog Testbench</span>
+              <span class="tag">Arty-Z7-20 Target</span>
             </div>
           </div>
 
@@ -802,7 +801,7 @@
             <span class="mq"><i></i>Embedded C/C++</span>
             <span class="mq"><i></i>Xilinx Vivado</span>
             <span class="mq"><i></i>PlatformIO</span>
-            <span class="mq"><i></i>PostgreSQL RLS</span>
+            <span class="mq"><i></i>PostgreSQL Schema</span>
             <span class="mq"><i></i>Docker Containers</span>
             <span class="mq"><i></i>I2C &amp; UART Peripherals</span>
             <!-- Duplicate for seamless loop -->
@@ -813,7 +812,7 @@
             <span class="mq"><i></i>Embedded C/C++</span>
             <span class="mq"><i></i>Xilinx Vivado</span>
             <span class="mq"><i></i>PlatformIO</span>
-            <span class="mq"><i></i>PostgreSQL RLS</span>
+            <span class="mq"><i></i>PostgreSQL Schema</span>
             <span class="mq"><i></i>Docker Containers</span>
             <span class="mq"><i></i>I2C &amp; UART Peripherals</span>
           </div>
@@ -821,25 +820,25 @@
 
         <div class="marquee reverse reveal" aria-hidden="true" style="margin-top:10px;">
           <div class="track">
-            <span class="mq"><i></i>Digilent Arty-Z7</span>
-            <span class="mq"><i></i>Cadence Xcelium</span>
+            <span class="mq"><i></i>Digilent Arty-Z7-20</span>
+            <span class="mq"><i></i>Verilog Testbench</span>
             <span class="mq"><i></i>STM32CubeIDE</span>
             <span class="mq"><i></i>Node.js &amp; Express</span>
             <span class="mq"><i></i>Next.js 16</span>
             <span class="mq"><i></i>Linux Ubuntu</span>
             <span class="mq"><i></i>Git &amp; GitHub CI</span>
-            <span class="mq"><i></i>React 19 &amp; Leaflet</span>
+            <span class="mq"><i></i>React 19 &amp; TypeScript</span>
             <span class="mq"><i></i>LittleFS Hot-Swap</span>
             <span class="mq"><i></i>WebSocket Streaming</span>
             <!-- Duplicate for seamless loop -->
-            <span class="mq"><i></i>Digilent Arty-Z7</span>
-            <span class="mq"><i></i>Cadence Xcelium</span>
+            <span class="mq"><i></i>Digilent Arty-Z7-20</span>
+            <span class="mq"><i></i>Verilog Testbench</span>
             <span class="mq"><i></i>STM32CubeIDE</span>
             <span class="mq"><i></i>Node.js &amp; Express</span>
             <span class="mq"><i></i>Next.js 16</span>
             <span class="mq"><i></i>Linux Ubuntu</span>
             <span class="mq"><i></i>Git &amp; GitHub CI</span>
-            <span class="mq"><i></i>React 19 &amp; Leaflet</span>
+            <span class="mq"><i></i>React 19 &amp; TypeScript</span>
             <span class="mq"><i></i>LittleFS Hot-Swap</span>
             <span class="mq"><i></i>WebSocket Streaming</span>
           </div>

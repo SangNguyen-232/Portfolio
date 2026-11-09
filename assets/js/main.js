@@ -28,13 +28,6 @@
       try {
         window.localStorage.setItem(key, value);
       } catch (_) {}
-    },
-    removeItem(key) {
-      key = String(key);
-      memoryStorage.set(key, null);
-      try {
-        window.localStorage.removeItem(key);
-      } catch (_) {}
     }
   };
 
@@ -115,8 +108,6 @@
       ring.style.transform = `translate3d(${ringX.toFixed(2)}px, ${ringY.toFixed(2)}px, 0) translate(-50%, -50%) scale(${ringScale.toFixed(3)})`;
       if (spot) {
         spot.style.transform = `translate3d(${spotX.toFixed(1)}px, ${spotY.toFixed(1)}px, 0)`;
-        spot.style.setProperty('--x', `${spotX.toFixed(1)}px`);
-        spot.style.setProperty('--y', `${spotY.toFixed(1)}px`);
       }
     };
 
@@ -270,7 +261,6 @@
         const x = (e.clientX - rect.left) / rect.width - 0.5;
         const y = (e.clientY - rect.top) / rect.height - 0.5;
         el.classList.add('tilting');
-        if (window.ScopeEngine) window.ScopeEngine.setHoverCoords(x, y);
 
         if (tiltRaf) cancelAnimationFrame(tiltRaf);
         tiltRaf = requestAnimationFrame(() => {
@@ -337,7 +327,7 @@
     });
     document.addEventListener('pointerdown', (e) => {
       if (prefersReducedMotion()) return;
-      const btn = e.target.closest && e.target.closest('.btn, .term-chip, .btn-copy-quick, .pcard-link, .regen');
+      const btn = e.target.closest && e.target.closest('.btn, .term-chip, .pcard-link, .regen');
       if (!btn) return;
 
       const rect = btn.getBoundingClientRect();
@@ -536,7 +526,6 @@
       if (activeSectionId !== activeId) {
         activeSectionId = activeId;
         updateTocBeam(activeId);
-        if (window.ScopeEngine) window.ScopeEngine.setActiveSection(activeId);
       }
     };
 

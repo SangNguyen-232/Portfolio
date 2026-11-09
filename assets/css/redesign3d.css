@@ -4,36 +4,14 @@
    với ngôn ngữ bo mạch chủ vi xử lý & khoa học máy tính (Silicon Motherboard).
    ===================================================================== */
 
-/* Canvas 3D: Mạng nơ-ron 3D và Lưới 3D hiển thị trực tiếp trên #net */
-#net {
-  opacity: 0.96;
-  transition: opacity 0.4s var(--ease);
-}
-/* Ẩn lưới 2D phẳng tĩnh để hiển thị Lưới 3D phối cảnh chuyển động trên Canvas */
-#grid {
-  display: none !important;
-}
 #aurora {
   opacity: 0.8;
 }
 
-/* Thẻ kính trong hơn → thấy chiều sâu cấu trúc bus phía sau, vẫn tương phản cao */
-:root {
-  --grad-card: linear-gradient(180deg, rgba(14, 38, 44, 0.62), rgba(10, 28, 33, 0.76));
-}
-.glass {
-  backdrop-filter: blur(14px) saturate(1.25);
-  -webkit-backdrop-filter: blur(14px) saturate(1.25);
-}
 .education-shell .edu.glass {
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
 } /* tránh blur lồng blur */
-
-/* Nền xen kẽ giữa các section thông suốt với nền 3D */
-main > .section:nth-of-type(even) {
-  background: linear-gradient(180deg, transparent, rgba(11, 31, 36, 0.22) 20%, rgba(11, 31, 36, 0.22) 80%, transparent);
-}
 
 /* Đánh số section theo chuẩn kiến trúc mạch vi điều khiển: 01 // … */
 main { counter-reset: sec; }
@@ -158,8 +136,5 @@ main > .section > .container > .sec-head .sec-title::before {
   .glass {
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
-  }
-  #grid {
-    display: none;
   }
 }

@@ -106,8 +106,8 @@ window.ScopeEngine = (() => {
     { sel: '#about', side: 1, tag: 'Clock / PLL', type: 'clk', build: wave, ops: ['XTAL 40MHz', 'PLL x6', 'SYS 240MHz'] },
     { sel: '#projectGrid article:nth-child(1)', side: 0, tag: 'FreeRTOS Scheduler', type: 'rtos', build: () => ring(7), ops: ['READY', 'RUNNING', 'BLOCKED', 'Mutex take', 'Mutex give'] },
     { sel: '#projectGrid article:nth-child(1)', side: 1, tag: 'TinyML Inference', type: 'tinyml', build: () => net([3, 4, 3]), ops: ['input', 'dense', 'softmax', '<1 ms'] },
-    { sel: '#projectGrid article:nth-child(2)', side: 0, tag: 'Verilog FSM', type: 'fpga', build: () => ring(5), ops: ['S_IDLE', 'S_COIN', 'S_SELECT', 'S_DISPENSE', 'S_CHANGE'] },
-    { sel: '#projectGrid article:nth-child(3)', side: 1, tag: 'Postgres RLS Pages', type: 'db', build: () => stack(3), ops: ['page #0', 'page #1', 'page #2'] },
+    { sel: '#projectGrid article:nth-child(2)', side: 0, tag: 'LCD FSM (illustration)', type: 'fpga', build: () => ring(9), ops: ['INIT', 'DISPLAY_ON', 'CLEAR_ON', 'SET_CURSOR1', 'WRITE_LINE1', 'SET_CURSOR2', 'WRITE_LINE2', 'IDLE', 'CHECK_UPDATE'] },
+    { sel: '#projectGrid article:nth-child(3)', side: 1, tag: 'Mock APIs / Local State', type: 'db', build: () => stack(3), ops: ['mock response', 'local state', 'SVG / CSS map'] },
     { sel: '#skills', side: 0, tag: 'Memory Hierarchy', type: 'mem', build: pyramid, ops: ['Regs', 'L1', 'SRAM', 'Flash'] },
     { sel: '#skills', side: 1, tag: 'SPI / I2C Bus', type: 'osc', build: wave, ops: ['SCK', 'MOSI', '/CS'] },
     { sel: '#experience', side: 0, tag: 'Sensor ADC', type: 'adc', build: cube, ops: ['sample', 'hold', 'convert'] },
@@ -338,7 +338,7 @@ window.ScopeEngine = (() => {
 
 
     /* ---------- Hai đường bus xuyên suốt ---------- */
-    const drawRails = (sy) => {
+    const drawRails = () => {
       for (const [s, right] of [[sideL, false], [sideR, true]]) {
         if (!s.on) continue;
         ctx.strokeStyle = rgba(C[0], 0.15 + dmaPulse * 0.25);
@@ -557,8 +557,8 @@ window.ScopeEngine = (() => {
         if (best) best.active = true;
       }
 
-      drawCloud(sy);
-      drawRails(sy);
+      drawCloud();
+      drawRails();
       drawChain(sy);
       drawCoupling();
       for (const m of mods) drawModule(m, sy);
@@ -647,13 +647,11 @@ window.ScopeEngine = (() => {
   };
 
   /* =================================================================
-     PUBLIC API (không đổi)
+     PUBLIC API
      ================================================================= */
   return {
     initNeuralNetwork,
     setHoveredCard(cardEl, isHovered) { hoveredCardEl = isHovered ? cardEl : null; },
-    setHoverCoords() {},
-    setActiveSection() {},
     pulseDMA(intensity = 1.0) { dmaPulse = Math.max(dmaPulse, intensity); },
     triggerModule(modType) {
       triggeredType = modType;

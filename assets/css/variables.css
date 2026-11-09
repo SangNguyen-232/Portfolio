@@ -6,21 +6,15 @@
 :root {
   /* Core Backgrounds (Dark Cyber Embedded Theme) */
   --bg: #061418;
-  --bg2: #0B1F24;
-  --bg3: #0F2A30;
-  --bg4: #13323A;
   --panel: rgba(19, 50, 58, 0.55);
-  --panel2: rgba(19, 50, 58, 0.9);
   
   /* Borders & Dividers */
   --border: #1E3B41;
   --border2: #2A4A50;
-  --border-focus: #5FE3C8;
 
   /* Typography Colors */
   --text: #E8F3F0;
   --text2: #C3D6D1;
-  --text3: #93AEA8;
   --muted: #A9C0BA;
   --dim: #9FBAB3;
 
@@ -30,19 +24,15 @@
   --amber: #FFB547;      /* Alert / Clock / Secondary */
   --amber-rgb: 255, 181, 71;
   --pale: #BFF2E6;       /* Sub-accent */
-  --pale-rgb: 191, 242, 230;
 
   /* Semantic Aliases */
   --cyan: var(--mint);
-  --cyan-rgb: var(--mint-rgb);
-  --green: var(--mint);
 
   /* Gradients */
   --grad: linear-gradient(120deg, #5FE3C8 0%, #D9F6EC 48%, #FFB547 100%);
   --grad2: linear-gradient(120deg, #FFB547, #5FE3C8);
-  --grad-data: linear-gradient(120deg, #5FE3C8, #BFF2E6);
   --grad-btn: linear-gradient(120deg, #FFC96E 0%, #FFB547 55%, #F5A52F 100%);
-  --grad-card: linear-gradient(180deg, rgba(15, 42, 48, 0.75), rgba(11, 31, 36, 0.85));
+  --grad-card: linear-gradient(180deg, rgba(14, 38, 44, 0.62), rgba(10, 28, 33, 0.76));
 
   /* Typography Font Families */
   --font: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
@@ -52,11 +42,9 @@
   /* Layout & Measurements */
   --r: 22px;
   --r-sm: 14px;
-  --r-xs: 8px;
   --nav-h: 72px;
   --max-w: 1180px;
   --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
-  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
 
   /* Dynamic interactive coordinates */
   --mx: 50%;

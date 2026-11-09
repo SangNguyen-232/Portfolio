@@ -123,10 +123,10 @@ window.TerminalEngine = (() => {
     terminalInitialized = true;
 
     const commandOutputs = {
-      help: 'Commands: [freertos -t] tasks  [tinyml --infer] inference  [fpga --fsm] vending FSM  [clear] reset',
+      help: 'Commands: [freertos -t] tasks  [tinyml --infer] inference  [fpga --fsm] LCD FSM  [clear] reset',
       tasks: 'FreeRTOS: temp_humi_monitor, tiny_ml_task, task_pump, task_database, Task_Toogle_BOOT, led_blinky, neo_blinky • 7 simulated tasks',
       tinyml: '[TFLite Micro] Temp=28.7°C Hum=72% Soil=41% -> CLASS: NORMAL (Risk: 11%, Latency: 0.82ms)',
-      fpga: 'Verilog FSM: [IDLE] -> [SELECT] -> [COIN_DETECT] -> [BALANCE_OK] -> [DISPENSE] -> [IDLE]'
+      fpga: 'LCD_display FSM (illustration): INIT -> DISPLAY_ON -> CLEAR_ON -> SET_CURSOR1 -> WRITE_LINE1 -> SET_CURSOR2 -> WRITE_LINE2 -> IDLE -> CHECK_UPDATE -> CLEAR_ON (refresh loop)'
     };
 
     // Build a terminal line with textContent only (no innerHTML injection)

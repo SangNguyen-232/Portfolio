@@ -20,8 +20,8 @@
 /* Glassmorphism Panel Container */
 .glass {
   background: var(--grad-card);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(14px) saturate(1.25);
+  -webkit-backdrop-filter: blur(14px) saturate(1.25);
   border: 1px solid var(--border);
   border-radius: var(--r);
   box-shadow: 0 16px 40px -16px rgba(0, 0, 0, 0.5);
@@ -460,7 +460,7 @@ kbd {
   width: 234px;
 }
 
-@media (min-width: 1360px) {
+@media (min-width: 1560px) {
   .toc { display: flex; }
 }
 

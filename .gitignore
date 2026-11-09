@@ -1,0 +1,20 @@
+# Local dependencies and browser/build reports
+node_modules/
+playwright-report/
+test-results/
+coverage/
+
+# LaTeX intermediates; keep the published CV.pdf and its CV.tex source.
+*.aux
+*.fls
+*.fdb_latexmk
+*.log
+*.out
+*.synctex.gz
+*.xdv
+
+# Editor and operating-system files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo

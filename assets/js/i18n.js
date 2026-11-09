@@ -42,7 +42,7 @@ window.PortfolioData = (() => {
       'hero.greet': 'Hi, I am',
       'hero.name': 'Nguyen Van Sang',
       'hero.title': 'Embedded Software Engineer — Fresher',
-      'hero.tagline': 'Computer Engineering student at HCMUT. I build firmware for the ESP32-S3: FreeRTOS multitasking, TinyML running on the microcontroller, FPGA state machines in Verilog, and IoT backends that collect sensor data in the cloud.',
+      "hero.tagline": "Computer Engineering student at HCMUT. I work on ESP32-S3 firmware with FreeRTOS and TinyML, Verilog RTL for an FPGA vending prototype, and IoT backends that collect sensor data in the cloud.",
       'hero.cta1': 'View projects',
       'hero.cta2': 'Contact me',
       'stats.s1': 'Projects on GitHub',
@@ -53,13 +53,13 @@ window.PortfolioData = (() => {
       'about.sub': 'Who I am and what I work on',
       'about.userPrompt': "Tell me more about Sang",
       'about.regen': 'Regenerate',
-      'about.streamText': "Nguyen Van Sang is a Computer Engineering student at Ho Chi Minh City University of Technology (HCMUT), focused on embedded systems and IoT. He has written FreeRTOS firmware for the ESP32-S3, run a TinyML model on a microcontroller, designed a vending machine as a Verilog state machine on an FPGA, and built a backend that collects sensor data. In summer 2026 he interned on IoT sensor solutions at Viettel Dak Lak. He is looking for a Fresher Embedded Software Engineer role where he can learn from experienced engineers and ship firmware that runs on real hardware.",
+      "about.streamText": "Nguyen Van Sang is a Computer Engineering student at Ho Chi Minh City University of Technology (HCMUT), focused on embedded systems and IoT. He has written FreeRTOS firmware for the ESP32-S3, run a TinyML model on a microcontroller, developed Verilog RTL for an FPGA vending prototype with an LCD controller FSM, and built a backend that collects sensor data. In summer 2026 he interned on IoT sensor solutions at Viettel Dak Lak. He is looking for a Fresher Embedded Software Engineer role where he can learn from experienced engineers and ship firmware that runs on real hardware.",
       'do.d1.title': 'Firmware & RTOS',
       'do.d1.desc': 'Concurrent firmware for ESP32 and ESP32-S3 on FreeRTOS: tasks, queues, mutexes and event groups, with drivers for I2C, GPIO and UART.',
       'do.d2.title': 'Edge AI & TinyML',
       'do.d2.desc': 'A small TensorFlow Lite Micro classifier running on the microcontroller, with a hardware interlock so the pump relay only switches on when conditions allow.',
       'do.d3.title': 'FPGA & Digital Design',
-      'do.d3.desc': 'Finite state machines and digital logic in Verilog, built with Vivado and Cadence Xcelium and running on a Digilent Arty-Z7 board.',
+      "do.d3.desc": "Verilog RTL for a vending prototype targeting Digilent Arty-Z7-20: User/Admin logic, an LCD controller state machine, button debounce and board pin/clock constraints for Vivado.",
       'exp.title': 'Experience',
       'exp.sub': 'Internship experience',
       'exp.role': 'IoT Intern',
@@ -74,20 +74,20 @@ window.PortfolioData = (() => {
       'proj.p1.b1': 'Wrote FreeRTOS firmware for the ESP32-S3 with 7 tasks (sensor sampling, TinyML inference, pump relay, logging, reset button, status LED) that share state through a semaphore-protected context, across I2C, GPIO and the network.',
       'proj.p1.b2': 'Ran a float32 TensorFlow Lite Micro model that classifies temperature, humidity and soil moisture into 3 risk levels in under 1 ms per inference, with hardware interlocks on the pump.',
       'proj.p1.b3': 'Added a Wi-Fi access-point fallback with known networks saved in LittleFS, and streamed telemetry over HTTP/WebSocket to a Node.js and PostgreSQL dashboard running in Docker.',
-      'proj.p2.title': 'FPGA Vending Machine Simulator',
-      'proj.p2.b1': 'Designed a vending machine as a Verilog finite state machine and implemented it on a Digilent Arty-Z7 board.',
-      'proj.p2.b2': 'The state machine handles product selection, coin validation, balance calculation and change return.',
-      'proj.p2.b3': 'Wrote the hardware interfaces for a 16x2 LCD, 7-segment displays and debounced push buttons.',
-      'proj.p3.title': 'Smart Campus Parking Management System',
-      'proj.p3.b1': 'Built 6 REST APIs that keep parking-slot status from IoT sensors in sync across 6 zones.',
-      'proj.p3.b2': 'Integrated the BKPay payment gateway for online payments and balance management.',
-      'proj.p3.b3': 'Built a 2D GPS map with React Leaflet and restricted access for 5 user roles with PostgreSQL Row-Level Security.',
+      "proj.p2.title": "FPGA Vending Machine Prototype",
+      "proj.p2.b1": "Developed Verilog RTL for a 4-product vending prototype targeting Digilent Arty-Z7-20, with separate User and Admin modes.",
+      "proj.p2.b2": "Implemented button-based credit (+5/+10), quantity selection, stock checks and balance deduction; Admin mode adjusts prices and restocks products.",
+      "proj.p2.b3": "Added counter-based button debounce, an 8-bit 16×2 LCD interface with a 9-state controller FSM, and four 4-bit digit outputs for a 7-segment display interface.",
+      "proj.p3.title": "ParkWise — Campus Parking Prototype",
+      "proj.p3.b1": "Built a Next.js 16 / React 19 prototype for 6 parking zones, with TypeScript, Tailwind CSS, Express mock APIs and Next.js API routes.",
+      "proj.p3.b2": "Simulated entry/exit, BKPay-style fees and balance management, payment history, incident reports, gate exceptions, IoT health and reconciliation reports.",
+      "proj.p3.b3": "Created an SVG/CSS parking map with slot selection and route simulation, plus UI access rules for 5 demo roles; browser state is stored in localStorage.",
       'proj.inspect': 'System architecture',
       'proj.m1': 'FreeRTOS tasks',
       'proj.m2': 'TinyML inference',
       'proj.m3': 'training samples',
-      'proj.inspectFSM': 'FSM & RTL design',
-      'proj.inspectCloud': 'Cloud & RLS design',
+      "proj.inspectFSM": "RTL & LCD controller",
+      "proj.inspectCloud": "Prototype architecture",
       'skills.title': 'Technical Skills',
       'skills.sub': 'Tools and technologies I have used in the projects below',
       'skills.c1': 'Programming Languages',
@@ -119,7 +119,16 @@ window.PortfolioData = (() => {
       'contact.copy': 'Copy Email',
       'shortcut.led': 'Toggle LED borders',
       'footer.totop': 'Back to Top',
-      'toast.copied': 'Email copied to clipboard!'
+      'toast.copied': 'Email copied to clipboard!',
+      "proj.p2.context": "CO3091 · Logic Design Project",
+      "proj.p2.hardware": "Target: Digilent Arty-Z7-20 · XDC clock constraint: 125 MHz",
+      "proj.p2.design": "Verilog RTL · User/Admin logic · LCD controller FSM",
+      "proj.p2.stage": "RTL prototype",
+      "proj.p3.b4": "Includes PostgreSQL schema/seed scripts. Live database, BKPay, IoT and backend authorization integrations remain future work.",
+      "proj.p3.context": "Full-stack prototype",
+      "proj.p3.backend": "Data: Express + Next.js mock APIs · localStorage · in-memory state",
+      "proj.p3.frontend": "UI: Next.js 16 · React 19 · TypeScript · Tailwind CSS",
+      "proj.p3.stage": "Mock-data demo",
     },
     vi: {
       'skip.content': 'Chuyển đến nội dung',
@@ -154,7 +163,7 @@ window.PortfolioData = (() => {
       'hero.greet': 'Xin chào, tôi là',
       'hero.name': 'Nguyễn Văn Sang',
       'hero.title': 'Kỹ sư Phần mềm Nhúng — Fresher',
-      'hero.tagline': 'Sinh viên Kỹ thuật Máy tính tại ĐH Bách khoa TP.HCM. Tôi viết firmware cho ESP32-S3: đa nhiệm FreeRTOS, TinyML chạy trực tiếp trên vi điều khiển, máy trạng thái FPGA bằng Verilog và backend IoT thu thập dữ liệu cảm biến lên cloud.',
+      "hero.tagline": "Sinh viên Kỹ thuật Máy tính tại ĐH Bách khoa TP.HCM. Tôi phát triển firmware ESP32-S3 với FreeRTOS và TinyML, RTL Verilog cho nguyên mẫu máy bán hàng trên FPGA và backend IoT thu thập dữ liệu cảm biến lên cloud.",
       'hero.cta1': 'Xem dự án',
       'hero.cta2': 'Liên hệ',
       'stats.s1': 'Dự án có mã nguồn trên GitHub',
@@ -165,13 +174,13 @@ window.PortfolioData = (() => {
       'about.sub': 'Giới thiệu ngắn về tôi và hướng chuyên môn',
       'about.userPrompt': 'Hãy giới thiệu về Sang',
       'about.regen': 'Phát lại',
-      'about.streamText': "Nguyễn Văn Sang là sinh viên Kỹ thuật Máy tính tại Trường Đại học Bách khoa – ĐHQG-HCM, tập trung vào hệ thống nhúng và IoT. Anh đã viết firmware FreeRTOS cho ESP32-S3, chạy mô hình TinyML trên vi điều khiển, thiết kế máy bán hàng tự động bằng FSM Verilog trên FPGA và xây dựng backend thu thập dữ liệu cảm biến. Mùa hè năm 2026, anh thực tập về giải pháp cảm biến IoT tại Viettel Đắk Lắk. Anh đang tìm vị trí Fresher Embedded Software Engineer để học hỏi từ các kỹ sư giàu kinh nghiệm và làm ra firmware chạy trên phần cứng thật.",
+      "about.streamText": "Nguyễn Văn Sang là sinh viên Kỹ thuật Máy tính tại Trường Đại học Bách khoa – ĐHQG-HCM, tập trung vào hệ thống nhúng và IoT. Anh đã viết firmware FreeRTOS cho ESP32-S3, chạy mô hình TinyML trên vi điều khiển, phát triển RTL Verilog cho nguyên mẫu máy bán hàng trên FPGA với FSM điều khiển LCD và xây dựng backend thu thập dữ liệu cảm biến. Mùa hè năm 2026, anh thực tập về giải pháp cảm biến IoT tại Viettel Đắk Lắk. Anh đang tìm vị trí Fresher Embedded Software Engineer để học hỏi từ các kỹ sư giàu kinh nghiệm và làm ra firmware chạy trên phần cứng thật.",
       'do.d1.title': 'Firmware & RTOS',
       'do.d1.desc': 'Firmware đa nhiệm cho ESP32 và ESP32-S3 trên FreeRTOS: task, queue, mutex, event group, kèm driver cho I2C, GPIO và UART.',
       'do.d2.title': 'Edge AI & TinyML',
       'do.d2.desc': 'Mô hình TensorFlow Lite Micro nhỏ chạy trực tiếp trên vi điều khiển, kèm khóa an toàn phần cứng để rơ-le bơm chỉ bật khi điều kiện cho phép.',
       'do.d3.title': 'FPGA & Thiết kế số',
-      'do.d3.desc': 'Máy trạng thái hữu hạn và logic số viết bằng Verilog, dùng Vivado và Cadence Xcelium, chạy trên bo Digilent Arty-Z7.',
+      "do.d3.desc": "RTL Verilog cho nguyên mẫu máy bán hàng hướng tới bo Digilent Arty-Z7-20: logic User/Admin, FSM điều khiển LCD, chống dội nút nhấn và ràng buộc chân/xung nhịp cho Vivado.",
       'exp.title': 'Kinh Nghiệm',
       'exp.sub': 'Kinh nghiệm thực tập',
       'exp.role': 'Thực tập sinh IoT',
@@ -186,20 +195,20 @@ window.PortfolioData = (() => {
       'proj.p1.b1': 'Viết firmware FreeRTOS cho ESP32-S3 gồm 7 task (đọc cảm biến, suy luận TinyML, rơ-le bơm, ghi log, nút reset, LED trạng thái) dùng chung trạng thái qua semaphore, giao tiếp I2C, GPIO và mạng.',
       'proj.p1.b2': 'Chạy mô hình float32 TensorFlow Lite Micro phân loại nhiệt độ, độ ẩm và độ ẩm đất thành 3 mức rủi ro, mỗi lần suy luận dưới 1 ms, kèm khóa an toàn phần cứng cho máy bơm.',
       'proj.p1.b3': 'Thêm chế độ Wi-Fi access point dự phòng, lưu các mạng đã biết trong LittleFS, và truyền telemetry qua HTTP/WebSocket tới dashboard Node.js + PostgreSQL chạy trong Docker.',
-      'proj.p2.title': 'Mô phỏng máy bán hàng tự động trên FPGA',
-      'proj.p2.b1': 'Thiết kế máy bán hàng tự động bằng FSM Verilog và triển khai trên bo Digilent Arty-Z7.',
-      'proj.p2.b2': 'FSM xử lý chọn sản phẩm, nhận diện tiền xu, tính số dư và trả tiền thừa.',
-      'proj.p2.b3': 'Viết giao tiếp phần cứng cho LCD 16x2, LED 7 đoạn và nút nhấn có chống dội.',
-      'proj.p3.title': 'Hệ thống quản lý bãi đỗ xe thông minh trong khuôn viên trường',
-      'proj.p3.b1': 'Xây dựng 6 REST API đồng bộ trạng thái chỗ đỗ từ cảm biến IoT trên 6 khu vực.',
-      'proj.p3.b2': 'Tích hợp cổng thanh toán BKPay để thanh toán trực tuyến và quản lý số dư.',
-      'proj.p3.b3': 'Làm bản đồ GPS 2D bằng React Leaflet và phân quyền cho 5 nhóm người dùng bằng PostgreSQL Row-Level Security.',
+      "proj.p2.title": "Nguyên mẫu máy bán hàng tự động trên FPGA",
+      "proj.p2.b1": "Phát triển RTL Verilog cho nguyên mẫu máy bán hàng gồm 4 loại sản phẩm, hướng tới bo Digilent Arty-Z7-20, có hai chế độ User và Admin.",
+      "proj.p2.b2": "Mô phỏng nạp số dư bằng nút nhấn (+5/+10), chọn số lượng, kiểm tra tồn kho và trừ tiền; Admin điều chỉnh giá và bổ sung hàng.",
+      "proj.p2.b3": "Bổ sung chống dội bằng bộ đếm, giao tiếp LCD 16×2 bus 8-bit với FSM điều khiển 9 trạng thái và bốn đầu ra chữ số 4-bit cho giao tiếp hiển thị LED 7 đoạn.",
+      "proj.p3.title": "ParkWise — Nguyên mẫu quản lý bãi đỗ xe trong trường",
+      "proj.p3.b1": "Xây dựng nguyên mẫu Next.js 16 / React 19 cho 6 khu đỗ, dùng TypeScript, Tailwind CSS, API Express mock và API route Next.js.",
+      "proj.p3.b2": "Mô phỏng xe vào/ra, thanh toán phí và quản lý số dư theo luồng BKPay, lịch sử giao dịch, báo cáo sự cố, ngoại lệ tại cổng, trạng thái IoT và báo cáo đối soát.",
+      "proj.p3.b3": "Tạo sơ đồ bãi xe SVG/CSS để chọn ô và mô phỏng chỉ đường, kèm kiểm tra quyền giao diện cho 5 nhóm tài khoản demo; lưu trạng thái trình duyệt bằng localStorage.",
       'proj.inspect': 'Kiến trúc hệ thống',
       'proj.m1': 'tác vụ FreeRTOS',
       'proj.m2': 'suy luận TinyML',
       'proj.m3': 'mẫu huấn luyện',
-      'proj.inspectFSM': 'Thiết kế FSM & RTL',
-      'proj.inspectCloud': 'Thiết kế Cloud & RLS',
+      "proj.inspectFSM": "RTL & bộ điều khiển LCD",
+      "proj.inspectCloud": "Kiến trúc nguyên mẫu",
       'skills.title': 'Kỹ Năng Chuyên Môn',
       'skills.sub': 'Công cụ và công nghệ tôi đã dùng trong các dự án bên dưới',
       'skills.c1': 'Ngôn ngữ lập trình',
@@ -231,7 +240,16 @@ window.PortfolioData = (() => {
       'contact.copy': 'Sao chép Email',
       'shortcut.led': 'Bật/tắt viền LED',
       'footer.totop': 'Lên Đầu Trang',
-      'toast.copied': 'Đã sao chép địa chỉ email vào bộ nhớ tạm!'
+      'toast.copied': 'Đã sao chép địa chỉ email vào bộ nhớ tạm!',
+      "proj.p2.context": "CO3091 · Đồ án Thiết kế luận lý",
+      "proj.p2.hardware": "Bo đích: Digilent Arty-Z7-20 · Ràng buộc xung nhịp XDC: 125 MHz",
+      "proj.p2.design": "RTL Verilog · Logic User/Admin · FSM điều khiển LCD",
+      "proj.p2.stage": "Nguyên mẫu RTL",
+      "proj.p3.b4": "Có script schema/seed PostgreSQL. Kết nối cơ sở dữ liệu, BKPay, IoT thật và phân quyền backend vẫn là hướng phát triển.",
+      "proj.p3.context": "Nguyên mẫu full-stack",
+      "proj.p3.backend": "Dữ liệu: API Express + Next.js mô phỏng · localStorage · bộ nhớ",
+      "proj.p3.frontend": "Giao diện: Next.js 16 · React 19 · TypeScript · Tailwind CSS",
+      "proj.p3.stage": "Demo dữ liệu mô phỏng",
     }
   };
 
@@ -339,166 +357,202 @@ window.PortfolioData = (() => {
       `
     },
     'modal-proj2': {
-      title_en: 'FPGA Vending Machine — RTL & FSM Architecture',
-      title_vi: 'Mô phỏng Máy bán hàng FPGA — Kiến trúc RTL & FSM',
-      sub_en: 'Digilent Arty-Z7 (Xilinx Zynq-7000) · Verilog HDL · Vivado Synthesis',
-      sub_vi: 'Digilent Arty-Z7 (Xilinx Zynq-7000) · Ngôn ngữ Verilog HDL · Tổng hợp Vivado',
+      title_en: "FPGA Vending Prototype — RTL & LCD Controller",
+      title_vi: "Nguyên mẫu máy bán hàng FPGA — RTL & bộ điều khiển LCD",
+      sub_en: "Arty-Z7-20 target · Verilog HDL · 125 MHz XDC constraint · 8-bit LCD bus",
+      sub_vi: "Bo đích Arty-Z7-20 · Verilog HDL · Ràng buộc XDC 125 MHz · LCD bus 8-bit",
       body_en: `
         <div class="arch-card">
-          <div class="arch-card-title">
-            <svg class="ic" style="width:16px;height:16px;color:var(--mint);"><use href="#i-cpu"/></svg>
-            <span>Finite State Machine (FSM) State Diagram</span>
-          </div>
-          <div class="arch-pipeline">
-            <div class="arch-step"><b>S_IDLE</b><span>Display Ready (0 VND)</span></div>
-            <span class="arch-sep">➔</span>
-            <div class="arch-step"><b>S_COIN_VAL</b><span>Validate 5k / 10k / 20k</span></div>
-            <span class="arch-sep">➔</span>
-            <div class="arch-step"><b>S_SEL_ITEM</b><span>Evaluate Product Price</span></div>
-            <span class="arch-sep">➔</span>
-            <div class="arch-step"><b>S_DISPENSE</b><span>Dispense Pulse Actuation</span></div>
-            <span class="arch-sep">➔</span>
-            <div class="arch-step"><b>S_RETURN_CHG</b><span>Calculate & Return Change</span></div>
-          </div>
-          <p class="muted small" style="margin:0;">A synchronous state machine implemented on the Xilinx Zynq-7000 logic fabric and clocked at 100 MHz.</p>
-        </div>
-
-        <div class="arch-card" style="margin-bottom:0;">
-          <div class="arch-card-title">
-            <svg class="ic" style="width:16px;height:16px;color:var(--amber);"><use href="#i-layers"/></svg>
-            <span>Verilog RTL Hardware Submodules</span>
-          </div>
+          <div class="arch-card-title"><svg class="ic" style="width:16px;height:16px;color:var(--mint);"><use href="#i-cpu"/></svg><span>Actual RTL hierarchy and interfaces</span></div>
           <table class="pin-table">
-            <thead>
-              <tr><th>Submodule</th><th>Clock Domain</th><th>Hardware Interface</th><th>Function</th></tr>
-            </thead>
+            <thead><tr><th>RTL component</th><th>Interface / behavior</th></tr></thead>
             <tbody>
-              <tr><td><b>clk_divider</b></td><td>100MHz ➔ 1kHz</td><td>Internal clock</td><td>Debounce sampling & display refresh timing</td></tr>
-              <tr><td><b>button_debouncer</b></td><td>1kHz Sample</td><td>Tactical Push Switches</td><td>4-stage shift register filters switch bounce</td></tr>
-              <tr><td><b>lcd1602_ctrl</b></td><td>Synchronous</td><td>4-bit Parallel Bus</td><td>Initializes LCD, renders balance & product names</td></tr>
-              <tr><td><b>seg7_multiplexer</b></td><td>500Hz Scan</td><td>4-Digit Common Anode</td><td>High-frequency time-multiplexed balance readout</td></tr>
+              <tr><td><b>top_button_handler</b></td><td>Four product types, one-hot switch selection, User/Admin mode, quantity, stock, price and balance registers; purchase feedback through LCD and LEDs</td></tr>
+              <tr><td><b>button_debounce ×4</b></td><td>Two synchronization registers and a 20-bit stability counter; generates a button flag in the input clock domain</td></tr>
+              <tr><td><b>LCD_display</b></td><td>Two 128-bit text lines for a 16×2 LCD; 8-bit data bus plus rs/rw/en; 9-state controller</td></tr>
+              <tr><td><b>seg_0_data … seg_3_data</b></td><td>Four 4-bit decimal-digit outputs derived from the balance register, for a 7-segment display interface; no segment decoder or multiplexed scan module is included</td></tr>
             </tbody>
           </table>
+          <p class="muted small" style="margin:12px 0 0;">The Arty-Z7-20 XDC file constrains the input clock to 8 ns (125 MHz). This is a design constraint, not a measured operating frequency or evidence of timing closure.</p>
+        </div>
+        <div class="arch-card">
+          <div class="arch-card-title"><svg class="ic" style="width:16px;height:16px;color:var(--mint);"><use href="#i-layers"/></svg><span>LCD_display FSM — source state names</span></div>
+          <div class="arch-pipeline">
+            <div class="arch-step"><b>INIT</b><span>8-bit / two-line mode</span></div><span class="arch-sep">➔</span>
+            <div class="arch-step"><b>DISPLAY_ON</b><span>Enable display</span></div><span class="arch-sep">➔</span>
+            <div class="arch-step"><b>CLEAR_ON</b><span>Clear display</span></div><span class="arch-sep">➔</span>
+            <div class="arch-step"><b>SET_CURSOR1</b><span>First-line address</span></div><span class="arch-sep">➔</span>
+            <div class="arch-step"><b>WRITE_LINE1</b><span>16 characters</span></div><span class="arch-sep">➔</span>
+            <div class="arch-step"><b>SET_CURSOR2</b><span>Second-line address</span></div><span class="arch-sep">➔</span>
+            <div class="arch-step"><b>WRITE_LINE2</b><span>16 characters</span></div><span class="arch-sep">➔</span>
+            <div class="arch-step"><b>IDLE</b><span>Lower en, request refresh</span></div><span class="arch-sep">➔</span>
+            <div class="arch-step"><b>CHECK_UPDATE</b><span>Wait 12,500,000 cycles → CLEAR_ON</span></div>
+          </div>
+          <p class="muted small" style="margin:0;">This is the LCD controller FSM. Vending transactions are implemented with clocked case/if logic in top_button_handler; the source does not define a separate five-state vending FSM.</p>
+        </div>
+        <div class="arch-card">
+          <div class="arch-card-title"><svg class="ic" style="width:16px;height:16px;color:var(--amber);"><use href="#i-code"/></svg><span>User and Admin workflows</span></div>
+          <p class="small" style="color:var(--text2);margin:0 0 10px;">User mode: with no product switch selected, buttons 0/1 add 5/10 credit units and button 2 clears the balance. One active product switch selects one of four products; buttons 0/1 increase/decrease quantity and button 2 requests a purchase. Quantity increases are capped at 9 and the selected product's current stock. The purchase branch checks nonzero stock, positive quantity and sufficient balance, then deducts the stored total and stock. The LCD reports success or insufficient funds; the selected-product LED blinks on success. Multiple active product switches show ONLY_1_SWITCH_ON.</p>
+          <p class="small" style="color:var(--text2);margin:0;">Admin mode: for a selected product, buttons 0/1 raise/lower the price, button 2 adds stock and button 3 resets price and stock. Price increases and restocking are capped at 9; a price is decreased only when above 1. All prices and stock counts start at zero. Remaining user credit stays in the balance register; no coin validator, physical dispenser or cash-change output is implemented.</p>
+        </div>
+        <div class="arch-card" style="margin-bottom:0;">
+          <div class="arch-card-title"><svg class="ic" style="width:16px;height:16px;color:var(--amber);"><use href="#i-layers"/></svg><span>Validation status and prototype limits</span></div>
+          <p class="small" style="color:var(--text2);margin:0 0 10px;">The repository contains RTL, board constraints and an LCD stimulus testbench. It contains no bitstream, synthesis/timing report, board demonstration or Xcelium run log. The supplied testbench stops before LCD initialization completes and has no self-checking assertions, so it does not establish functional correctness.</p>
+          <p class="muted small" style="margin:0;">Static review identified an 8-bit balance that can wrap, a truncated debounce threshold literal, and stale quantity/total values when changing products. These edge cases require RTL fixes and verification before reliable hardware use.</p>
         </div>
       `,
       body_vi: `
         <div class="arch-card">
-          <div class="arch-card-title">
-            <svg class="ic" style="width:16px;height:16px;color:var(--mint);"><use href="#i-cpu"/></svg>
-            <span>Biểu đồ Máy Trạng thái Hữu hạn (FSM)</span>
-          </div>
-          <div class="arch-pipeline">
-            <div class="arch-step"><b>S_IDLE</b><span>Sẵn sàng (Số dư: 0đ)</span></div>
-            <span class="arch-sep">➔</span>
-            <div class="arch-step"><b>S_COIN_VAL</b><span>Nhận tiền 5k / 10k / 20k</span></div>
-            <span class="arch-sep">➔</span>
-            <div class="arch-step"><b>S_SEL_ITEM</b><span>Chọn món & So khớp giá</span></div>
-            <span class="arch-sep">➔</span>
-            <div class="arch-step"><b>S_DISPENSE</b><span>Phát xung trả hàng</span></div>
-            <span class="arch-sep">➔</span>
-            <div class="arch-step"><b>S_RETURN_CHG</b><span>Tính toán & Trả tiền thừa</span></div>
-          </div>
-          <p class="muted small" style="margin:0;">Máy trạng thái đồng bộ được triển khai trên phần logic của Xilinx Zynq-7000, xung nhịp 100 MHz.</p>
-        </div>
-
-        <div class="arch-card" style="margin-bottom:0;">
-          <div class="arch-card-title">
-            <svg class="ic" style="width:16px;height:16px;color:var(--amber);"><use href="#i-layers"/></svg>
-            <span>Các Khối Phần cứng Verilog RTL Phân rã</span>
-          </div>
+          <div class="arch-card-title"><svg class="ic" style="width:16px;height:16px;color:var(--mint);"><use href="#i-cpu"/></svg><span>Cấu trúc RTL và các giao tiếp thực có</span></div>
           <table class="pin-table">
-            <thead>
-              <tr><th>Khối RTL</th><th>Miền Xung nhịp</th><th>Giao tiếp Phần cứng</th><th>Chức năng</th></tr>
-            </thead>
+            <thead><tr><th>Thành phần RTL</th><th>Giao tiếp / chức năng</th></tr></thead>
             <tbody>
-              <tr><td><b>clk_divider</b></td><td>100MHz ➔ 1kHz</td><td>Bộ chia tần nội</td><td>Tạo xung nhịp chống dội và quét màn hình</td></tr>
-              <tr><td><b>button_debouncer</b></td><td>Lấy mẫu 1kHz</td><td>Phím bấm cơ học</td><td>Thanh ghi dịch 4 tầng lọc nhiễu rung phím</td></tr>
-              <tr><td><b>lcd1602_ctrl</b></td><td>Đồng bộ</td><td>Bus song song 4-bit</td><td>Khởi tạo LCD 16x2, hiển thị số dư và tên món</td></tr>
-              <tr><td><b>seg7_multiplexer</b></td><td>Quét 500Hz</td><td>4 LED 7 đoạn Anode chung</td><td>Quét ghép kênh thời gian hiển thị số tiền tức thì</td></tr>
+              <tr><td><b>top_button_handler</b></td><td>Bốn loại sản phẩm, chọn bằng switch one-hot, chế độ User/Admin, các thanh ghi số lượng, tồn kho, giá và số dư; phản hồi giao dịch qua LCD và LED</td></tr>
+              <tr><td><b>button_debounce ×4</b></td><td>Hai thanh ghi đồng bộ và bộ đếm ổn định 20-bit; tạo cờ nút nhấn trong miền xung nhịp đầu vào</td></tr>
+              <tr><td><b>LCD_display</b></td><td>Hai dòng văn bản 128-bit cho LCD 16×2; bus dữ liệu 8-bit cùng rs/rw/en; FSM điều khiển 9 trạng thái</td></tr>
+              <tr><td><b>seg_0_data … seg_3_data</b></td><td>Bốn đầu ra chữ số thập phân 4-bit tính từ thanh ghi số dư, dùng cho giao tiếp hiển thị LED 7 đoạn; chưa có bộ giải mã segment hoặc module quét ghép kênh</td></tr>
             </tbody>
           </table>
+          <p class="muted small" style="margin:12px 0 0;">Tệp XDC của Arty-Z7-20 đặt chu kỳ xung nhịp đầu vào 8 ns (125 MHz). Đây là ràng buộc thiết kế, chưa phải tần số đo thực tế hoặc bằng chứng đạt timing.</p>
+        </div>
+        <div class="arch-card">
+          <div class="arch-card-title"><svg class="ic" style="width:16px;height:16px;color:var(--mint);"><use href="#i-layers"/></svg><span>FSM của LCD_display — tên trạng thái trong mã nguồn</span></div>
+          <div class="arch-pipeline">
+            <div class="arch-step"><b>INIT</b><span>Chế độ 8-bit / hai dòng</span></div><span class="arch-sep">➔</span>
+            <div class="arch-step"><b>DISPLAY_ON</b><span>Bật hiển thị</span></div><span class="arch-sep">➔</span>
+            <div class="arch-step"><b>CLEAR_ON</b><span>Xóa màn hình</span></div><span class="arch-sep">➔</span>
+            <div class="arch-step"><b>SET_CURSOR1</b><span>Địa chỉ dòng 1</span></div><span class="arch-sep">➔</span>
+            <div class="arch-step"><b>WRITE_LINE1</b><span>Ghi 16 ký tự</span></div><span class="arch-sep">➔</span>
+            <div class="arch-step"><b>SET_CURSOR2</b><span>Địa chỉ dòng 2</span></div><span class="arch-sep">➔</span>
+            <div class="arch-step"><b>WRITE_LINE2</b><span>Ghi 16 ký tự</span></div><span class="arch-sep">➔</span>
+            <div class="arch-step"><b>IDLE</b><span>Hạ en, chuyển sang cập nhật</span></div><span class="arch-sep">➔</span>
+            <div class="arch-step"><b>CHECK_UPDATE</b><span>Chờ 12.500.000 chu kỳ → CLEAR_ON</span></div>
+          </div>
+          <p class="muted small" style="margin:0;">Đây là FSM điều khiển LCD. Giao dịch bán hàng dùng logic case/if theo xung nhịp trong top_button_handler; mã nguồn không định nghĩa FSM bán hàng năm trạng thái riêng.</p>
+        </div>
+        <div class="arch-card">
+          <div class="arch-card-title"><svg class="ic" style="width:16px;height:16px;color:var(--amber);"><use href="#i-code"/></svg><span>Quy trình User và Admin</span></div>
+          <p class="small" style="color:var(--text2);margin:0 0 10px;">Chế độ User: khi chưa chọn switch sản phẩm, nút 0/1 cộng 5/10 đơn vị số dư, nút 2 xóa số dư. Bật đúng một switch để chọn một trong bốn sản phẩm; nút 0/1 tăng/giảm số lượng, nút 2 yêu cầu mua. Khi tăng, số lượng được giới hạn ở 9 và tồn kho hiện tại của sản phẩm đã chọn. Nhánh mua kiểm tra còn hàng, số lượng chọn lớn hơn 0 và đủ số dư, sau đó trừ tổng tiền đang lưu và tồn kho. LCD báo thành công hoặc thiếu tiền; LED sản phẩm nhấp nháy khi thành công. Bật nhiều switch sẽ hiện ONLY_1_SWITCH_ON.</p>
+          <p class="small" style="color:var(--text2);margin:0;">Chế độ Admin: với sản phẩm đã chọn, nút 0/1 tăng/giảm giá, nút 2 thêm tồn kho, nút 3 đưa giá và tồn kho về 0. Tăng giá và bổ sung tồn kho được giới hạn ở 9; chỉ giảm giá khi giá lớn hơn 1. Giá và tồn kho khởi tạo bằng 0. Tiền chưa dùng vẫn nằm trong thanh ghi số dư; chưa có bộ nhận dạng tiền xu, cơ cấu nhả hàng hoặc đầu ra trả tiền mặt.</p>
+        </div>
+        <div class="arch-card" style="margin-bottom:0;">
+          <div class="arch-card-title"><svg class="ic" style="width:16px;height:16px;color:var(--amber);"><use href="#i-layers"/></svg><span>Trạng thái kiểm chứng và giới hạn nguyên mẫu</span></div>
+          <p class="small" style="color:var(--text2);margin:0 0 10px;">Repository có RTL, ràng buộc bo và testbench kích thích LCD. Chưa có bitstream, báo cáo tổng hợp/timing, bản trình diễn trên bo hoặc log chạy Xcelium. Testbench hiện dừng trước khi LCD khởi tạo xong và không có assertion tự kiểm tra nên chưa chứng minh tính đúng chức năng.</p>
+          <p class="muted small" style="margin:0;">Đối chiếu tĩnh phát hiện số dư 8-bit có thể tràn, hằng ngưỡng chống dội bị cắt bit và số lượng/tổng tiền cũ còn giữ khi đổi sản phẩm. Các tình huống biên này cần sửa RTL và kiểm chứng trước khi sử dụng phần cứng tin cậy.</p>
         </div>
       `
     },
     'modal-proj3': {
-      title_en: 'Smart Campus Parking — Cloud & Security Architecture',
-      title_vi: 'Quản lý Bãi đỗ xe Thông minh — Kiến trúc Đám mây & Bảo mật',
-      sub_en: 'Next.js 16 · Express REST APIs · PostgreSQL Row-Level Security · Leaflet',
-      sub_vi: 'Next.js 16 · Express REST APIs · PostgreSQL Row-Level Security · Leaflet',
+      title_en: "ParkWise — Parking Management Prototype",
+      title_vi: "ParkWise — Nguyên mẫu quản lý bãi đỗ xe",
+      sub_en: "Next.js 16 · React 19 · Express mock APIs · localStorage · SVG/CSS map",
+      sub_vi: "Next.js 16 · React 19 · API Express mô phỏng · localStorage · Sơ đồ SVG/CSS",
       body_en: `
         <div class="arch-card">
           <div class="arch-card-title">
             <svg class="ic" style="width:16px;height:16px;color:var(--mint);"><use href="#i-server"/></svg>
-            <span>Telemetry Pipeline: Edge IoT to Next.js 16 Dashboard</span>
+            <span>Application scope and actual data flow</span>
           </div>
-          <div class="arch-pipeline">
-            <div class="arch-step"><b>Barrier / Slot Sensors</b><span>IoT Trigger Nodes</span></div>
-            <span class="arch-sep">➔</span>
-            <div class="arch-step"><b>Express REST APIs</b><span>6 REST endpoints</span></div>
-            <span class="arch-sep">➔</span>
-            <div class="arch-step"><b>PostgreSQL RLS</b><span>Database Security Layer</span></div>
-            <span class="arch-sep">➔</span>
-            <div class="arch-step"><b>WebSocket Events</b><span>Live Slot State Push</span></div>
-            <span class="arch-sep">➔</span>
-            <div class="arch-step"><b>React Leaflet Map</b><span>Interactive 2D Campus View</span></div>
+          <p class="small" style="color:var(--text2);margin:0 0 12px;">A campus parking prototype with entry/exit screens, six parking zones (A–F), fee payment and history, incident reports, gate exceptions, an IoT-health dashboard, settings and reconciliation reports. These workflows use demo data.</p>
+          <table class="pin-table">
+            <thead><tr><th>Component</th><th>Implemented behavior</th><th>State source</th></tr></thead>
+            <tbody>
+              <tr><td><b>Next.js frontend</b></td><td>React 19 / TypeScript pages and Tailwind CSS; role-based menus and UI checks</td><td>Demo user and selected operational state in browser localStorage</td></tr>
+              <tr><td><b>Express mock server</b></td><td>13 HTTP route handlers: demo login, zones/slots, check-in/out, search and reports</td><td>Independent in-memory users, six zones with 100 slots each, and mock report records</td></tr>
+              <tr><td><b>Next.js API routes</b></td><td>13 HTTP handlers in 12 route files for zones/slots, check-in/out, balance, payments, history, receipts, promotions and IoT health</td><td>In-memory data from lib/parking-data.ts; six initial zones with 12 slots each</td></tr>
+            </tbody>
+          </table>
+          <p class="muted small" style="margin:12px 0 0;">These are separate demo state stores. The map reads its zones from localStorage or initial data. Entry/exit screen confirmation handlers currently log actions rather than call the mock check-in/out APIs. There is no implemented sensor-to-database-to-WebSocket pipeline.</p>
+        </div>
+
+        <div class="arch-card">
+          <div class="arch-card-title">
+            <svg class="ic" style="width:16px;height:16px;color:var(--mint);"><use href="#i-layers"/></svg>
+            <span>2D navigation and payment simulation</span>
           </div>
+          <p class="small" style="color:var(--text2);margin:0 0 10px;">The map and navigation view are drawn with SVG and CSS. Users can inspect zone occupancy, select an empty slot and play a route simulation. Both the “GPS” start and entrance start use fixed schematic coordinates; real device geolocation and React Leaflet rendering are not implemented.</p>
+          <p class="small" style="color:var(--text2);margin:0;">The BKPay-style workflow selects unpaid sessions, checks a demo balance, updates in-memory payment status and creates an HTML receipt that can be printed or saved as PDF. Payments, reconciliation and IoT alerts are simulated; no live BKPay gateway or parking sensors are connected.</p>
+        </div>
+
+        <div class="arch-card">
+          <div class="arch-card-title">
+            <svg class="ic" style="width:16px;height:16px;color:var(--amber);"><use href="#i-award"/></svg>
+            <span>Five demo login roles and UI access rules</span>
+          </div>
+          <table class="pin-table">
+            <thead><tr><th>Demo role</th><th>Main UI workflow</th></tr></thead>
+            <tbody>
+              <tr><td><b>Student</b></td><td>Account, demo payments/history, slot selection and route simulation, incident reporting</td></tr>
+              <tr><td><b>Faculty / Staff</b></td><td>Account, demo payments/history, map, slot selection and route simulation, incident reporting; grouped with students as internal users in the UI</td></tr>
+              <tr><td><b>Operations</b></td><td>Entry/exit, incident tickets, gate exceptions, IoT-health view and zone settings</td></tr>
+              <tr><td><b>Management</b></td><td>Pricing settings, analytics/reconciliation reports and parking overview</td></tr>
+              <tr><td><b>IT</b></td><td>Internal-user and role settings</td></tr>
+            </tbody>
+          </table>
+          <p class="muted small" style="margin:12px 0 0;">Login checks a hard-coded account list and stores user information in localStorage. These frontend checks do not provide production backend authorization or database-enforced per-user isolation.</p>
         </div>
 
         <div class="arch-card" style="margin-bottom:0;">
           <div class="arch-card-title">
-            <svg class="ic" style="width:16px;height:16px;color:var(--amber);"><use href="#i-award"/></svg>
-            <span>Access control for 5 roles with PostgreSQL Row-Level Security</span>
+            <svg class="ic" style="width:16px;height:16px;color:var(--amber);"><use href="#i-server"/></svg>
+            <span>SQL assets and current implementation limits</span>
           </div>
-          <table class="pin-table">
-            <thead>
-              <tr><th>Role Tier</th><th>Access Scope</th><th>RLS Security Policy</th></tr>
-            </thead>
-            <tbody>
-              <tr><td><b>Student / Visitor</b></td><td>Public Available Lots & Personal Vehicles</td><td><code>SELECT WHERE user_id = auth.uid()</code></td></tr>
-              <tr><td><b>Faculty Member</b></td><td>Reserved Priority Zones & Faculty Lots</td><td><code>SELECT/UPDATE WHERE zone_type = 'faculty'</code></td></tr>
-              <tr><td><b>Parking Attendant</b></td><td>Live Gate Control & Manual License Override</td><td><code>UPDATE lot_status, INSERT gate_log</code></td></tr>
-              <tr><td><b>Finance Officer</b></td><td>BKPay Transaction Reconciliations</td><td><code>SELECT/AUDIT payment_transactions</code></td></tr>
-              <tr><td><b>Super Administrator</b></td><td>Full Campus Configuration & IoT Node Health</td><td><code>ALL PRIVILEGES WITH SYSTEM AUDIT</code></td></tr>
-            </tbody>
-          </table>
+          <p class="small" style="color:var(--text2);margin:0 0 10px;">The repository includes PostgreSQL schema and seed scripts for zones, parking_slots, vehicles and parking_sessions, with foreign keys, status checks and indexes. The schema enables RLS, but its demo policies allow public CRUD operations with USING (true) / WITH CHECK (true). They do not implement the five UI roles, and the running mock application is not connected to this database.</p>
+          <p class="muted small" style="margin:0;">A real database connection, HCMUT SSO, authenticated backend permissions, live BKPay, physical IoT integration and durable audit logs remain future work. Browser state can be cleared, and in-memory data is not durable.</p>
         </div>
       `,
       body_vi: `
         <div class="arch-card">
           <div class="arch-card-title">
             <svg class="ic" style="width:16px;height:16px;color:var(--mint);"><use href="#i-server"/></svg>
-            <span>Đường ống Dữ liệu: Từ Cảm biến IoT đến Dashboard Next.js 16</span>
+            <span>Phạm vi ứng dụng và luồng dữ liệu hiện có</span>
           </div>
-          <div class="arch-pipeline">
-            <div class="arch-step"><b>Cảm biến Barrier / Ô đỗ</b><span>Nút kích hoạt IoT</span></div>
-            <span class="arch-sep">➔</span>
-            <div class="arch-step"><b>Express REST APIs</b><span>6 REST endpoint</span></div>
-            <span class="arch-sep">➔</span>
-            <div class="arch-step"><b>PostgreSQL RLS</b><span>Bảo mật hàng tại tầng Database</span></div>
-            <span class="arch-sep">➔</span>
-            <div class="arch-step"><b>WebSocket Stream</b><span>Bắn sự kiện trạng thái chỗ trống</span></div>
-            <span class="arch-sep">➔</span>
-            <div class="arch-step"><b>Bản đồ React Leaflet</b><span>Giao diện 2D thời gian thực</span></div>
+          <p class="small" style="color:var(--text2);margin:0 0 12px;">Nguyên mẫu quản lý bãi xe trong trường gồm các màn hình xe vào/ra, sáu khu đỗ A–F, thanh toán và lịch sử phí, báo cáo sự cố, xử lý ngoại lệ tại cổng, giám sát trạng thái IoT, cấu hình và báo cáo đối soát. Các quy trình sử dụng dữ liệu demo.</p>
+          <table class="pin-table">
+            <thead><tr><th>Thành phần</th><th>Chức năng đã có</th><th>Nguồn trạng thái</th></tr></thead>
+            <tbody>
+              <tr><td><b>Frontend Next.js</b></td><td>Các trang React 19 / TypeScript và Tailwind CSS; menu và kiểm tra quyền trên giao diện</td><td>Thông tin người dùng demo và một số trạng thái vận hành trong localStorage</td></tr>
+              <tr><td><b>Máy chủ Express mock</b></td><td>13 trình xử lý HTTP: đăng nhập demo, khu/ô đỗ, xe vào/ra, tìm kiếm và báo cáo</td><td>Mảng tài khoản, sáu khu có 100 ô mỗi khu và dữ liệu báo cáo mô phỏng, lưu riêng trong bộ nhớ</td></tr>
+              <tr><td><b>API route Next.js</b></td><td>13 trình xử lý HTTP trong 12 tệp route cho khu/ô đỗ, xe vào/ra, số dư, thanh toán, lịch sử, biên lai, ưu đãi và trạng thái IoT</td><td>Dữ liệu trong bộ nhớ từ lib/parking-data.ts; khởi tạo sáu khu có 12 ô mỗi khu</td></tr>
+            </tbody>
+          </table>
+          <p class="muted small" style="margin:12px 0 0;">Các nguồn trạng thái demo này tách biệt. Bản đồ đọc khu đỗ từ localStorage hoặc dữ liệu khởi tạo. Hàm xác nhận trên màn hình xe vào/ra hiện ghi log thao tác, chưa gọi API check-in/out mô phỏng. Chưa có chuỗi đồng bộ cảm biến → cơ sở dữ liệu → WebSocket.</p>
+        </div>
+
+        <div class="arch-card">
+          <div class="arch-card-title">
+            <svg class="ic" style="width:16px;height:16px;color:var(--mint);"><use href="#i-layers"/></svg>
+            <span>Sơ đồ 2D, chỉ đường và thanh toán mô phỏng</span>
           </div>
+          <p class="small" style="color:var(--text2);margin:0 0 10px;">Bản đồ và màn hình chỉ đường được vẽ bằng SVG/CSS. Người dùng xem tình trạng khu đỗ, chọn ô trống và chạy mô phỏng tuyến đường. Điểm bắt đầu “GPS” và cổng vào đều dùng tọa độ cố định trên sơ đồ; chưa lấy vị trí thật của thiết bị và chưa render bằng React Leaflet.</p>
+          <p class="small" style="color:var(--text2);margin:0;">Luồng giao diện BKPay cho phép chọn phiên chưa thanh toán, kiểm tra số dư demo, cập nhật trạng thái trong bộ nhớ và tạo biên lai HTML để in hoặc lưu PDF. Thanh toán, đối soát và cảnh báo IoT đều mô phỏng; chưa kết nối cổng BKPay hoặc cảm biến bãi xe thật.</p>
+        </div>
+
+        <div class="arch-card">
+          <div class="arch-card-title">
+            <svg class="ic" style="width:16px;height:16px;color:var(--amber);"><use href="#i-award"/></svg>
+            <span>Năm nhóm tài khoản demo và quyền trên giao diện</span>
+          </div>
+          <table class="pin-table">
+            <thead><tr><th>Nhóm tài khoản demo</th><th>Quy trình giao diện chính</th></tr></thead>
+            <tbody>
+              <tr><td><b>Sinh viên</b></td><td>Tài khoản, thanh toán/lịch sử demo, chọn ô và mô phỏng chỉ đường, báo cáo sự cố</td></tr>
+              <tr><td><b>Giảng viên / Cán bộ</b></td><td>Tài khoản, thanh toán/lịch sử demo, bản đồ, chọn ô và mô phỏng chỉ đường, báo cáo sự cố; được gộp với Sinh viên thành người dùng nội bộ trên giao diện</td></tr>
+              <tr><td><b>Vận hành</b></td><td>Xe vào/ra, ticket sự cố, ngoại lệ tại cổng, trạng thái IoT và cấu hình khu đỗ</td></tr>
+              <tr><td><b>Ban quản lý</b></td><td>Chính sách giá, báo cáo phân tích/đối soát và tổng quan bãi đỗ</td></tr>
+              <tr><td><b>IT</b></td><td>Cấu hình tài khoản và nhóm quyền nội bộ</td></tr>
+            </tbody>
+          </table>
+          <p class="muted small" style="margin:12px 0 0;">Đăng nhập đối chiếu danh sách tài khoản viết sẵn và lưu thông tin người dùng vào localStorage. Kiểm tra quyền ở frontend chưa cung cấp phân quyền backend ở mức production hoặc cô lập dữ liệu từng người dùng tại cơ sở dữ liệu.</p>
         </div>
 
         <div class="arch-card" style="margin-bottom:0;">
           <div class="arch-card-title">
-            <svg class="ic" style="width:16px;height:16px;color:var(--amber);"><use href="#i-award"/></svg>
-            <span>Phân quyền 5 nhóm người dùng bằng PostgreSQL Row-Level Security</span>
+            <svg class="ic" style="width:16px;height:16px;color:var(--amber);"><use href="#i-server"/></svg>
+            <span>Tài liệu SQL và giới hạn triển khai hiện tại</span>
           </div>
-          <table class="pin-table">
-            <thead>
-              <tr><th>Cấp Phân quyền</th><th>Phạm vi Truy cập</th><th>Chính sách Bảo mật RLS</th></tr>
-            </thead>
-            <tbody>
-              <tr><td><b>Sinh viên / Khách vãng lai</b></td><td>Xem chỗ trống và thông tin xe cá nhân</td><td><code>SELECT WHERE user_id = auth.uid()</code></td></tr>
-              <tr><td><b>Cán bộ Giảng viên</b></td><td>Khu vực đỗ xe ưu tiên và lối vào giảng viên</td><td><code>SELECT/UPDATE WHERE zone_type = 'faculty'</code></td></tr>
-              <tr><td><b>Nhân viên Trực bãi xe</b></td><td>Điều khiển Barrier & Ghi đè biển số thủ công</td><td><code>UPDATE lot_status, INSERT gate_log</code></td></tr>
-              <tr><td><b>Kế toán Tài chính</b></td><td>Đối soát giao dịch nạp/trừ tiền cổng BKPay</td><td><code>SELECT/AUDIT payment_transactions</code></td></tr>
-              <tr><td><b>Quản trị viên Hệ thống</b></td><td>Toàn quyền cấu hình bãi đỗ & theo dõi Node IoT</td><td><code>ALL PRIVILEGES WITH SYSTEM AUDIT</code></td></tr>
-            </tbody>
-          </table>
+          <p class="small" style="color:var(--text2);margin:0 0 10px;">Repository có script schema và seed PostgreSQL cho zones, parking_slots, vehicles, parking_sessions, kèm khóa ngoại, ràng buộc trạng thái và index. Schema bật RLS nhưng các policy demo cho phép CRUD công khai với USING (true) / WITH CHECK (true). Chúng chưa áp dụng năm nhóm quyền trên giao diện; ứng dụng mock hiện chưa kết nối cơ sở dữ liệu này.</p>
+          <p class="muted small" style="margin:0;">Kết nối cơ sở dữ liệu thật, HCMUT SSO, phân quyền backend có xác thực, BKPay thật, phần cứng IoT và audit log bền vững vẫn là hướng phát triển. Trạng thái trình duyệt có thể bị xóa; dữ liệu trong bộ nhớ không được lưu bền vững.</p>
         </div>
       `
     }
@@ -516,7 +570,6 @@ window.PortfolioData = (() => {
     const langToggle = document.getElementById('langToggle');
     if (langToggle) {
       langToggle.dataset.lang = lang;
-      langToggle.setAttribute('aria-label', lang === 'vi' ? 'Switch to English' : 'Chuyển sang tiếng Việt');
     }
 
     const dict = i18n[lang];
@@ -534,10 +587,6 @@ window.PortfolioData = (() => {
       });
     });
 
-    const heroName = document.querySelector('.hero-name');
-    if (heroName && dict['hero.name']) {
-      heroName.setAttribute('data-text', dict['hero.name']);
-    }
   };
 
   return {

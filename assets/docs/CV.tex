@@ -1,0 +1,146 @@
+% Canonical CV source: edit this file, then compile it to regenerate CV.pdf.
+% Do not edit the generated PDF directly.
+\documentclass[a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+% \usepackage[top=0.4in,bottom=0.4in,left=0.4in,right=0.4in]{geometry}
+\usepackage[top=0.35in,bottom=0.35in,left=0.35in,right=0.35in]{geometry}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{fontawesome5}
+\usepackage{xcolor}
+\usepackage{setspace}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{fontsize}
+% \changefontsize{10.5pt}
+\changefontsize{10.4pt}
+
+% Màu xanh
+\definecolor{myblue}{RGB}{0,102,255}
+
+% Cấu hình liên kết
+\hypersetup{
+    colorlinks=true,
+    linkcolor=myblue,
+    filecolor=magenta,
+    urlcolor=myblue
+}
+
+\pagestyle{empty}
+\setstretch{1.0}
+\setlength{\parindent}{0pt}
+
+% Định dạng section
+\titleformat{\section}
+  {\normalfont\bfseries}
+  {}
+  {0pt}
+  {\MakeUppercase}
+  [\titlerule]
+
+\titlespacing*{\section}{0pt}{5pt}{3pt}
+
+% Bullet list
+\setlist[itemize]{
+    leftmargin=*,
+    itemsep=1pt,
+    topsep=2pt,
+    parsep=0pt,
+    partopsep=0pt
+}
+
+\begin{document}
+
+% ==================== THÔNG TIN CÁ NHÂN ====================
+\begin{center}
+{\LARGE \textbf{\fontfamily{qtm}\selectfont NGUYEN VAN SANG}}\\[5pt]
+{\Large \textbf{Embedded Software Engineer -- Fresher}}\\[5pt]
+
+% \small
+% \faPhone\ 0383 589 877 \quad
+% \faEnvelope\ \href{mailto:sangnguyen230204@gmail.com}{sangnguyen230204@gmail.com} \quad
+% \faMapMarker*\ Ho Chi Minh City \quad
+% \faGithub\ \href{https://github.com/SangNguyen-232}{SangNguyen-232} \quad
+% \faLinkedin\ \href{https://www.linkedin.com/in/sangnguyen232/}{\textcolor{myblue}{sangnguyen232}}
+% \end{center}
+\small
+\faPhone\ 0383 589 877 \qquad
+\faEnvelope\ \href{mailto:sangnguyen230204@gmail.com}{sangnguyen230204@gmail.com} \qquad
+\faMapMarker*\ Ho Chi Minh City\\[5pt]
+\faGithub\ \href{https://github.com/SangNguyen-232}{SangNguyen-232} \qquad
+\faLinkedin\ \href{https://www.linkedin.com/in/sangnguyen232/}{sangnguyen232} \qquad
+\faGlobe\ \href{https://sangnguyen-232.github.io/Portfolio/}{Portfolio}
+\end{center}
+
+\vspace{-5pt}
+
+% ==================== MỤC TIÊU NGHỀ NGHIỆP ====================
+\section*{Professional Summary}
+Final-year Computer Engineering student aiming to build a career in Embedded Systems and IoT. Gained learning experience through academic projects and an on-site internship at Viettel Dak Lak -- Viettel Group. Seeking a Fresher Embedded Software Engineer position to continue learning, enhance practical skills, and develop expertise in a professional environment alongside experienced engineers.
+
+% ==================== HỌC VẤN ====================
+\section*{Education}
+\textbf{Ho Chi Minh City University of Technology -- VNU-HCM} \hfill \textit{Ho Chi Minh City, Vietnam} \\
+\textit{Bachelor of Computer Engineering -- GPA: 2.8/4.0 (7.20/10)} \hfill \textit{Sep 2022 -- Nov 2027}
+
+% ==================== BẰNG CẤP ====================
+\section*{Certification}
+\textbf{TOEIC (Listening and Reading): } \hfill \textit{Dec 2026}
+
+% ==================== KỸ NĂNG CHUYÊN MÔN ====================
+\section*{Technical Skills}
+\noindent
+\textbf{Programming Languages:} C, C++, Python \\
+\textbf{Embedded Systems:} ESP32, ESP32-S3, FreeRTOS, GPIO, I2C, UART \\
+\textbf{Edge AI \& TinyML:} TensorFlow Lite for Microcontrollers, On-device Inference \\
+\textbf{FPGA \& Digital Design:} Verilog RTL, LCD controller FSM, Xilinx XDC constraints \\
+\textbf{Development Tools:} PlatformIO, STM32CubeIDE, Linux, Git, GitHub, Docker \\
+\textbf{IoT Backend \& Web:} Node.js, Express.js, Next.js, PostgreSQL, React, HTML, CSS
+
+% ==================== KINH NGHIỆM ====================
+\section*{Experience}
+\textbf{Viettel Dak Lak -- Viettel Group} \hfill \textit{On-site} \\
+\textit{IoT Intern} \hfill \textit{Jun 2026 -- Aug 2026}
+\begin{itemize}
+    \item Learned the fundamentals of IoT, sensors, and ESP32 programming.
+    \item Explored IoT platforms and backend development with Node.js and PostgreSQL.
+    \item Built an IoT solution with ESP32 and sensors.
+\end{itemize}
+
+% ==================== DỰ ÁN TIÊU BIỂU ====================
+\section*{Projects}
+
+% DỰ ÁN 1
+\textbf{Smart Agriculture Environmental Monitoring System} \,|\, \faGithub\ \href{https://github.com/SangNguyen-232/IoT-Env-Monitor}{Github} \hfill \textit{Jul 2026 -- Nov 2026} \\
+{\footnotesize \textbf{Stack:} C/C++, Python, ESP32-S3, FreeRTOS, TensorFlow Lite Micro, I2C, GPIO, UART, Node.js, Express.js, PostgreSQL, Docker, Linux, JavaScript}
+\begin{itemize}
+    \item Engineered concurrent FreeRTOS firmware on ESP32-S3 with semaphore-guarded shared context, coordinating 7 tasks (sensor sampling, TinyML inference, pump control, database logging, boot-button reset, LED/NeoPixel indicators) across I2C, GPIO and network peripherals with zero race conditions.
+    \item Deployed a float32 TensorFlow Lite Micro classifier (temperature, humidity, soil moisture $\rightarrow$ 3-class risk) trained on a 21000-row synthetic dataset, achieving sub-1\,ms on-device inference with rolling accuracy tracking and a hardware safety interlock for extreme sensor thresholds.
+    \item Implemented WiFi AP fallback with hot-swap via LittleFS-persisted network lists, streaming sensor data to the backend over HTTP/WebSocket.
+    \item Built the fleet management platform (Node.js/Express/PostgreSQL) with role-based session auth, per-device password verification and real-time Chart.js/Leaflet dashboards, containerized with Docker Compose on Linux.
+\end{itemize}
+
+\vspace{1.5pt}
+
+% DỰ ÁN 2
+\textbf{FPGA Vending Machine Prototype} \,|\, \faGithub\ \href{https://github.com/SangNguyen-232/FPGA-Vending-System}{Github} \hfill \textit{Oct 2024 -- Dec 2024} \\
+{\footnotesize \textbf{Stack:} Verilog HDL, Arty-Z7-20 target, Vivado/XDC constraints}
+\begin{itemize}
+    \item Developed a four-product Verilog RTL prototype targeting Arty-Z7-20, with User/Admin modes, one-hot selection, button-based credits (+5/+10), quantity selection, admin price adjustment/restocking and balance deduction.
+    \item Implemented a nine-state 16x2 LCD controller with an 8-bit bus, counter-based button filtering and four 4-bit BCD balance outputs. Includes XDC pin and 8\,ns clock constraints and an LCD stimulus testbench; functional validation, synthesis/timing closure and board deployment are not established by the repository.
+\end{itemize}
+
+\vspace{1.5pt}
+
+% DỰ ÁN 3
+\textbf{ParkWise - Campus Parking Prototype} \,|\, \faGithub\ \href{https://github.com/SangNguyen-232/ParkWise}{Github} \hfill \textit{Mar 2026 -- May 2026} \\
+{\footnotesize \textbf{Stack:} Next.js 16, React 19, TypeScript, Express.js, Tailwind CSS, localStorage, PostgreSQL schema/seed}
+\begin{itemize}
+    \item Built a six-zone Next.js/React prototype with an SVG/CSS map, simulated navigation and demo views for \mbox{entry/exit}, incidents, gate operations, settings and reconciliation.
+    \item Implemented Express parking/report mocks and Next.js API routes for slot updates, BKPay-style billing/history and printable HTML receipts. Demo state uses separate memory/localStorage stores, without live GPS, IoT, database or payment-gateway integration.
+    \item Added UI access checks for five demo login roles and standalone PostgreSQL schema/seed scripts with permissive demo RLS policies; backend authorization and per-user transaction isolation are not implemented.
+\end{itemize}
+
+\end{document}

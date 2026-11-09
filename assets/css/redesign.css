@@ -1,6 +1,6 @@
 /* =====================================================================
    REDESIGN LAYER — "Silicon Blueprint"
-   Nạp cuối cùng trong style.css. Điểm nhấn duy nhất: thẻ chân dung
+   Điểm nhấn: thẻ chân dung
    được thiết kế như một con chip trên PCB; phần còn lại giữ yên tĩnh.
    ===================================================================== */
 
@@ -67,11 +67,6 @@ html { scrollbar-color: var(--border2) var(--bg); }
 }
 .eng-card-foot::before { content: 'rev 2026.10'; }
 
-.avatar-frame {
-  box-shadow: 0 0 0 6px rgba(var(--mint-rgb), 0.05),
-              0 0 36px rgba(var(--mint-rgb), 0.22);
-}
-
 /* ---------------------------------------------------------------------
    2. TERMINAL: scanline mảnh + viền phát sáng khi focus bằng phím [T]
    --------------------------------------------------------------------- */
@@ -79,12 +74,10 @@ html { scrollbar-color: var(--border2) var(--bg); }
   background-image: repeating-linear-gradient(
     180deg, rgba(var(--mint-rgb), 0.025) 0 1px, transparent 1px 3px);
 }
-.term-chip { position: relative; overflow: hidden; } /* sửa lỗi ripple lệch vị trí */
 
 /* ---------------------------------------------------------------------
    3. ĐIỀU HƯỚNG
    --------------------------------------------------------------------- */
-.nav-links a { position: relative; }
 .nav-links a.active::after {
   content: '';
   position: absolute;
@@ -108,10 +101,6 @@ html { scrollbar-color: var(--border2) var(--bg); }
   .cv-contact-bar::-webkit-scrollbar { display: none; }
   .cv-contact-item { flex: 0 0 auto; white-space: nowrap; }
 }
-
-/* TOC bên phải đè lên nội dung ở 1360–1559px → chỉ hiện khi đủ chỗ */
-@media (min-width: 1360px) { .toc { display: none; } }
-@media (min-width: 1560px) { .toc { display: flex; } }
 
 /* ---------------------------------------------------------------------
    4. KHỐI NỘI DUNG
