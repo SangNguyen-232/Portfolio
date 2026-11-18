@@ -80,13 +80,12 @@ window.PortfolioData = (() => {
       "proj.p2.b3": "Added counter-based button debounce, an 8-bit 16×2 LCD interface with a 9-state controller FSM, and four 4-bit digit outputs for a 7-segment display interface.",
       "proj.p3.context": "Mar 2026 - May 2026",
       "proj.p3.title": "ParkWise — Campus Parking Prototype",
-      "proj.p3.b1": "Built the account dashboard for our campus parking project. It shows the outstanding fees and warns when the account balance is too low to pay.",
-      "proj.p3.b2": "Implemented a simulated BKPay checkout that settles all unpaid parking sessions in one payment and records the transaction in the payment history.",
-      "proj.p3.b3": "Added history filters for check-in date and license plate, plus downloadable PDF receipts for one session or up to ten matching sessions.",
-      "proj.p3.backend": "The UC2 payment API keeps the demo account in server memory.",
-      "proj.p3.stack": "ParkWise project stack",
+      "proj.p3.b1": "The account API totals the fees due after discounts on unpaid parking sessions. The dashboard compares that total with the account balance and flags a shortfall before checkout.",
+      "proj.p3.b2": "A TypeScript payment controller settles multiple sessions through simulated BKPay. It debits the total once and records a shared payment reference on each paid session.",
+      "proj.p3.b3": "Payment history filters paid sessions by check-in date and partial license plate. A Node.js route generates an itemized Vietnamese PDF for a single session or up to ten matching sessions.",
+      "proj.p3.stack": "Tech Stack:",
       "proj.p3.sqlTag": "PostgreSQL schema & seed",
-      "proj.p3.inspect": "Explore UC2",
+      "proj.p3.inspect": "Process flow",
       "proj.p3.stage": "Software prototype",
       'proj.inspect': 'System architecture',
       'proj.m1': 'FreeRTOS tasks',
@@ -201,13 +200,12 @@ window.PortfolioData = (() => {
       "proj.p2.b3": "Bổ sung chống dội bằng bộ đếm, giao tiếp LCD 16×2 bus 8-bit với FSM điều khiển 9 trạng thái và bốn đầu ra chữ số 4-bit cho giao tiếp hiển thị LED 7 đoạn.",
       "proj.p3.context": "Tháng 3/2026 – Tháng 5/2026",
       "proj.p3.title": "ParkWise — Nguyên mẫu quản lý bãi đỗ xe trong trường",
-      "proj.p3.b1": "Tôi xây dựng trang tổng quan tài khoản cho dự án bãi xe của nhóm. Trang hiển thị số phí còn nợ và cảnh báo khi số dư không đủ để thanh toán.",
-      "proj.p3.b2": "Tôi triển khai luồng BKPay mô phỏng để người dùng trả phí cho tất cả lượt gửi xe còn nợ trong một lần và xem lại giao dịch trong lịch sử thanh toán.",
-      "proj.p3.b3": "Tôi bổ sung bộ lọc lịch sử theo ngày vào bãi và biển số xe. Người dùng có thể tải biên lai PDF cho từng lượt hoặc gộp tối đa mười lượt khớp với bộ lọc.",
-      "proj.p3.backend": "API thanh toán của UC2 lưu tài khoản mô phỏng trong bộ nhớ máy chủ.",
-      "proj.p3.stack": "Công nghệ của toàn dự án ParkWise",
+      "proj.p3.b1": "API tài khoản tính tổng phí sau ưu đãi của các lượt gửi xe chưa thanh toán. Trang tổng quan đối chiếu tổng phí với số dư và cảnh báo khi tài khoản thiếu tiền.",
+      "proj.p3.b2": "Bộ điều khiển thanh toán viết bằng TypeScript xử lý nhiều lượt gửi xe trong một giao dịch BKPay mô phỏng. Hệ thống trừ tổng phí một lần và gắn cùng mã giao dịch cho từng lượt đã thanh toán.",
+      "proj.p3.b3": "Trang lịch sử lọc các lượt đã thanh toán theo ngày vào bãi và một phần biển số. API chạy trên Node.js xuất biên lai PDF tiếng Việt cho một lượt hoặc gộp tối đa mười lượt khớp bộ lọc.",
+      "proj.p3.stack": "Công nghệ nhóm sử dụng",
       "proj.p3.sqlTag": "PostgreSQL (schema và dữ liệu mẫu)",
-      "proj.p3.inspect": "Xem chi tiết UC2",
+      "proj.p3.inspect": "Kiến trúc thanh toán và biên lai",
       "proj.p3.stage": "Nguyên mẫu phần mềm",
       'proj.inspect': 'Kiến trúc hệ thống',
       'proj.m1': 'tác vụ FreeRTOS',
@@ -443,64 +441,70 @@ window.PortfolioData = (() => {
       `
     },
     'modal-proj3': {
-      title_en: "ParkWise — Parking Management Prototype",
-      title_vi: "ParkWise — Nguyên mẫu quản lý bãi đỗ xe",
-      sub_en: "My contribution to UC2 · Account dashboard, parking fee payments and receipts",
-      sub_vi: "Phần tôi phụ trách trong UC2 · Tài khoản, thanh toán phí gửi xe và biên lai",
+      title_en: "ParkWise — Parking Fee Settlement and Receipts",
+      title_vi: "ParkWise — Thanh toán phí gửi xe và xuất biên lai",
+      sub_en: "React account dashboard · Next.js Route Handlers · TypeScript payment model · PDF generation",
+      sub_vi: "Trang tài khoản React · Route Handler của Next.js · Mô hình thanh toán TypeScript · Xuất PDF",
       body_en: `
         <div class="arch-card">
-          <div class="arch-card-title">
-            <svg class="ic" style="width:16px;height:16px;color:var(--mint);"><use href="#i-layers"/></svg>
-            <span>Account balance and outstanding fees</span>
-          </div>
-          <p class="small" style="color:var(--text2);margin:0 0 10px;">For UC2, I built the account, payment and history screens and the Next.js routes that serve them. The dashboard shows the balance alongside the sum of unpaid fees. In the sample data, six sessions total 35,000 VND and the account holds 20,000 VND, so the dashboard displays a low-balance warning.</p>
-          <p class="small" style="color:var(--text2);margin:0;">Users can edit the demo balance on the dashboard. On the payment screen, they can adjust the discount from 0% to 100% for eligible unpaid sessions.</p>
+          <div class="arch-card-title"><svg class="ic" style="width:16px;height:16px;color:var(--mint);"><use href="#i-layers"/></svg><span>Account balance and fee calculation</span></div>
+          <p class="small" style="color:var(--text2);margin:0 0 10px;"><code>GET /api/user/balance</code> returns the account balance and the sum of <code>finalFee</code> across sessions in <code>Pending_Payment</code>. The six sample sessions total 35,000 VND. The account holds 20,000 VND, leaving a 15,000 VND shortfall. The React dashboard compares the two amounts and shows a low-balance warning before checkout.</p>
+          <p class="small" style="color:var(--text2);margin:0;">Changing the demo discount recalculates only eligible unpaid sessions. The server rounds the percentage to a whole number between 0 and 100, applies it to each original fee and rounds the discount to the nearest dong. Fees for settled sessions stay fixed, so a later promotion cannot change an earlier receipt.</p>
         </div>
 
         <div class="arch-card">
-          <div class="arch-card-title">
-            <svg class="ic" style="width:16px;height:16px;color:var(--mint);"><use href="#i-server"/></svg>
-            <span>Paying the outstanding fees</span>
+          <div class="arch-card-title"><svg class="ic" style="width:16px;height:16px;color:var(--mint);"><use href="#i-server"/></svg><span>Batch payment and session state</span></div>
+          <div class="arch-pipeline">
+            <div class="arch-step"><b>React checkout</b><span>Collect unpaid session IDs</span></div>
+            <span class="arch-sep" aria-hidden="true">→</span>
+            <div class="arch-step"><b>POST /api/payment</b><span>Validate the demo code</span></div>
+            <span class="arch-sep" aria-hidden="true">→</span>
+            <div class="arch-step"><b>PaymentController</b><span>Check funds and settle sessions</span></div>
           </div>
-          <p class="small" style="color:var(--text2);margin:0 0 10px;">The payment screen submits all unpaid sessions together. A Next.js API route checks a fixed six-digit demo code. The payment controller checks the available balance and rejects the payment if funds are short.</p>
-          <p class="small" style="color:var(--text2);margin:0;">On success, the controller deducts the total and marks each session as paid with the same payment time and transaction reference. BKPay is simulated, and the shared account and its transactions live in server memory.</p>
+          <p class="small" style="color:var(--text2);margin:0 0 10px;">The checkout submits session IDs and a fixed six-digit demo code. The controller selects the requested sessions that are still pending and calculates the total from their fees on the server. If none qualify or the balance is too low, it returns an error before debiting the account.</p>
+          <p class="small" style="color:var(--text2);margin:0;">On success, the controller deducts the total once, marks each included session <code>Paid</code> and writes the same payment time and reference to each. The API returns the new balance, remaining debt and payment reference. BKPay is simulated, and the shared demo account, sessions and transaction log live in server memory.</p>
         </div>
 
         <div class="arch-card">
-          <div class="arch-card-title">
-            <svg class="ic" style="width:16px;height:16px;color:var(--mint);"><use href="#i-code"/></svg>
-            <span>Finding a session and downloading a receipt</span>
-          </div>
-          <p class="small" style="color:var(--text2);margin:0 0 10px;">The history screen lists paid sessions. Users can narrow the list by check-in date range and by typing part of a license plate. They can download a receipt for one row or a combined receipt for the first ten matches.</p>
-          <p class="small" style="color:var(--text2);margin:0;">The server generates the receipt with pdf-lib and uses @pdf-lib/fontkit to embed Roboto for Vietnamese text. Each row shows the session number, entry and exit times, plate and fee. The total appears below the rows.</p>
+          <div class="arch-card-title"><svg class="ic" style="width:16px;height:16px;color:var(--mint);"><use href="#i-code"/></svg><span>Payment history and receipt selection</span></div>
+          <p class="small" style="color:var(--text2);margin:0;"><code>GET /api/transactions?status=paid</code> supplies paid sessions with a payment time and reference. The history screen filters them by an inclusive check-in date range and a case-insensitive match on part of a license plate. Each row keeps its session ID, so a driver can retrieve one visit from a grouped payment.</p>
+        </div>
+
+        <div class="arch-card" style="margin-bottom:0;">
+          <div class="arch-card-title"><svg class="ic" style="width:16px;height:16px;color:var(--mint);"><use href="#i-layers"/></svg><span>Server-generated Vietnamese PDF receipts</span></div>
+          <p class="small" style="color:var(--text2);margin:0 0 10px;">From the history screen, a row sends one ID to <code>GET /api/receipt</code>. A combined export sends the first ten filtered IDs. The receipt model selects matching paid sessions, caps the document at ten rows and totals only the fees included. Each row lists the session number, entry and exit times, license plate and fee.</p>
+          <p class="small" style="color:var(--text2);margin:0;">The Node.js route returns the document as an <code>application/pdf</code> attachment. It uses <code>pdf-lib</code> and <code>@pdf-lib/fontkit</code> to embed a subset of Roboto, preserving Vietnamese diacritics in the downloaded receipt.</p>
         </div>
       `,
       body_vi: `
         <div class="arch-card">
-          <div class="arch-card-title">
-            <svg class="ic" style="width:16px;height:16px;color:var(--mint);"><use href="#i-layers"/></svg>
-            <span>Số dư tài khoản và phí gửi xe còn nợ</span>
-          </div>
-          <p class="small" style="color:var(--text2);margin:0 0 10px;">Trong dự án ParkWise của nhóm, tôi phụ trách ba màn hình của UC2 và các API Next.js phục vụ việc xem tài khoản, thanh toán và tra cứu lịch sử. Trang tổng quan hiển thị số dư và tổng phí còn nợ. Với dữ liệu mẫu, sáu lượt gửi xe có tổng phí 35.000 đồng trong khi tài khoản có 20.000 đồng, nên trang hiển thị cảnh báo thiếu tiền.</p>
-          <p class="small" style="color:var(--text2);margin:0;">Người dùng có thể chỉnh số dư mô phỏng trên trang tài khoản. Ở màn hình thanh toán, họ có thể thay đổi mức giảm từ 0% đến 100% cho những lượt chưa thanh toán thuộc diện ưu đãi.</p>
+          <div class="arch-card-title"><svg class="ic" style="width:16px;height:16px;color:var(--mint);"><use href="#i-layers"/></svg><span>Số dư tài khoản và cách tính phí</span></div>
+          <p class="small" style="color:var(--text2);margin:0 0 10px;"><code>GET /api/user/balance</code> trả về số dư và tổng <code>finalFee</code> của các lượt ở trạng thái <code>Pending_Payment</code>. Trong dữ liệu mẫu, sáu lượt gửi xe có tổng phí 35.000 đồng. Tài khoản còn 20.000 đồng, tức là thiếu 15.000 đồng. Trang tổng quan React so sánh số dư với tổng phí và hiển thị cảnh báo trước khi thanh toán.</p>
+          <p class="small" style="color:var(--text2);margin:0;">Khi thay đổi mức ưu đãi mô phỏng, máy chủ chỉ tính lại phí cho các lượt chưa thanh toán thuộc diện ưu đãi. Tỷ lệ giảm được làm tròn thành số nguyên từ 0 đến 100 rồi áp dụng lên phí gốc của từng lượt. Khoản giảm được làm tròn đến đơn vị đồng. Vì phí của lượt đã thanh toán được giữ nguyên, thay đổi ưu đãi sau này không làm đổi số tiền trên biên lai cũ.</p>
         </div>
 
         <div class="arch-card">
-          <div class="arch-card-title">
-            <svg class="ic" style="width:16px;height:16px;color:var(--mint);"><use href="#i-server"/></svg>
-            <span>Thanh toán các lượt gửi xe còn nợ</span>
+          <div class="arch-card-title"><svg class="ic" style="width:16px;height:16px;color:var(--mint);"><use href="#i-server"/></svg><span>Thanh toán gộp và cập nhật trạng thái từng lượt</span></div>
+          <div class="arch-pipeline">
+            <div class="arch-step"><b>Trang thanh toán React</b><span>Lấy ID các lượt chưa trả phí</span></div>
+            <span class="arch-sep" aria-hidden="true">→</span>
+            <div class="arch-step"><b>POST /api/payment</b><span>Kiểm tra mã xác nhận mô phỏng</span></div>
+            <span class="arch-sep" aria-hidden="true">→</span>
+            <div class="arch-step"><b>PaymentController</b><span>Kiểm tra số dư và ghi nhận thanh toán</span></div>
           </div>
-          <p class="small" style="color:var(--text2);margin:0 0 10px;">Màn hình thanh toán gửi toàn bộ lượt còn nợ trong một yêu cầu. API Next.js kiểm tra mã xác nhận cố định gồm sáu chữ số. Bộ xử lý thanh toán kiểm tra số dư và từ chối giao dịch nếu tài khoản không đủ tiền.</p>
-          <p class="small" style="color:var(--text2);margin:0;">Khi thanh toán thành công, hệ thống trừ tổng phí khỏi số dư và đánh dấu từng lượt đã thanh toán với cùng thời điểm và mã giao dịch. Luồng BKPay được mô phỏng. Tài khoản dùng chung và dữ liệu giao dịch nằm trong bộ nhớ máy chủ.</p>
+          <p class="small" style="color:var(--text2);margin:0 0 10px;">Trang thanh toán gửi danh sách ID cùng mã xác nhận cố định gồm sáu chữ số. Bộ điều khiển lọc những lượt trong yêu cầu vẫn đang chờ thanh toán và tính tổng từ phí lưu trên máy chủ. Nếu không còn lượt nào đủ điều kiện hoặc số dư không đủ, hệ thống trả lỗi trước khi trừ tiền.</p>
+          <p class="small" style="color:var(--text2);margin:0;">Khi thanh toán thành công, bộ điều khiển trừ tổng phí một lần, chuyển từng lượt sang <code>Paid</code>, rồi ghi cùng thời điểm thanh toán và mã giao dịch cho các lượt đó. API trả về số dư mới, số tiền còn nợ và mã giao dịch. BKPay được mô phỏng. Tài khoản mẫu dùng chung, các lượt gửi xe và nhật ký giao dịch đều được lưu trong bộ nhớ máy chủ.</p>
         </div>
 
         <div class="arch-card">
-          <div class="arch-card-title">
-            <svg class="ic" style="width:16px;height:16px;color:var(--mint);"><use href="#i-code"/></svg>
-            <span>Tra cứu lượt gửi xe và tải biên lai</span>
-          </div>
-          <p class="small" style="color:var(--text2);margin:0 0 10px;">Trang lịch sử liệt kê các lượt đã thanh toán. Người dùng có thể lọc theo khoảng ngày vào bãi và nhập một phần biển số để tìm xe, rồi tải biên lai cho từng lượt hoặc một biên lai chung cho tối đa mười lượt đầu tiên trong danh sách đã lọc.</p>
-          <p class="small" style="color:var(--text2);margin:0;">Máy chủ tạo biên lai bằng pdf-lib và dùng @pdf-lib/fontkit để nhúng phông Roboto cho nội dung tiếng Việt. Mỗi dòng ghi số thứ tự của lượt gửi xe, giờ vào và ra, biển số và mức phí. Tổng tiền nằm cuối biên lai.</p>
+          <div class="arch-card-title"><svg class="ic" style="width:16px;height:16px;color:var(--mint);"><use href="#i-code"/></svg><span>Tra cứu lịch sử và chọn lượt để xuất biên lai</span></div>
+          <p class="small" style="color:var(--text2);margin:0;"><code>GET /api/transactions?status=paid</code> trả về các lượt đã thanh toán có thời điểm thanh toán và mã giao dịch. Trang lịch sử lọc theo ngày vào bãi, tính cả ngày đầu và ngày cuối, đồng thời cho phép tìm một phần biển số mà không phân biệt chữ hoa, chữ thường. Mỗi dòng giữ ID riêng nên người dùng vẫn có thể tra cứu từng lượt sau khi trả gộp.</p>
+        </div>
+
+        <div class="arch-card" style="margin-bottom:0;">
+          <div class="arch-card-title"><svg class="ic" style="width:16px;height:16px;color:var(--mint);"><use href="#i-layers"/></svg><span>Tạo biên lai PDF tiếng Việt trên máy chủ</span></div>
+          <p class="small" style="color:var(--text2);margin:0 0 10px;">Khi xuất biên lai từng dòng, trang lịch sử gửi một ID đến <code>GET /api/receipt</code>. Khi xuất gộp, trang gửi tối đa mười ID đầu tiên khớp bộ lọc. Mô hình biên lai chọn các lượt đã thanh toán có ID tương ứng, giới hạn mười dòng và chỉ cộng phí của các dòng được in. Mỗi dòng ghi số thứ tự lượt gửi xe, giờ vào và ra, biển số cùng mức phí.</p>
+          <p class="small" style="color:var(--text2);margin:0;">API chạy trên Node.js trả về tệp đính kèm có kiểu <code>application/pdf</code>. Bộ tạo PDF dùng <code>pdf-lib</code> và <code>@pdf-lib/fontkit</code> để nhúng các ký tự Roboto cần dùng, giúp biên lai tải xuống hiển thị đúng dấu tiếng Việt.</p>
         </div>
       `
     }

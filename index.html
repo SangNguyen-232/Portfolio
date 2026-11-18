@@ -81,10 +81,9 @@
     <symbol id="i-close" viewBox="0 0 24 24">
       <path d="M6 6l12 12M18 6L6 18" />
     </symbol>
-    <symbol id="i-download" viewBox="0 0 24 24">
-      <path d="M12 4v12" />
-      <path d="M6 10l6 6 6-6" />
-      <path d="M4 20h16" />
+    <symbol id="i-eye" viewBox="0 0 24 24">
+      <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z" />
+      <circle cx="12" cy="12" r="3" />
     </symbol>
     <symbol id="i-cpu" viewBox="0 0 24 24">
       <rect x="4" y="4" width="16" height="16" rx="2" />
@@ -181,8 +180,8 @@
         </button>
         <a class="btn btn-ghost btn-sm resume-btn" id="resumeBtn" href="assets/docs/CV.pdf" target="_blank" rel="noopener"
           data-cursor>
-          <svg class="ic">
-            <use href="#i-download" />
+          <svg class="ic" aria-hidden="true">
+            <use href="#i-eye" />
           </svg>
           <span data-i18n="nav.resume">View CV</span>
         </a>
@@ -633,23 +632,18 @@
             </div>
             <h3 data-i18n="proj.p3.title">ParkWise — Campus Parking Prototype</h3>
             <ul>
-              <li data-i18n="proj.p3.b1">Built the account dashboard for our campus parking project. It shows the outstanding fees and warns when the account balance is too low to pay.</li>
-              <li data-i18n="proj.p3.b2">Implemented a simulated BKPay checkout that settles all unpaid parking sessions in one payment and records the transaction in the payment history.</li>
-              <li data-i18n="proj.p3.b3">Added history filters for check-in date and license plate, plus downloadable PDF receipts for one session or up to ten matching sessions.</li>
+              <li data-i18n="proj.p3.b1">The account API totals the fees due after discounts on unpaid parking sessions. The dashboard compares that total with the account balance and flags a shortfall before checkout.</li>
+              <li data-i18n="proj.p3.b2">A TypeScript payment controller settles multiple sessions through simulated BKPay. It debits the total once and records a shared payment reference on each paid session.</li>
+              <li data-i18n="proj.p3.b3">Payment history filters paid sessions by check-in date and partial license plate. A Node.js route generates an itemized Vietnamese PDF for a single session or up to ten matching sessions.</li>
             </ul>
-            <div class="pcard-meta">
-              <span><svg class="ic">
-                  <use href="#i-server" />
-                </svg><span data-i18n="proj.p3.backend">The UC2 payment API keeps the demo account in server memory.</span></span>
-            </div>
             <div class="stack">
-              <span class="lbl mono" data-i18n="proj.p3.stack">ParkWise project stack</span>
+              <span class="lbl mono" data-i18n="proj.p3.stack">Tech Stack:</span>
               <div class="tags">
-                <span class="tag">Next.js 16</span>
-                <span class="tag">React 19</span>
+                <span class="tag">Next.js</span>
+                <span class="tag">React</span>
                 <span class="tag">TypeScript</span>
-                <span class="tag">Tailwind CSS 4</span>
-                <span class="tag">Express.js 5</span>
+                <span class="tag">Tailwind CSS</span>
+                <span class="tag">Express.js</span>
                 <span class="tag">REST APIs</span>
                 <span class="tag" data-i18n="proj.p3.sqlTag">PostgreSQL schema &amp; seed</span>
               </div>
@@ -659,7 +653,7 @@
                 <svg class="ic">
                   <use href="#i-server" />
                 </svg>
-                <span data-i18n="proj.p3.inspect">Explore UC2</span>
+                <span data-i18n="proj.p3.inspect">Process flow</span>
               </button>
               <a href="https://github.com/SangNguyen-232/ParkWise" target="_blank" rel="noopener" class="pcard-link"
                 data-cursor>
@@ -821,10 +815,10 @@
             <span class="mq"><i></i>Verilog Testbench</span>
             <span class="mq"><i></i>STM32CubeIDE</span>
             <span class="mq"><i></i>Node.js &amp; Express</span>
-            <span class="mq"><i></i>Next.js 16</span>
+            <span class="mq"><i></i>Next.js</span>
             <span class="mq"><i></i>Linux Ubuntu</span>
-            <span class="mq"><i></i>Git &amp; GitHub CI</span>
-            <span class="mq"><i></i>React 19 &amp; TypeScript</span>
+            <span class="mq"><i></i>Git &amp; GitHub</span>
+            <span class="mq"><i></i>React &amp; TypeScript</span>
             <span class="mq"><i></i>LittleFS Hot-Swap</span>
             <span class="mq"><i></i>WebSocket Streaming</span>
             <!-- Duplicate for seamless loop -->
@@ -832,10 +826,10 @@
             <span class="mq"><i></i>Verilog Testbench</span>
             <span class="mq"><i></i>STM32CubeIDE</span>
             <span class="mq"><i></i>Node.js &amp; Express</span>
-            <span class="mq"><i></i>Next.js 16</span>
+            <span class="mq"><i></i>Next.js</span>
             <span class="mq"><i></i>Linux Ubuntu</span>
-            <span class="mq"><i></i>Git &amp; GitHub CI</span>
-            <span class="mq"><i></i>React 19 &amp; TypeScript</span>
+            <span class="mq"><i></i>Git &amp; GitHub</span>
+            <span class="mq"><i></i>React &amp; TypeScript</span>
             <span class="mq"><i></i>LittleFS Hot-Swap</span>
             <span class="mq"><i></i>WebSocket Streaming</span>
           </div>
@@ -1009,8 +1003,8 @@
               <span>0383 589 877</span>
             </a>
             <a href="assets/docs/CV.pdf" target="_blank" rel="noopener" class="btn btn-ghost" data-cursor>
-              <svg class="ic">
-                <use href="#i-download" />
+              <svg class="ic" aria-hidden="true">
+                <use href="#i-eye" />
               </svg>
               <span data-i18n="nav.resume">View CV</span>
             </a>

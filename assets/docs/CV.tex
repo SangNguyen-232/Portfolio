@@ -15,7 +15,7 @@
 \usepackage{lmodern}
 \usepackage{fontsize}
 % \changefontsize{10.5pt}
-\changefontsize{10.4pt}
+\changefontsize{10.35pt}
 
 % Blue accent color
 \definecolor{myblue}{RGB}{0,102,255}
@@ -78,7 +78,7 @@
 
 % ==================== CAREER OBJECTIVE ====================
 \section*{Professional Summary}
-Final-year Computer Engineering student aiming to build a career in Embedded Systems and IoT. Gained learning experience through academic projects and an on-site internship at Viettel Dak Lak -- Viettel Group. Seeking a Fresher Embedded Software Engineer position to continue learning, enhance practical skills, and develop expertise in a professional environment alongside experienced engineers.
+Final-year Computer Engineering student aiming to build a career in Embedded Systems and IoT. Gained learning experience through academic projects and an on-site internship at Viettel Dak Lak -- Viettel Group. Seeking a Fresher Embedded Software Engineer position to continue learning, enhance practical skills, and develop expertise in a professional environment alongside experienced engineers
 
 % ==================== EDUCATION ====================
 \section*{Education}
@@ -104,43 +104,46 @@ Final-year Computer Engineering student aiming to build a career in Embedded Sys
 \textbf{Viettel Dak Lak -- Viettel Group} \hfill \textit{On-site} \\
 \textit{IoT Intern} \hfill \textit{Jun 2026 -- Aug 2026}
 \begin{itemize}
-    \item Learned the fundamentals of IoT, sensors, and ESP32 programming.
-    \item Explored IoT platforms and backend development with Node.js and PostgreSQL.
-    \item Built an IoT solution with ESP32 and sensors.
+    \item Learned the fundamentals of IoT, sensors, and ESP32 programming
+    \item Explored IoT platforms and backend development with Node.js and PostgreSQL
+    \item Built an IoT solution with ESP32 and sensors
 \end{itemize}
 
 % ==================== FEATURED PROJECTS ====================
 \section*{Projects}
 
 % PROJECT 1
-\textbf{Smart Agriculture Environmental Monitoring System} \,|\, \faGithub\ \href{https://github.com/SangNguyen-232/IoT-Env-Monitor}{Github} \hfill \textit{Jul 2026 -- Nov 2026} \\
-{\footnotesize \textbf{Stack:} C/C++, Python, ESP32-S3, FreeRTOS, TensorFlow Lite Micro, I2C, GPIO, UART, Node.js, Express.js, PostgreSQL, Docker, Linux, JavaScript}
+\textbf{Smart Agriculture Environmental Monitoring System} \,|\, \faGithub\ \href{https://github.com/SangNguyen-232/IoT-Env-Monitor}{GitHub Repo} \hfill \textit{Jul 2026 -- Nov 2026} \\
+% {\small \textbf{Stack:} C/C++, Python, JavaScript, ESP32-S3, FreeRTOS, TensorFlow Lite Micro, I2C, GPIO, UART, Node.js, Express.js, PostgreSQL, Docker, Linux}
+\textbf{Stack:} C/C++, Python, JavaScript, ESP32-S3, FreeRTOS, TensorFlow Lite Micro, I2C, GPIO, UART, Node.js, Express.js, PostgreSQL, Docker, Linux
 \begin{itemize}
-    \item Engineered concurrent FreeRTOS firmware on ESP32-S3 with semaphore-guarded shared context, coordinating 7 tasks (sensor sampling, TinyML inference, pump control, database logging, boot-button reset, LED/NeoPixel indicators) across I2C, GPIO and network peripherals with zero race conditions.
-    \item Deployed a float32 TensorFlow Lite Micro classifier (temperature, humidity, soil moisture $\rightarrow$ 3-class risk) trained on a 21000-row synthetic dataset, achieving sub-1\,ms on-device inference with rolling accuracy tracking and a hardware safety interlock for extreme sensor thresholds.
-    \item Implemented WiFi AP fallback with hot-swap via LittleFS-persisted network lists, streaming sensor data to the backend over HTTP/WebSocket.
-    \item Built the fleet management platform (Node.js/Express/PostgreSQL) with role-based session auth, per-device password verification and real-time Chart.js/Leaflet dashboards, containerized with Docker Compose on Linux.
+    \item Engineered concurrent FreeRTOS firmware on ESP32-S3 with semaphore-guarded shared context, coordinating 7 tasks (sensor sampling, TinyML inference, pump control, database logging, boot-button reset, LED/NeoPixel indicators) across I2C, GPIO and network peripherals with zero race conditions
+    \item Deployed a float32 TensorFlow Lite Micro classifier (temperature, humidity, soil moisture $\rightarrow$ 3-class risk) trained on a 21000-row synthetic dataset, achieving sub-1\,ms on-device inference with rolling accuracy tracking and a hardware safety interlock for extreme sensor thresholds
+    \item Implemented WiFi AP fallback with hot-swap via LittleFS-persisted network lists, streaming sensor data to the backend over HTTP/WebSocket
+    \item Built the fleet management platform (Node.js/Express/PostgreSQL) with role-based session auth, per-device password verification and real-time Chart.js/Leaflet dashboards, containerized with Docker Compose on Linux
 \end{itemize}
 
 \vspace{1.5pt}
 
 % PROJECT 2
-\textbf{FPGA Vending Machine Prototype} \,|\, \faGithub\ \href{https://github.com/SangNguyen-232/FPGA-Vending-System}{Github} \hfill \textit{Oct 2024 -- Dec 2024} \\
-{\footnotesize \textbf{Stack:} Verilog HDL, Arty-Z7-20 target, Vivado/XDC constraints}
+\textbf{FPGA Vending Machine Prototype} \,|\, \faGithub\ \href{https://github.com/SangNguyen-232/FPGA-Vending-System}{GitHub Repo} \hfill \textit{Oct 2024 -- Dec 2024} \\
+% {\small \textbf{Stack:} Verilog HDL, Arty-Z7-20 target, Vivado/XDC constraints}
+\textbf{Stack:} Verilog HDL, Arty-Z7-20 target, Vivado/XDC constraints
 \begin{itemize}
-    \item Developed a four-product Verilog RTL prototype targeting Arty-Z7-20, with User/Admin modes, one-hot selection, button-based credits (+5/+10), quantity selection, admin price adjustment/restocking and balance deduction.
-    \item Implemented a nine-state 16x2 LCD controller with an 8-bit bus, counter-based button filtering and four 4-bit BCD balance outputs. Includes XDC pin and 8\,ns clock constraints and an LCD stimulus testbench; functional validation, synthesis/timing closure and board deployment are not established by the repository.
+    \item Developed a four-product Verilog RTL prototype targeting Arty-Z7-20, with User/Admin modes, one-hot selection, button-based credits (+5/+10), quantity selection, admin price adjustment/restocking and balance deduction
+    \item Implemented a nine-state 16x2 LCD controller with an 8-bit bus, counter-based button filtering and four 4-bit BCD balance outputs. Includes XDC pin and 8\,ns clock constraints and an LCD stimulus testbench; functional validation, synthesis/timing closure and board deployment are not established by the repository
 \end{itemize}
 
 \vspace{1.5pt}
 
 % PROJECT 3
-\textbf{ParkWise - Campus Parking Prototype} \,|\, \faGithub\ \href{https://github.com/SangNguyen-232/ParkWise}{GitHub Repo} \hfill \textit{Mar 2026 -- May 2026} \\
-{\footnotesize \textbf{Team project stack} \enspace Next.js 16, React 19, TypeScript/JavaScript, Tailwind CSS 4, PostCSS, shadcn/ui, Radix UI, Lucide, Recharts, SVG, Vercel Analytics, Node.js, Express.js 5, CORS, REST APIs, localStorage, server memory, PostgreSQL schema/seed, pnpm.}
+\textbf{ParkWise -- Campus Parking Prototype} \,|\, \faGithub\ \href{https://github.com/SangNguyen-232/ParkWise}{GitHub Repo} \hfill \textit{Mar 2026 -- May 2026} \\
+% {\small \textbf{Stack:} Next.js 16, React 19, TypeScript/JavaScript, Tailwind CSS 4, PostCSS, Node.js, Express.js 5, REST APIs, PostgreSQL}
+\textbf{Stack:} Next.js, React, TypeScript/JavaScript, Tailwind CSS, PostCSS, Node.js, Express.js, REST APIs, PostgreSQL
 \begin{itemize}
-    \item Built the UC2 account dashboard to show outstanding parking fees, the demo balance and low-balance warnings.
-    \item Implemented simulated BKPay checkout for all unpaid sessions. Users can adjust eligible discounts. The API checks a fixed code and available funds, deducts the total and marks the sessions paid under one transaction reference.
-    \item Added paid-session filters for check-in date and license plate. Used pdf-lib and @pdf-lib/fontkit to generate Vietnamese PDF receipts for one session or up to ten matches, with entry and exit times, plates, fees and totals.
+    \item The TypeScript billing model sums unpaid session fees after eligible discounts. The React dashboard compares the total with the account balance and flags a shortfall before checkout
+    \item A Next.js route validates a fixed demo code for simulated BKPay payments. The controller checks available funds, debits the in-memory account once and records a shared timestamp and transaction reference on each settled session
+    \item The history view filters paid sessions by check-in date range and partial plate number, then requests one visit or the first ten matches. A Node.js route generates the itemized PDF with pdf-lib and embeds Roboto for Vietnamese diacritics
 \end{itemize}
 
 \end{document}
