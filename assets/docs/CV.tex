@@ -17,10 +17,10 @@
 % \changefontsize{10.5pt}
 \changefontsize{10.4pt}
 
-% Màu xanh
+% Blue accent color
 \definecolor{myblue}{RGB}{0,102,255}
 
-% Cấu hình liên kết
+% Link configuration
 \hypersetup{
     colorlinks=true,
     linkcolor=myblue,
@@ -32,7 +32,7 @@
 \setstretch{1.0}
 \setlength{\parindent}{0pt}
 
-% Định dạng section
+% Section formatting
 \titleformat{\section}
   {\normalfont\bfseries}
   {}
@@ -53,7 +53,7 @@
 
 \begin{document}
 
-% ==================== THÔNG TIN CÁ NHÂN ====================
+% ==================== PERSONAL INFORMATION ====================
 \begin{center}
 {\LARGE \textbf{\fontfamily{qtm}\selectfont NGUYEN VAN SANG}}\\[5pt]
 {\Large \textbf{Embedded Software Engineer -- Fresher}}\\[5pt]
@@ -76,20 +76,20 @@
 
 \vspace{-5pt}
 
-% ==================== MỤC TIÊU NGHỀ NGHIỆP ====================
+% ==================== CAREER OBJECTIVE ====================
 \section*{Professional Summary}
 Final-year Computer Engineering student aiming to build a career in Embedded Systems and IoT. Gained learning experience through academic projects and an on-site internship at Viettel Dak Lak -- Viettel Group. Seeking a Fresher Embedded Software Engineer position to continue learning, enhance practical skills, and develop expertise in a professional environment alongside experienced engineers.
 
-% ==================== HỌC VẤN ====================
+% ==================== EDUCATION ====================
 \section*{Education}
 \textbf{Ho Chi Minh City University of Technology -- VNU-HCM} \hfill \textit{Ho Chi Minh City, Vietnam} \\
 \textit{Bachelor of Computer Engineering -- GPA: 2.8/4.0 (7.20/10)} \hfill \textit{Sep 2022 -- Nov 2027}
 
-% ==================== BẰNG CẤP ====================
+% ==================== CERTIFICATION ====================
 \section*{Certification}
 \textbf{TOEIC (Listening and Reading): } \hfill \textit{Dec 2026}
 
-% ==================== KỸ NĂNG CHUYÊN MÔN ====================
+% ==================== TECHNICAL SKILLS ====================
 \section*{Technical Skills}
 \noindent
 \textbf{Programming Languages:} C, C++, Python \\
@@ -99,7 +99,7 @@ Final-year Computer Engineering student aiming to build a career in Embedded Sys
 \textbf{Development Tools:} PlatformIO, STM32CubeIDE, Linux, Git, GitHub, Docker \\
 \textbf{IoT Backend \& Web:} Node.js, Express.js, Next.js, PostgreSQL, React, HTML, CSS
 
-% ==================== KINH NGHIỆM ====================
+% ==================== EXPERIENCE ====================
 \section*{Experience}
 \textbf{Viettel Dak Lak -- Viettel Group} \hfill \textit{On-site} \\
 \textit{IoT Intern} \hfill \textit{Jun 2026 -- Aug 2026}
@@ -109,10 +109,10 @@ Final-year Computer Engineering student aiming to build a career in Embedded Sys
     \item Built an IoT solution with ESP32 and sensors.
 \end{itemize}
 
-% ==================== DỰ ÁN TIÊU BIỂU ====================
+% ==================== FEATURED PROJECTS ====================
 \section*{Projects}
 
-% DỰ ÁN 1
+% PROJECT 1
 \textbf{Smart Agriculture Environmental Monitoring System} \,|\, \faGithub\ \href{https://github.com/SangNguyen-232/IoT-Env-Monitor}{Github} \hfill \textit{Jul 2026 -- Nov 2026} \\
 {\footnotesize \textbf{Stack:} C/C++, Python, ESP32-S3, FreeRTOS, TensorFlow Lite Micro, I2C, GPIO, UART, Node.js, Express.js, PostgreSQL, Docker, Linux, JavaScript}
 \begin{itemize}
@@ -124,7 +124,7 @@ Final-year Computer Engineering student aiming to build a career in Embedded Sys
 
 \vspace{1.5pt}
 
-% DỰ ÁN 2
+% PROJECT 2
 \textbf{FPGA Vending Machine Prototype} \,|\, \faGithub\ \href{https://github.com/SangNguyen-232/FPGA-Vending-System}{Github} \hfill \textit{Oct 2024 -- Dec 2024} \\
 {\footnotesize \textbf{Stack:} Verilog HDL, Arty-Z7-20 target, Vivado/XDC constraints}
 \begin{itemize}
@@ -134,13 +134,13 @@ Final-year Computer Engineering student aiming to build a career in Embedded Sys
 
 \vspace{1.5pt}
 
-% DỰ ÁN 3
-\textbf{ParkWise - Campus Parking Prototype} \,|\, \faGithub\ \href{https://github.com/SangNguyen-232/ParkWise}{Github} \hfill \textit{Mar 2026 -- May 2026} \\
-{\footnotesize \textbf{Stack:} Next.js 16, React 19, TypeScript, Express.js, Tailwind CSS, localStorage, PostgreSQL schema/seed}
+% PROJECT 3
+\textbf{ParkWise - Campus Parking Prototype} \,|\, \faGithub\ \href{https://github.com/SangNguyen-232/ParkWise}{GitHub Repo} \hfill \textit{Mar 2026 -- May 2026} \\
+{\footnotesize \textbf{Team project stack} \enspace Next.js 16, React 19, TypeScript/JavaScript, Tailwind CSS 4, PostCSS, shadcn/ui, Radix UI, Lucide, Recharts, SVG, Vercel Analytics, Node.js, Express.js 5, CORS, REST APIs, localStorage, server memory, PostgreSQL schema/seed, pnpm.}
 \begin{itemize}
-    \item Built a six-zone Next.js/React prototype with an SVG/CSS map, simulated navigation and demo views for \mbox{entry/exit}, incidents, gate operations, settings and reconciliation.
-    \item Implemented Express parking/report mocks and Next.js API routes for slot updates, BKPay-style billing/history and printable HTML receipts. Demo state uses separate memory/localStorage stores, without live GPS, IoT, database or payment-gateway integration.
-    \item Added UI access checks for five demo login roles and standalone PostgreSQL schema/seed scripts with permissive demo RLS policies; backend authorization and per-user transaction isolation are not implemented.
+    \item Built the UC2 account dashboard to show outstanding parking fees, the demo balance and low-balance warnings.
+    \item Implemented simulated BKPay checkout for all unpaid sessions. Users can adjust eligible discounts. The API checks a fixed code and available funds, deducts the total and marks the sessions paid under one transaction reference.
+    \item Added paid-session filters for check-in date and license plate. Used pdf-lib and @pdf-lib/fontkit to generate Vietnamese PDF receipts for one session or up to ten matches, with entry and exit times, plates, fees and totals.
 \end{itemize}
 
 \end{document}

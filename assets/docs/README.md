@@ -1,13 +1,13 @@
-# Biên dịch CV
+# Compiling the CV
 
-`CV.tex` là nguồn chính của CV. Mọi thay đổi về nội dung, bố cục, phông chữ hoặc liên kết phải thực hiện trong tệp này. `CV.pdf` là kết quả biên dịch; không chỉnh sửa trực tiếp PDF.
+`CV.tex` is the canonical CV source. Make all changes to content, layout, fonts, or links in this file. `CV.pdf` is the compiled output; do not edit the PDF directly.
 
-Với [Tectonic](https://tectonic-typesetting.github.io/book/latest/installation/) đã có trong PATH, chạy từ thư mục gốc Portfolio:
+With [Tectonic](https://tectonic-typesetting.github.io/book/latest/installation/) available on PATH, run the following command from the Portfolio root directory:
 
 ```powershell
 tectonic --untrusted --outdir assets/docs assets/docs/CV.tex
 ```
 
-Tectonic tự tải các gói và phông chữ cần thiết trong lần chạy đầu. Nếu dùng một bản portable, thay `tectonic` bằng đường dẫn tới chương trình.
+Tectonic downloads the required packages and fonts on its first run. If you use a portable version, replace `tectonic` with the path to the executable.
 
-Sau khi biên dịch, đọc log và kiểm tra trực quan tất cả các trang PDF trước khi sử dụng. Không dùng cách chồng chữ, sửa content stream hoặc di chuyển link annotation trong PDF; chỉnh mã LaTeX và biên dịch lại.
+After compiling, read the log and visually inspect every PDF page before using the document. Do not overlay text, edit content streams, or move link annotations in the PDF; update the LaTeX source and recompile instead.

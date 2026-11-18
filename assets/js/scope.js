@@ -10,7 +10,7 @@ window.ScopeEngine = (() => {
   let triggeredType = null;
   let triggeredTimer = 0;
 
-  // [0] mint = logic 1 / dữ liệu   [1] amber = clock / active / chip-select   [2] ice = gói tin
+  // [0] mint = logic 1 / data   [1] amber = clock / active / chip-select   [2] ice = packets
   const C = [[95, 227, 200], [255, 181, 71], [191, 242, 230]];
   const FONT = '"JetBrains Mono", ui-monospace, Menlo, Consolas, monospace';
   const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
@@ -18,7 +18,7 @@ window.ScopeEngine = (() => {
   const rgba = (c, a) => `rgba(${c[0]},${c[1]},${c[2]},${clamp(a, 0, 1).toFixed(3)})`;
 
   /* =================================================================
-     BỘ DỰNG ĐỒ THỊ 3D — mọi vật thể là {n: nodes[[x,y,z]], e: edges[[i,j]]}
+     3D GRAPH BUILDER — each object is {n: nodes[[x,y,z]], e: edges[[i,j]]}
      ================================================================= */
   const cube = (s = 0.62) => {
     const n = [];
@@ -97,7 +97,7 @@ window.ScopeEngine = (() => {
   };
 
   /* =================================================================
-     LIÊN KẾT PHÂN HỆ ↔ SECTION (ops = trạng thái hiển thị theo nhịp)
+     SUBSYSTEM ↔ SECTION MAPPING (ops = status labels cycled with the clock)
      ================================================================= */
   const BIND = [
     { sel: '#hero', side: 0, tag: 'CPU Pipeline LX7', type: 'cpu', build: cube, ops: ['IF', 'ID', 'EX', 'MEM', 'WB'] },
@@ -139,9 +139,9 @@ window.ScopeEngine = (() => {
     const MIN_FRAME = isFinePointer ? 16 : 32;
 
     /* =================================================================
-       NỀN MẠNG NƠ-RON — y nguyên khung nền của mã tham chiếu
-       Node trôi, nối nhau khi đủ gần, xung tín hiệu chạy dọc cạnh,
-       chuột hút node. Vẽ TRƯỚC (nằm dưới) hệ 3D CS ở hai lề.
+       NEURAL NETWORK BACKGROUND — retain the reference code's background structure
+       Nodes drift and connect when close enough; signal pulses travel along edges,
+       and the pointer attracts nodes. Draw FIRST (beneath) the 3D CS system in both margins.
        ================================================================= */
     const mouseP = { x: -9999, y: -9999, on: false };
     let cloud = [], cEdges = [], cPulses = [];
@@ -168,7 +168,7 @@ window.ScopeEngine = (() => {
 
     const updateCloud = (dt) => {
       if (dt <= 0 || !cloud.length) return;
-      const k = dt * 60; // chuẩn hóa theo 60fps như mã tham chiếu
+      const k = dt * 60; // Normalize to 60 fps, as in the reference code
       const damp = Math.pow(0.995, k);
       for (const p of cloud) {
         if (mouseP.on) {
@@ -188,7 +188,7 @@ window.ScopeEngine = (() => {
         if (p.y < -30) p.y = H + 30; else if (p.y > H + 30) p.y = -30;
       }
 
-      // Xung tín hiệu (neuron bắn); gõ terminal / chat sẽ bắn dày hơn
+      // Signal pulses (neuron firing); typing in the terminal / chat increases their frequency
       const rate = (mouseP.on ? 0.14 : 0.07) + dmaPulse * 0.2;
       if (cEdges.length && Math.random() < rate * k && cPulses.length < 14 + Math.round(dmaPulse * 6)) {
         const [a, b] = cEdges[Math.floor(Math.random() * cEdges.length)];
@@ -252,7 +252,7 @@ window.ScopeEngine = (() => {
       ctx.font = `600 ${px}px ${FONT}`;
     };
 
-    // Điểm tại tỉ lệ u (0..1) trên đường gấp khúc
+    // Point at fraction u (0..1) along the polyline
     const along = (pts, u) => {
       const segs = [];
       let total = 0;
@@ -282,7 +282,7 @@ window.ScopeEngine = (() => {
       ctx.fill();
     };
 
-    /* ---------- Layout: đo cột nội dung, hai lề, vị trí module ---------- */
+    /* ---------- Layout: measure the content column, margins, and module positions ---------- */
     const buildLane = (docH) => {
       builtH = docH;
       builtW = W;
@@ -310,12 +310,12 @@ window.ScopeEngine = (() => {
       CR = Math.min(W, CR);
 
       sideL = { on: CL >= 56, bx: CL * 0.8, ix: CL * 0.4, g: CL };
-      const rLimit = W >= 1560 ? W - 250 : W; // chừa chỗ cho thanh TOC
+      const rLimit = W >= 1560 ? W - 250 : W; // Reserve space for the TOC rail
       const gR = rLimit - CR;
       sideR = { on: gR >= 56, bx: CR + gR * 0.2, ix: CR + gR * 0.6, g: gR };
 
       if (!cardEls) {
-        cardEls = [...document.querySelectorAll('.term, .eng-card, .chat, .do, .pcard, .skill, .tl-card, .education-shell, .contact-card')];
+        cardEls = [...document.querySelectorAll('.term, .eng-card, .chat, .profile, .do, .pcard, .skill, .tl-card, .education-shell, .contact-card')];
       }
       const sy = window.scrollY || 0;
       cards = [];
@@ -337,7 +337,7 @@ window.ScopeEngine = (() => {
     };
 
 
-    /* ---------- Hai đường bus xuyên suốt ---------- */
+    /* ---------- Two continuous bus rails ---------- */
     const drawRails = () => {
       for (const [s, right] of [[sideL, false], [sideR, true]]) {
         if (!s.on) continue;
@@ -369,7 +369,7 @@ window.ScopeEngine = (() => {
       }
     };
 
-    /* ---------- Chuỗi liên kết giữa các module cùng bên ---------- */
+    /* ---------- Chain connections between modules on the same side ---------- */
     const drawChain = (sy) => {
       for (const sideIdx of [0, 1]) {
         const s = sideIdx ? sideR : sideL;
@@ -401,7 +401,7 @@ window.ScopeEngine = (() => {
       }
     };
 
-    /* ---------- Vẽ một vật thể 3D ---------- */
+    /* ---------- Draw a 3D object ---------- */
     const drawModule = (m, sy) => {
       const s = m.side ? sideR : sideL;
       if (!s.on) return;
@@ -411,10 +411,10 @@ window.ScopeEngine = (() => {
 
       const focus = 1 - clamp(Math.abs(y0 - H * 0.5) / (H * 0.6), 0, 1);
       const act = m.active || triggeredType === m.type;
-      const a = clamp(0.22 + 0.5 * focus + (act ? 0.2 : 0), 0, 0.8); // trần độ sáng: không lấn nội dung
+      const a = clamp(0.22 + 0.5 * focus + (act ? 0.2 : 0), 0, 0.8); // Cap brightness to avoid overpowering the content
       const col = act ? C[1] : C[0];
 
-      // Xoay 3D: tự quay + theo cuộn trang + theo chuột
+      // 3D rotation: automatic spin + page scrolling + pointer movement
       const ry = time * 0.35 * (m.side ? -1 : 1) + sy * 0.0016 + cam.mx * 0.5 + m.idx;
       const rx = -0.35 + cam.my * 0.3 + Math.sin(time * 0.4 + m.idx) * 0.1;
       const ca = Math.cos(ry), sa = Math.sin(ry), cx = Math.cos(rx), sx = Math.sin(rx);
@@ -428,7 +428,7 @@ window.ScopeEngine = (() => {
         return [s.ix + x * size * k, y0 + y * size * k, k, clamp(0.65 - z * 0.35, 0.3, 1)];
       });
 
-      // Nhánh nối module → bus
+      // Branch connecting the module → bus
       const toward = m.side ? -1 : 1;
       ctx.strokeStyle = rgba(C[0], a * 0.5);
       ctx.lineWidth = 1;
@@ -443,7 +443,7 @@ window.ScopeEngine = (() => {
 
       glow(s.ix, y0, size * 1.7, col, 0.07 * (0.4 + focus));
 
-      // Tín hiệu lan theo cạnh: node "nóng" chuyển dần, cùng nhịp sysClock
+      // Signal propagation along edges: the "hot" node advances in sync with sysClock
       const N = P.length;
       const hot = Math.floor(sysClock * (act ? 2.6 : 1.3)) % N;
       const prev = (hot + N - 1) % N;
@@ -477,7 +477,7 @@ window.ScopeEngine = (() => {
       }
       glow(P[hot][0], P[hot][1], 8, C[1], 0.5 * a);
 
-      // Nhãn + trạng thái thực (đồng bộ với node đang nóng)
+      // Label + current status (synchronized with the hot node)
       if (size >= 20) {
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
@@ -493,7 +493,7 @@ window.ScopeEngine = (() => {
       }
     };
 
-    /* ---------- Thẻ nội dung ↔ bus: làm nổi bật nội dung chính ---------- */
+    /* ---------- Content card ↔ bus: highlight the main content ---------- */
     const drawCoupling = () => {
       for (const c of cards) {
         if (c.hidden || c.b < -40 || c.t > H + 40) continue;
@@ -545,7 +545,7 @@ window.ScopeEngine = (() => {
       ctx.globalAlpha = 1;
       const sy = window.scrollY || 0;
 
-      // Module gần tâm màn hình nhất ở mỗi bên = ACTIVE
+      // The module nearest the screen center on each side is ACTIVE
       for (const side of [0, 1]) {
         let best = null, bd = H * 0.45;
         for (const m of mods) {

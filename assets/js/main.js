@@ -244,7 +244,7 @@
     if (!isFinePointer) return;
 
     // 3D Tilt on Cards
-    const tiltTargets = document.querySelectorAll('.pcard, .skill, .do, .edu, .tl-card, .term, .eng-card, .chat, .contact-card');
+    const tiltTargets = document.querySelectorAll('.pcard, .skill, .do, .edu, .tl-card, .term, .eng-card, .chat, .profile, .contact-card');
     tiltTargets.forEach((el) => {
       let rect = null;
       let tiltRaf = null;

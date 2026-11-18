@@ -1,14 +1,14 @@
 /* =====================================================================
    REDESIGN LAYER — "Silicon Blueprint"
-   Điểm nhấn: thẻ chân dung
-   được thiết kế như một con chip trên PCB; phần còn lại giữ yên tĩnh.
+   Focal point: the portrait card
+   is styled as a chip on a PCB; the rest of the layout stays understated.
    ===================================================================== */
 
 :root { color-scheme: dark; }
 html { scrollbar-color: var(--border2) var(--bg); }
 
 /* ---------------------------------------------------------------------
-   1. HERO: thẻ chân dung = chip trên PCB (nhãn lụa silkscreen)
+   1. HERO: portrait card = chip on a PCB (silkscreen labels)
    --------------------------------------------------------------------- */
 .eng-card { position: relative; }
 .eng-card-head,
@@ -68,7 +68,7 @@ html { scrollbar-color: var(--border2) var(--bg); }
 .eng-card-foot::before { content: 'rev 2026.10'; }
 
 /* ---------------------------------------------------------------------
-   2. TERMINAL: scanline mảnh + viền phát sáng khi focus bằng phím [T]
+   2. TERMINAL: thin scanlines + glowing border when focused with the [T] key
    --------------------------------------------------------------------- */
 .term-body {
   background-image: repeating-linear-gradient(
@@ -76,7 +76,7 @@ html { scrollbar-color: var(--border2) var(--bg); }
 }
 
 /* ---------------------------------------------------------------------
-   3. ĐIỀU HƯỚNG
+   3. NAVIGATION
    --------------------------------------------------------------------- */
 .nav-links a.active::after {
   content: '';
@@ -87,7 +87,7 @@ html { scrollbar-color: var(--border2) var(--bg); }
   background: var(--grad2);
 }
 
-/* Thanh liên hệ: cuộn ngang trên màn hình nhỏ thay vì xuống 4–5 dòng */
+/* Contact bar: scroll horizontally on small screens instead of wrapping to 4–5 lines */
 @media (max-width: 700px) {
   .cv-contact-bar {
     flex-wrap: nowrap;
@@ -103,7 +103,7 @@ html { scrollbar-color: var(--border2) var(--bg); }
 }
 
 /* ---------------------------------------------------------------------
-   4. KHỐI NỘI DUNG
+   4. CONTENT BLOCKS
    --------------------------------------------------------------------- */
 .tl-item.current .tl-dot { animation: pulseDot 2.2s infinite; }
 .pcard:hover { box-shadow: 0 22px 50px -18px rgba(0, 0, 0, 0.65), 0 0 34px -14px rgba(var(--amber-rgb), 0.35); }
@@ -111,7 +111,7 @@ html { scrollbar-color: var(--border2) var(--bg); }
 .marquee:hover .track { animation-play-state: paused; }
 
 /* ---------------------------------------------------------------------
-   5. TRUY CẬP: tôn trọng "giảm chuyển động" ở các hiệu ứng còn sót
+   5. ACCESSIBILITY: respect reduced motion for the remaining effects
    --------------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   .marquee .track { animation: none; flex-wrap: wrap; width: auto; }

@@ -78,16 +78,21 @@ window.PortfolioData = (() => {
       "proj.p2.b1": "Developed Verilog RTL for a 4-product vending prototype targeting Digilent Arty-Z7-20, with separate User and Admin modes.",
       "proj.p2.b2": "Implemented button-based credit (+5/+10), quantity selection, stock checks and balance deduction; Admin mode adjusts prices and restocks products.",
       "proj.p2.b3": "Added counter-based button debounce, an 8-bit 16×2 LCD interface with a 9-state controller FSM, and four 4-bit digit outputs for a 7-segment display interface.",
+      "proj.p3.context": "Mar 2026 - May 2026",
       "proj.p3.title": "ParkWise — Campus Parking Prototype",
-      "proj.p3.b1": "Built a Next.js 16 / React 19 prototype for 6 parking zones, with TypeScript, Tailwind CSS, Express mock APIs and Next.js API routes.",
-      "proj.p3.b2": "Simulated entry/exit, BKPay-style fees and balance management, payment history, incident reports, gate exceptions, IoT health and reconciliation reports.",
-      "proj.p3.b3": "Created an SVG/CSS parking map with slot selection and route simulation, plus UI access rules for 5 demo roles; browser state is stored in localStorage.",
+      "proj.p3.b1": "Built the account dashboard for our campus parking project. It shows the outstanding fees and warns when the account balance is too low to pay.",
+      "proj.p3.b2": "Implemented a simulated BKPay checkout that settles all unpaid parking sessions in one payment and records the transaction in the payment history.",
+      "proj.p3.b3": "Added history filters for check-in date and license plate, plus downloadable PDF receipts for one session or up to ten matching sessions.",
+      "proj.p3.backend": "The UC2 payment API keeps the demo account in server memory.",
+      "proj.p3.stack": "ParkWise project stack",
+      "proj.p3.sqlTag": "PostgreSQL schema & seed",
+      "proj.p3.inspect": "Explore UC2",
+      "proj.p3.stage": "Software prototype",
       'proj.inspect': 'System architecture',
       'proj.m1': 'FreeRTOS tasks',
       'proj.m2': 'TinyML inference',
       'proj.m3': 'training samples',
       "proj.inspectFSM": "RTL & LCD controller",
-      "proj.inspectCloud": "Prototype architecture",
       'skills.title': 'Technical Skills',
       'skills.sub': 'Tools and technologies I have used in the projects below',
       'skills.c1': 'Programming Languages',
@@ -120,15 +125,10 @@ window.PortfolioData = (() => {
       'shortcut.led': 'Toggle LED borders',
       'footer.totop': 'Back to Top',
       'toast.copied': 'Email copied to clipboard!',
-      "proj.p2.context": "CO3091 · Logic Design Project",
+      "proj.p2.context": "Oct 2024 – Dec 2024",
       "proj.p2.hardware": "Target: Digilent Arty-Z7-20 · XDC clock constraint: 125 MHz",
       "proj.p2.design": "Verilog RTL · User/Admin logic · LCD controller FSM",
       "proj.p2.stage": "RTL prototype",
-      "proj.p3.b4": "Includes PostgreSQL schema/seed scripts. Live database, BKPay, IoT and backend authorization integrations remain future work.",
-      "proj.p3.context": "Full-stack prototype",
-      "proj.p3.backend": "Data: Express + Next.js mock APIs · localStorage · in-memory state",
-      "proj.p3.frontend": "UI: Next.js 16 · React 19 · TypeScript · Tailwind CSS",
-      "proj.p3.stage": "Mock-data demo",
     },
     vi: {
       'skip.content': 'Chuyển đến nội dung',
@@ -199,16 +199,21 @@ window.PortfolioData = (() => {
       "proj.p2.b1": "Phát triển RTL Verilog cho nguyên mẫu máy bán hàng gồm 4 loại sản phẩm, hướng tới bo Digilent Arty-Z7-20, có hai chế độ User và Admin.",
       "proj.p2.b2": "Mô phỏng nạp số dư bằng nút nhấn (+5/+10), chọn số lượng, kiểm tra tồn kho và trừ tiền; Admin điều chỉnh giá và bổ sung hàng.",
       "proj.p2.b3": "Bổ sung chống dội bằng bộ đếm, giao tiếp LCD 16×2 bus 8-bit với FSM điều khiển 9 trạng thái và bốn đầu ra chữ số 4-bit cho giao tiếp hiển thị LED 7 đoạn.",
+      "proj.p3.context": "Tháng 3/2026 – Tháng 5/2026",
       "proj.p3.title": "ParkWise — Nguyên mẫu quản lý bãi đỗ xe trong trường",
-      "proj.p3.b1": "Xây dựng nguyên mẫu Next.js 16 / React 19 cho 6 khu đỗ, dùng TypeScript, Tailwind CSS, API Express mock và API route Next.js.",
-      "proj.p3.b2": "Mô phỏng xe vào/ra, thanh toán phí và quản lý số dư theo luồng BKPay, lịch sử giao dịch, báo cáo sự cố, ngoại lệ tại cổng, trạng thái IoT và báo cáo đối soát.",
-      "proj.p3.b3": "Tạo sơ đồ bãi xe SVG/CSS để chọn ô và mô phỏng chỉ đường, kèm kiểm tra quyền giao diện cho 5 nhóm tài khoản demo; lưu trạng thái trình duyệt bằng localStorage.",
+      "proj.p3.b1": "Tôi xây dựng trang tổng quan tài khoản cho dự án bãi xe của nhóm. Trang hiển thị số phí còn nợ và cảnh báo khi số dư không đủ để thanh toán.",
+      "proj.p3.b2": "Tôi triển khai luồng BKPay mô phỏng để người dùng trả phí cho tất cả lượt gửi xe còn nợ trong một lần và xem lại giao dịch trong lịch sử thanh toán.",
+      "proj.p3.b3": "Tôi bổ sung bộ lọc lịch sử theo ngày vào bãi và biển số xe. Người dùng có thể tải biên lai PDF cho từng lượt hoặc gộp tối đa mười lượt khớp với bộ lọc.",
+      "proj.p3.backend": "API thanh toán của UC2 lưu tài khoản mô phỏng trong bộ nhớ máy chủ.",
+      "proj.p3.stack": "Công nghệ của toàn dự án ParkWise",
+      "proj.p3.sqlTag": "PostgreSQL (schema và dữ liệu mẫu)",
+      "proj.p3.inspect": "Xem chi tiết UC2",
+      "proj.p3.stage": "Nguyên mẫu phần mềm",
       'proj.inspect': 'Kiến trúc hệ thống',
       'proj.m1': 'tác vụ FreeRTOS',
       'proj.m2': 'suy luận TinyML',
       'proj.m3': 'mẫu huấn luyện',
       "proj.inspectFSM": "RTL & bộ điều khiển LCD",
-      "proj.inspectCloud": "Kiến trúc nguyên mẫu",
       'skills.title': 'Kỹ Năng Chuyên Môn',
       'skills.sub': 'Công cụ và công nghệ tôi đã dùng trong các dự án bên dưới',
       'skills.c1': 'Ngôn ngữ lập trình',
@@ -241,15 +246,10 @@ window.PortfolioData = (() => {
       'shortcut.led': 'Bật/tắt viền LED',
       'footer.totop': 'Lên Đầu Trang',
       'toast.copied': 'Đã sao chép địa chỉ email vào bộ nhớ tạm!',
-      "proj.p2.context": "CO3091 · Đồ án Thiết kế luận lý",
+      "proj.p2.context": "Tháng 10/2024 – Tháng 12/2024",
       "proj.p2.hardware": "Bo đích: Digilent Arty-Z7-20 · Ràng buộc xung nhịp XDC: 125 MHz",
       "proj.p2.design": "RTL Verilog · Logic User/Admin · FSM điều khiển LCD",
       "proj.p2.stage": "Nguyên mẫu RTL",
-      "proj.p3.b4": "Có script schema/seed PostgreSQL. Kết nối cơ sở dữ liệu, BKPay, IoT thật và phân quyền backend vẫn là hướng phát triển.",
-      "proj.p3.context": "Nguyên mẫu full-stack",
-      "proj.p3.backend": "Dữ liệu: API Express + Next.js mô phỏng · localStorage · bộ nhớ",
-      "proj.p3.frontend": "Giao diện: Next.js 16 · React 19 · TypeScript · Tailwind CSS",
-      "proj.p3.stage": "Demo dữ liệu mô phỏng",
     }
   };
 
@@ -445,114 +445,62 @@ window.PortfolioData = (() => {
     'modal-proj3': {
       title_en: "ParkWise — Parking Management Prototype",
       title_vi: "ParkWise — Nguyên mẫu quản lý bãi đỗ xe",
-      sub_en: "Next.js 16 · React 19 · Express mock APIs · localStorage · SVG/CSS map",
-      sub_vi: "Next.js 16 · React 19 · API Express mô phỏng · localStorage · Sơ đồ SVG/CSS",
+      sub_en: "My contribution to UC2 · Account dashboard, parking fee payments and receipts",
+      sub_vi: "Phần tôi phụ trách trong UC2 · Tài khoản, thanh toán phí gửi xe và biên lai",
       body_en: `
         <div class="arch-card">
           <div class="arch-card-title">
-            <svg class="ic" style="width:16px;height:16px;color:var(--mint);"><use href="#i-server"/></svg>
-            <span>Application scope and actual data flow</span>
-          </div>
-          <p class="small" style="color:var(--text2);margin:0 0 12px;">A campus parking prototype with entry/exit screens, six parking zones (A–F), fee payment and history, incident reports, gate exceptions, an IoT-health dashboard, settings and reconciliation reports. These workflows use demo data.</p>
-          <table class="pin-table">
-            <thead><tr><th>Component</th><th>Implemented behavior</th><th>State source</th></tr></thead>
-            <tbody>
-              <tr><td><b>Next.js frontend</b></td><td>React 19 / TypeScript pages and Tailwind CSS; role-based menus and UI checks</td><td>Demo user and selected operational state in browser localStorage</td></tr>
-              <tr><td><b>Express mock server</b></td><td>13 HTTP route handlers: demo login, zones/slots, check-in/out, search and reports</td><td>Independent in-memory users, six zones with 100 slots each, and mock report records</td></tr>
-              <tr><td><b>Next.js API routes</b></td><td>13 HTTP handlers in 12 route files for zones/slots, check-in/out, balance, payments, history, receipts, promotions and IoT health</td><td>In-memory data from lib/parking-data.ts; six initial zones with 12 slots each</td></tr>
-            </tbody>
-          </table>
-          <p class="muted small" style="margin:12px 0 0;">These are separate demo state stores. The map reads its zones from localStorage or initial data. Entry/exit screen confirmation handlers currently log actions rather than call the mock check-in/out APIs. There is no implemented sensor-to-database-to-WebSocket pipeline.</p>
-        </div>
-
-        <div class="arch-card">
-          <div class="arch-card-title">
             <svg class="ic" style="width:16px;height:16px;color:var(--mint);"><use href="#i-layers"/></svg>
-            <span>2D navigation and payment simulation</span>
+            <span>Account balance and outstanding fees</span>
           </div>
-          <p class="small" style="color:var(--text2);margin:0 0 10px;">The map and navigation view are drawn with SVG and CSS. Users can inspect zone occupancy, select an empty slot and play a route simulation. Both the “GPS” start and entrance start use fixed schematic coordinates; real device geolocation and React Leaflet rendering are not implemented.</p>
-          <p class="small" style="color:var(--text2);margin:0;">The BKPay-style workflow selects unpaid sessions, checks a demo balance, updates in-memory payment status and creates an HTML receipt that can be printed or saved as PDF. Payments, reconciliation and IoT alerts are simulated; no live BKPay gateway or parking sensors are connected.</p>
+          <p class="small" style="color:var(--text2);margin:0 0 10px;">For UC2, I built the account, payment and history screens and the Next.js routes that serve them. The dashboard shows the balance alongside the sum of unpaid fees. In the sample data, six sessions total 35,000 VND and the account holds 20,000 VND, so the dashboard displays a low-balance warning.</p>
+          <p class="small" style="color:var(--text2);margin:0;">Users can edit the demo balance on the dashboard. On the payment screen, they can adjust the discount from 0% to 100% for eligible unpaid sessions.</p>
         </div>
 
         <div class="arch-card">
           <div class="arch-card-title">
-            <svg class="ic" style="width:16px;height:16px;color:var(--amber);"><use href="#i-award"/></svg>
-            <span>Five demo login roles and UI access rules</span>
+            <svg class="ic" style="width:16px;height:16px;color:var(--mint);"><use href="#i-server"/></svg>
+            <span>Paying the outstanding fees</span>
           </div>
-          <table class="pin-table">
-            <thead><tr><th>Demo role</th><th>Main UI workflow</th></tr></thead>
-            <tbody>
-              <tr><td><b>Student</b></td><td>Account, demo payments/history, slot selection and route simulation, incident reporting</td></tr>
-              <tr><td><b>Faculty / Staff</b></td><td>Account, demo payments/history, map, slot selection and route simulation, incident reporting; grouped with students as internal users in the UI</td></tr>
-              <tr><td><b>Operations</b></td><td>Entry/exit, incident tickets, gate exceptions, IoT-health view and zone settings</td></tr>
-              <tr><td><b>Management</b></td><td>Pricing settings, analytics/reconciliation reports and parking overview</td></tr>
-              <tr><td><b>IT</b></td><td>Internal-user and role settings</td></tr>
-            </tbody>
-          </table>
-          <p class="muted small" style="margin:12px 0 0;">Login checks a hard-coded account list and stores user information in localStorage. These frontend checks do not provide production backend authorization or database-enforced per-user isolation.</p>
+          <p class="small" style="color:var(--text2);margin:0 0 10px;">The payment screen submits all unpaid sessions together. A Next.js API route checks a fixed six-digit demo code. The payment controller checks the available balance and rejects the payment if funds are short.</p>
+          <p class="small" style="color:var(--text2);margin:0;">On success, the controller deducts the total and marks each session as paid with the same payment time and transaction reference. BKPay is simulated, and the shared account and its transactions live in server memory.</p>
         </div>
 
-        <div class="arch-card" style="margin-bottom:0;">
+        <div class="arch-card">
           <div class="arch-card-title">
-            <svg class="ic" style="width:16px;height:16px;color:var(--amber);"><use href="#i-server"/></svg>
-            <span>SQL assets and current implementation limits</span>
+            <svg class="ic" style="width:16px;height:16px;color:var(--mint);"><use href="#i-code"/></svg>
+            <span>Finding a session and downloading a receipt</span>
           </div>
-          <p class="small" style="color:var(--text2);margin:0 0 10px;">The repository includes PostgreSQL schema and seed scripts for zones, parking_slots, vehicles and parking_sessions, with foreign keys, status checks and indexes. The schema enables RLS, but its demo policies allow public CRUD operations with USING (true) / WITH CHECK (true). They do not implement the five UI roles, and the running mock application is not connected to this database.</p>
-          <p class="muted small" style="margin:0;">A real database connection, HCMUT SSO, authenticated backend permissions, live BKPay, physical IoT integration and durable audit logs remain future work. Browser state can be cleared, and in-memory data is not durable.</p>
+          <p class="small" style="color:var(--text2);margin:0 0 10px;">The history screen lists paid sessions. Users can narrow the list by check-in date range and by typing part of a license plate. They can download a receipt for one row or a combined receipt for the first ten matches.</p>
+          <p class="small" style="color:var(--text2);margin:0;">The server generates the receipt with pdf-lib and uses @pdf-lib/fontkit to embed Roboto for Vietnamese text. Each row shows the session number, entry and exit times, plate and fee. The total appears below the rows.</p>
         </div>
       `,
       body_vi: `
         <div class="arch-card">
           <div class="arch-card-title">
-            <svg class="ic" style="width:16px;height:16px;color:var(--mint);"><use href="#i-server"/></svg>
-            <span>Phạm vi ứng dụng và luồng dữ liệu hiện có</span>
-          </div>
-          <p class="small" style="color:var(--text2);margin:0 0 12px;">Nguyên mẫu quản lý bãi xe trong trường gồm các màn hình xe vào/ra, sáu khu đỗ A–F, thanh toán và lịch sử phí, báo cáo sự cố, xử lý ngoại lệ tại cổng, giám sát trạng thái IoT, cấu hình và báo cáo đối soát. Các quy trình sử dụng dữ liệu demo.</p>
-          <table class="pin-table">
-            <thead><tr><th>Thành phần</th><th>Chức năng đã có</th><th>Nguồn trạng thái</th></tr></thead>
-            <tbody>
-              <tr><td><b>Frontend Next.js</b></td><td>Các trang React 19 / TypeScript và Tailwind CSS; menu và kiểm tra quyền trên giao diện</td><td>Thông tin người dùng demo và một số trạng thái vận hành trong localStorage</td></tr>
-              <tr><td><b>Máy chủ Express mock</b></td><td>13 trình xử lý HTTP: đăng nhập demo, khu/ô đỗ, xe vào/ra, tìm kiếm và báo cáo</td><td>Mảng tài khoản, sáu khu có 100 ô mỗi khu và dữ liệu báo cáo mô phỏng, lưu riêng trong bộ nhớ</td></tr>
-              <tr><td><b>API route Next.js</b></td><td>13 trình xử lý HTTP trong 12 tệp route cho khu/ô đỗ, xe vào/ra, số dư, thanh toán, lịch sử, biên lai, ưu đãi và trạng thái IoT</td><td>Dữ liệu trong bộ nhớ từ lib/parking-data.ts; khởi tạo sáu khu có 12 ô mỗi khu</td></tr>
-            </tbody>
-          </table>
-          <p class="muted small" style="margin:12px 0 0;">Các nguồn trạng thái demo này tách biệt. Bản đồ đọc khu đỗ từ localStorage hoặc dữ liệu khởi tạo. Hàm xác nhận trên màn hình xe vào/ra hiện ghi log thao tác, chưa gọi API check-in/out mô phỏng. Chưa có chuỗi đồng bộ cảm biến → cơ sở dữ liệu → WebSocket.</p>
-        </div>
-
-        <div class="arch-card">
-          <div class="arch-card-title">
             <svg class="ic" style="width:16px;height:16px;color:var(--mint);"><use href="#i-layers"/></svg>
-            <span>Sơ đồ 2D, chỉ đường và thanh toán mô phỏng</span>
+            <span>Số dư tài khoản và phí gửi xe còn nợ</span>
           </div>
-          <p class="small" style="color:var(--text2);margin:0 0 10px;">Bản đồ và màn hình chỉ đường được vẽ bằng SVG/CSS. Người dùng xem tình trạng khu đỗ, chọn ô trống và chạy mô phỏng tuyến đường. Điểm bắt đầu “GPS” và cổng vào đều dùng tọa độ cố định trên sơ đồ; chưa lấy vị trí thật của thiết bị và chưa render bằng React Leaflet.</p>
-          <p class="small" style="color:var(--text2);margin:0;">Luồng giao diện BKPay cho phép chọn phiên chưa thanh toán, kiểm tra số dư demo, cập nhật trạng thái trong bộ nhớ và tạo biên lai HTML để in hoặc lưu PDF. Thanh toán, đối soát và cảnh báo IoT đều mô phỏng; chưa kết nối cổng BKPay hoặc cảm biến bãi xe thật.</p>
+          <p class="small" style="color:var(--text2);margin:0 0 10px;">Trong dự án ParkWise của nhóm, tôi phụ trách ba màn hình của UC2 và các API Next.js phục vụ việc xem tài khoản, thanh toán và tra cứu lịch sử. Trang tổng quan hiển thị số dư và tổng phí còn nợ. Với dữ liệu mẫu, sáu lượt gửi xe có tổng phí 35.000 đồng trong khi tài khoản có 20.000 đồng, nên trang hiển thị cảnh báo thiếu tiền.</p>
+          <p class="small" style="color:var(--text2);margin:0;">Người dùng có thể chỉnh số dư mô phỏng trên trang tài khoản. Ở màn hình thanh toán, họ có thể thay đổi mức giảm từ 0% đến 100% cho những lượt chưa thanh toán thuộc diện ưu đãi.</p>
         </div>
 
         <div class="arch-card">
           <div class="arch-card-title">
-            <svg class="ic" style="width:16px;height:16px;color:var(--amber);"><use href="#i-award"/></svg>
-            <span>Năm nhóm tài khoản demo và quyền trên giao diện</span>
+            <svg class="ic" style="width:16px;height:16px;color:var(--mint);"><use href="#i-server"/></svg>
+            <span>Thanh toán các lượt gửi xe còn nợ</span>
           </div>
-          <table class="pin-table">
-            <thead><tr><th>Nhóm tài khoản demo</th><th>Quy trình giao diện chính</th></tr></thead>
-            <tbody>
-              <tr><td><b>Sinh viên</b></td><td>Tài khoản, thanh toán/lịch sử demo, chọn ô và mô phỏng chỉ đường, báo cáo sự cố</td></tr>
-              <tr><td><b>Giảng viên / Cán bộ</b></td><td>Tài khoản, thanh toán/lịch sử demo, bản đồ, chọn ô và mô phỏng chỉ đường, báo cáo sự cố; được gộp với Sinh viên thành người dùng nội bộ trên giao diện</td></tr>
-              <tr><td><b>Vận hành</b></td><td>Xe vào/ra, ticket sự cố, ngoại lệ tại cổng, trạng thái IoT và cấu hình khu đỗ</td></tr>
-              <tr><td><b>Ban quản lý</b></td><td>Chính sách giá, báo cáo phân tích/đối soát và tổng quan bãi đỗ</td></tr>
-              <tr><td><b>IT</b></td><td>Cấu hình tài khoản và nhóm quyền nội bộ</td></tr>
-            </tbody>
-          </table>
-          <p class="muted small" style="margin:12px 0 0;">Đăng nhập đối chiếu danh sách tài khoản viết sẵn và lưu thông tin người dùng vào localStorage. Kiểm tra quyền ở frontend chưa cung cấp phân quyền backend ở mức production hoặc cô lập dữ liệu từng người dùng tại cơ sở dữ liệu.</p>
+          <p class="small" style="color:var(--text2);margin:0 0 10px;">Màn hình thanh toán gửi toàn bộ lượt còn nợ trong một yêu cầu. API Next.js kiểm tra mã xác nhận cố định gồm sáu chữ số. Bộ xử lý thanh toán kiểm tra số dư và từ chối giao dịch nếu tài khoản không đủ tiền.</p>
+          <p class="small" style="color:var(--text2);margin:0;">Khi thanh toán thành công, hệ thống trừ tổng phí khỏi số dư và đánh dấu từng lượt đã thanh toán với cùng thời điểm và mã giao dịch. Luồng BKPay được mô phỏng. Tài khoản dùng chung và dữ liệu giao dịch nằm trong bộ nhớ máy chủ.</p>
         </div>
 
-        <div class="arch-card" style="margin-bottom:0;">
+        <div class="arch-card">
           <div class="arch-card-title">
-            <svg class="ic" style="width:16px;height:16px;color:var(--amber);"><use href="#i-server"/></svg>
-            <span>Tài liệu SQL và giới hạn triển khai hiện tại</span>
+            <svg class="ic" style="width:16px;height:16px;color:var(--mint);"><use href="#i-code"/></svg>
+            <span>Tra cứu lượt gửi xe và tải biên lai</span>
           </div>
-          <p class="small" style="color:var(--text2);margin:0 0 10px;">Repository có script schema và seed PostgreSQL cho zones, parking_slots, vehicles, parking_sessions, kèm khóa ngoại, ràng buộc trạng thái và index. Schema bật RLS nhưng các policy demo cho phép CRUD công khai với USING (true) / WITH CHECK (true). Chúng chưa áp dụng năm nhóm quyền trên giao diện; ứng dụng mock hiện chưa kết nối cơ sở dữ liệu này.</p>
-          <p class="muted small" style="margin:0;">Kết nối cơ sở dữ liệu thật, HCMUT SSO, phân quyền backend có xác thực, BKPay thật, phần cứng IoT và audit log bền vững vẫn là hướng phát triển. Trạng thái trình duyệt có thể bị xóa; dữ liệu trong bộ nhớ không được lưu bền vững.</p>
+          <p class="small" style="color:var(--text2);margin:0 0 10px;">Trang lịch sử liệt kê các lượt đã thanh toán. Người dùng có thể lọc theo khoảng ngày vào bãi và nhập một phần biển số để tìm xe, rồi tải biên lai cho từng lượt hoặc một biên lai chung cho tối đa mười lượt đầu tiên trong danh sách đã lọc.</p>
+          <p class="small" style="color:var(--text2);margin:0;">Máy chủ tạo biên lai bằng pdf-lib và dùng @pdf-lib/fontkit để nhúng phông Roboto cho nội dung tiếng Việt. Mỗi dòng ghi số thứ tự của lượt gửi xe, giờ vào và ra, biển số và mức phí. Tổng tiền nằm cuối biên lai.</p>
         </div>
       `
     }

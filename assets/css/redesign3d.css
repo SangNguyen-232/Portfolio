@@ -1,7 +1,7 @@
 /* =====================================================================
-   REDESIGN 3D LAYER — nạp SAU redesign.css
-   Mục tiêu: để nền 3D (#net) lộ rõ qua các thẻ kính, đồng bộ toàn diện
-   với ngôn ngữ bo mạch chủ vi xử lý & khoa học máy tính (Silicon Motherboard).
+   REDESIGN 3D LAYER — load AFTER redesign.css
+   Goal: reveal the 3D background (#net) through the glass cards and align
+   the entire layout with the processor and computer science theme (Silicon Motherboard).
    ===================================================================== */
 
 #aurora {
@@ -11,9 +11,9 @@
 .education-shell .edu.glass {
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
-} /* tránh blur lồng blur */
+} /* Avoid nested blur effects */
 
-/* Đánh số section theo chuẩn kiến trúc mạch vi điều khiển: 01 // … */
+/* Number sections in the style of microcontroller circuit diagrams: 01 // … */
 main { counter-reset: sec; }
 main > .section > .container > .sec-head { counter-increment: sec; }
 main > .section > .container > .sec-head .sec-title::before {
@@ -26,14 +26,14 @@ main > .section > .container > .sec-head .sec-title::before {
   text-shadow: 0 0 10px rgba(var(--amber-rgb), 0.5);
 }
 
-/* Hero: tên có lớp sáng neon nổi trên nền vi mạch 3D */
+/* Hero: add a neon glow to the name over the 3D circuit background */
 .hero-name {
   text-shadow: 0 0 40px rgba(var(--mint-rgb), 0.22), 0 0 80px rgba(var(--mint-rgb), 0.08);
 }
 
 /* =====================================================================
-   CÁC THẺ NỘI DUNG ĐÓNG VAI TRÒ VI MẠCH (IC CHIP SUB-SYSTEMS)
-   Liên kết không gian 3D thực với góc nghiêng (3D Preserve-3D & Z-Depth)
+   CONTENT CARDS ACT AS INTEGRATED CIRCUITS (IC CHIP SUB-SYSTEMS)
+   Connect true 3D space with tilt effects (Preserve-3D & Z-Depth)
    ===================================================================== */
 
 .pcard,
@@ -44,13 +44,14 @@ main > .section > .container > .sec-head .sec-title::before {
 .term,
 .eng-card,
 .chat,
+.profile,
 .contact-card {
   transform-style: preserve-3d;
   will-change: transform;
   position: relative;
 }
 
-/* Dấu căn tọa độ Silkscreen vi mạch PCB (+) ở góc thẻ */
+/* PCB silkscreen alignment marks (+) at card corners */
 .pcard::before,
 .skill::before,
 .term::before,
@@ -68,7 +69,7 @@ main > .section > .container > .sec-head .sec-title::before {
   transition: color 0.3s var(--ease), text-shadow 0.3s var(--ease);
 }
 
-/* Tầng chiều sâu Z-Space khi rê chuột nghiêng 3D (Layered Microarchitecture) */
+/* Z-depth layers during pointer-driven 3D tilt (Layered Microarchitecture) */
 .tilting .pcard-icon,
 .tilting .skill-icon,
 .tilting .pcard-top,
@@ -93,7 +94,7 @@ main > .section > .container > .sec-head .sec-title::before {
   transition: transform 0.18s ease-out;
 }
 
-/* Trạng thái vi mạch được chọn qua đường Bus (/CS Chip Select Active) */
+/* Chip selected through the bus (/CS Chip Select Active) */
 .chip-active {
   border-color: rgba(var(--mint-rgb), 0.55) !important;
   box-shadow: 0 20px 48px -14px rgba(0, 0, 0, 0.75), 0 0 30px -6px rgba(var(--mint-rgb), 0.32) !important;
@@ -109,7 +110,7 @@ main > .section > .container > .sec-head .sec-title::before {
   text-shadow: 0 0 8px rgba(var(--amber-rgb), 0.9);
 }
 
-/* Cổng chân hàn Pin Header phát quang ở mép vi mạch tiếp xúc với bus */
+/* Glowing pin header at the chip edge where it connects to the bus */
 .pcard.chip-active::after,
 .skill.chip-active::after,
 .tl-card.chip-active::after {
@@ -131,7 +132,7 @@ main > .section > .container > .sec-head .sec-title::before {
   100% { opacity: 1; transform: scaleY(1.1); box-shadow: 0 0 20px var(--amber), 0 0 6px #ffffff; }
 }
 
-/* Thiết bị yếu / cảm ứng: bỏ blur để giữ FPS cao nhất cho canvas 3D */
+/* Low-powered / touch devices: disable blur to maximize the 3D canvas frame rate */
 @media (max-width: 700px), (pointer: coarse) {
   .glass {
     backdrop-filter: none;
