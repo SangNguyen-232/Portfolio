@@ -46,10 +46,10 @@ window.TerminalEngine = (() => {
     if (!cmd1 || !out1 || !out1t || !cmd2 || !out2 || !out2t) return;
     bootStarted = true;
 
-    const command1Str = 'idf.py build && esptool.py flash_id';
+    const command1Str = 'pio run -e yolo_uno';
     const output1Str = 'ESP32-S3 (Xtensa LX7 dual-core, 240MHz) • Flash: 8MB QIO';
     const command2Str = 'freertos --status-all';
-    const output2Str = '7 tasks active • TinyML: 0.84ms latency • Heap: 284KB free';
+    const output2Str = '7 application tasks • DHT20 every 5 s • INT8 forecast at +30 s';
 
     const finishBoot = () => {
       clearTimeout(bootTimeout);
@@ -124,8 +124,8 @@ window.TerminalEngine = (() => {
 
     const commandOutputs = {
       help: 'Commands: [freertos -t] tasks  [tinyml --infer] inference  [fpga --fsm] LCD FSM  [clear] reset',
-      tasks: 'FreeRTOS: temp_humi_monitor, tiny_ml_task, task_pump, task_database, Task_Toogle_BOOT, led_blinky, neo_blinky • 7 simulated tasks',
-      tinyml: '[TFLite Micro] Temp=28.7°C Hum=72% Soil=41% -> CLASS: NORMAL (Risk: 11%, Latency: 0.82ms)',
+      tasks: 'FreeRTOS: temp_humi_monitor, tiny_ml_task, task_fan, task_database, Task_Toggle_BOOT, led_blinky, neo_blinky • 7 simulated tasks',
+      tinyml: '[INT8 demo] 7 rising samples → 28.5°C / 71% RH • fan=OFF • forecast at +30 s: ON',
       fpga: 'LCD_display FSM (illustration): INIT -> DISPLAY_ON -> CLEAR_ON -> SET_CURSOR1 -> WRITE_LINE1 -> SET_CURSOR2 -> WRITE_LINE2 -> IDLE -> CHECK_UPDATE -> CLEAR_ON (refresh loop)'
     };
 

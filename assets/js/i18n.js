@@ -42,22 +42,22 @@ window.PortfolioData = (() => {
       'hero.greet': 'Hi, I am',
       'hero.name': 'Nguyen Van Sang',
       'hero.title': 'Embedded Software Engineer — Fresher',
-      "hero.tagline": "Computer Engineering student at HCMUT. I work on ESP32-S3 firmware with FreeRTOS and TinyML, Verilog RTL for an FPGA vending prototype, and IoT backends that collect sensor data in the cloud.",
+      "hero.tagline": "Computer Engineering student at HCMUT. I work on ESP32-S3 firmware with FreeRTOS and TinyML, Verilog RTL for an FPGA vending prototype, and IoT backends that store sensor history.",
       'hero.cta1': 'View projects',
       'hero.cta2': 'Contact me',
       'stats.s1': 'Projects on GitHub',
-      'stats.s2': 'FreeRTOS tasks in one firmware',
-      'stats.s3': 'Synthetic training samples',
-      'stats.s4': 'TinyML inference time',
+      'stats.s2': 'Application tasks on ESP32-S3',
+      'stats.s3': 'Simulated training episodes',
+      'stats.s4': 'Forecast horizon',
       'about.title': 'Professional Summary',
       'about.sub': 'Who I am and what I work on',
       'about.userPrompt': "Tell me more about Sang",
       'about.regen': 'Regenerate',
-      "about.streamText": "Nguyen Van Sang is a Computer Engineering student at Ho Chi Minh City University of Technology (HCMUT), focused on embedded systems and IoT. He has written FreeRTOS firmware for the ESP32-S3, run a TinyML model on a microcontroller, developed Verilog RTL for an FPGA vending prototype with an LCD controller FSM, and built a backend that collects sensor data. In summer 2026 he interned on IoT sensor solutions at Viettel Dak Lak. He is looking for a Fresher Embedded Software Engineer role where he can learn from experienced engineers and ship firmware that runs on real hardware.",
+      "about.streamText": "Nguyen Van Sang is a Computer Engineering student at Ho Chi Minh City University of Technology (HCMUT), focused on embedded systems and IoT. He has written FreeRTOS firmware for the ESP32-S3, integrated a TinyML forecast into its fan controller, developed Verilog RTL for an FPGA vending prototype with an LCD controller FSM, and built a backend that collects sensor data. In summer 2026 he interned on IoT sensor solutions at Viettel Dak Lak. He is looking for a Fresher Embedded Software Engineer role where he can learn from experienced engineers and ship firmware that runs on real hardware.",
       'do.d1.title': 'Firmware & RTOS',
-      'do.d1.desc': 'Concurrent firmware for ESP32 and ESP32-S3 on FreeRTOS: tasks, queues, mutexes and event groups, with drivers for I2C, GPIO and UART.',
+      'do.d1.desc': 'I use FreeRTOS tasks, mutexes and notifications to share sensor readings and coordinate the fan relay, display and network uploads on an ESP32-S3.',
       'do.d2.title': 'Edge AI & TinyML',
-      'do.d2.desc': 'A small TensorFlow Lite Micro classifier running on the microcontroller, with a hardware interlock so the pump relay only switches on when conditions allow.',
+      'do.d2.desc': 'I use TensorFlow Lite Micro to forecast temperature and humidity bands on the ESP32-S3. The fan controller checks each forecast against the latest readings before acting.',
       'do.d3.title': 'FPGA & Digital Design',
       "do.d3.desc": "Verilog RTL for a vending prototype targeting Digilent Arty-Z7-20: User/Admin logic, an LCD controller state machine, button debounce and board pin/clock constraints for Vivado.",
       'exp.title': 'Experience',
@@ -70,10 +70,17 @@ window.PortfolioData = (() => {
       'exp.b3': 'Built an IoT sensor solution that sends hardware readings to a cloud backend and logs them.',
       'proj.title': 'Projects',
       'proj.sub': 'Embedded, FPGA and full-stack work, each with source code on GitHub',
-      'proj.p1.title': 'Smart Agriculture Monitoring System',
-      'proj.p1.b1': 'Wrote FreeRTOS firmware for the ESP32-S3 with 7 tasks (sensor sampling, TinyML inference, pump relay, logging, reset button, status LED) that share state through a semaphore-protected context, across I2C, GPIO and the network.',
-      'proj.p1.b2': 'Ran a float32 TensorFlow Lite Micro model that classifies temperature, humidity and soil moisture into 3 risk levels in under 1 ms per inference, with hardware interlocks on the pump.',
-      'proj.p1.b3': 'Added a Wi-Fi access-point fallback with known networks saved in LittleFS, and streamed telemetry over HTTP/WebSocket to a Node.js and PostgreSQL dashboard running in Docker.',
+      'proj.p1.title': 'Smart Environmental Monitoring System',
+      'proj.p1.context': 'Jul – Nov 2026 · Individual project',
+      'proj.p1.relay': 'Fan relay',
+      'proj.p1.mode': 'Fan control',
+      'proj.p1.metaModel': 'INT8 model · 5,536 bytes',
+      'proj.p1.metaScore': '87.28% accuracy on 3,600 synthetic test episodes',
+      'proj.p1.stage': 'Embedded system',
+      'proj.p1.stack': 'Tech stack',
+      'proj.p1.b1': 'Built ESP32-S3 firmware that samples air temperature and humidity every five seconds, displays the readings on an LCD and controls a ventilation fan. A separate probe measures soil moisture.',
+      'proj.p1.b2': 'Integrated an INT8 model that uses seven readings and the sampled fan command to forecast the OFF, HOLD or ON band 30 seconds ahead. In AI mode, a rising trend can trigger ventilation before a threshold is crossed.',
+      'proj.p1.b3': 'Built a live WebSocket dashboard on the board and an Express API that stores HTTP uploads in PostgreSQL for multi-device history.',
       "proj.p2.title": "FPGA Vending Machine Prototype",
       "proj.p2.b1": "Developed Verilog RTL for a 4-product vending prototype targeting Digilent Arty-Z7-20, with separate User and Admin modes.",
       "proj.p2.b2": "Implemented button-based credit (+5/+10), quantity selection, stock checks and balance deduction; Admin mode adjusts prices and restocks products.",
@@ -89,8 +96,8 @@ window.PortfolioData = (() => {
       "proj.p3.stage": "Software prototype",
       'proj.inspect': 'System architecture',
       'proj.m1': 'FreeRTOS tasks',
-      'proj.m2': 'TinyML inference',
-      'proj.m3': 'training samples',
+      'proj.m2': 'Sampling interval',
+      'proj.m3': 'Forecast horizon',
       "proj.inspectFSM": "RTL & LCD controller",
       'skills.title': 'Technical Skills',
       'skills.sub': 'Tools and technologies I have used in the projects below',
@@ -162,22 +169,22 @@ window.PortfolioData = (() => {
       'hero.greet': 'Xin chào, tôi là',
       'hero.name': 'Nguyễn Văn Sang',
       'hero.title': 'Kỹ sư Phần mềm Nhúng — Fresher',
-      "hero.tagline": "Sinh viên Kỹ thuật Máy tính tại ĐH Bách khoa TP.HCM. Tôi phát triển firmware ESP32-S3 với FreeRTOS và TinyML, RTL Verilog cho nguyên mẫu máy bán hàng trên FPGA và backend IoT thu thập dữ liệu cảm biến lên cloud.",
+      "hero.tagline": "Sinh viên Kỹ thuật Máy tính tại ĐH Bách khoa TP.HCM. Tôi phát triển firmware ESP32-S3 với FreeRTOS và TinyML, RTL Verilog cho nguyên mẫu máy bán hàng trên FPGA và backend IoT lưu lịch sử số đo cảm biến.",
       'hero.cta1': 'Xem dự án',
       'hero.cta2': 'Liên hệ',
       'stats.s1': 'Dự án có mã nguồn trên GitHub',
-      'stats.s2': 'Tác vụ FreeRTOS trong một firmware',
-      'stats.s3': 'Mẫu dữ liệu huấn luyện tổng hợp',
-      'stats.s4': 'Thời gian suy luận TinyML',
+      'stats.s2': 'Tác vụ ứng dụng trên ESP32-S3',
+      'stats.s3': 'Kịch bản mô phỏng để huấn luyện',
+      'stats.s4': 'Khoảng thời gian dự báo',
       'about.title': 'Tóm Tắt Chuyên Môn',
       'about.sub': 'Giới thiệu ngắn về tôi và hướng chuyên môn',
       'about.userPrompt': 'Hãy giới thiệu về Sang',
       'about.regen': 'Phát lại',
-      "about.streamText": "Nguyễn Văn Sang là sinh viên Kỹ thuật Máy tính tại Trường Đại học Bách khoa – ĐHQG-HCM, tập trung vào hệ thống nhúng và IoT. Anh đã viết firmware FreeRTOS cho ESP32-S3, chạy mô hình TinyML trên vi điều khiển, phát triển RTL Verilog cho nguyên mẫu máy bán hàng trên FPGA với FSM điều khiển LCD và xây dựng backend thu thập dữ liệu cảm biến. Mùa hè năm 2026, anh thực tập về giải pháp cảm biến IoT tại Viettel Đắk Lắk. Anh đang tìm vị trí Fresher Embedded Software Engineer để học hỏi từ các kỹ sư giàu kinh nghiệm và làm ra firmware chạy trên phần cứng thật.",
+      "about.streamText": "Nguyễn Văn Sang là sinh viên Kỹ thuật Máy tính tại Trường Đại học Bách khoa – ĐHQG-HCM, tập trung vào hệ thống nhúng và IoT. Anh đã viết firmware FreeRTOS cho ESP32-S3, tích hợp mô hình dự báo TinyML vào bộ điều khiển quạt, phát triển RTL Verilog cho nguyên mẫu máy bán hàng trên FPGA với FSM điều khiển LCD và xây dựng backend thu thập dữ liệu cảm biến. Mùa hè năm 2026, anh thực tập về giải pháp cảm biến IoT tại Viettel Đắk Lắk. Anh đang tìm vị trí Fresher Embedded Software Engineer để học hỏi từ các kỹ sư giàu kinh nghiệm và làm ra firmware chạy trên phần cứng thật.",
       'do.d1.title': 'Firmware & RTOS',
-      'do.d1.desc': 'Firmware đa nhiệm cho ESP32 và ESP32-S3 trên FreeRTOS: task, queue, mutex, event group, kèm driver cho I2C, GPIO và UART.',
+      'do.d1.desc': 'Tôi dùng tác vụ FreeRTOS, mutex và thông báo giữa các tác vụ để chia sẻ số đo cảm biến, điều khiển rơ-le quạt, cập nhật màn hình và gửi dữ liệu trên ESP32-S3.',
       'do.d2.title': 'Edge AI & TinyML',
-      'do.d2.desc': 'Mô hình TensorFlow Lite Micro nhỏ chạy trực tiếp trên vi điều khiển, kèm khóa an toàn phần cứng để rơ-le bơm chỉ bật khi điều kiện cho phép.',
+      'do.d2.desc': 'Tôi dùng TensorFlow Lite Micro trên ESP32-S3 để dự báo nhiệt độ và độ ẩm sẽ nằm trong vùng ngưỡng nào. Bộ điều khiển quạt đối chiếu dự báo với số đo mới nhất trước khi ra lệnh.',
       'do.d3.title': 'FPGA & Thiết kế số',
       "do.d3.desc": "RTL Verilog cho nguyên mẫu máy bán hàng hướng tới bo Digilent Arty-Z7-20: logic User/Admin, FSM điều khiển LCD, chống dội nút nhấn và ràng buộc chân/xung nhịp cho Vivado.",
       'exp.title': 'Kinh Nghiệm',
@@ -190,10 +197,17 @@ window.PortfolioData = (() => {
       'exp.b3': 'Xây dựng giải pháp cảm biến IoT gửi dữ liệu từ phần cứng lên backend cloud và lưu nhật ký.',
       'proj.title': 'Dự Án',
       'proj.sub': 'Dự án nhúng, FPGA và full-stack, đều có mã nguồn trên GitHub',
-      'proj.p1.title': 'Hệ thống giám sát nông nghiệp thông minh',
-      'proj.p1.b1': 'Viết firmware FreeRTOS cho ESP32-S3 gồm 7 task (đọc cảm biến, suy luận TinyML, rơ-le bơm, ghi log, nút reset, LED trạng thái) dùng chung trạng thái qua semaphore, giao tiếp I2C, GPIO và mạng.',
-      'proj.p1.b2': 'Chạy mô hình float32 TensorFlow Lite Micro phân loại nhiệt độ, độ ẩm và độ ẩm đất thành 3 mức rủi ro, mỗi lần suy luận dưới 1 ms, kèm khóa an toàn phần cứng cho máy bơm.',
-      'proj.p1.b3': 'Thêm chế độ Wi-Fi access point dự phòng, lưu các mạng đã biết trong LittleFS, và truyền telemetry qua HTTP/WebSocket tới dashboard Node.js + PostgreSQL chạy trong Docker.',
+      'proj.p1.title': 'Hệ thống giám sát môi trường thông minh',
+      'proj.p1.context': '07 – 11/2026 · Dự án cá nhân',
+      'proj.p1.relay': 'Rơ-le quạt',
+      'proj.p1.mode': 'Điều khiển quạt',
+      'proj.p1.metaModel': 'Mô hình INT8 · 5.536 byte',
+      'proj.p1.metaScore': 'Dự báo đúng 87,28% trên 3.600 kịch bản kiểm thử mô phỏng',
+      'proj.p1.stage': 'Hệ thống nhúng',
+      'proj.p1.stack': 'Công nghệ',
+      'proj.p1.b1': 'Thiết kế firmware ESP32-S3 để đọc nhiệt độ và độ ẩm không khí mỗi 5 giây, hiển thị số đo trên LCD và điều khiển quạt thông gió. Một đầu dò riêng đo độ ẩm đất.',
+      'proj.p1.b2': 'Tích hợp mô hình INT8 dùng bảy lần đọc cảm biến và lệnh quạt tại thời điểm lấy mẫu để dự báo vùng OFF, HOLD hoặc ON sau 30 giây. Ở chế độ AI, bộ điều khiển có thể bật quạt sớm khi dự báo cho thấy sắp vượt ngưỡng.',
+      'proj.p1.b3': 'Xây dựng bảng theo dõi trực tiếp trên bo mạch qua WebSocket và API Express nhận dữ liệu qua HTTP để lưu lịch sử của nhiều thiết bị vào PostgreSQL.',
       "proj.p2.title": "Nguyên mẫu máy bán hàng tự động trên FPGA",
       "proj.p2.b1": "Phát triển RTL Verilog cho nguyên mẫu máy bán hàng gồm 4 loại sản phẩm, hướng tới bo Digilent Arty-Z7-20, có hai chế độ User và Admin.",
       "proj.p2.b2": "Mô phỏng nạp số dư bằng nút nhấn (+5/+10), chọn số lượng, kiểm tra tồn kho và trừ tiền; Admin điều chỉnh giá và bổ sung hàng.",
@@ -209,8 +223,8 @@ window.PortfolioData = (() => {
       "proj.p3.stage": "Nguyên mẫu phần mềm",
       'proj.inspect': 'Kiến trúc hệ thống',
       'proj.m1': 'tác vụ FreeRTOS',
-      'proj.m2': 'suy luận TinyML',
-      'proj.m3': 'mẫu huấn luyện',
+      'proj.m2': 'chu kỳ lấy mẫu',
+      'proj.m3': 'tầm dự báo',
       "proj.inspectFSM": "RTL & bộ điều khiển LCD",
       'skills.title': 'Kỹ Năng Chuyên Môn',
       'skills.sub': 'Công cụ và công nghệ tôi đã dùng trong các dự án bên dưới',
@@ -253,104 +267,78 @@ window.PortfolioData = (() => {
 
   const modalContentData = {
     'modal-proj1': {
-      title_en: 'Smart Agriculture System — System Architecture',
-      title_vi: 'Hệ thống Nông nghiệp Thông minh — Kiến trúc Hệ thống',
-      sub_en: 'ESP32-S3 Dual-Core · 7-Task FreeRTOS Concurrency · TinyML Edge AI',
-      sub_vi: 'ESP32-S3 Dual-Core · 7 Tác vụ FreeRTOS Đồng thời · TinyML Biên',
+      title_en: 'Air monitoring and fan control',
+      title_vi: 'Giám sát môi trường và điều khiển quạt',
+      sub_en: 'Yolo Uno ESP32-S3 · FreeRTOS · TensorFlow Lite Micro',
+      sub_vi: 'Yolo Uno ESP32-S3 · FreeRTOS · TensorFlow Lite Micro',
       body_en: `
         <div class="arch-card">
-          <div class="arch-card-title">
-            <svg class="ic" style="width:16px;height:16px;color:var(--mint);"><use href="#i-layers"/></svg>
-            <span>FreeRTOS tasks and how they communicate</span>
+          <div class="arch-card-title"><svg class="ic"><use href="#i-layers"/></svg><span>From air sample to relay command</span></div>
+          <div class="arch-pipeline air-monitor-flow">
+            <div class="arch-step"><b>temp_humi_monitor</b><span>DHT20 reading every 5 s</span></div>
+            <span class="arch-sep" aria-hidden="true">➔</span>
+            <div class="arch-step"><b>tiny_ml_task</b><span>Seven samples → forecast at +30 s</span></div>
+            <span class="arch-sep" aria-hidden="true">➔</span>
+            <div class="arch-step"><b>task_fan</b><span>Apply the control policy to GPIO10</span></div>
           </div>
-          <div class="arch-pipeline">
-            <div class="arch-step"><b>temp_humi_monitor</b><span>DHT20 and soil moisture readings</span></div>
-            <span class="arch-sep">➔</span>
-            <div class="arch-step"><b>SharedContext</b><span>Mutex-protected sensor state</span></div>
-            <span class="arch-sep">➔</span>
-            <div class="arch-step"><b>tiny_ml_task</b><span>TFLite Micro inference</span></div>
-            <span class="arch-sep">➔</span>
-            <div class="arch-step"><b>SharedContext</b><span>Sensor readings and risk level</span></div>
-            <span class="arch-sep">➔</span>
-            <div class="arch-step"><b>task_pump</b><span>Safety interlocks and relay control</span></div>
-          </div>
-          <p class="muted small" style="margin:0;">Sensor, inference and pump tasks exchange state through a mutex-protected SharedContext. Binary semaphores notify LED and database tasks when updates are needed.</p>
+          <p class="small">The tasks exchange timestamped readings and forecasts through a mutex-protected <code>SharedContext</code>. AUTO uses the saved temperature and humidity thresholds. SHADOW records the forecast while AUTO rules drive the relay. AI can start the fan early between thresholds when the profile matches and the ON score reaches 0.80. Stale or invalid air readings force the relay off in automatic modes.</p>
         </div>
-
         <div class="arch-card">
-          <div class="arch-card-title">
-            <svg class="ic" style="width:16px;height:16px;color:var(--amber);"><use href="#i-chip"/></svg>
-            <span>Pin and peripheral allocation</span>
-          </div>
+          <div class="arch-card-title"><svg class="ic"><use href="#i-chip"/></svg><span>Board connections</span></div>
           <table class="pin-table">
-            <thead>
-              <tr><th>Pin</th><th>Peripheral</th><th>Device Interface</th><th>Operating Mode</th></tr>
-            </thead>
+            <thead><tr><th scope="col">Pin or interface</th><th scope="col">Component</th><th scope="col">Role</th></tr></thead>
             <tbody>
-              <tr><td><b>GPIO 11</b></td><td>I2C SDA</td><td>DHT20 temperature / humidity sensor</td><td>Sensor data</td></tr>
-              <tr><td><b>GPIO 12</b></td><td>I2C SCL</td><td>DHT20 sensor clock</td><td>I2C clock</td></tr>
-              <tr><td><b>GPIO 2</b></td><td>ADC1_CH1</td><td>Soil moisture probe</td><td>Analog input</td></tr>
-              <tr><td><b>GPIO 6</b></td><td>Digital Out</td><td>Pump relay control</td><td>Output with safety interlocks</td></tr>
-              <tr><td><b>GPIO 0</b></td><td>Polled input</td><td>BOOT button / Wi-Fi setup</td><td>Hold for more than 2 seconds</td></tr>
-              <tr><td><b>TXD0/RXD0</b></td><td>UART0</td><td>Firmware Diagnostics Shell</td><td>115200 Baud 8N1</td></tr>
+              <tr><td>GPIO11 / GPIO12</td><td>I2C SDA / SCL</td><td>Shared bus for the DHT20 and 16×2 LCD (0x27)</td></tr>
+              <tr><td>GPIO2</td><td>Soil probe (ADC)</td><td>Independent moisture reading for display and history</td></tr>
+              <tr><td>GPIO10</td><td>Fan relay</td><td>Active-high output to the fan driver</td></tr>
+              <tr><td>GPIO48 / GPIO45</td><td>LED / NeoPixel</td><td>Indicate temperature and humidity bands, respectively</td></tr>
+              <tr><td>GPIO0</td><td>BOOT button</td><td>Hold for more than 2 s to reset saved settings</td></tr>
+              <tr><td>USB CDC</td><td>Serial monitor</td><td>Firmware log at 115200 baud</td></tr>
             </tbody>
           </table>
         </div>
-
-        <div class="arch-card" style="margin-bottom:0;">
-          <div class="arch-card-title">
-            <svg class="ic" style="width:16px;height:16px;color:var(--cyan);"><use href="#i-server"/></svg>
-            <span>Wi-Fi fallback and cloud telemetry</span>
-          </div>
-          <p class="small" style="color:var(--text2);margin:0 0 8px;">If none of the saved Wi-Fi networks is available, the ESP32-S3 starts its own access point and serves a setup page. Known networks are stored in LittleFS. Once connected, it streams telemetry over HTTP/WebSocket to a Node.js and PostgreSQL dashboard running in Docker.</p>
+        <div class="arch-card">
+          <div class="arch-card-title"><svg class="ic"><use href="#i-sparkle"/></svg><span>What the model predicts</span></div>
+          <p class="small">The eight inputs describe air temperature, relative humidity, their recent trends and the fan command at sampling. The INT8 model predicts the OFF, HOLD or ON band 30 seconds ahead, assuming that command persists. On 3,600 held-out synthetic episodes, the desktop reference scored 87.28%, compared with 82.94% for linear extrapolation. Field accuracy and board latency require measurements on the physical setup. <a href="https://github.com/SangNguyen-232/IoT-Env-Monitor/blob/project_linux/ml/models/fan_model_manifest.json" target="_blank" rel="noopener">Model evaluation results</a></p>
+        </div>
+        <div class="arch-card">
+          <div class="arch-card-title"><svg class="ic"><use href="#i-server"/></svg><span>Local control and device history</span></div>
+          <p class="small">If the configured Wi-Fi network is unavailable, the board opens a setup access point. LittleFS stores its network settings. On the LAN, the browser receives live readings from the board over WebSocket. Separately, the board sends HTTP POST requests to <code>/sensor</code> on the Express backend, which writes to PostgreSQL. The central dashboard polls the backend. Remote access can use an optional Cloudflare gateway.</p>
         </div>
       `,
       body_vi: `
         <div class="arch-card">
-          <div class="arch-card-title">
-            <svg class="ic" style="width:16px;height:16px;color:var(--mint);"><use href="#i-layers"/></svg>
-            <span>Các task FreeRTOS và cách chúng giao tiếp</span>
+          <div class="arch-card-title"><svg class="ic"><use href="#i-layers"/></svg><span>Từ số đo không khí đến lệnh rơ-le</span></div>
+          <div class="arch-pipeline air-monitor-flow">
+            <div class="arch-step"><b>temp_humi_monitor</b><span>Đọc DHT20 mỗi 5 giây</span></div>
+            <span class="arch-sep" aria-hidden="true">➔</span>
+            <div class="arch-step"><b>tiny_ml_task</b><span>Dùng bảy mẫu để dự báo trước 30 giây</span></div>
+            <span class="arch-sep" aria-hidden="true">➔</span>
+            <div class="arch-step"><b>task_fan</b><span>Áp dụng quy tắc điều khiển lên GPIO10</span></div>
           </div>
-          <div class="arch-pipeline">
-            <div class="arch-step"><b>temp_humi_monitor</b><span>Đọc DHT20 và độ ẩm đất</span></div>
-            <span class="arch-sep">➔</span>
-            <div class="arch-step"><b>SharedContext</b><span>Dữ liệu cảm biến được bảo vệ bằng mutex</span></div>
-            <span class="arch-sep">➔</span>
-            <div class="arch-step"><b>tiny_ml_task</b><span>Suy luận TFLite Micro</span></div>
-            <span class="arch-sep">➔</span>
-            <div class="arch-step"><b>SharedContext</b><span>Dữ liệu cảm biến và mức rủi ro</span></div>
-            <span class="arch-sep">➔</span>
-            <div class="arch-step"><b>task_pump</b><span>Khóa an toàn và điều khiển rơ-le</span></div>
-          </div>
-          <p class="muted small" style="margin:0;">Các task cảm biến, suy luận và điều khiển bơm trao đổi trạng thái qua SharedContext được bảo vệ bằng mutex. Semaphore nhị phân thông báo cho các task LED và cơ sở dữ liệu khi cần cập nhật.</p>
+          <p class="small">Các tác vụ trao đổi số đo có dấu thời gian và kết quả dự báo qua <code>SharedContext</code> được bảo vệ bằng mutex. AUTO dùng ngưỡng nhiệt độ và độ ẩm đã lưu. SHADOW ghi lại dự báo trong khi quy tắc AUTO điều khiển rơ-le. AI có thể bật quạt sớm khi số đo nằm giữa hai ngưỡng, cấu hình khớp với mô hình và điểm ON đạt ít nhất 0,80. Ở các chế độ tự động, bộ điều khiển tắt rơ-le khi số đo không khí quá cũ hoặc không hợp lệ.</p>
         </div>
-
         <div class="arch-card">
-          <div class="arch-card-title">
-            <svg class="ic" style="width:16px;height:16px;color:var(--amber);"><use href="#i-chip"/></svg>
-            <span>Phân bổ chân và ngoại vi</span>
-          </div>
+          <div class="arch-card-title"><svg class="ic"><use href="#i-chip"/></svg><span>Kết nối trên bo mạch</span></div>
           <table class="pin-table">
-            <thead>
-              <tr><th>Chân</th><th>Ngoại vi</th><th>Giao tiếp Thiết bị</th><th>Chế độ hoạt động</th></tr>
-            </thead>
+            <thead><tr><th scope="col">Chân hoặc giao tiếp</th><th scope="col">Thành phần</th><th scope="col">Chức năng</th></tr></thead>
             <tbody>
-              <tr><td><b>GPIO 11</b></td><td>I2C SDA</td><td>Cảm biến nhiệt độ / độ ẩm DHT20</td><td>Dữ liệu cảm biến</td></tr>
-              <tr><td><b>GPIO 12</b></td><td>I2C SCL</td><td>Xung nhịp cảm biến DHT20</td><td>Xung nhịp I2C</td></tr>
-              <tr><td><b>GPIO 2</b></td><td>ADC1_CH1</td><td>Cảm biến độ ẩm đất</td><td>Đầu vào tương tự</td></tr>
-              <tr><td><b>GPIO 6</b></td><td>Digital Out</td><td>Điều khiển rơ-le máy bơm</td><td>Đầu ra có khóa an toàn</td></tr>
-              <tr><td><b>GPIO 0</b></td><td>Đọc nút theo chu kỳ</td><td>Nút BOOT / Cấu hình Wi-Fi</td><td>Giữ hơn 2 giây</td></tr>
-              <tr><td><b>TXD0/RXD0</b></td><td>UART0</td><td>Console Nhật ký & Gỡ lỗi Firmware</td><td>115200 Baud 8N1</td></tr>
+              <tr><td>GPIO11 / GPIO12</td><td>I2C SDA / SCL</td><td>Bus chung cho DHT20 và LCD 16×2 (0x27)</td></tr>
+              <tr><td>GPIO2</td><td>Đầu dò độ ẩm đất (ADC)</td><td>Đo riêng để hiển thị và lưu lịch sử</td></tr>
+              <tr><td>GPIO10</td><td>Rơ-le quạt</td><td>Mức cao kích hoạt mạch điều khiển quạt</td></tr>
+              <tr><td>GPIO48 / GPIO45</td><td>LED / NeoPixel</td><td>Lần lượt báo vùng nhiệt độ và độ ẩm</td></tr>
+              <tr><td>GPIO0</td><td>Nút BOOT</td><td>Giữ hơn 2 giây để xóa cấu hình đã lưu</td></tr>
+              <tr><td>USB CDC</td><td>Cổng nối tiếp</td><td>Đọc nhật ký firmware ở 115200 baud</td></tr>
             </tbody>
           </table>
         </div>
-
-        <div class="arch-card" style="margin-bottom:0;">
-          <div class="arch-card-title">
-            <svg class="ic" style="width:16px;height:16px;color:var(--cyan);"><use href="#i-server"/></svg>
-            <span>Wi-Fi dự phòng và telemetry lên cloud</span>
-          </div>
-          <p class="small" style="color:var(--text2);margin:0 0 8px;">Nếu không có mạng Wi-Fi nào đã lưu khả dụng, ESP32-S3 tự phát access point riêng và mở trang cấu hình. Các mạng đã biết được lưu trong LittleFS. Khi đã kết nối, thiết bị truyền telemetry qua HTTP/WebSocket tới dashboard Node.js + PostgreSQL chạy trong Docker.</p>
+        <div class="arch-card">
+          <div class="arch-card-title"><svg class="ic"><use href="#i-sparkle"/></svg><span>Mô hình dự báo điều gì?</span></div>
+          <p class="small">Tám đầu vào mô tả nhiệt độ, độ ẩm không khí, xu hướng gần đây và lệnh quạt lúc lấy mẫu. Mô hình INT8 dự báo vùng OFF, HOLD hoặc ON sau 30 giây với giả định lệnh quạt giữ nguyên. Trên 3.600 kịch bản mô phỏng dành riêng cho kiểm thử, mô hình tham chiếu chạy trên máy tính dự báo đúng 87,28%, so với 82,94% của phép ngoại suy tuyến tính. Độ chính xác thực địa và thời gian suy luận trên bo mạch cần được đo trên thiết bị thật. <a href="https://github.com/SangNguyen-232/IoT-Env-Monitor/blob/project_linux/ml/models/fan_model_manifest.json" target="_blank" rel="noopener">Kết quả đánh giá mô hình</a></p>
+        </div>
+        <div class="arch-card">
+          <div class="arch-card-title"><svg class="ic"><use href="#i-server"/></svg><span>Điều khiển tại chỗ và lưu lịch sử thiết bị</span></div>
+          <p class="small">Khi mạng Wi-Fi đã cấu hình không khả dụng, bo mạch mở điểm truy cập để thiết lập lại. Cấu hình mạng được lưu trong LittleFS. Trên mạng LAN, trình duyệt nhận số đo trực tiếp từ bo mạch qua WebSocket. Một luồng riêng gửi dữ liệu bằng HTTP POST đến <code>/sensor</code> của backend Express để lưu vào PostgreSQL. Trang quản lý định kỳ lấy dữ liệu từ backend. Có thể dùng cổng Cloudflare để truy cập từ xa.</p>
         </div>
       `
     },
@@ -523,6 +511,10 @@ window.PortfolioData = (() => {
     if (langToggle) {
       langToggle.dataset.lang = lang;
     }
+
+    document.querySelectorAll('.count[data-to]').forEach((counter) => {
+      counter.textContent = Number(counter.dataset.to).toLocaleString(lang);
+    });
 
     const dict = i18n[lang];
     document.querySelectorAll('[data-i18n]').forEach((el) => {

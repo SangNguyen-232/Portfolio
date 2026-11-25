@@ -334,7 +334,7 @@
             </div>
           </div>
 
-          <p class="hero-tagline reveal" style="--d:.3s" data-i18n="hero.tagline">Computer Engineering student at HCMUT. I work on ESP32-S3 firmware with FreeRTOS and TinyML, Verilog RTL for an FPGA vending prototype, and IoT backends that collect sensor data in the cloud.</p>
+          <p class="hero-tagline reveal" style="--d:.3s" data-i18n="hero.tagline">Computer Engineering student at HCMUT. I work on ESP32-S3 firmware with FreeRTOS and TinyML, Verilog RTL for an FPGA vending prototype, and IoT backends that store sensor history.</p>
 
           <div class="hero-cta reveal" style="--d:.35s">
             <a href="#projects" class="btn btn-primary" data-cursor>
@@ -355,15 +355,15 @@
             </div>
             <div class="stat">
               <b class="count" data-to="7">7</b>
-              <span data-i18n="stats.s2">FreeRTOS tasks in one firmware</span>
+              <span data-i18n="stats.s2">Application tasks on ESP32-S3</span>
             </div>
             <div class="stat">
-              <b class="count" data-to="21000">21,000</b>
-              <span data-i18n="stats.s3">Synthetic training samples</span>
+              <b class="count" data-to="16800">16,800</b>
+              <span data-i18n="stats.s3">Simulated training episodes</span>
             </div>
             <div class="stat">
-              <b>&lt; 1 ms</b>
-              <span data-i18n="stats.s4">TinyML inference time</span>
+              <b>30 s</b>
+              <span data-i18n="stats.s4">Forecast horizon</span>
             </div>
           </div>
         </div>
@@ -424,7 +424,7 @@
                     <div class="typing" id="typing" aria-hidden="true">
                       <i></i><i></i><i></i>
                     </div>
-                    <div class="stream on" id="stream">Nguyen Van Sang is a Computer Engineering student at Ho Chi Minh City University of Technology (HCMUT), focused on embedded systems and IoT. He has written FreeRTOS firmware for the ESP32-S3, run a TinyML model on a microcontroller, developed Verilog RTL for an FPGA vending prototype with an LCD controller FSM, and built a backend that collects sensor data. In summer 2026 he interned on IoT sensor solutions at Viettel Dak Lak. He is looking for a Fresher Embedded Software Engineer role where he can learn from experienced engineers and ship firmware that runs on real hardware.</div>
+                    <div class="stream on" id="stream">Nguyen Van Sang is a Computer Engineering student at Ho Chi Minh City University of Technology (HCMUT), focused on embedded systems and IoT. He has written FreeRTOS firmware for the ESP32-S3, integrated a TinyML forecast into its fan controller, developed Verilog RTL for an FPGA vending prototype with an LCD controller FSM, and built a backend that collects sensor data. In summer 2026 he interned on IoT sensor solutions at Viettel Dak Lak. He is looking for a Fresher Embedded Software Engineer role where he can learn from experienced engineers and ship firmware that runs on real hardware.</div>
                   </div>
                 </div>
               </div>
@@ -471,14 +471,14 @@
                   <use href="#i-chip" />
                 </svg></div>
               <h3 data-i18n="do.d1.title">Firmware &amp; RTOS</h3>
-              <p data-i18n="do.d1.desc">Concurrent firmware for ESP32 and ESP32-S3 on FreeRTOS: tasks, queues, mutexes and event groups, with drivers for I2C, GPIO and UART.</p>
+              <p data-i18n="do.d1.desc">I use FreeRTOS tasks, mutexes and notifications to share sensor readings and coordinate the fan relay, display and network uploads on an ESP32-S3.</p>
             </div>
             <div class="do glass spot reveal" style="--d:.2s">
               <div class="do-icon"><svg class="ic">
                   <use href="#i-sparkle" />
                 </svg></div>
               <h3 data-i18n="do.d2.title">Edge AI &amp; TinyML</h3>
-              <p data-i18n="do.d2.desc">A small TensorFlow Lite Micro classifier running on the microcontroller, with a hardware interlock so the pump relay only switches on when conditions allow.</p>
+              <p data-i18n="do.d2.desc">I use TensorFlow Lite Micro to forecast temperature and humidity bands on the ESP32-S3. The fan controller checks each forecast against the latest readings before acting.</p>
             </div>
             <div class="do glass spot reveal" style="--d:.3s">
               <div class="do-icon"><svg class="ic">
@@ -502,56 +502,56 @@
         </div>
 
         <div class="projects" id="projectGrid">
-          <!-- Project 1: Smart Agriculture -->
+          <!-- Project 1: IoT-Env-Monitor -->
           <article class="pcard featured glass spot reveal" data-cat="embedded">
             <div class="pcard-visual">
               <div class="pv-metrics">
                 <div><b>7</b><span data-i18n="proj.m1">FreeRTOS tasks</span></div>
-                <div><b>&lt; 1 ms</b><span data-i18n="proj.m2">TinyML inference</span></div>
-                <div><b>21k</b><span data-i18n="proj.m3">training samples</span></div>
+                <div><b>5 s</b><span data-i18n="proj.m2">Sampling interval</span></div>
+                <div><b>30 s</b><span data-i18n="proj.m3">Forecast horizon</span></div>
               </div>
               <div class="pv-flow mono" aria-hidden="true">
-                <span class="pv-node">Sensors<small>I2C · ADC</small></span>
+                <span class="pv-node">DHT20<small>I2C</small></span>
                 <span class="pv-node">SharedContext<small>Mutex</small></span>
-                <span class="pv-node hot">TinyML<small>Inference</small></span>
-                <span class="pv-node">Safety<small>Interlock</small></span>
-                <span class="pv-node">Pump<small>GPIO 6</small></span>
+                <span class="pv-node hot">TinyML<small>INT8</small></span>
+                <span class="pv-node"><span data-i18n="proj.p1.mode">Fan control</span><small>task_fan</small></span>
+                <span class="pv-node"><span data-i18n="proj.p1.relay">Fan relay</span><small>GPIO10</small></span>
               </div>
             </div>
             <div class="pcard-top">
               <div class="pcard-icon"><svg class="ic">
                   <use href="#i-chip" />
                 </svg></div>
-              <span class="pill glow mono">Jul 2026 – Present</span>
+              <span class="pill glow mono" data-i18n="proj.p1.context">Jul – Nov 2026 · Individual project</span>
             </div>
-            <h3 data-i18n="proj.p1.title">Smart Agriculture Monitoring System</h3>
+            <h3 data-i18n="proj.p1.title">Smart Environmental Monitoring System</h3>
             <ul>
-              <li data-i18n="proj.p1.b1">Wrote FreeRTOS firmware for the ESP32-S3 with 7 tasks (sensor sampling, TinyML inference, pump relay, logging, reset button, status LED) that share state through a semaphore-protected context, across I2C, GPIO and the network.</li>
-              <li data-i18n="proj.p1.b2">Ran a float32 TensorFlow Lite Micro model that classifies temperature, humidity and soil moisture into 3 risk levels in under 1 ms per inference, with hardware interlocks on the pump.</li>
-              <li data-i18n="proj.p1.b3">Added a Wi-Fi access-point fallback with known networks saved in LittleFS, and streamed telemetry over HTTP/WebSocket to a Node.js and PostgreSQL dashboard running in Docker.</li>
+              <li data-i18n="proj.p1.b1">Built ESP32-S3 firmware that samples air temperature and humidity every five seconds, displays the readings on an LCD and controls a ventilation fan. A separate probe measures soil moisture.</li>
+              <li data-i18n="proj.p1.b2">Integrated an INT8 model that uses seven readings and the sampled fan command to forecast the OFF, HOLD or ON band 30 seconds ahead. In AI mode, a rising trend can trigger ventilation before a threshold is crossed.</li>
+              <li data-i18n="proj.p1.b3">Built a live WebSocket dashboard on the board and an Express API that stores HTTP uploads in PostgreSQL for multi-device history.</li>
             </ul>
             <div class="pcard-meta">
               <span><svg class="ic">
                   <use href="#i-layers" />
-                </svg><b>Architecture:</b> 7 Concurrent FreeRTOS Tasks</span>
+                </svg><span data-i18n="proj.p1.metaModel">INT8 model · 5,536 bytes</span></span>
               <span><svg class="ic">
                   <use href="#i-sparkle" />
-                </svg><b>TinyML:</b> 21,000-row Synthetic Dataset, &lt; 1 ms Latency</span>
+                </svg><span data-i18n="proj.p1.metaScore">87.28% accuracy on 3,600 synthetic test episodes</span></span>
             </div>
             <div class="stack">
-              <span class="lbl mono">Tech Stack:</span>
+              <span class="lbl mono" data-i18n="proj.p1.stack">Tech stack</span>
               <div class="tags">
                 <span class="tag">C/C++</span>
                 <span class="tag">Python</span>
                 <span class="tag">I2C</span>
                 <span class="tag">GPIO</span>
-                <span class="tag">UART</span>
+                <span class="tag">ADC</span>
                 <span class="tag">FreeRTOS</span>
                 <span class="tag">ESP32-S3</span>
                 <span class="tag">TFLite Micro</span>
                 <span class="tag">Docker</span>
                 <span class="tag">PostgreSQL</span>
-                <span class="tag">Linux</span>
+                <span class="tag">Express</span>
                 <span class="tag">JavaScript</span>
               </div>
             </div>
@@ -569,7 +569,7 @@
                 </svg>
                 <span>GitHub Repo</span>
               </a>
-              <span class="pcard-period mono">Embedded + Cloud</span>
+              <span class="pcard-period mono" data-i18n="proj.p1.stage">Embedded system</span>
             </div>
           </article>
 
@@ -819,7 +819,7 @@
             <span class="mq"><i></i>Linux Ubuntu</span>
             <span class="mq"><i></i>Git &amp; GitHub</span>
             <span class="mq"><i></i>React &amp; TypeScript</span>
-            <span class="mq"><i></i>LittleFS Hot-Swap</span>
+            <span class="mq"><i></i>LittleFS</span>
             <span class="mq"><i></i>WebSocket Streaming</span>
             <!-- Duplicate for seamless loop -->
             <span class="mq"><i></i>Digilent Arty-Z7-20</span>
@@ -830,7 +830,7 @@
             <span class="mq"><i></i>Linux Ubuntu</span>
             <span class="mq"><i></i>Git &amp; GitHub</span>
             <span class="mq"><i></i>React &amp; TypeScript</span>
-            <span class="mq"><i></i>LittleFS Hot-Swap</span>
+            <span class="mq"><i></i>LittleFS</span>
             <span class="mq"><i></i>WebSocket Streaming</span>
           </div>
         </div>
@@ -946,7 +946,7 @@
                       <b data-i18n="cert.c1.name">TOEIC (Listening &amp; Reading)</b>
                       <span data-i18n="cert.c1.date">Test scheduled for Dec 2026 • ETS</span>
                     </div>
-                    <span class="pill mono" data-i18n="cert.scheduled">Scheduled</span>
+                    <span class="pill mono" data-i18n="cert.scheduled">Scheduled (Aim 600+)</span>
                   </div>
                 </div>
                 <!-- Language proficiency -->

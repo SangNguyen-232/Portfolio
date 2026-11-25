@@ -57,20 +57,6 @@ window.ScopeEngine = (() => {
     e: [[0, 1], [0, 2], [1, 3], [1, 4], [2, 5], [2, 6]]
   });
 
-  const net = (L = [3, 4, 2]) => {
-    const n = [], e = [], idx = [];
-    L.forEach((c, li) => {
-      const row = [];
-      for (let i = 0; i < c; i++) {
-        row.push(n.length);
-        n.push([(li - (L.length - 1) / 2) * 0.85, (i - (c - 1) / 2) * 0.55, i % 2 ? 0.25 : -0.25]);
-      }
-      idx.push(row);
-    });
-    for (let l = 0; l < idx.length - 1; l++) for (const a of idx[l]) for (const b of idx[l + 1]) e.push([a, b]);
-    return { n, e };
-  };
-
   const wave = () => {
     const n = [], e = [];
     for (let i = 0; i < 14; i++) n.push([-0.9 + i * (1.8 / 13), Math.floor(i / 2) % 2 ? -0.35 : -0.05, -0.3]);
@@ -105,7 +91,7 @@ window.ScopeEngine = (() => {
     { sel: '#about', side: 0, tag: 'Dual-Core SoC', type: 'soc', build: mesh, ops: ['Core0', 'Core1', 'AXI', 'Core0'] },
     { sel: '#about', side: 1, tag: 'Clock / PLL', type: 'clk', build: wave, ops: ['XTAL 40MHz', 'PLL x6', 'SYS 240MHz'] },
     { sel: '#projectGrid article:nth-child(1)', side: 0, tag: 'FreeRTOS Scheduler', type: 'rtos', build: () => ring(7), ops: ['READY', 'RUNNING', 'BLOCKED', 'Mutex take', 'Mutex give'] },
-    { sel: '#projectGrid article:nth-child(1)', side: 1, tag: 'TinyML Inference', type: 'tinyml', build: () => net([3, 4, 3]), ops: ['input', 'dense', 'softmax', '<1 ms'] },
+    { sel: '#projectGrid article:nth-child(1)', side: 1, tag: 'INT8 forecast', type: 'tinyml', build: () => stack(4), ops: ['8 inputs', 'Dense 64', 'Dense 32', '3 scores'] },
     { sel: '#projectGrid article:nth-child(2)', side: 0, tag: 'LCD FSM (illustration)', type: 'fpga', build: () => ring(9), ops: ['INIT', 'DISPLAY_ON', 'CLEAR_ON', 'SET_CURSOR1', 'WRITE_LINE1', 'SET_CURSOR2', 'WRITE_LINE2', 'IDLE', 'CHECK_UPDATE'] },
     { sel: '#projectGrid article:nth-child(3)', side: 1, tag: 'Mock APIs / Local State', type: 'db', build: () => stack(3), ops: ['mock response', 'local state', 'SVG / CSS map'] },
     { sel: '#skills', side: 0, tag: 'Memory Hierarchy', type: 'mem', build: pyramid, ops: ['Regs', 'L1', 'SRAM', 'Flash'] },

@@ -951,11 +951,11 @@
       const to = +el.dataset.to, t0 = performance.now(), dur = 1200;
       const tick = (t) => {
         if (prefersReducedMotion()) {
-          el.textContent = to.toLocaleString('en-US');
+          el.textContent = to.toLocaleString(document.documentElement.lang);
           return;
         }
         const p = Math.min((t - t0) / dur, 1), e = 1 - Math.pow(1 - p, 3);
-        el.textContent = Math.round(to * e).toLocaleString('en-US');
+        el.textContent = Math.round(to * e).toLocaleString(document.documentElement.lang);
         if (p < 1) requestAnimationFrame(tick);
       };
       requestAnimationFrame(tick);

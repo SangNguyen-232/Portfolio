@@ -15,7 +15,7 @@
 \usepackage{lmodern}
 \usepackage{fontsize}
 % \changefontsize{10.5pt}
-\changefontsize{10.35pt}
+\changefontsize{10.4pt}
 
 % Blue accent color
 \definecolor{myblue}{RGB}{0,102,255}
@@ -29,7 +29,7 @@
 }
 
 \pagestyle{empty}
-\setstretch{1.0}
+\setstretch{1.025}
 \setlength{\parindent}{0pt}
 
 % Section formatting
@@ -78,26 +78,26 @@
 
 % ==================== CAREER OBJECTIVE ====================
 \section*{Professional Summary}
-Final-year Computer Engineering student aiming to build a career in Embedded Systems and IoT. Gained learning experience through academic projects and an on-site internship at Viettel Dak Lak -- Viettel Group. Seeking a Fresher Embedded Software Engineer position to continue learning, enhance practical skills, and develop expertise in a professional environment alongside experienced engineers
+Final-year Computer Engineering student at Ho Chi Minh City University of Technology -- Vietnam National University Ho Chi Minh City (HCMUT) pursuing a career in Embedded Systems and IoT. Gained knowledge and experience through academic project and an on-site internship at Viettel Dak Lak -- Viettel Group. Currently seeking a Fresher Embedded Software Engineer position to continue learning and developing expertise in a professional environment alongside a team of experienced engineers.
 
 % ==================== EDUCATION ====================
 \section*{Education}
-\textbf{Ho Chi Minh City University of Technology -- VNU-HCM} \hfill \textit{Ho Chi Minh City, Vietnam} \\
-\textit{Bachelor of Computer Engineering -- GPA: 2.8/4.0 (7.20/10)} \hfill \textit{Sep 2022 -- Nov 2027}
+\textbf{Ho Chi Minh City University of Technology -- VNU-HCM} \hfill \textit{Ho Chi Minh City} \\
+\textit{Bachelor of Computer Engineering} \hfill \textit{Sep 2022 -- Nov 2027}
 
-% ==================== CERTIFICATION ====================
-\section*{Certification}
-\textbf{TOEIC (Listening and Reading): } \hfill \textit{Dec 2026}
+% % ==================== CERTIFICATION ====================
+% \section*{Certification}
+% \textbf{TOEIC (Listening and Reading): } \hfill \textit{Dec 2026}
 
 % ==================== TECHNICAL SKILLS ====================
 \section*{Technical Skills}
 \noindent
 \textbf{Programming Languages:} C, C++, Python \\
-\textbf{Embedded Systems:} ESP32, ESP32-S3, FreeRTOS, GPIO, I2C, UART \\
+\textbf{Embedded Systems:} ESP32, ESP32-S3, FreeRTOS, GPIO, ADC, I2C, UART \\
 \textbf{Edge AI \& TinyML:} TensorFlow Lite for Microcontrollers, On-device Inference \\
-\textbf{FPGA \& Digital Design:} Verilog RTL, LCD controller FSM, Xilinx XDC constraints \\
+\textbf{FPGA \& Digital Design:} Verilog HDL, Xilinx Vivado, Cadence Xcelium, Arty-Z7 Board \\
 \textbf{Development Tools:} PlatformIO, STM32CubeIDE, Linux, Git, GitHub, Docker \\
-\textbf{IoT Backend \& Web:} Node.js, Express.js, Next.js, PostgreSQL, React, HTML, CSS
+\textbf{IoT Backend \& Web:} Node.js, Express.js, Next.js, React, Tailwind CSS, HTML, CSS, HTTP/WebSocket, PostgreSQL
 
 % ==================== EXPERIENCE ====================
 \section*{Experience}
@@ -113,20 +113,19 @@ Final-year Computer Engineering student aiming to build a career in Embedded Sys
 \section*{Projects}
 
 % PROJECT 1
-\textbf{Smart Agriculture Environmental Monitoring System} \,|\, \faGithub\ \href{https://github.com/SangNguyen-232/IoT-Env-Monitor}{GitHub Repo} \hfill \textit{Jul 2026 -- Nov 2026} \\
-% {\small \textbf{Stack:} C/C++, Python, JavaScript, ESP32-S3, FreeRTOS, TensorFlow Lite Micro, I2C, GPIO, UART, Node.js, Express.js, PostgreSQL, Docker, Linux}
-\textbf{Stack:} C/C++, Python, JavaScript, ESP32-S3, FreeRTOS, TensorFlow Lite Micro, I2C, GPIO, UART, Node.js, Express.js, PostgreSQL, Docker, Linux
+\textbf{Smart Environmental Monitoring System} \,|\, Individual project \,|\, \faGithub\ \href{https://github.com/SangNguyen-232/IoT-Env-Monitor}{GitHub Repo} \hfill \textit{Jul 2026 -- Nov 2026} \\
+\textbf{Stack:} ESP32-S3, C/C++, FreeRTOS, PlatformIO, TensorFlow Lite Micro, Python, JavaScript, Express, PostgreSQL
 \begin{itemize}
-    \item Engineered concurrent FreeRTOS firmware on ESP32-S3 with semaphore-guarded shared context, coordinating 7 tasks (sensor sampling, TinyML inference, pump control, database logging, boot-button reset, LED/NeoPixel indicators) across I2C, GPIO and network peripherals with zero race conditions
-    \item Deployed a float32 TensorFlow Lite Micro classifier (temperature, humidity, soil moisture $\rightarrow$ 3-class risk) trained on a 21000-row synthetic dataset, achieving sub-1\,ms on-device inference with rolling accuracy tracking and a hardware safety interlock for extreme sensor thresholds
-    \item Implemented WiFi AP fallback with hot-swap via LittleFS-persisted network lists, streaming sensor data to the backend over HTTP/WebSocket
-    \item Built the fleet management platform (Node.js/Express/PostgreSQL) with role-based session auth, per-device password verification and real-time Chart.js/Leaflet dashboards, containerized with Docker Compose on Linux
+    \item Coordinated seven FreeRTOS tasks to sample the DHT20, update the LCD and indicators, run inference, control a fan relay on GPIO10, upload telemetry and handle factory reset
+    \item Integrated a 5,536-byte INT8 model that forecasts the temperature and humidity band 30 seconds ahead. It reached 87.28\% accuracy on 3,600 held-out synthetic episodes in the desktop reference interpreter
+    \item Implemented fan control with configurable thresholds, early starts from the AI forecast, minimum switch intervals and automatic shutoff on stale sensor readings
+    \item Built a live WebSocket dashboard on the board and an Express API that receives HTTP telemetry, stores device history in PostgreSQL and serves a central dashboard with role-based access
 \end{itemize}
 
 \vspace{1.5pt}
 
 % PROJECT 2
-\textbf{FPGA Vending Machine Prototype} \,|\, \faGithub\ \href{https://github.com/SangNguyen-232/FPGA-Vending-System}{GitHub Repo} \hfill \textit{Oct 2024 -- Dec 2024} \\
+\textbf{FPGA Vending Machine Prototype} \,|\, Team of 5 \,|\, \faGithub\ \href{https://github.com/SangNguyen-232/FPGA-Vending-System}{GitHub Repo} \hfill \textit{Oct 2024 -- Dec 2024} \\
 % {\small \textbf{Stack:} Verilog HDL, Arty-Z7-20 target, Vivado/XDC constraints}
 \textbf{Stack:} Verilog HDL, Arty-Z7-20 target, Vivado/XDC constraints
 \begin{itemize}
@@ -137,7 +136,7 @@ Final-year Computer Engineering student aiming to build a career in Embedded Sys
 \vspace{1.5pt}
 
 % PROJECT 3
-\textbf{ParkWise -- Campus Parking Prototype} \,|\, \faGithub\ \href{https://github.com/SangNguyen-232/ParkWise}{GitHub Repo} \hfill \textit{Mar 2026 -- May 2026} \\
+\textbf{University Campus Parking System Prototype} \,|\, Team of 5 \,|\, \faGithub\ \href{https://github.com/SangNguyen-232/ParkWise}{GitHub Repo} \hfill \textit{Mar 2026 -- May 2026} \\
 % {\small \textbf{Stack:} Next.js 16, React 19, TypeScript/JavaScript, Tailwind CSS 4, PostCSS, Node.js, Express.js 5, REST APIs, PostgreSQL}
 \textbf{Stack:} Next.js, React, TypeScript/JavaScript, Tailwind CSS, PostCSS, Node.js, Express.js, REST APIs, PostgreSQL
 \begin{itemize}

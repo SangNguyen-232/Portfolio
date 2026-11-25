@@ -323,6 +323,12 @@
   color: var(--text);
 }
 
+.arch-card p a {
+  color: var(--mint);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
 .arch-pipeline {
   display: flex;
   align-items: center;
@@ -356,6 +362,19 @@
 .arch-sep {
   color: var(--amber);
   font-weight: bold;
+}
+
+@media (max-width: 640px) {
+  .air-monitor-flow {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+  }
+
+  .air-monitor-flow .arch-sep {
+    align-self: center;
+    transform: rotate(90deg);
+  }
 }
 
 .pin-table {
