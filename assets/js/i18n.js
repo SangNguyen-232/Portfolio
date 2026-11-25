@@ -11,17 +11,16 @@ window.PortfolioData = (() => {
   const i18n = {
     en: {
       'skip.content': 'Skip to content',
-      'terminal.simulation': 'Simulated diagnostics',
-      'cert.scheduled': 'Scheduled',
+      'cert.scheduled': 'Scheduled (Aim 600+)',
       'modal.close': 'Close',
       'modal.exit': 'Press ESC to exit inspector',
       'shortcuts.title': 'Keyboard Shortcuts',
       'shortcuts.sub': 'Quick navigation',
-      'shortcut.language': 'Toggle Language (EN / VI)',
-      'shortcut.terminal': 'Jump & Focus Firmware Terminal',
+      'shortcut.language': 'Toggle Language (EN/VI)',
+      'shortcut.terminal': 'Jump to the introduction',
       'shortcut.projects': 'Navigate to Featured Projects',
       'shortcut.close': 'Close any Open Modal',
-      'shortcut.help': 'Show / Hide this Shortcuts Guide',
+      'shortcut.help': 'Show/Hide this Shortcuts Guide',
       'shortcuts.helper': 'Shortcuts',
       'a11y.language': 'Chuyển sang tiếng Việt',
       'a11y.menuOpen': 'Open menu',
@@ -29,7 +28,8 @@ window.PortfolioData = (() => {
       'a11y.home': 'Home',
       'a11y.backTop': 'Back to top',
       'a11y.portrait': 'Portrait of Nguyen Van Sang',
-      'a11y.terminal': 'Simulated firmware terminal',
+      'a11y.terminal': 'Introduction',
+      'a11y.focusAreas': 'Core focus areas',
       'nav.about': 'Professional Summary',
       'nav.experience': 'Experience',
       'nav.projects': 'Projects',
@@ -37,18 +37,18 @@ window.PortfolioData = (() => {
       'nav.education': 'Education & Certification',
       'nav.contact': 'Contact',
       'nav.resume': 'View CV',
-      'loader.text': 'Booting ESP32-S3 firmware',
-      'hero.status': 'Looking for a Fresher Embedded Software Engineer role',
-      'hero.greet': 'Hi, I am',
+      'loader.text': 'Ready to explore',
+      'hero.consoleTag': 'Embedded Software',
+      'hero.greet': 'Hello, I am',
       'hero.name': 'Nguyen Van Sang',
-      'hero.title': 'Embedded Software Engineer — Fresher',
-      "hero.tagline": "Computer Engineering student at HCMUT. I work on ESP32-S3 firmware with FreeRTOS and TinyML, Verilog RTL for an FPGA vending prototype, and IoT backends that store sensor history.",
+      'hero.tagline': 'Building deterministic FreeRTOS firmware, on-device TinyML inference, and Verilog FPGA systems — from hardware peripherals to IoT platforms.',
+      'hero.p1.sub': 'Concurrent firmware',
+      'hero.p2.sub': 'On-device AI',
+      'hero.p3.sub': 'RTL & LCD FSM',
+      'hero.p4.sub': 'WebSocket & API',
+      'hero.status': "I'm looking for a Fresher Embedded Software Engineer role",
       'hero.cta1': 'View projects',
       'hero.cta2': 'Contact me',
-      'stats.s1': 'Projects on GitHub',
-      'stats.s2': 'Application tasks on ESP32-S3',
-      'stats.s3': 'Simulated training episodes',
-      'stats.s4': 'Forecast horizon',
       'about.title': 'Professional Summary',
       'about.sub': 'Who I am and what I work on',
       'about.userPrompt': "Tell me more about Sang",
@@ -97,10 +97,9 @@ window.PortfolioData = (() => {
       'proj.inspect': 'System architecture',
       'proj.m1': 'FreeRTOS tasks',
       'proj.m2': 'Sampling interval',
-      'proj.m3': 'Forecast horizon',
       "proj.inspectFSM": "RTL & LCD controller",
       'skills.title': 'Technical Skills',
-      'skills.sub': 'Tools and technologies I have used in the projects below',
+      'skills.sub': 'Tools and technologies I have used in the projects above',
       'skills.c1': 'Programming Languages',
       'skills.c2': 'Embedded Systems & RTOS',
       'skills.c3': 'Edge AI & TinyML',
@@ -126,8 +125,7 @@ window.PortfolioData = (() => {
       'cert.c1.date': 'Test scheduled for Dec 2026 • ETS',
       'contact.status': 'Open to fresher opportunities',
       'contact.title': "Let’s talk",
-      'contact.desc': 'I’m looking for a Fresher Embedded Software Engineer role in Ho Chi Minh City or remote. You can reach me by email, phone or LinkedIn.',
-      'contact.copy': 'Copy Email',
+      'contact.desc': 'I am looking for an entry-level Embedded Software Engineer position in Ho Chi Minh City, surrounding areas, or a remote role. You can reach me by email, phone, or LinkedIn.',
       'shortcut.led': 'Toggle LED borders',
       'footer.totop': 'Back to Top',
       'toast.copied': 'Email copied to clipboard!',
@@ -138,17 +136,16 @@ window.PortfolioData = (() => {
     },
     vi: {
       'skip.content': 'Chuyển đến nội dung',
-      'terminal.simulation': 'Chẩn đoán mô phỏng',
-      'cert.scheduled': 'Đã lên lịch',
+      'cert.scheduled': 'Đã lên lịch (mục tiêu 600+)',
       'modal.close': 'Đóng',
       'modal.exit': 'Nhấn ESC để đóng cửa sổ chi tiết',
       'shortcuts.title': 'Phím tắt',
       'shortcuts.sub': 'Điều hướng nhanh',
-      'shortcut.language': 'Đổi ngôn ngữ (EN / VI)',
-      'shortcut.terminal': 'Chuyển đến và chọn terminal firmware',
+      'shortcut.language': 'Đổi ngôn ngữ (EN/VI)',
+      'shortcut.terminal': 'Chuyển đến phần giới thiệu',
       'shortcut.projects': 'Chuyển đến các dự án nổi bật',
       'shortcut.close': 'Đóng cửa sổ đang mở',
-      'shortcut.help': 'Hiện / Ẩn hướng dẫn phím tắt',
+      'shortcut.help': 'Hiện/Ẩn hướng dẫn phím tắt',
       'shortcuts.helper': 'Phím tắt',
       'a11y.language': 'Switch to English',
       'a11y.menuOpen': 'Mở menu',
@@ -156,7 +153,8 @@ window.PortfolioData = (() => {
       'a11y.home': 'Trang đầu',
       'a11y.backTop': 'Lên đầu trang',
       'a11y.portrait': 'Ảnh chân dung Nguyễn Văn Sang',
-      'a11y.terminal': 'Terminal firmware mô phỏng',
+      'a11y.terminal': 'Giới thiệu',
+      'a11y.focusAreas': 'Lĩnh vực chuyên môn chính',
       'nav.about': 'Tóm tắt chuyên môn',
       'nav.experience': 'Kinh nghiệm',
       'nav.projects': 'Dự án',
@@ -164,18 +162,18 @@ window.PortfolioData = (() => {
       'nav.education': 'Học vấn & Chứng chỉ',
       'nav.contact': 'Liên hệ',
       'nav.resume': 'Xem CV',
-      'loader.text': 'Đang khởi động firmware ESP32-S3',
-      'hero.status': 'Đang tìm vị trí Fresher Embedded Software Engineer',
+      'loader.text': 'Sẵn sàng khám phá',
+      'hero.consoleTag': 'Embedded Software',
       'hero.greet': 'Xin chào, tôi là',
       'hero.name': 'Nguyễn Văn Sang',
-      'hero.title': 'Kỹ sư Phần mềm Nhúng — Fresher',
-      "hero.tagline": "Sinh viên Kỹ thuật Máy tính tại ĐH Bách khoa TP.HCM. Tôi phát triển firmware ESP32-S3 với FreeRTOS và TinyML, RTL Verilog cho nguyên mẫu máy bán hàng trên FPGA và backend IoT lưu lịch sử số đo cảm biến.",
+      'hero.tagline': 'Phát triển firmware FreeRTOS ổn định, TinyML chạy trực tiếp trên vi điều khiển và thiết kế số Verilog FPGA — kết nối phần cứng với nền tảng IoT.',
+      'hero.p1.sub': 'Firmware đa nhiệm',
+      'hero.p2.sub': 'AI trên thiết bị',
+      'hero.p3.sub': 'RTL & FSM LCD',
+      'hero.p4.sub': 'WebSocket & API',
+      'hero.status': 'Tôi đang tìm vị trí Fresher Embedded Software Engineer',
       'hero.cta1': 'Xem dự án',
       'hero.cta2': 'Liên hệ',
-      'stats.s1': 'Dự án có mã nguồn trên GitHub',
-      'stats.s2': 'Tác vụ ứng dụng trên ESP32-S3',
-      'stats.s3': 'Kịch bản mô phỏng để huấn luyện',
-      'stats.s4': 'Khoảng thời gian dự báo',
       'about.title': 'Tóm Tắt Chuyên Môn',
       'about.sub': 'Giới thiệu ngắn về tôi và hướng chuyên môn',
       'about.userPrompt': 'Hãy giới thiệu về Sang',
@@ -224,10 +222,9 @@ window.PortfolioData = (() => {
       'proj.inspect': 'Kiến trúc hệ thống',
       'proj.m1': 'tác vụ FreeRTOS',
       'proj.m2': 'chu kỳ lấy mẫu',
-      'proj.m3': 'tầm dự báo',
       "proj.inspectFSM": "RTL & bộ điều khiển LCD",
       'skills.title': 'Kỹ Năng Chuyên Môn',
-      'skills.sub': 'Công cụ và công nghệ tôi đã dùng trong các dự án bên dưới',
+      'skills.sub': 'Công cụ và công nghệ tôi đã dùng trong các dự án ở trên',
       'skills.c1': 'Ngôn ngữ lập trình',
       'skills.c2': 'Hệ thống nhúng & RTOS',
       'skills.c3': 'Edge AI & TinyML',
@@ -253,8 +250,7 @@ window.PortfolioData = (() => {
       'cert.c1.date': 'Dự kiến thi tháng 12/2026 • ETS',
       'contact.status': 'Đang tìm cơ hội Fresher',
       'contact.title': 'Cùng trao đổi',
-      'contact.desc': 'Tôi đang tìm vị trí Fresher Embedded Software Engineer tại TP. Hồ Chí Minh hoặc làm việc từ xa. Bạn có thể liên hệ qua email, điện thoại hoặc LinkedIn.',
-      'contact.copy': 'Sao chép Email',
+      'contact.desc': 'Tôi đang tìm vị trí Embedded Software Engineer (Fresher/Entry-level) tại TP. Hồ Chí Minh, các khu vực lân cận hoặc làm việc từ xa. Bạn có thể liên hệ qua email, điện thoại hoặc LinkedIn.',
       'shortcut.led': 'Bật/tắt viền LED',
       'footer.totop': 'Lên Đầu Trang',
       'toast.copied': 'Đã sao chép địa chỉ email vào bộ nhớ tạm!',
@@ -265,168 +261,80 @@ window.PortfolioData = (() => {
     }
   };
 
+  const fpgaSource = 'https://github.com/SangNguyen-232/FPGA-Vending-System/blob/main/sources_1/new/';
+  const lcdStates = [
+    'INIT', 'DISPLAY_ON', 'CLEAR_ON', 'SET_CURSOR1', 'WRITE_LINE1',
+    'SET_CURSOR2', 'WRITE_LINE2', 'IDLE', 'CHECK_UPDATE'
+  ];
+
+  function fpgaPurchase(lang) {
+    const story = lang === 'vi' ? {
+      title: 'Mua hai đơn vị sản phẩm số 1',
+      setup: 'Ở chế độ Admin, đặt đơn giá là 2 và tồn kho là 3. Sang chế độ User, tắt các công tắc chọn sản phẩm rồi nhấn BTN1 để nạp 10 đơn vị. Chọn lại sản phẩm số 1 để bắt đầu mua.',
+      steps: [
+        ['Từ nút nhấn đến sự kiện trong RTL', 'Mỗi nút đi qua hai tầng thanh ghi đồng bộ. Với ngưỡng thực tế của bộ đếm 20 bit, tín hiệu cần ổn định khoảng 1,61 ms ở xung thiết kế 125 MHz. Nhấn BTN0 hai lần để chọn hai đơn vị sản phẩm số 1, rồi nhấn BTN2 để xác nhận.'],
+        ['Từ yêu cầu mua đến giá trị thanh ghi', 'Khi tăng số lượng, bộ điều khiển giới hạn mức chọn theo tồn kho. Khi xác nhận, tổng tiền là 2 × 2 = 4. Giao dịch trừ số dư từ 10 xuống 6 và giảm tồn kho từ 3 xuống 1. Với cùng lựa chọn nhưng số dư dưới 4, nhánh thiếu tiền giữ nguyên số dư và tồn kho.'],
+        ['Từ kết quả đến ký tự trên LCD', 'Mạch giao dịch chuẩn bị hai dòng văn bản 128 bit. Bộ điều khiển LCD 16×2 gửi từng ký tự qua bus 8 bit, dùng RS để chọn lệnh hoặc dữ liệu và EN để tạo xung ghi. Dòng đầu hiển thị <code>SUCCESS!</code> hoặc <code>NOT ENOUGH MONEY</code> theo kết quả.']
+      ],
+      disclosure: '9 trạng thái và thời gian làm mới LCD',
+      order: 'Thứ tự các trạng thái của LCD',
+      refresh: 'Sau khi ghi 16 ký tự mỗi dòng, FSM vào <code>IDLE</code>, chuyển sang <code>CHECK_UPDATE</code> rồi chờ bộ đếm đạt 12.500.000 trước khi quay về <code>CLEAR_ON</code> để ghi lại hai dòng. Với ràng buộc xung 125 MHz trong XDC, riêng khoảng chờ này tương ứng khoảng 100 ms.',
+      test: 'Trong mô phỏng RTL riêng bằng Icarus Verilog ở 125 MHz, cả hai nhánh mua hàng cho số dư, tồn kho và thông báo đúng như ví dụ. FSM đi qua đủ 9 trạng thái. Trên bus LCD, mỗi dòng của khung hình đầu có 16 lượt ghi ký tự. Testbench đi kèm dự án dùng xung 100 MHz và dừng ở 1,01 µs, khi FSM còn ở INIT.',
+      bench: 'Testbench LCD'
+    } : {
+      title: 'Buying two units of product 1',
+      setup: 'In Admin mode, set the unit price to 2 and stock to 3. Switch to User mode, deselect all products and press BTN1 to add 10 credits. Select product 1 again to start the purchase.',
+      steps: [
+        ['From a button press to an RTL event', 'Each button passes through two synchronizer stages. At the target 125 MHz clock, the effective 20-bit counter threshold requires about 1.61 ms of stable input. With product 1 selected, press BTN0 twice to request two units, then BTN2 to confirm.'],
+        ['From a purchase request to register updates', 'Stock limits the quantity while the user increases it. At confirmation, the total is 2 × 2 = 4. The purchase reduces credit from 10 to 6 and stock from 3 to 1. With the same selection and fewer than 4 credits, the insufficient-funds branch preserves both values.'],
+        ['From the result to characters on the LCD', 'The transaction logic prepares two 128-bit text lines. The 16×2 LCD controller writes one character at a time over an 8-bit bus, using RS to select commands or data and EN to strobe each write. The first line shows <code>SUCCESS!</code> or <code>NOT ENOUGH MONEY</code> according to the outcome.']
+      ],
+      disclosure: 'Nine LCD states and refresh timing',
+      order: 'LCD state sequence',
+      refresh: 'After writing 16 characters per line, the FSM enters <code>IDLE</code> and then <code>CHECK_UPDATE</code>. When the counter reaches 12,500,000 it returns to <code>CLEAR_ON</code> to redraw both lines. At the 125 MHz clock specified in the XDC, this wait alone is about 100 ms.',
+      test: 'In a separate 125 MHz Icarus Verilog simulation, both purchase cases produced the expected balance, stock and message. The simulation visited all nine LCD states and recorded 16 character writes per line on the bus during the first frame. The repository’s 100 MHz LCD testbench stops at 1.01 µs, still in INIT.',
+      bench: 'LCD testbench'
+    };
+
+    const sources = ['button_debounce.v', 'top_button_handler.v', 'LCD_display.v'];
+    return `
+      <article class="fpga-story">
+        <h4>${story.title}</h4>
+        <p>${story.setup}</p>
+        <ol class="fpga-flow">
+          ${story.steps.map(([heading, description], i) => `
+            <li>
+              <h5>${heading}</h5>
+              <p>${description}</p>
+              <a href="${fpgaSource}${sources[i]}" target="_blank" rel="noopener">${sources[i]}</a>
+            </li>`).join('')}
+        </ol>
+        <section class="fpga-fsm">
+          <h5 class="fpga-fsm-title">${story.disclosure}</h5>
+          <ol aria-label="${story.order}">
+            ${lcdStates.map(state => `<li><code>${state}</code></li>`).join('')}
+          </ol>
+          <p>${story.refresh}</p>
+          <p>${story.test} <a href="${fpgaSource}test_lcd_display.v" target="_blank" rel="noopener">${story.bench}</a></p>
+        </section>
+      </article>`;
+  }
+
   const modalContentData = {
     'modal-proj1': {
-      title_en: 'Air monitoring and fan control',
-      title_vi: 'Giám sát môi trường và điều khiển quạt',
-      sub_en: 'Yolo Uno ESP32-S3 · FreeRTOS · TensorFlow Lite Micro',
-      sub_vi: 'Yolo Uno ESP32-S3 · FreeRTOS · TensorFlow Lite Micro',
-      body_en: `
-        <div class="arch-card">
-          <div class="arch-card-title"><svg class="ic"><use href="#i-layers"/></svg><span>From air sample to relay command</span></div>
-          <div class="arch-pipeline air-monitor-flow">
-            <div class="arch-step"><b>temp_humi_monitor</b><span>DHT20 reading every 5 s</span></div>
-            <span class="arch-sep" aria-hidden="true">➔</span>
-            <div class="arch-step"><b>tiny_ml_task</b><span>Seven samples → forecast at +30 s</span></div>
-            <span class="arch-sep" aria-hidden="true">➔</span>
-            <div class="arch-step"><b>task_fan</b><span>Apply the control policy to GPIO10</span></div>
-          </div>
-          <p class="small">The tasks exchange timestamped readings and forecasts through a mutex-protected <code>SharedContext</code>. AUTO uses the saved temperature and humidity thresholds. SHADOW records the forecast while AUTO rules drive the relay. AI can start the fan early between thresholds when the profile matches and the ON score reaches 0.80. Stale or invalid air readings force the relay off in automatic modes.</p>
-        </div>
-        <div class="arch-card">
-          <div class="arch-card-title"><svg class="ic"><use href="#i-chip"/></svg><span>Board connections</span></div>
-          <table class="pin-table">
-            <thead><tr><th scope="col">Pin or interface</th><th scope="col">Component</th><th scope="col">Role</th></tr></thead>
-            <tbody>
-              <tr><td>GPIO11 / GPIO12</td><td>I2C SDA / SCL</td><td>Shared bus for the DHT20 and 16×2 LCD (0x27)</td></tr>
-              <tr><td>GPIO2</td><td>Soil probe (ADC)</td><td>Independent moisture reading for display and history</td></tr>
-              <tr><td>GPIO10</td><td>Fan relay</td><td>Active-high output to the fan driver</td></tr>
-              <tr><td>GPIO48 / GPIO45</td><td>LED / NeoPixel</td><td>Indicate temperature and humidity bands, respectively</td></tr>
-              <tr><td>GPIO0</td><td>BOOT button</td><td>Hold for more than 2 s to reset saved settings</td></tr>
-              <tr><td>USB CDC</td><td>Serial monitor</td><td>Firmware log at 115200 baud</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="arch-card">
-          <div class="arch-card-title"><svg class="ic"><use href="#i-sparkle"/></svg><span>What the model predicts</span></div>
-          <p class="small">The eight inputs describe air temperature, relative humidity, their recent trends and the fan command at sampling. The INT8 model predicts the OFF, HOLD or ON band 30 seconds ahead, assuming that command persists. On 3,600 held-out synthetic episodes, the desktop reference scored 87.28%, compared with 82.94% for linear extrapolation. Field accuracy and board latency require measurements on the physical setup. <a href="https://github.com/SangNguyen-232/IoT-Env-Monitor/blob/project_linux/ml/models/fan_model_manifest.json" target="_blank" rel="noopener">Model evaluation results</a></p>
-        </div>
-        <div class="arch-card">
-          <div class="arch-card-title"><svg class="ic"><use href="#i-server"/></svg><span>Local control and device history</span></div>
-          <p class="small">If the configured Wi-Fi network is unavailable, the board opens a setup access point. LittleFS stores its network settings. On the LAN, the browser receives live readings from the board over WebSocket. Separately, the board sends HTTP POST requests to <code>/sensor</code> on the Express backend, which writes to PostgreSQL. The central dashboard polls the backend. Remote access can use an optional Cloudflare gateway.</p>
-        </div>
-      `,
-      body_vi: `
-        <div class="arch-card">
-          <div class="arch-card-title"><svg class="ic"><use href="#i-layers"/></svg><span>Từ số đo không khí đến lệnh rơ-le</span></div>
-          <div class="arch-pipeline air-monitor-flow">
-            <div class="arch-step"><b>temp_humi_monitor</b><span>Đọc DHT20 mỗi 5 giây</span></div>
-            <span class="arch-sep" aria-hidden="true">➔</span>
-            <div class="arch-step"><b>tiny_ml_task</b><span>Dùng bảy mẫu để dự báo trước 30 giây</span></div>
-            <span class="arch-sep" aria-hidden="true">➔</span>
-            <div class="arch-step"><b>task_fan</b><span>Áp dụng quy tắc điều khiển lên GPIO10</span></div>
-          </div>
-          <p class="small">Các tác vụ trao đổi số đo có dấu thời gian và kết quả dự báo qua <code>SharedContext</code> được bảo vệ bằng mutex. AUTO dùng ngưỡng nhiệt độ và độ ẩm đã lưu. SHADOW ghi lại dự báo trong khi quy tắc AUTO điều khiển rơ-le. AI có thể bật quạt sớm khi số đo nằm giữa hai ngưỡng, cấu hình khớp với mô hình và điểm ON đạt ít nhất 0,80. Ở các chế độ tự động, bộ điều khiển tắt rơ-le khi số đo không khí quá cũ hoặc không hợp lệ.</p>
-        </div>
-        <div class="arch-card">
-          <div class="arch-card-title"><svg class="ic"><use href="#i-chip"/></svg><span>Kết nối trên bo mạch</span></div>
-          <table class="pin-table">
-            <thead><tr><th scope="col">Chân hoặc giao tiếp</th><th scope="col">Thành phần</th><th scope="col">Chức năng</th></tr></thead>
-            <tbody>
-              <tr><td>GPIO11 / GPIO12</td><td>I2C SDA / SCL</td><td>Bus chung cho DHT20 và LCD 16×2 (0x27)</td></tr>
-              <tr><td>GPIO2</td><td>Đầu dò độ ẩm đất (ADC)</td><td>Đo riêng để hiển thị và lưu lịch sử</td></tr>
-              <tr><td>GPIO10</td><td>Rơ-le quạt</td><td>Mức cao kích hoạt mạch điều khiển quạt</td></tr>
-              <tr><td>GPIO48 / GPIO45</td><td>LED / NeoPixel</td><td>Lần lượt báo vùng nhiệt độ và độ ẩm</td></tr>
-              <tr><td>GPIO0</td><td>Nút BOOT</td><td>Giữ hơn 2 giây để xóa cấu hình đã lưu</td></tr>
-              <tr><td>USB CDC</td><td>Cổng nối tiếp</td><td>Đọc nhật ký firmware ở 115200 baud</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="arch-card">
-          <div class="arch-card-title"><svg class="ic"><use href="#i-sparkle"/></svg><span>Mô hình dự báo điều gì?</span></div>
-          <p class="small">Tám đầu vào mô tả nhiệt độ, độ ẩm không khí, xu hướng gần đây và lệnh quạt lúc lấy mẫu. Mô hình INT8 dự báo vùng OFF, HOLD hoặc ON sau 30 giây với giả định lệnh quạt giữ nguyên. Trên 3.600 kịch bản mô phỏng dành riêng cho kiểm thử, mô hình tham chiếu chạy trên máy tính dự báo đúng 87,28%, so với 82,94% của phép ngoại suy tuyến tính. Độ chính xác thực địa và thời gian suy luận trên bo mạch cần được đo trên thiết bị thật. <a href="https://github.com/SangNguyen-232/IoT-Env-Monitor/blob/project_linux/ml/models/fan_model_manifest.json" target="_blank" rel="noopener">Kết quả đánh giá mô hình</a></p>
-        </div>
-        <div class="arch-card">
-          <div class="arch-card-title"><svg class="ic"><use href="#i-server"/></svg><span>Điều khiển tại chỗ và lưu lịch sử thiết bị</span></div>
-          <p class="small">Khi mạng Wi-Fi đã cấu hình không khả dụng, bo mạch mở điểm truy cập để thiết lập lại. Cấu hình mạng được lưu trong LittleFS. Trên mạng LAN, trình duyệt nhận số đo trực tiếp từ bo mạch qua WebSocket. Một luồng riêng gửi dữ liệu bằng HTTP POST đến <code>/sensor</code> của backend Express để lưu vào PostgreSQL. Trang quản lý định kỳ lấy dữ liệu từ backend. Có thể dùng cổng Cloudflare để truy cập từ xa.</p>
-        </div>
-      `
+      title_en: 'System architecture',
+      title_vi: 'Kiến trúc hệ thống',
+      sub_en: 'IoT-Env-Monitor · Yolo Uno ESP32-S3',
+      sub_vi: 'IoT-Env-Monitor · Yolo Uno ESP32-S3',
+      renderBody: window.IoTArchitecture.render
     },
     'modal-proj2': {
-      title_en: "FPGA Vending Prototype — RTL & LCD Controller",
-      title_vi: "Nguyên mẫu máy bán hàng FPGA — RTL & bộ điều khiển LCD",
-      sub_en: "Arty-Z7-20 target · Verilog HDL · 125 MHz XDC constraint · 8-bit LCD bus",
-      sub_vi: "Bo đích Arty-Z7-20 · Verilog HDL · Ràng buộc XDC 125 MHz · LCD bus 8-bit",
-      body_en: `
-        <div class="arch-card">
-          <div class="arch-card-title"><svg class="ic" style="width:16px;height:16px;color:var(--mint);"><use href="#i-cpu"/></svg><span>Actual RTL hierarchy and interfaces</span></div>
-          <table class="pin-table">
-            <thead><tr><th>RTL component</th><th>Interface / behavior</th></tr></thead>
-            <tbody>
-              <tr><td><b>top_button_handler</b></td><td>Four product types, one-hot switch selection, User/Admin mode, quantity, stock, price and balance registers; purchase feedback through LCD and LEDs</td></tr>
-              <tr><td><b>button_debounce ×4</b></td><td>Two synchronization registers and a 20-bit stability counter; generates a button flag in the input clock domain</td></tr>
-              <tr><td><b>LCD_display</b></td><td>Two 128-bit text lines for a 16×2 LCD; 8-bit data bus plus rs/rw/en; 9-state controller</td></tr>
-              <tr><td><b>seg_0_data … seg_3_data</b></td><td>Four 4-bit decimal-digit outputs derived from the balance register, for a 7-segment display interface; no segment decoder or multiplexed scan module is included</td></tr>
-            </tbody>
-          </table>
-          <p class="muted small" style="margin:12px 0 0;">The Arty-Z7-20 XDC file constrains the input clock to 8 ns (125 MHz). This is a design constraint, not a measured operating frequency or evidence of timing closure.</p>
-        </div>
-        <div class="arch-card">
-          <div class="arch-card-title"><svg class="ic" style="width:16px;height:16px;color:var(--mint);"><use href="#i-layers"/></svg><span>LCD_display FSM — source state names</span></div>
-          <div class="arch-pipeline">
-            <div class="arch-step"><b>INIT</b><span>8-bit / two-line mode</span></div><span class="arch-sep">➔</span>
-            <div class="arch-step"><b>DISPLAY_ON</b><span>Enable display</span></div><span class="arch-sep">➔</span>
-            <div class="arch-step"><b>CLEAR_ON</b><span>Clear display</span></div><span class="arch-sep">➔</span>
-            <div class="arch-step"><b>SET_CURSOR1</b><span>First-line address</span></div><span class="arch-sep">➔</span>
-            <div class="arch-step"><b>WRITE_LINE1</b><span>16 characters</span></div><span class="arch-sep">➔</span>
-            <div class="arch-step"><b>SET_CURSOR2</b><span>Second-line address</span></div><span class="arch-sep">➔</span>
-            <div class="arch-step"><b>WRITE_LINE2</b><span>16 characters</span></div><span class="arch-sep">➔</span>
-            <div class="arch-step"><b>IDLE</b><span>Lower en, request refresh</span></div><span class="arch-sep">➔</span>
-            <div class="arch-step"><b>CHECK_UPDATE</b><span>Wait 12,500,000 cycles → CLEAR_ON</span></div>
-          </div>
-          <p class="muted small" style="margin:0;">This is the LCD controller FSM. Vending transactions are implemented with clocked case/if logic in top_button_handler; the source does not define a separate five-state vending FSM.</p>
-        </div>
-        <div class="arch-card">
-          <div class="arch-card-title"><svg class="ic" style="width:16px;height:16px;color:var(--amber);"><use href="#i-code"/></svg><span>User and Admin workflows</span></div>
-          <p class="small" style="color:var(--text2);margin:0 0 10px;">User mode: with no product switch selected, buttons 0/1 add 5/10 credit units and button 2 clears the balance. One active product switch selects one of four products; buttons 0/1 increase/decrease quantity and button 2 requests a purchase. Quantity increases are capped at 9 and the selected product's current stock. The purchase branch checks nonzero stock, positive quantity and sufficient balance, then deducts the stored total and stock. The LCD reports success or insufficient funds; the selected-product LED blinks on success. Multiple active product switches show ONLY_1_SWITCH_ON.</p>
-          <p class="small" style="color:var(--text2);margin:0;">Admin mode: for a selected product, buttons 0/1 raise/lower the price, button 2 adds stock and button 3 resets price and stock. Price increases and restocking are capped at 9; a price is decreased only when above 1. All prices and stock counts start at zero. Remaining user credit stays in the balance register; no coin validator, physical dispenser or cash-change output is implemented.</p>
-        </div>
-        <div class="arch-card" style="margin-bottom:0;">
-          <div class="arch-card-title"><svg class="ic" style="width:16px;height:16px;color:var(--amber);"><use href="#i-layers"/></svg><span>Validation status and prototype limits</span></div>
-          <p class="small" style="color:var(--text2);margin:0 0 10px;">The repository contains RTL, board constraints and an LCD stimulus testbench. It contains no bitstream, synthesis/timing report, board demonstration or Xcelium run log. The supplied testbench stops before LCD initialization completes and has no self-checking assertions, so it does not establish functional correctness.</p>
-          <p class="muted small" style="margin:0;">Static review identified an 8-bit balance that can wrap, a truncated debounce threshold literal, and stale quantity/total values when changing products. These edge cases require RTL fixes and verification before reliable hardware use.</p>
-        </div>
-      `,
-      body_vi: `
-        <div class="arch-card">
-          <div class="arch-card-title"><svg class="ic" style="width:16px;height:16px;color:var(--mint);"><use href="#i-cpu"/></svg><span>Cấu trúc RTL và các giao tiếp thực có</span></div>
-          <table class="pin-table">
-            <thead><tr><th>Thành phần RTL</th><th>Giao tiếp / chức năng</th></tr></thead>
-            <tbody>
-              <tr><td><b>top_button_handler</b></td><td>Bốn loại sản phẩm, chọn bằng switch one-hot, chế độ User/Admin, các thanh ghi số lượng, tồn kho, giá và số dư; phản hồi giao dịch qua LCD và LED</td></tr>
-              <tr><td><b>button_debounce ×4</b></td><td>Hai thanh ghi đồng bộ và bộ đếm ổn định 20-bit; tạo cờ nút nhấn trong miền xung nhịp đầu vào</td></tr>
-              <tr><td><b>LCD_display</b></td><td>Hai dòng văn bản 128-bit cho LCD 16×2; bus dữ liệu 8-bit cùng rs/rw/en; FSM điều khiển 9 trạng thái</td></tr>
-              <tr><td><b>seg_0_data … seg_3_data</b></td><td>Bốn đầu ra chữ số thập phân 4-bit tính từ thanh ghi số dư, dùng cho giao tiếp hiển thị LED 7 đoạn; chưa có bộ giải mã segment hoặc module quét ghép kênh</td></tr>
-            </tbody>
-          </table>
-          <p class="muted small" style="margin:12px 0 0;">Tệp XDC của Arty-Z7-20 đặt chu kỳ xung nhịp đầu vào 8 ns (125 MHz). Đây là ràng buộc thiết kế, chưa phải tần số đo thực tế hoặc bằng chứng đạt timing.</p>
-        </div>
-        <div class="arch-card">
-          <div class="arch-card-title"><svg class="ic" style="width:16px;height:16px;color:var(--mint);"><use href="#i-layers"/></svg><span>FSM của LCD_display — tên trạng thái trong mã nguồn</span></div>
-          <div class="arch-pipeline">
-            <div class="arch-step"><b>INIT</b><span>Chế độ 8-bit / hai dòng</span></div><span class="arch-sep">➔</span>
-            <div class="arch-step"><b>DISPLAY_ON</b><span>Bật hiển thị</span></div><span class="arch-sep">➔</span>
-            <div class="arch-step"><b>CLEAR_ON</b><span>Xóa màn hình</span></div><span class="arch-sep">➔</span>
-            <div class="arch-step"><b>SET_CURSOR1</b><span>Địa chỉ dòng 1</span></div><span class="arch-sep">➔</span>
-            <div class="arch-step"><b>WRITE_LINE1</b><span>Ghi 16 ký tự</span></div><span class="arch-sep">➔</span>
-            <div class="arch-step"><b>SET_CURSOR2</b><span>Địa chỉ dòng 2</span></div><span class="arch-sep">➔</span>
-            <div class="arch-step"><b>WRITE_LINE2</b><span>Ghi 16 ký tự</span></div><span class="arch-sep">➔</span>
-            <div class="arch-step"><b>IDLE</b><span>Hạ en, chuyển sang cập nhật</span></div><span class="arch-sep">➔</span>
-            <div class="arch-step"><b>CHECK_UPDATE</b><span>Chờ 12.500.000 chu kỳ → CLEAR_ON</span></div>
-          </div>
-          <p class="muted small" style="margin:0;">Đây là FSM điều khiển LCD. Giao dịch bán hàng dùng logic case/if theo xung nhịp trong top_button_handler; mã nguồn không định nghĩa FSM bán hàng năm trạng thái riêng.</p>
-        </div>
-        <div class="arch-card">
-          <div class="arch-card-title"><svg class="ic" style="width:16px;height:16px;color:var(--amber);"><use href="#i-code"/></svg><span>Quy trình User và Admin</span></div>
-          <p class="small" style="color:var(--text2);margin:0 0 10px;">Chế độ User: khi chưa chọn switch sản phẩm, nút 0/1 cộng 5/10 đơn vị số dư, nút 2 xóa số dư. Bật đúng một switch để chọn một trong bốn sản phẩm; nút 0/1 tăng/giảm số lượng, nút 2 yêu cầu mua. Khi tăng, số lượng được giới hạn ở 9 và tồn kho hiện tại của sản phẩm đã chọn. Nhánh mua kiểm tra còn hàng, số lượng chọn lớn hơn 0 và đủ số dư, sau đó trừ tổng tiền đang lưu và tồn kho. LCD báo thành công hoặc thiếu tiền; LED sản phẩm nhấp nháy khi thành công. Bật nhiều switch sẽ hiện ONLY_1_SWITCH_ON.</p>
-          <p class="small" style="color:var(--text2);margin:0;">Chế độ Admin: với sản phẩm đã chọn, nút 0/1 tăng/giảm giá, nút 2 thêm tồn kho, nút 3 đưa giá và tồn kho về 0. Tăng giá và bổ sung tồn kho được giới hạn ở 9; chỉ giảm giá khi giá lớn hơn 1. Giá và tồn kho khởi tạo bằng 0. Tiền chưa dùng vẫn nằm trong thanh ghi số dư; chưa có bộ nhận dạng tiền xu, cơ cấu nhả hàng hoặc đầu ra trả tiền mặt.</p>
-        </div>
-        <div class="arch-card" style="margin-bottom:0;">
-          <div class="arch-card-title"><svg class="ic" style="width:16px;height:16px;color:var(--amber);"><use href="#i-layers"/></svg><span>Trạng thái kiểm chứng và giới hạn nguyên mẫu</span></div>
-          <p class="small" style="color:var(--text2);margin:0 0 10px;">Repository có RTL, ràng buộc bo và testbench kích thích LCD. Chưa có bitstream, báo cáo tổng hợp/timing, bản trình diễn trên bo hoặc log chạy Xcelium. Testbench hiện dừng trước khi LCD khởi tạo xong và không có assertion tự kiểm tra nên chưa chứng minh tính đúng chức năng.</p>
-          <p class="muted small" style="margin:0;">Đối chiếu tĩnh phát hiện số dư 8-bit có thể tràn, hằng ngưỡng chống dội bị cắt bit và số lượng/tổng tiền cũ còn giữ khi đổi sản phẩm. Các tình huống biên này cần sửa RTL và kiểm chứng trước khi sử dụng phần cứng tin cậy.</p>
-        </div>
-      `
+      title_en: 'RTL & LCD controller',
+      title_vi: 'RTL & bộ điều khiển LCD',
+      sub_en: 'FPGA Vending · Arty-Z7-20 · Verilog',
+      sub_vi: 'FPGA Vending · Arty-Z7-20 · Verilog',
+      body_en: fpgaPurchase('en'),
+      body_vi: fpgaPurchase('vi')
     },
     'modal-proj3': {
       title_en: "ParkWise — Parking Fee Settlement and Receipts",

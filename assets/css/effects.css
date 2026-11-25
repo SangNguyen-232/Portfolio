@@ -1,5 +1,5 @@
 /* =====================================================================
-   DYNAMIC EFFECTS, AMBIENT LAYERS, CURSOR & ANIMATIONS
+   DYNAMIC EFFECTS, AMBIENT LAYERS & ANIMATIONS
    ===================================================================== */
 
 /* Preloader */
@@ -21,54 +21,51 @@
 }
 
 .loader-inner {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: grid;
+  justify-items: center;
   gap: 16px;
-  width: 280px;
 }
 
-.loader-logo {
-  font-family: var(--display);
-  font-weight: 800;
-  font-size: 32px;
+.loader-ready {
   color: var(--mint);
-  letter-spacing: -0.04em;
-  position: relative;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
-.loader-bar {
-  width: 100%;
-  height: 3px;
-  border-radius: 2px;
-  background: rgba(30, 59, 65, 0.6);
-  overflow: hidden;
-  position: relative;
+.ready-track {
+  fill: rgba(var(--mint-rgb), 0.06);
+  stroke: var(--border2);
 }
 
-.loader-bar span {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: 0%;
-  background: linear-gradient(90deg, var(--mint), var(--amber));
-  animation: loadProgress 1.4s var(--ease) forwards;
+.ready-check {
+  stroke-width: 4;
 }
 
-@keyframes loadProgress {
-  0% { width: 0%; }
-  60% { width: 75%; }
-  100% { width: 100%; }
+@media (prefers-reduced-motion: no-preference) {
+  .ready-ring,
+  .ready-check {
+    stroke-dasharray: 1;
+    animation: readyDraw 700ms var(--ease) both;
+  }
+
+  .ready-check {
+    animation-delay: 320ms;
+    animation-duration: 400ms;
+  }
+
+  @keyframes readyDraw {
+    from { stroke-dashoffset: 1; }
+    to { stroke-dashoffset: 0; }
+  }
 }
 
-.loader-line {
+.loader-text {
   font-family: var(--mono);
-  font-size: 12px;
-  color: var(--dim);
-  display: flex;
-  align-items: center;
-  gap: 4px;
+  font-size: 15px;
+  color: var(--text);
 }
 
 /* Ambient Canvas & Glow Layers */
@@ -83,22 +80,6 @@
   transition: opacity 0.4s var(--ease);
 }
 
-#spot {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 700px;
-  height: 700px;
-  margin-top: -350px;
-  margin-left: -350px;
-  border-radius: 50%;
-  pointer-events: none;
-  background: radial-gradient(circle, rgba(var(--mint-rgb), 0.055) 0%, transparent 70%);
-  transform: translate3d(50vw, 40vh, 0);
-  will-change: transform;
-  z-index: 1;
-}
-
 #aurora {
   position: fixed;
   top: -20%;
@@ -107,9 +88,8 @@
   height: 80vh;
   z-index: 0;
   pointer-events: none;
-  background: radial-gradient(ellipse at 40% 30%, rgba(var(--mint-rgb), 0.08) 0%, transparent 60%),
-              radial-gradient(ellipse at 70% 60%, rgba(var(--amber-rgb), 0.06) 0%, transparent 65%);
-  filter: blur(60px);
+  background: radial-gradient(ellipse at 40% 30%, rgba(var(--mint-rgb), 0.075) 0%, transparent 68%),
+              radial-gradient(ellipse at 70% 60%, rgba(var(--amber-rgb), 0.055) 0%, transparent 72%);
 }
 
 /* Neon Top Scroll Progress Bar */
@@ -132,81 +112,9 @@
   transition: width 0.1s linear;
 }
 
-/* Custom Cyber Cursor */
-body.cursor-on,
-body.cursor-on a,
-body.cursor-on button {
-  cursor: none;
-}
-
-body.cursor-on input,
-body.cursor-on textarea,
-body.cursor-on select {
-  cursor: auto;
-}
-
-.cursor-dot,
-.cursor-ring {
-  position: fixed;
-  top: 0;
-  left: 0;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 99999;
-  display: none;
-}
-
-body.cursor-on .cursor-dot,
-body.cursor-on .cursor-ring {
-  display: block;
-}
-
-.cursor-dot {
-  width: 6px;
-  height: 6px;
-  background: var(--mint);
-  box-shadow: 0 0 8px var(--mint), 0 0 16px rgba(var(--mint-rgb), 0.4);
-  will-change: transform;
-  transition: opacity 0.2s var(--ease), background-color 0.15s, box-shadow 0.15s;
-}
-
-.cursor-ring {
-  width: 36px;
-  height: 36px;
-  border: 1.5px solid rgba(var(--mint-rgb), 0.55);
-  box-shadow: 0 0 12px rgba(var(--mint-rgb), 0.2);
-  will-change: transform;
-  transition: border-color 0.22s cubic-bezier(0.16, 1, 0.3, 1),
-              background-color 0.22s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.22s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-body.cursor-hover .cursor-ring {
-  border-color: var(--amber);
-  background: rgba(var(--amber-rgb), 0.08);
-  box-shadow: 0 0 18px rgba(var(--amber-rgb), 0.35);
-}
-
-body.cursor-down .cursor-ring {
-  border-color: var(--mint);
-  background: rgba(var(--mint-rgb), 0.2);
-  box-shadow: 0 0 22px rgba(var(--mint-rgb), 0.6), inset 0 0 8px rgba(var(--mint-rgb), 0.35);
-}
-
-body.cursor-down .cursor-dot {
-  background: #ffffff;
-  box-shadow: 0 0 12px #ffffff, 0 0 22px var(--mint);
-}
-
 /* 3D Tilt Class */
 .tilting {
   transition: none !important;
-  will-change: transform;
-}
-
-/* Magnetic Interaction Active Class */
-.magnetic-active {
-  transition: transform 0.08s ease-out !important;
   will-change: transform;
 }
 
@@ -214,7 +122,6 @@ body.cursor-down .cursor-dot {
 .btn:active,
 .social:active,
 .totop:active,
-.term-chip:active,
 .regen:active,
 .pcard-link:active,
 .btn-shortcuts-helper:active,
@@ -286,12 +193,10 @@ body.cursor-down .cursor-dot {
 /* Keep native content and navigation usable when scripting is unavailable. */
 .no-js #loader,
 .no-js #net,
-.no-js .term,
 .no-js .lang,
 .no-js .burger,
 .no-js .btn-inspect,
 .no-js #shortcutsHelperBtn,
-.no-js #copyEmailBtn,
 .no-js .typing,
 .no-js .chat-foot {
   display: none;
@@ -336,12 +241,12 @@ body.cursor-down .cursor-dot {
 /* Shimmer Animation for Gradient Text */
 @media (prefers-reduced-motion: no-preference) {
   .hero-name {
-    animation: nameIn 1.2s var(--ease) 0.4s backwards;
+    animation: nameIn 0.9s var(--ease) 0.3s backwards, shimmer 9s ease-in-out 1.2s infinite alternate;
   }
   @keyframes nameIn {
     from {
-      letter-spacing: 0.12em;
-      filter: blur(8px);
+      letter-spacing: 0.05em;
+      transform: translateY(8px);
       opacity: 0;
     }
   }

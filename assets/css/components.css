@@ -20,8 +20,6 @@
 /* Glassmorphism Panel Container */
 .glass {
   background: var(--grad-card);
-  backdrop-filter: blur(14px) saturate(1.25);
-  -webkit-backdrop-filter: blur(14px) saturate(1.25);
   border: 1px solid var(--border);
   border-radius: var(--r);
   box-shadow: 0 16px 40px -16px rgba(0, 0, 0, 0.5);
@@ -33,24 +31,8 @@
   border-color: var(--border2);
 }
 
-/* Spotlight Border Glow on Mouse Hover */
-.spot::after {
-  content: '';
-  position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  padding: 1px;
-  background: radial-gradient(350px circle at var(--mx, 50%) var(--my, 50%), rgba(var(--mint-rgb), 0.35), transparent 70%);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.35s var(--ease);
-}
-
-.spot:hover::after {
-  opacity: 1;
+@media (hover: hover) {
+  .spot:hover { border-color: rgba(var(--mint-rgb), 0.35); }
 }
 
 /* Buttons */
@@ -163,6 +145,7 @@
 }
 
 .status-dot {
+  flex: none;
   width: 8px;
   height: 8px;
   border-radius: 50%;
@@ -364,19 +347,6 @@
   font-weight: bold;
 }
 
-@media (max-width: 640px) {
-  .air-monitor-flow {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 4px;
-  }
-
-  .air-monitor-flow .arch-sep {
-    align-self: center;
-    transform: rotate(90deg);
-  }
-}
-
 .pin-table {
   width: 100%;
   border-collapse: collapse;
@@ -403,6 +373,123 @@
   background: rgba(var(--mint-rgb), 0.05);
   color: var(--mint);
 }
+
+/* Architecture of the ESP32 control loop (all sections expanded on open) */
+.iot-inspector { max-height: min(90dvh, 900px); }
+.iot-inspector .modal-body {
+  display: block;
+  min-height: 0;
+  overscroll-behavior: contain;
+  padding: clamp(16px, 3vw, 30px);
+  color: var(--text2);
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+
+.iot-intro { color: var(--pale); }
+.iot-flow {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  list-style: none;
+  margin: 16px 0 20px;
+  padding: 0;
+}
+.iot-flow li {
+  position: relative;
+  padding: 8px 10px;
+  border: 1px solid var(--border2);
+  border-radius: 7px;
+  background: rgba(var(--mint-rgb), 0.045);
+}
+.iot-flow li + li::before {
+  content: '';
+  position: absolute;
+  right: calc(100% + 8px);
+  top: calc(50% - 4px);
+  width: 7px;
+  height: 7px;
+  border-top: 1px solid var(--mint);
+  border-right: 1px solid var(--mint);
+  transform: rotate(45deg);
+}
+.iot-flow b { display: block; color: var(--mint); font: 600 14px/1.4 var(--mono); }
+.iot-flow span { font-size: 13px; }
+
+.iot-decision {
+  border-top: 1px solid var(--border2);
+  padding-top: 14px;
+}
+.iot-decision-title {
+  margin: 0 0 8px;
+  color: var(--mint);
+  font-size: 16px;
+  font-weight: 600;
+}
+.iot-decision p { margin: 0 0 10px; font-size: 15px; }
+.iot-sources {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+  padding: 2px 0 16px;
+  font-size: 13px;
+}
+.iot-sources a { color: var(--mint); text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 540px) {
+  .iot-inspector .modal-header, .iot-inspector .modal-footer { padding: 12px 16px; }
+  .iot-flow { gap: 12px; }
+  .iot-flow li { padding: 6px; }
+  .iot-flow li + li::before { right: calc(100% + 4px); width: 5px; height: 5px; }
+  .iot-flow b { font-size: 12px; }
+  .iot-flow span { display: block; font-size: 12px; }
+}
+
+/* Follow one purchase through the FPGA's input logic, registers and LCD (all sections expanded). */
+.fpga-story {
+  flex: 0 0 auto;
+  min-width: 0;
+  color: var(--text2);
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+.fpga-story h4 { color: var(--text); font-size: clamp(19px, 3vw, 24px); }
+.fpga-story h5 { color: var(--pale); font-size: 16px; }
+.fpga-story p { margin: 5px 0 8px; font-size: 15px; }
+.fpga-story a { color: var(--mint); text-decoration: underline; text-underline-offset: 3px; font-size: 13px; }
+.fpga-flow {
+  list-style: decimal;
+  margin: 16px 0;
+  padding-inline-start: 1.6em;
+  border-block-start: 1px solid var(--border);
+}
+.fpga-flow li { padding: 12px 0 0 4px; }
+.fpga-flow li::marker { color: var(--amber); font: 600 13px var(--mono); }
+.fpga-fsm {
+  border-top: 1px solid var(--border2);
+  padding-top: 14px;
+}
+.fpga-fsm-title {
+  margin: 0 0 10px;
+  color: var(--mint);
+  font-size: 16px;
+  font-weight: 600;
+}
+.fpga-fsm ol {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+  gap: 6px;
+  margin: 6px 0 12px;
+  padding: 0;
+  list-style: decimal inside;
+}
+.fpga-fsm li {
+  padding: 4px 8px;
+  border-inline-start: 2px solid var(--border2);
+  background: rgba(var(--mint-rgb), 0.04);
+  font: 500 12px/1.6 var(--mono);
+}
+.fpga-fsm li::marker { color: var(--mint); }
 
 /* Shortcuts Dialog */
 .shortcuts-dialog {
@@ -558,13 +645,13 @@ kbd {
   transition: color 0.25s ease;
 }
 
-/* Precise constellation layout matching the visual screenshot */
-.toc a:nth-of-type(1) { width: 174px; } /* Professional Summary (dot at ~70px) */
-.toc a:nth-of-type(2) { width: 95px; }  /* Projects (dot at ~149px) */
-.toc a:nth-of-type(3) { width: 82px; }  /* Skills (dot at ~162px) */
-.toc a:nth-of-type(4) { width: 108px; } /* Experience (dot at ~136px) */
-.toc a:nth-of-type(5) { width: 207px; } /* Education & Certification (dot at ~37px) */
-.toc a:nth-of-type(6) { width: 88px; }  /* Contact (dot at ~156px) */
+/* Constellation widths keyed by target section so reordering stays aligned */
+.toc a[href="#about"] { width: 174px; }
+.toc a[href="#projects"] { width: 95px; }
+.toc a[href="#education"] { width: 207px; }
+.toc a[href="#skills"] { width: 82px; }
+.toc a[href="#experience"] { width: 108px; }
+.toc a[href="#contact"] { width: 88px; }
 
 .toc a span {
   opacity: 0;

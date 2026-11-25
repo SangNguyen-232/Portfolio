@@ -23,7 +23,7 @@ This is a static website. HTML defines its content and structure, CSS controls i
 
 Node.js runs the small local HTTP server in `scripts/serve.mjs`. The server uses Node.js built-in modules and serves `index.html` and files under `assets/`. There are no npm dependencies to install and no frontend compilation step. The only npm script is `start`; `npm install`, `npm ci`, and `npm run build` are not setup steps for this project.
 
-The terminal output, hardware graphics, and assistant text are browser demonstrations. Their displayed commands do not execute firmware or shell commands, and the assistant does not contact an AI service.
+The terminal-style panel displays the candidate’s introduction. The hardware graphics and the About section’s assistant text run locally in the browser.
 
 ## 2. Install the required tools
 
@@ -142,12 +142,13 @@ npm start
 
 ## 5. Use the portfolio interface
 
-- Use the navigation links to move between the summary, projects, skills, experience, education, and contact sections. On narrower screens, open the navigation menu with its menu button.
+- Use the navigation links to move between the summary, projects, education, skills, experience, and contact sections. On narrower screens, open the navigation menu with its menu button.
 - Use the language button to switch between English and Vietnamese. Both interface translations are intentional. The browser stores the language preference when local storage is available.
-- Open the architecture/details buttons on project cards to read the project dialogs. Use the close button, click the backdrop, or press Escape to close a dialog. Keyboard Tab navigation stays within an open dialog.
-- Click the terminal command chips to display local diagnostic demonstrations: help, FreeRTOS tasks, TinyML inference, FPGA state-machine output, and clear. These are clickable simulations, not a general-purpose terminal input.
+- Open **System architecture** on the IoT-Env-Monitor card. It displays the DHT20-to-relay diagram and all four design decisions fully expanded with links to their implementation.
+- Open **RTL & LCD controller** on the FPGA card. It displays the worked purchase from the button inputs through the balance and stock registers to the LCD, along with the nine-state sequence, refresh timing and the supplied testbench's stopping point fully expanded.
+- Open **Process flow** on the ParkWise card to view all four sections covering account balance calculation, batch payment settlement, payment history filtering, and Vietnamese PDF receipt generation. Use the close button, click the backdrop, or press Escape to return to the page.
 - Use the assistant's regenerate button to replay its predefined profile text in the selected language. No account or API key is needed.
-- Move the mouse across the **about me** and **profile.json** cards to see them tilt slightly and highlight their borders. The cards settle back when the pointer leaves. On touch-only devices or with reduced motion enabled, the cards stay level.
+- Move the mouse across the **about me** and **profile.json** cards to see them tilt slightly. The page uses the system cursor, and the cards settle when the pointer leaves. On touch-only devices or with reduced motion enabled, the cards stay level.
 - Use **View CV** to open `assets/docs/CV.pdf`. A browser may display it in a PDF viewer or offer a download according to its settings.
 
 The keyboard shortcuts are:
@@ -155,8 +156,8 @@ The keyboard shortcuts are:
 | Key | Action |
 | --- | --- |
 | `L` | Switch the interface language. |
-| `B` | Toggle the animated LED borders. |
-| `T` | Move to and focus the firmware terminal region. |
+| `B` | Show or hide the pulsing LED borders and the light traces between sections. |
+| `T` | Move to and focus the introduction in the terminal-style panel. |
 | `P` | Move to the projects section. |
 | `Escape` | Close an open dialog or the mobile menu. |
 | `?` | Open or close the shortcut guide. |
@@ -188,6 +189,7 @@ Portfolio/
       redesign3d.css
     js/
       i18n.js
+      iot-architecture.js
       scope.js
       terminal.js
       main.js
@@ -202,19 +204,20 @@ Portfolio/
 | Change you want to make | File or directory to edit |
 | --- | --- |
 | Page sections, links, metadata, and initial HTML content | `index.html` |
-| English/Vietnamese interface strings and project dialog content | `assets/js/i18n.js` |
+| English/Vietnamese interface strings and FPGA/ParkWise dialogs | `assets/js/i18n.js` |
+| IoT control diagram, bilingual design decisions and source links | `assets/js/iot-architecture.js` |
 | Colors and shared design variables | `assets/css/variables.css` |
 | Layout and appearance | The relevant file in `assets/css/`; check the stylesheet order in `index.html`. |
 | Navigation, storage preferences, keyboard shortcuts, and dialogs | `assets/js/main.js` |
-| Simulated terminal output and assistant stream behavior | `assets/js/terminal.js` |
+| About section’s assistant text and replay behavior | `assets/js/terminal.js` |
 | Canvas/hardware-style background effects | `assets/js/scope.js` |
 | Portrait | `assets/images/anh-the-trang.webp` and its references/alternative text if renamed |
 | CV content and layout | `assets/docs/CV.tex`, then rebuild `CV.pdf` |
 | Local HTTP serving behavior | `scripts/serve.mjs` |
 
-Keep code comments and documentation in English. Preserve the deliberate English and Vietnamese interface translations. For an element with a `data-i18n` attribute, changing only its text in `index.html` is not enough: the language system replaces it with the corresponding dictionary value. Update the relevant English and Vietnamese keys in `i18n.js`, and keep the HTML fallback text consistent. Project dialog bodies also have separate language versions in that file.
+Keep code comments and documentation in English. Maintain both interface languages. For an element with a `data-i18n` attribute, update the English and Vietnamese values in `i18n.js` and the English fallback in `index.html`. Each design decision in `iot-architecture.js` has English and Vietnamese text and shares the same implementation links on the IoT project’s `project_linux` branch.
 
-For IoT-Env-Monitor, check the ESP32 task names and relay pin in the firmware and the model's inputs, data split and evaluation runtime in the manifest. Update the hero figures, project card, architecture dialog, simulated terminal and CV together when those facts change. The portfolio's model accuracy is measured on held-out synthetic episodes using the desktop interpreter. [Project source](https://github.com/SangNguyen-232/IoT-Env-Monitor/tree/project_linux) · [Model manifest](https://github.com/SangNguyen-232/IoT-Env-Monitor/blob/project_linux/ml/models/fan_model_manifest.json)
+For IoT-Env-Monitor, check the ESP32 task names and relay pin in the firmware and the model's inputs, data split and evaluation runtime in the manifest. Update the project card, architecture dialog and CV wherever they use a changed fact. The portfolio's model accuracy is measured on held-out synthetic episodes using the desktop interpreter. [Project source](https://github.com/SangNguyen-232/IoT-Env-Monitor/tree/project_linux) · [Model manifest](https://github.com/SangNguyen-232/IoT-Env-Monitor/blob/project_linux/ml/models/fan_model_manifest.json)
 
 Use the same engineering style for ParkWise as for the firmware and FPGA entries. In the project card and CV, connect a mechanism to its effect. For example, one balance deduction settles several parking visits, while a shared transaction reference keeps each visit traceable. In the project dialog, follow the data from the React screens through the Next.js routes and payment controller to the PDF receipt. Document the validation checks and prototype limits, and omit internal use-case labels.
 
@@ -306,6 +309,7 @@ The repository has no `test`, `lint`, or `build` npm script and no bundled brows
 ```sh
 node --check scripts/serve.mjs
 node --check assets/js/i18n.js
+node --check assets/js/iot-architecture.js
 node --check assets/js/main.js
 node --check assets/js/scope.js
 node --check assets/js/terminal.js
@@ -319,8 +323,8 @@ Start the server as described in section 4, then follow this manual check:
 1. Open the URL printed by the server and confirm that the page, portrait, styles, and icons load. In the browser's Network panel, check that local CSS, JavaScript, image, and PDF requests succeed.
 2. Follow the navigation links on both a wide window and a narrow/mobile-sized window. Open and close the mobile menu and confirm that the page can still scroll.
 3. Switch between English and Vietnamese. Check the section titles, project text, and project detail dialogs in both languages. Reload the page and confirm the language preference persists when browser storage is allowed.
-4. Open each project dialog. Use Tab and Shift+Tab to move among its controls, then close it with Escape and with its close button. Check the shortcut guide with `?` and the `L`, `B`, `T`, and `P` shortcuts when no dialog is open.
-5. Click each terminal command chip, including clear, and replay the assistant text. Confirm that the local demonstrations complete without uncaught errors in the browser Console.
+4. Open each project dialog (**System architecture**, **RTL & LCD controller**, **Process flow**) and verify all sections are expanded immediately without extra clicks. Use Tab and Shift+Tab to move among its controls, then close it with Escape and with its close button. Check the shortcut guide with `?` and the `L`, `B`, `T`, and `P` shortcuts when no dialog is open.
+5. Check that the greeting, name and role appear together inside the terminal-style panel in both languages. Replay the assistant text in About and check the browser Console for uncaught errors.
 6. Open **View CV** and inspect the PDF. After any CV source change, recompile it and inspect every page as described in section 7.
 7. Enable the operating system or browser's reduced-motion preference, reload the page, and confirm that navigation and content remain usable. Restore your preferred setting afterward.
 8. Stop the server with Ctrl+C, restart it, and reopen the printed URL. If you changed the port, use the matching URL.
@@ -341,4 +345,4 @@ curl --head http://127.0.0.1:4173/assets/docs/CV.pdf
 
 Both responses should begin with `HTTP/1.1 200 OK`. Replace `4173` in these commands if you selected another port. An HTTP success confirms that a file is served; use the browser checks above to assess interactive behavior and layout.
 
-The syntax checks passed under Node.js 26.13.1. The IoT-Env-Monitor card, architecture dialog, language switch and terminal demonstrations were exercised in Chrome at desktop and mobile viewport sizes on Windows. Tectonic 0.17.0 rebuilt the one-page CV. The rendered page and its project repository link were checked.
+The syntax checks passed under Node.js 26.13.1. The introduction, IoT-Env-Monitor card, architecture dialog and language switch were exercised in Chrome at desktop and mobile viewport sizes on Windows. Tectonic 0.17.0 rebuilt the one-page CV. The rendered page and its project repository link were checked.

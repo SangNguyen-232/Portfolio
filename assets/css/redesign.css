@@ -65,14 +65,14 @@ html { scrollbar-color: var(--border2) var(--bg); }
     transform: scale(1.05);
   }
 }
-.eng-card-foot::before { content: 'rev 2026.10'; }
+.eng-card-foot::before { content: 'rev 2026.11'; }
 
 /* ---------------------------------------------------------------------
-   2. TERMINAL: thin scanlines + glowing border when focused with the [T] key
+   2. TERMINAL: delicate scanlines + reduced-motion safety for waveform/ping
    --------------------------------------------------------------------- */
 .term-body {
   background-image: repeating-linear-gradient(
-    180deg, rgba(var(--mint-rgb), 0.025) 0 1px, transparent 1px 3px);
+    180deg, rgba(var(--mint-rgb), 0.018) 0 1px, transparent 1px 4px);
 }
 
 /* ---------------------------------------------------------------------
@@ -115,8 +115,9 @@ html { scrollbar-color: var(--border2) var(--bg); }
    --------------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   .marquee .track { animation: none; flex-wrap: wrap; width: auto; }
-  .status-dot, .caret, .typing i, .stream.live::after,
+  .status-dot, .term-wave .wave-pulse,
+  .typing i, .stream.live::after,
   .eng-card-head::after, .tl-item.current .tl-dot,
-  .loader-bar span, .chat-head .dots i { animation: none; }
+  .chat-head .dots i { animation: none; }
   html { scroll-behavior: auto; }
 }

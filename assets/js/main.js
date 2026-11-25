@@ -41,7 +41,6 @@
   let reducedMotionState = motionQuery.matches;
   motionQuery.addEventListener('change', (event) => { reducedMotionState = event.matches; });
   const prefersReducedMotion = () => reducedMotionState;
-  const isFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   const scrollBehavior = () => prefersReducedMotion() ? 'auto' : 'smooth';
   let closeMobileMenu = () => {};
 
@@ -50,272 +49,77 @@
      ===================================================================== */
   const initPreloader = () => {
     const loader = document.getElementById('loader');
-    if (!loader) {
-      if (window.TerminalEngine) window.TerminalEngine.startTerminalTyping();
-      return;
-    }
+    if (!loader) return;
 
     if (prefersReducedMotion()) {
       loader.classList.add('done');
-      if (window.TerminalEngine) window.TerminalEngine.startTerminalTyping();
       return;
     }
 
     setTimeout(() => {
       loader.classList.add('done');
-      if (window.TerminalEngine) window.TerminalEngine.startTerminalTyping();
     }, 1400);
   };
 
   /* =====================================================================
-     2. CUSTOM CYBER CURSOR & SPOTLIGHT
+     2. POINTER TILT ON CARDS
      ===================================================================== */
-  const initCustomCursor = () => {
-    if (!isFinePointer) return;
+  const initCardTilt = () => {
+    const hover = window.matchMedia('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)');
+    const cards = document.querySelectorAll('.pcard, .skill, .do, .edu, .tl-card, .term, .eng-card, .chat, .profile, .contact-card');
+    let active = null;
+    let bounds = null;
+    let frame = null;
+    let clientX = 0;
+    let clientY = 0;
 
-    let dot = document.querySelector('.cursor-dot');
-    let ring = document.querySelector('.cursor-ring');
-    const spot = document.getElementById('spot');
-
-    if (!dot || !ring) {
-      dot = document.createElement('div');
-      dot.className = 'cursor-dot';
-      ring = document.createElement('div');
-      ring.className = 'cursor-ring';
-      document.body.append(dot, ring);
-    }
-
-    document.body.classList.toggle('cursor-on', !prefersReducedMotion());
-
-    let mouseX = -100, mouseY = -100;
-    let ringX = -100, ringY = -100;
-    let spotX = window.innerWidth / 2, spotY = window.innerHeight / 3;
-    let rafId = null;
-    let hasPointer = false;
-    let isHovered = false;
-    let isDown = false;
-    let ringScale = 1.0;
-    let targetScale = 1.0;
-
-    const lerp = (a, b, t) => a + (b - a) * t;
-
-    const updateDotPosition = () => {
-      dot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%) scale(${isDown ? 0.75 : 1})`;
+    const clear = () => {
+      if (!active) return;
+      if (frame !== null) cancelAnimationFrame(frame);
+      frame = null;
+      active.style.removeProperty('transform');
+      active.classList.remove('tilting', 'chip-active');
+      window.ScopeEngine?.setHoveredCard(null, false);
+      active = null;
+      bounds = null;
     };
 
-    const positionCursor = () => {
-      updateDotPosition();
-      ring.style.transform = `translate3d(${ringX.toFixed(2)}px, ${ringY.toFixed(2)}px, 0) translate(-50%, -50%) scale(${ringScale.toFixed(3)})`;
-      if (spot) {
-        spot.style.transform = `translate3d(${spotX.toFixed(1)}px, ${spotY.toFixed(1)}px, 0)`;
-      }
+    const render = () => {
+      frame = null;
+      if (!bounds) bounds = active.getBoundingClientRect();
+      if (!bounds.width || !bounds.height) return;
+      const x = Math.max(-0.5, Math.min(0.5, (clientX - bounds.left) / bounds.width - 0.5));
+      const y = Math.max(-0.5, Math.min(0.5, (clientY - bounds.top) / bounds.height - 0.5));
+      active.style.transform = `perspective(1000px) rotateX(${(-y * 6).toFixed(2)}deg) rotateY(${(x * 6).toFixed(2)}deg) translateY(-3px)`;
     };
 
-    const renderCursor = () => {
-      rafId = null;
-      if (document.hidden || prefersReducedMotion()) return;
-
-      ringX = lerp(ringX, mouseX, 0.22);
-      ringY = lerp(ringY, mouseY, 0.22);
-      ringScale = lerp(ringScale, targetScale, 0.28);
-
-      if (spot) {
-        spotX = lerp(spotX, mouseX, 0.12);
-        spotY = lerp(spotY, mouseY, 0.12);
+    const track = (event) => {
+      if (!hover.matches || event.pointerType === 'touch' || document.hidden) return;
+      if (active !== event.currentTarget) {
+        clear();
+        active = event.currentTarget;
+        active.classList.add('tilting', 'chip-active');
+        window.ScopeEngine?.setHoveredCard(active, true);
       }
-
-      const ringSettled = Math.abs(ringX - mouseX) < 0.15 &&
-        Math.abs(ringY - mouseY) < 0.15 &&
-        Math.abs(ringScale - targetScale) < 0.005;
-      const spotSettled = !spot || (Math.abs(spotX - mouseX) < 0.2 && Math.abs(spotY - mouseY) < 0.2);
-
-      if (ringSettled) {
-        ringX = mouseX;
-        ringY = mouseY;
-        ringScale = targetScale;
-      }
-      if (spotSettled && spot) {
-        spotX = mouseX;
-        spotY = mouseY;
-      }
-
-      positionCursor();
-
-      if (!ringSettled || !spotSettled) {
-        rafId = requestAnimationFrame(renderCursor);
-      }
+      clientX = event.clientX;
+      clientY = event.clientY;
+      if (frame === null) frame = requestAnimationFrame(render);
     };
 
-    const scheduleCursor = () => {
-      if (rafId === null && !document.hidden && !prefersReducedMotion()) {
-        rafId = requestAnimationFrame(renderCursor);
-      }
-    };
-
-    window.addEventListener('pointermove', (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-      hasPointer = true;
-      if (prefersReducedMotion()) return;
-
-      updateDotPosition();
-
-      const hovering = !!(e.target && e.target.closest && e.target.closest('a, button, [data-cursor], .tag, .pill, .pcard, .skill, .term-chip'));
-      if (hovering !== isHovered) {
-        isHovered = hovering;
-        targetScale = isDown ? 0.75 : (isHovered ? 1.35 : 1.0);
-        document.body.classList.toggle('cursor-hover', isHovered);
-      }
-      scheduleCursor();
-    }, { passive: true });
-
-    window.addEventListener('pointerdown', () => {
-      isDown = true;
-      targetScale = 0.75;
-      if (!prefersReducedMotion()) {
-        document.body.classList.add('cursor-down');
-        updateDotPosition();
-        scheduleCursor();
-      }
+    cards.forEach((card) => {
+      card.addEventListener('pointerenter', track, {passive: true});
+      card.addEventListener('pointermove', track, {passive: true});
+      const leave = () => { if (active === card) clear(); };
+      card.addEventListener('pointerleave', leave);
+      card.addEventListener('pointercancel', leave);
     });
 
-    window.addEventListener('pointerup', () => {
-      isDown = false;
-      targetScale = isHovered ? 1.35 : 1.0;
-      document.body.classList.remove('cursor-down');
-      if (!prefersReducedMotion()) {
-        updateDotPosition();
-        scheduleCursor();
-      }
-    });
-
-    const updateVisibility = () => {
-      root.classList.toggle('led-paused', document.hidden);
-    };
-    document.addEventListener('visibilitychange', updateVisibility);
-    updateVisibility();
-
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden) {
-        if (rafId !== null) cancelAnimationFrame(rafId);
-        rafId = null;
-        isDown = false;
-        document.body.classList.remove('cursor-down');
-      } else if (hasPointer) {
-        scheduleCursor();
-      }
-    });
-
-    motionQuery.addEventListener('change', () => {
-      document.body.classList.toggle('cursor-on', !prefersReducedMotion());
-      if (prefersReducedMotion()) {
-        if (rafId !== null) cancelAnimationFrame(rafId);
-        rafId = null;
-        isDown = false;
-        document.body.classList.remove('cursor-hover', 'cursor-down');
-      } else if (hasPointer) {
-        scheduleCursor();
-      }
-    });
-    positionCursor();
-  };
-
-  /* =====================================================================
-     3. 3D TILT, MAGNETIC BUTTONS & SPOTLIGHT BORDER
-     ===================================================================== */
-  const initTiltAndSpotlight = () => {
-    // Spotlight border on glass cards
-    document.querySelectorAll('.spot').forEach((card) => {
-      let rect = null;
-      card.addEventListener('pointerenter', () => {
-        rect = card.getBoundingClientRect();
-      }, { passive: true });
-      card.addEventListener('pointermove', (e) => {
-        if (prefersReducedMotion()) return;
-        if (!rect) rect = card.getBoundingClientRect();
-        card.style.setProperty('--mx', `${(e.clientX - rect.left).toFixed(1)}px`);
-        card.style.setProperty('--my', `${(e.clientY - rect.top).toFixed(1)}px`);
-      }, { passive: true });
-      card.addEventListener('pointerleave', () => {
-        rect = null;
-      }, { passive: true });
-    });
-
-    if (!isFinePointer) return;
-
-    // 3D Tilt on Cards
-    const tiltTargets = document.querySelectorAll('.pcard, .skill, .do, .edu, .tl-card, .term, .eng-card, .chat, .profile, .contact-card');
-    tiltTargets.forEach((el) => {
-      let rect = null;
-      let tiltRaf = null;
-
-      el.addEventListener('pointerenter', () => {
-        rect = el.getBoundingClientRect();
-        el.classList.add('tilting', 'chip-active');
-        if (window.ScopeEngine) window.ScopeEngine.setHoveredCard(el, true);
-      });
-
-      el.addEventListener('pointermove', (e) => {
-        if (prefersReducedMotion()) return;
-        if (!rect) rect = el.getBoundingClientRect();
-        const x = (e.clientX - rect.left) / rect.width - 0.5;
-        const y = (e.clientY - rect.top) / rect.height - 0.5;
-        el.classList.add('tilting');
-
-        if (tiltRaf) cancelAnimationFrame(tiltRaf);
-        tiltRaf = requestAnimationFrame(() => {
-          el.style.transform = `perspective(1000px) rotateX(${(-y * 6).toFixed(2)}deg) rotateY(${(x * 6).toFixed(2)}deg) translateY(-3px)`;
-        });
-      });
-
-      el.addEventListener('pointerleave', () => {
-        if (tiltRaf) cancelAnimationFrame(tiltRaf);
-        rect = null;
-        el.classList.remove('tilting', 'chip-active');
-        el.style.transform = '';
-        if (window.ScopeEngine) window.ScopeEngine.setHoveredCard(null, false);
-      });
-    });
-
-    // Magnetic Micro-Interactions on Interactive Elements
-    const magneticTargets = document.querySelectorAll('.btn, .social, .totop, .mobile-socials a');
-    magneticTargets.forEach((el) => {
-      let rect = null;
-      let magRaf = null;
-
-      el.addEventListener('pointerenter', () => {
-        rect = el.getBoundingClientRect();
-        el.classList.add('magnetic-active');
-      });
-
-      el.addEventListener('pointermove', (e) => {
-        if (prefersReducedMotion()) return;
-        if (!rect) rect = el.getBoundingClientRect();
-        const x = (e.clientX - rect.left - rect.width / 2) * 0.18;
-        const y = (e.clientY - rect.top - rect.height / 2) * 0.18;
-        el.classList.add('magnetic-active');
-
-        if (magRaf) cancelAnimationFrame(magRaf);
-        magRaf = requestAnimationFrame(() => {
-          el.style.transform = `translate(${x.toFixed(1)}px, ${(y - 2).toFixed(1)}px)`;
-        });
-      });
-
-      el.addEventListener('pointerleave', () => {
-        if (magRaf) cancelAnimationFrame(magRaf);
-        rect = null;
-        el.classList.remove('magnetic-active');
-        el.style.transform = '';
-      });
-    });
-
-    motionQuery.addEventListener('change', () => {
-      if (!prefersReducedMotion()) return;
-      [...tiltTargets, ...magneticTargets].forEach((el) => {
-        el.classList.remove('tilting', 'magnetic-active');
-        el.style.transform = '';
-      });
-    });
+    const invalidateBounds = () => { bounds = null; };
+    window.addEventListener('scroll', invalidateBounds, {passive: true});
+    window.addEventListener('resize', invalidateBounds);
+    window.addEventListener('blur', clear);
+    document.addEventListener('visibilitychange', () => { if (document.hidden) clear(); });
+    hover.addEventListener('change', clear);
   };
 
   /* =====================================================================
@@ -327,7 +131,7 @@
     });
     document.addEventListener('pointerdown', (e) => {
       if (prefersReducedMotion()) return;
-      const btn = e.target.closest && e.target.closest('.btn, .term-chip, .pcard-link, .regen');
+      const btn = e.target.closest && e.target.closest('.btn, .pcard-link, .regen');
       if (!btn) return;
 
       const rect = btn.getBoundingClientRect();
@@ -692,9 +496,16 @@
       const isVi = document.documentElement.lang === 'vi';
       title.textContent = isVi ? data.title_vi : data.title_en;
       sub.textContent = isVi ? data.sub_vi : data.sub_en;
-      body.innerHTML = isVi ? data.body_vi : data.body_en;
-      // Explicit stops keep native scroll-container focus in the dialog's Tab cycle.
-      body.querySelectorAll('.arch-card').forEach((card) => { card.tabIndex = 0; });
+      dialog.classList.toggle('iot-inspector', Boolean(data.renderBody));
+      body.tabIndex = 0;
+      if (data.renderBody) {
+        data.renderBody(body, isVi ? 'vi' : 'en');
+      } else {
+        body.innerHTML = isVi ? data.body_vi : data.body_en;
+        // Keep native scroll containers in the dialog's Tab cycle.
+        body.querySelectorAll('.arch-card').forEach((card) => { card.tabIndex = 0; });
+      }
+      body.scrollTop = 0;
       openDialog(backdrop, dialog);
     };
 
@@ -728,7 +539,7 @@
 
     const trapTab = (e) => {
       const modalDialog = activeModal.dialog;
-      const focusable = [...modalDialog.querySelectorAll('a[href], button, input, textarea, select, [tabindex], [contenteditable="true"]')]
+      const focusable = [...modalDialog.querySelectorAll('a[href], button, details > summary, input, textarea, select, [tabindex], [contenteditable="true"]')]
         .filter((el) => !el.matches(':disabled') && el.tabIndex >= 0 &&
           !el.closest('[inert]') && el.getClientRects().length > 0 && getComputedStyle(el).visibility !== 'hidden');
       const first = focusable[0];
@@ -812,8 +623,7 @@
   };
 
   const initClipboard = () => {
-    const copyBtn = document.getElementById('copyEmailBtn');
-    const quickCopyEmail = document.getElementById('quickCopyEmail');
+    const copyLinks = document.querySelectorAll('[data-copy]');
 
     const copyText = (text, successMsg) => {
       if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -825,22 +635,18 @@
       }
     };
 
-    if (copyBtn) {
-      copyBtn.addEventListener('click', () => {
-        const email = 'sangnguyen230204@gmail.com';
-        const isVi = document.documentElement.lang === 'vi';
-        copyText(email, isVi ? 'Đã sao chép email: ' + email : 'Copied email: ' + email);
-      });
-    }
-
-    if (quickCopyEmail) {
-      quickCopyEmail.addEventListener('click', (e) => {
+    copyLinks.forEach((el) => {
+      el.addEventListener('click', (e) => {
         e.preventDefault();
-        const email = quickCopyEmail.dataset.copy || 'sangnguyen230204@gmail.com';
+        const value = el.dataset.copy || 'sangnguyen230204@gmail.com';
+        const isPhone = el.dataset.copyType === 'phone';
         const isVi = document.documentElement.lang === 'vi';
-        copyText(email, isVi ? 'Đã sao chép email: ' + email : 'Copied email: ' + email);
+        const msg = isPhone
+          ? (isVi ? 'Đã sao chép số điện thoại: ' + value : 'Copied phone: ' + value)
+          : (isVi ? 'Đã sao chép email: ' + value : 'Copied email: ' + value);
+        copyText(value, msg);
       });
-    }
+    });
   };
 
   /* =====================================================================
@@ -910,17 +716,9 @@
      10. SYNCHRONIZED LED BORDER CONTROLLER
      ===================================================================== */
   const initLedController = () => {
-    if (window.CSS && typeof window.CSS.registerProperty === 'function') {
-      try {
-        window.CSS.registerProperty({
-          name: '--led-a',
-          syntax: '<angle>',
-          inherits: false,
-          initialValue: '0deg',
-        });
-      } catch (_) {}
-    }
-
+    const syncVisibility = () => root.classList.toggle('led-paused', document.hidden);
+    syncVisibility();
+    document.addEventListener('visibilitychange', syncVisibility);
     if ('IntersectionObserver' in window) {
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(({ target, isIntersecting }) => {
@@ -929,7 +727,7 @@
       }, { rootMargin: '100px' });
 
       const targets = new Set([
-        ...document.querySelectorAll('.glass, .nav-inner, .term, .stat, .pcard-visual'),
+        ...document.querySelectorAll('.glass, .nav-inner, .term, .pcard-visual'),
         ...document.querySelectorAll('.section, .sec-head .sec-title')
       ]);
 
@@ -942,32 +740,7 @@
   };
 
   /* =====================================================================
-     11. HERO STATS COUNT-UP ANIMATION
-     ===================================================================== */
-  const initStatsCountUp = () => {
-    const els = document.querySelectorAll('.count[data-to]');
-    if (!els.length || prefersReducedMotion() || !('IntersectionObserver' in window)) return;
-    const run = (el) => {
-      const to = +el.dataset.to, t0 = performance.now(), dur = 1200;
-      const tick = (t) => {
-        if (prefersReducedMotion()) {
-          el.textContent = to.toLocaleString(document.documentElement.lang);
-          return;
-        }
-        const p = Math.min((t - t0) / dur, 1), e = 1 - Math.pow(1 - p, 3);
-        el.textContent = Math.round(to * e).toLocaleString(document.documentElement.lang);
-        if (p < 1) requestAnimationFrame(tick);
-      };
-      requestAnimationFrame(tick);
-    };
-    const io = new IntersectionObserver((es) => es.forEach((en) => {
-      if (en.isIntersecting) { io.unobserve(en.target); run(en.target); }
-    }), { threshold: 0.6 });
-    els.forEach((el) => io.observe(el));
-  };
-
-  /* =====================================================================
-     12. BOOTSTRAP CLIENT APPLICATION
+     11. BOOTSTRAP CLIENT APPLICATION
      ===================================================================== */
   document.addEventListener('DOMContentLoaded', () => {
     // 1. Language Init & Toggle
@@ -1006,13 +779,8 @@
       window.ScopeEngine.initNeuralNetwork();
     }
 
-    if (window.TerminalEngine) {
-      window.TerminalEngine.initInteractiveTerminal();
-    }
-
     // 5. Interaction Systems
-    initCustomCursor();
-    initTiltAndSpotlight();
+    initCardTilt();
     initButtonRipple();
     initScrollManager();
     initScrambleTitles();
@@ -1020,7 +788,6 @@
     initClipboard();
     initMobileMenu();
     initLedController();
-    initStatsCountUp();
     document.documentElement.classList.remove('no-js');
   });
 })();

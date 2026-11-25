@@ -8,11 +8,6 @@
   opacity: 0.8;
 }
 
-.education-shell .edu.glass {
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-} /* Avoid nested blur effects */
-
 /* Number sections in the style of microcontroller circuit diagrams: 01 // … */
 main { counter-reset: sec; }
 main > .section > .container > .sec-head { counter-increment: sec; }
@@ -26,14 +21,14 @@ main > .section > .container > .sec-head .sec-title::before {
   text-shadow: 0 0 10px rgba(var(--amber-rgb), 0.5);
 }
 
-/* Hero: add a neon glow to the name over the 3D circuit background */
+/* Hero: add a crisp luminous halo to the gradient name */
 .hero-name {
-  text-shadow: 0 0 40px rgba(var(--mint-rgb), 0.22), 0 0 80px rgba(var(--mint-rgb), 0.08);
+  filter: drop-shadow(0 0 28px rgba(var(--mint-rgb), 0.22));
 }
 
 /* =====================================================================
    CONTENT CARDS ACT AS INTEGRATED CIRCUITS (IC CHIP SUB-SYSTEMS)
-   Connect true 3D space with tilt effects (Preserve-3D & Z-Depth)
+   Cards tilt as single surfaces while the pointer is over them.
    ===================================================================== */
 
 .pcard,
@@ -46,52 +41,7 @@ main > .section > .container > .sec-head .sec-title::before {
 .chat,
 .profile,
 .contact-card {
-  transform-style: preserve-3d;
-  will-change: transform;
   position: relative;
-}
-
-/* PCB silkscreen alignment marks (+) at card corners */
-.pcard::before,
-.skill::before,
-.term::before,
-.eng-card::before,
-.tl-card::before {
-  content: '+';
-  position: absolute;
-  top: 8px;
-  left: 10px;
-  font: 700 10px/1 var(--mono);
-  color: rgba(var(--mint-rgb), 0.35);
-  pointer-events: none;
-  letter-spacing: 0;
-  z-index: 2;
-  transition: color 0.3s var(--ease), text-shadow 0.3s var(--ease);
-}
-
-/* Z-depth layers during pointer-driven 3D tilt (Layered Microarchitecture) */
-.tilting .pcard-icon,
-.tilting .skill-icon,
-.tilting .pcard-top,
-.tilting .skill-head {
-  transform: translateZ(14px);
-  transition: transform 0.18s ease-out;
-}
-
-.tilting h3,
-.tilting .pcard h3,
-.tilting .skill-head h3,
-.tilting .tl-role {
-  transform: translateZ(10px);
-  transition: transform 0.18s ease-out;
-}
-
-.tilting .pcard-visual,
-.tilting .tags,
-.tilting .pcard-meta,
-.tilting .tl-stack {
-  transform: translateZ(6px);
-  transition: transform 0.18s ease-out;
 }
 
 /* Chip selected through the bus (/CS Chip Select Active) */
@@ -103,11 +53,6 @@ main > .section > .container > .sec-head .sec-title::before {
 .chip-active.featured {
   border-color: rgba(var(--amber-rgb), 0.75) !important;
   box-shadow: 0 24px 54px -14px rgba(0, 0, 0, 0.78), 0 0 36px -6px rgba(var(--amber-rgb), 0.42) !important;
-}
-
-.chip-active::before {
-  color: var(--amber) !important;
-  text-shadow: 0 0 8px rgba(var(--amber-rgb), 0.9);
 }
 
 /* Glowing pin header at the chip edge where it connects to the bus */
@@ -129,13 +74,5 @@ main > .section > .container > .sec-head .sec-title::before {
 
 @keyframes pinPulse {
   0% { opacity: 0.7; transform: scaleY(0.9); }
-  100% { opacity: 1; transform: scaleY(1.1); box-shadow: 0 0 20px var(--amber), 0 0 6px #ffffff; }
-}
-
-/* Low-powered / touch devices: disable blur to maximize the 3D canvas frame rate */
-@media (max-width: 700px), (pointer: coarse) {
-  .glass {
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-  }
+  100% { opacity: 1; transform: scaleY(1.1); }
 }

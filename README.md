@@ -24,4 +24,6 @@ Deploy `index.html` and the `assets` directory together on a static host. Asset 
 
 The published `assets/docs/CV.pdf` is included and can be viewed without installing a LaTeX toolchain. Tectonic is needed only when recompiling the canonical source, `assets/docs/CV.tex`; its first run needs internet access to download packages and fonts. See [the CV compilation instructions](assets/docs/README.md), and inspect the result before replacing the published PDF.
 
-The terminal, background hardware graphics, and assistant text are local illustrations. They do not execute firmware, contact a chatbot service, or make live hardware measurements.
+The terminal-style panel introduces the candidate. The animated hardware graphics and the About section’s assistant text run locally in the browser.
+
+On the IoT-Env-Monitor card, **System architecture** follows a measurement from the DHT20 to the fan relay, displaying all four design sections expanded in full with links to their implementation. The **RTL & LCD controller** and **Process flow** dialogs likewise open with every detail section fully visible.

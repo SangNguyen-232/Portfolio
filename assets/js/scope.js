@@ -7,8 +7,6 @@ window.ScopeEngine = (() => {
   let initialized = false;
   let hoveredCardEl = null;
   let dmaPulse = 0;
-  let triggeredType = null;
-  let triggeredTimer = 0;
 
   // [0] mint = logic 1 / data   [1] amber = clock / active / chip-select   [2] ice = packets
   const C = [[95, 227, 200], [255, 181, 71], [191, 242, 230]];
@@ -94,12 +92,12 @@ window.ScopeEngine = (() => {
     { sel: '#projectGrid article:nth-child(1)', side: 1, tag: 'INT8 forecast', type: 'tinyml', build: () => stack(4), ops: ['8 inputs', 'Dense 64', 'Dense 32', '3 scores'] },
     { sel: '#projectGrid article:nth-child(2)', side: 0, tag: 'LCD FSM (illustration)', type: 'fpga', build: () => ring(9), ops: ['INIT', 'DISPLAY_ON', 'CLEAR_ON', 'SET_CURSOR1', 'WRITE_LINE1', 'SET_CURSOR2', 'WRITE_LINE2', 'IDLE', 'CHECK_UPDATE'] },
     { sel: '#projectGrid article:nth-child(3)', side: 1, tag: 'Mock APIs / Local State', type: 'db', build: () => stack(3), ops: ['mock response', 'local state', 'SVG / CSS map'] },
+    { sel: '#education', side: 0, tag: 'AVL Tree', type: 'tree', build: tree, ops: ['insert', 'rotate', 'balance'] },
+    { sel: '#education', side: 1, tag: 'Dijkstra Graph', type: 'dijkstra', build: pyramid, ops: ['relax', 'relax', 'path'] },
     { sel: '#skills', side: 0, tag: 'Memory Hierarchy', type: 'mem', build: pyramid, ops: ['Regs', 'L1', 'SRAM', 'Flash'] },
     { sel: '#skills', side: 1, tag: 'SPI / I2C Bus', type: 'osc', build: wave, ops: ['SCK', 'MOSI', '/CS'] },
     { sel: '#experience', side: 0, tag: 'Sensor ADC', type: 'adc', build: cube, ops: ['sample', 'hold', 'convert'] },
     { sel: '#experience', side: 1, tag: 'UART DMA Ring', type: 'dma', build: () => ring(8), ops: ['wr', 'rd', 'wr', 'rd'] },
-    { sel: '#education', side: 0, tag: 'AVL Tree', type: 'tree', build: tree, ops: ['insert', 'rotate', 'balance'] },
-    { sel: '#education', side: 1, tag: 'Dijkstra Graph', type: 'dijkstra', build: pyramid, ops: ['relax', 'relax', 'path'] },
     { sel: '#contact', side: 0, tag: 'NVIC Vectors', type: 'nvic', build: () => stack(4), ops: ['Reset', 'SysTick', 'UART0', 'GPIO'] },
     { sel: '#contact', side: 1, tag: 'Serial Transceiver', type: 'serial', build: wave, ops: ['TX', 'RX', '115200 8N1'] }
   ];
@@ -119,10 +117,18 @@ window.ScopeEngine = (() => {
     let sideL = { on: false, bx: 0, ix: 0, g: 0 };
     let sideR = { on: false, bx: 0, ix: 0, g: 0 };
     let time = 0, sysClock = 0, last = 0, rafId = null;
-    let lastLayout = -1e9, builtH = -1, builtW = -1;
-    let mods = [], cards = [], cardEls = null, minL = 0, maxR = 0;
+    let layoutDirty = true, resizePending = true;
+    let scrollY = window.scrollY;
+    let cards = [], minL = 0, maxR = 0;
+    const container = document.querySelector('main .container');
+    const cardEls = [...document.querySelectorAll('.term, .eng-card, .chat, .profile, .do, .pcard, .skill, .tl-card, .education-shell, .contact-card')];
+    const mods = BIND.map((b, idx) => ({
+      ...b, idx, el: document.querySelector(b.sel), g: b.build(), pageY: 0, active: false
+    }));
+    const chains = [mods.filter(m => m.side === 0), mods.filter(m => m.side === 1)];
     const cam = { mx: 0, my: 0, tmx: 0, tmy: 0 };
-    const MIN_FRAME = isFinePointer ? 16 : 32;
+    // Leave frames available for input and scrolling. Allow for rounded rAF timestamps.
+    const MIN_FRAME = 1000 / 30 - 1;
 
     /* =================================================================
        NEURAL NETWORK BACKGROUND — retain the reference code's background structure
@@ -131,7 +137,9 @@ window.ScopeEngine = (() => {
        ================================================================= */
     const mouseP = { x: -9999, y: -9999, on: false };
     let cloud = [], cEdges = [], cPulses = [];
+    let linkCounts = new Uint8Array(0);
     const LINK = 150, MLINK = 230;
+    const MAX_NEIGHBORS = 6;
     const NC = { cyan: C[0], violet: C[1], pink: C[2] }; // mint · amber · pale mint
 
     const mkNode = () => {
@@ -149,6 +157,8 @@ window.ScopeEngine = (() => {
       const target = clamp(Math.round((W * H) / (isFinePointer ? 13000 : 26000)), 28, 120);
       while (cloud.length < target) cloud.push(mkNode());
       cloud.length = target;
+      linkCounts = new Uint8Array(target);
+      cEdges.length = 0;
       cPulses = [];
     };
 
@@ -174,7 +184,7 @@ window.ScopeEngine = (() => {
         if (p.y < -30) p.y = H + 30; else if (p.y > H + 30) p.y = -30;
       }
 
-      // Signal pulses (neuron firing); typing in the terminal / chat increases their frequency
+      // The About section's typing animation briefly increases the signal pulse rate.
       const rate = (mouseP.on ? 0.14 : 0.07) + dmaPulse * 0.2;
       if (cEdges.length && Math.random() < rate * k && cPulses.length < 14 + Math.round(dmaPulse * 6)) {
         const [a, b] = cEdges[Math.floor(Math.random() * cEdges.length)];
@@ -189,19 +199,23 @@ window.ScopeEngine = (() => {
     const drawCloud = () => {
       if (!cloud.length) return;
       cEdges.length = 0;
+      linkCounts.fill(0);
       ctx.lineWidth = 1;
       for (let i = 0; i < cloud.length; i++) {
         const a = cloud[i];
         for (let j = i + 1; j < cloud.length; j++) {
+          if (linkCounts[i] >= MAX_NEIGHBORS) break;
+          if (linkCounts[j] >= MAX_NEIGHBORS) continue;
           const b = cloud[j];
           const dx = a.x - b.x, dy = a.y - b.y;
-          if (Math.abs(dx) > LINK || Math.abs(dy) > LINK) continue;
-          const d = Math.hypot(dx, dy);
-          if (d > LINK) continue;
-          const al = (1 - d / LINK) * 0.32;
+          const d2 = dx * dx + dy * dy;
+          if (d2 > LINK * LINK) continue;
+          const al = (1 - Math.sqrt(d2) / LINK) * 0.32;
           ctx.strokeStyle = rgba(a.c === b.c ? a.c : NC.pink, al * 0.8);
           ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
-          if (cEdges.length < 400) cEdges.push([a, b]);
+          linkCounts[i]++;
+          linkCounts[j]++;
+          cEdges.push([a, b]);
         }
         if (mouseP.on) {
           const d = Math.hypot(a.x - mouseP.x, a.y - mouseP.y);
@@ -224,10 +238,6 @@ window.ScopeEngine = (() => {
         ctx.beginPath(); ctx.arc(x, y, 6, 0, Math.PI * 2); ctx.fill();
         ctx.fillStyle = `rgba(255,255,255,${(0.95 * fade).toFixed(3)})`;
         ctx.beginPath(); ctx.arc(x, y, 2, 0, Math.PI * 2); ctx.fill();
-      }
-      if (mouseP.on) {
-        ctx.fillStyle = rgba(NC.cyan, 0.9);
-        ctx.beginPath(); ctx.arc(mouseP.x, mouseP.y, 2.5, 0, Math.PI * 2); ctx.fill();
       }
     };
 
@@ -269,20 +279,9 @@ window.ScopeEngine = (() => {
     };
 
     /* ---------- Layout: measure the content column, margins, and module positions ---------- */
-    const buildLane = (docH) => {
-      builtH = docH;
-      builtW = W;
-      const sy = window.scrollY || 0;
-      mods = BIND.map((b, i) => {
-        const el = document.querySelector(b.sel);
-        const r = el ? el.getBoundingClientRect() : null;
-        return { ...b, idx: i, g: b.build(), pageY: r ? r.top + sy + r.height * 0.42 : 200 + i * 440, active: false };
-      });
-    };
-
     const refreshLayout = () => {
-      lastLayout = performance.now();
-      const container = document.querySelector('main .container');
+      layoutDirty = false;
+      scrollY = window.scrollY;
       if (container) {
         const r = container.getBoundingClientRect();
         const cs = getComputedStyle(container);
@@ -300,26 +299,23 @@ window.ScopeEngine = (() => {
       const gR = rLimit - CR;
       sideR = { on: gR >= 56, bx: CR + gR * 0.2, ix: CR + gR * 0.6, g: gR };
 
-      if (!cardEls) {
-        cardEls = [...document.querySelectorAll('.term, .eng-card, .chat, .profile, .do, .pcard, .skill, .tl-card, .education-shell, .contact-card')];
-      }
-      const sy = window.scrollY || 0;
       cards = [];
+      if (!sideL.on && !sideR.on) return;
+      for (const m of mods) {
+        const r = m.el?.getBoundingClientRect();
+        m.pageY = r ? r.top + scrollY + r.height * 0.42 : 200 + m.idx * 440;
+      }
+      chains.forEach(chain => chain.sort((a, b) => a.pageY - b.pageY));
       minL = Infinity;
       maxR = -Infinity;
       for (const el of cardEls) {
         const r = el.getBoundingClientRect();
         if (r.width < 30 || r.height < 30) continue;
-        cards.push({
-          el, t: r.top, b: r.bottom, l: r.left, r: r.right, pageY: r.top + sy,
-          hidden: el.classList.contains('reveal') && !el.classList.contains('in')
-        });
+        cards.push({ el, t: r.top + scrollY, b: r.bottom + scrollY, l: r.left, r: r.right });
         minL = Math.min(minL, r.left);
         maxR = Math.max(maxR, r.right);
       }
 
-      const docH = document.documentElement.scrollHeight;
-      if (Math.abs(docH - builtH) > 40 || Math.abs(W - builtW) > 40) buildLane(docH);
     };
 
 
@@ -360,7 +356,7 @@ window.ScopeEngine = (() => {
       for (const sideIdx of [0, 1]) {
         const s = sideIdx ? sideR : sideL;
         if (!s.on) continue;
-        const list = mods.filter((m) => m.side === sideIdx).sort((a, b) => a.pageY - b.pageY);
+        const list = chains[sideIdx];
         const off = sideIdx ? -14 : 14;
         const col = sideIdx ? C[0] : C[1];
 
@@ -396,7 +392,7 @@ window.ScopeEngine = (() => {
       if (y0 < -size * 3 || y0 > H + size * 3) return;
 
       const focus = 1 - clamp(Math.abs(y0 - H * 0.5) / (H * 0.6), 0, 1);
-      const act = m.active || triggeredType === m.type;
+      const act = m.active;
       const a = clamp(0.22 + 0.5 * focus + (act ? 0.2 : 0), 0, 0.8); // Cap brightness to avoid overpowering the content
       const col = act ? C[1] : C[0];
 
@@ -482,8 +478,9 @@ window.ScopeEngine = (() => {
     /* ---------- Content card ↔ bus: highlight the main content ---------- */
     const drawCoupling = () => {
       for (const c of cards) {
-        if (c.hidden || c.b < -40 || c.t > H + 40) continue;
-        const cy = (c.t + c.b) / 2;
+        if (c.b < scrollY - 40 || c.t > scrollY + H + 40) continue;
+        if (c.el.classList.contains('reveal') && !c.el.classList.contains('in')) continue;
+        const cy = (c.t + c.b) / 2 - scrollY;
         const hov = c.el === hoveredCardEl;
         const focus = 1 - clamp(Math.abs(cy - H * 0.5) / (H * 0.55), 0, 1);
         if (focus < 0.12 && !hov) continue;
@@ -513,7 +510,7 @@ window.ScopeEngine = (() => {
           ctx.fill();
 
           if (!motionQuery.matches && (hov || focus > 0.35)) {
-            const [px, py] = along(pts, time * (hov ? 1.8 : 0.65) + c.pageY * 0.002);
+            const [px, py] = along(pts, time * (hov ? 1.8 : 0.65) + c.t * 0.002);
             ctx.fillStyle = rgba(C[2], 0.95);
             ctx.beginPath();
             ctx.arc(px, py, hov ? 3 : 2, 0, Math.PI * 2);
@@ -526,87 +523,79 @@ window.ScopeEngine = (() => {
 
     /* ---------- Render ---------- */
     const render = () => {
-      if (performance.now() - lastLayout > 120) refreshLayout();
+      if (layoutDirty) refreshLayout();
       ctx.clearRect(0, 0, W, H);
       ctx.globalAlpha = 1;
-      const sy = window.scrollY || 0;
+      drawCloud();
+      if (!sideL.on && !sideR.on) return;
 
       // The module nearest the screen center on each side is ACTIVE
-      for (const side of [0, 1]) {
+      for (const chain of chains) {
         let best = null, bd = H * 0.45;
-        for (const m of mods) {
-          if (m.side !== side) continue;
-          const d = Math.abs(m.pageY - sy - H * 0.5);
+        for (const m of chain) {
+          const d = Math.abs(m.pageY - scrollY - H * 0.5);
           m.active = false;
           if (d < bd) { bd = d; best = m; }
         }
         if (best) best.active = true;
       }
 
-      drawCloud();
       drawRails();
-      drawChain(sy);
+      drawChain(scrollY);
       drawCoupling();
-      for (const m of mods) drawModule(m, sy);
+      for (const m of mods) drawModule(m, scrollY);
     };
 
     /* ---------- Update ---------- */
     const update = (dt) => {
-      cam.mx = lerp(cam.mx, cam.tmx, 0.06);
-      cam.my = lerp(cam.my, cam.tmy, 0.06);
+      const follow = 1 - Math.pow(0.94, dt * 60);
+      cam.mx = lerp(cam.mx, cam.tmx, follow);
+      cam.my = lerp(cam.my, cam.tmy, follow);
       sysClock += dt;
       updateCloud(dt);
-      dmaPulse = dmaPulse > 0.01 ? lerp(dmaPulse, 0, 0.08) : 0;
-      if (triggeredTimer > 0) {
-        triggeredTimer -= dt * 1000;
-        if (triggeredTimer <= 0) triggeredType = null;
-      }
+      dmaPulse = dmaPulse > 0.01 ? dmaPulse * Math.pow(0.92, dt * 60) : 0;
     };
 
     /* ---------- Resize / input / loop ---------- */
-    let staticQueued = false;
-    const scheduleStatic = () => {
-      if (!motionQuery.matches || staticQueued) return;
-      staticQueued = true;
-      requestAnimationFrame(() => {
-        staticQueued = false;
-        lastLayout = -1e9;
-        render();
-      });
-    };
-
-    let resizeTimer = null;
     const resize = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, isFinePointer ? 2 : 1.5);
+      resizePending = false;
       W = window.innerWidth;
       H = window.innerHeight;
+      // Limit the backing store of this decorative layer on large, high-DPI screens.
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5, Math.sqrt(2_000_000 / (W * H)));
       canvas.width = Math.round(W * dpr);
       canvas.height = Math.round(H * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       curSize = 0;
-      lastLayout = -1e9;
+      layoutDirty = true;
       initCloud();
-      scheduleStatic();
     };
-    window.addEventListener('resize', () => {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(resize, 120);
-    });
+    window.addEventListener('resize', () => { resizePending = true; });
     window.addEventListener('pointermove', (e) => {
+      if (!W || !H || motionQuery.matches || canvas.inert) return;
       cam.tmx = (e.clientX / W) * 2 - 1;
       cam.tmy = (e.clientY / H) * 2 - 1;
       if (e.pointerType !== 'touch') { mouseP.x = e.clientX; mouseP.y = e.clientY; mouseP.on = true; }
     }, { passive: true });
     document.addEventListener('mouseleave', () => { cam.tmx = 0; cam.tmy = 0; mouseP.on = false; });
-    window.addEventListener('scroll', scheduleStatic, { passive: true });
-    if (document.fonts) document.fonts.ready.then(() => { lastLayout = -1e9; builtH = -1; scheduleStatic(); });
-    window.addEventListener('load', () => { lastLayout = -1e9; builtH = -1; scheduleStatic(); });
+    window.addEventListener('scroll', () => { scrollY = window.scrollY; }, { passive: true });
+    const invalidateLayout = () => { layoutDirty = true; };
+    const layoutObserver = new ResizeObserver(invalidateLayout);
+    if (container) layoutObserver.observe(container);
+    document.querySelectorAll('main > section').forEach(el => layoutObserver.observe(el));
+    cardEls.forEach(el => layoutObserver.observe(el));
+    // Reveal transforms have finished, so connectors can use the final positions.
+    document.addEventListener('transitionend', e => {
+      if (e.propertyName === 'opacity' && e.target.classList.contains('reveal')) invalidateLayout();
+    });
+    if (document.fonts) document.fonts.ready.then(invalidateLayout);
+    window.addEventListener('load', invalidateLayout);
 
     const frame = (now) => {
       rafId = null;
-      if (document.hidden || motionQuery.matches) return;
       rafId = requestAnimationFrame(frame);
       if (now - last < MIN_FRAME) return;
+      if (resizePending) resize();
       const dt = Math.min((now - last) / 1000, 0.1);
       last = now;
       time = now / 1000;
@@ -615,19 +604,19 @@ window.ScopeEngine = (() => {
     };
 
     const sync = () => {
-      if (document.hidden || motionQuery.matches) {
+      if (document.hidden || motionQuery.matches || canvas.inert) {
         if (rafId !== null) cancelAnimationFrame(rafId);
         rafId = null;
-        if (motionQuery.matches) { time = 0; update(0); lastLayout = -1e9; render(); }
-        else ctx.clearRect(0, 0, W, H);
+        mouseP.on = false;
       } else if (rafId === null) {
         last = performance.now();
         rafId = requestAnimationFrame(frame);
       }
     };
 
-    resize();
     sync();
+    // Opening a dialog makes the background inert. Keep its last image until dismissal.
+    new MutationObserver(sync).observe(canvas, { attributes: true, attributeFilter: ['inert'] });
     document.addEventListener('visibilitychange', sync);
     motionQuery.addEventListener('change', sync);
   };
@@ -638,11 +627,6 @@ window.ScopeEngine = (() => {
   return {
     initNeuralNetwork,
     setHoveredCard(cardEl, isHovered) { hoveredCardEl = isHovered ? cardEl : null; },
-    pulseDMA(intensity = 1.0) { dmaPulse = Math.max(dmaPulse, intensity); },
-    triggerModule(modType) {
-      triggeredType = modType;
-      triggeredTimer = 2400;
-      dmaPulse = 1.6;
-    }
+    pulseDMA(intensity = 1.0) { dmaPulse = Math.max(dmaPulse, intensity); }
   };
 })();

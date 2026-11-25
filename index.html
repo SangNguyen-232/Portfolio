@@ -139,18 +139,17 @@
   <!-- Preloader -->
   <div id="loader" aria-hidden="true">
     <div class="loader-inner">
-      <div class="loader-logo"><span>SV</span><i></i></div>
-      <div class="loader-bar"><span></span></div>
-      <div class="loader-line">
-        <span class="loader-text" data-i18n="loader.text">Booting ESP32-S3 firmware</span>
-        <span class="loader-dots"></span>
-      </div>
+      <svg class="loader-ready" viewBox="0 0 64 64" width="64" height="64" aria-hidden="true" focusable="false">
+        <circle class="ready-track" cx="32" cy="32" r="26" />
+        <circle class="ready-ring" cx="32" cy="32" r="26" pathLength="1" transform="rotate(-90 32 32)" />
+        <path class="ready-check" d="m20 32 8 8 16-17" pathLength="1" />
+      </svg>
+      <span class="loader-text" data-i18n="loader.text">Ready to explore</span>
     </div>
   </div>
 
   <!-- Ambient Dynamic Background Layers -->
   <div id="aurora" aria-hidden="true"></div>
-  <div id="spot" aria-hidden="true"></div>
   <canvas id="net" aria-hidden="true"></canvas>
   <div class="scroll-progress" id="scrollProgress" aria-hidden="true">
     <div class="scroll-progress-bar" id="scrollProgressBar"></div>
@@ -159,34 +158,33 @@
   <!-- Header Navigation -->
   <header class="nav" id="nav">
     <div class="nav-inner">
-      <a href="#hero" class="logo" data-cursor aria-label="Home" data-i18n-aria-label="a11y.home">
+      <a href="#hero" class="logo" aria-label="Home" data-i18n-aria-label="a11y.home">
         <span class="logo-mark"><i></i><i></i><i></i></span>
         <span class="logo-text">sang<b>.dev</b></span>
       </a>
       <nav class="nav-links" aria-label="Primary">
-        <a href="#about" data-i18n="nav.about" data-cursor>Professional Summary</a>
-        <a href="#projects" data-i18n="nav.projects" data-cursor>Projects</a>
-        <a href="#skills" data-i18n="nav.skills" data-cursor>Skills</a>
-        <a href="#experience" data-i18n="nav.experience" data-cursor>Experience</a>
-        <a href="#education" data-i18n="nav.education" data-cursor>Education &amp; Certification</a>
-        <a href="#contact" data-i18n="nav.contact" data-cursor>Contact</a>
+        <a href="#about" data-i18n="nav.about">Professional Summary</a>
+        <a href="#projects" data-i18n="nav.projects">Projects</a>
+        <a href="#education" data-i18n="nav.education">Education &amp; Certification</a>
+        <a href="#skills" data-i18n="nav.skills">Skills</a>
+        <a href="#experience" data-i18n="nav.experience">Experience</a>
+        <a href="#contact" data-i18n="nav.contact">Contact</a>
       </nav>
       <div class="nav-right">
         <!-- Language Switcher -->
-        <button class="lang" id="langToggle" type="button" aria-label="Switch language" data-i18n-aria-label="a11y.language" data-cursor>
+        <button class="lang" id="langToggle" type="button" aria-label="Switch language" data-i18n-aria-label="a11y.language">
           <span class="lang-pill"></span>
           <span class="lang-opt" data-lang="en">EN</span>
           <span class="lang-opt" data-lang="vi">VI</span>
         </button>
-        <a class="btn btn-ghost btn-sm resume-btn" id="resumeBtn" href="assets/docs/CV.pdf" target="_blank" rel="noopener"
-          data-cursor>
+        <a class="btn btn-ghost btn-sm resume-btn" id="resumeBtn" href="assets/docs/CV.pdf" target="_blank" rel="noopener">
           <svg class="ic" aria-hidden="true">
             <use href="#i-eye" />
           </svg>
           <span data-i18n="nav.resume">View CV</span>
         </a>
         <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="mobileMenu"
-          aria-label="Open menu" data-i18n-aria-label="a11y.menuOpen" data-cursor>
+          aria-label="Open menu" data-i18n-aria-label="a11y.menuOpen">
           <svg class="ic ic-open">
             <use href="#i-menu" />
           </svg>
@@ -199,10 +197,10 @@
   </header>
 
   <!-- Contact Bar (Aligned with CV Header, Centered in Layout) -->
-  <aside class="recruiter-bar" id="recruiterBar" aria-label="Candidate Contact & Profiles">
+  <aside class="recruiter-bar" id="recruiterBar" aria-label="Candidate Contact &amp; Profiles">
     <div class="container recruiter-inner">
       <div class="cv-contact-bar">
-        <a class="cv-contact-item" href="tel:0383589877" title="Call: 0383 589 877">
+        <a class="cv-contact-item" href="tel:0383589877" id="quickCopyPhone" data-copy="0383589877" data-copy-type="phone" title="Phone / Click to copy: 0383589877">
           <svg class="ic">
             <use href="#i-phone" />
           </svg>
@@ -241,9 +239,9 @@
     <nav aria-label="Mobile">
       <a href="#about" data-i18n="nav.about">Professional Summary</a>
       <a href="#projects" data-i18n="nav.projects">Projects</a>
+      <a href="#education" data-i18n="nav.education">Education &amp; Certification</a>
       <a href="#skills" data-i18n="nav.skills">Skills</a>
       <a href="#experience" data-i18n="nav.experience">Experience</a>
-      <a href="#education" data-i18n="nav.education">Education &amp; Certification</a>
       <a href="#contact" data-i18n="nav.contact">Contact</a>
       <a href="assets/docs/CV.pdf" target="_blank" rel="noopener" data-i18n="nav.resume">View CV</a>
       </nav>
@@ -287,9 +285,9 @@
     </svg>
     <a href="#about"><i></i><span data-i18n="nav.about">Professional Summary</span></a>
     <a href="#projects"><i></i><span data-i18n="nav.projects">Projects</span></a>
+    <a href="#education"><i></i><span data-i18n="nav.education">Education &amp; Certification</span></a>
     <a href="#skills"><i></i><span data-i18n="nav.skills">Skills</span></a>
     <a href="#experience"><i></i><span data-i18n="nav.experience">Experience</span></a>
-    <a href="#education"><i></i><span data-i18n="nav.education">Education &amp; Certification</span></a>
     <a href="#contact"><i></i><span data-i18n="nav.contact">Contact</span></a>
   </nav>
 
@@ -297,75 +295,96 @@
     <!-- ===================== HERO SECTION ===================== -->
     <section id="hero" class="hero">
       <div class="container hero-grid">
-        <div class="hero-copy">
-          <div class="status reveal" style="--d:.05s">
-            <span class="status-dot"></span>
-            <span data-i18n="hero.status">Looking for a Fresher Embedded Software Engineer role</span>
-          </div>
-          <p class="hero-greet mono reveal" style="--d:.1s">
-            <span class="prompt">&gt;</span> <span data-i18n="hero.greet">Hi, I am</span>
-          </p>
-          <h1 class="hero-name reveal" style="--d:.15s" data-i18n="hero.name">Nguyen
-            Van Sang</h1>
-          <h2 class="hero-title reveal" style="--d:.2s">
-            <span class="grad-text" data-i18n="hero.title">Embedded Software Engineer — Fresher</span>
-          </h2>
+        <div class="term reveal" style="--d:.1s" id="term" role="region" tabindex="-1" aria-label="Introduction" data-i18n-aria-label="a11y.terminal">
+          <div class="term-shell">
+            <div class="term-ambient" aria-hidden="true"></div>
 
-          <!-- Interactive Terminal -->
-          <div class="term reveal" style="--d:.25s" id="term" role="region" tabindex="-1" aria-label="Firmware terminal" data-i18n-aria-label="a11y.terminal">
             <div class="term-bar">
-              <i></i><i></i><i></i>
-              <span class="term-title mono">sang@esp32s3: ~ · <span data-i18n="terminal.simulation">Simulated diagnostics</span></span>
+              <div class="term-bar-left">
+                <span class="term-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+                <span class="term-title mono">
+                  <span class="term-user">sang@esp32s3</span><span class="term-sep">:</span><span class="term-path">~/profile</span>
+                </span>
+              </div>
+              <div class="term-bar-right">
+                <span class="term-wave" aria-hidden="true">
+                  <svg viewBox="0 0 42 14" width="42" height="14" focusable="false">
+                    <path class="wave-track" d="M1 7h7l2-5 3 10 3-8 2 3h6l2-4 2 7 2-3h11" />
+                    <path class="wave-pulse" d="M1 7h7l2-5 3 10 3-8 2 3h6l2-4 2 7 2-3h11" pathLength="100" />
+                  </svg>
+                </span>
+                <span class="pill amber" data-i18n="hero.consoleTag">Embedded Software</span>
+              </div>
             </div>
-            <div class="term-body mono" id="termBody">
-              <div class="term-line"><span class="prompt">$</span> <span class="cmd" id="cmd1"></span></div>
-              <div class="term-line out" id="out1"><span class="arrow">›</span> <span id="out1t"></span></div>
-              <div class="term-line" id="line2"><span class="prompt">$</span> <span class="cmd" id="cmd2"></span></div>
-              <div class="term-line out" id="out2"><span class="arrow">›</span> <span id="out2t"></span><span
-                  class="caret" id="caret"></span></div>
-            </div>
-            <!-- Quick Command Interactive Chips -->
-            <div class="term-chips" id="termChips">
-              <button class="term-chip" type="button" data-cmd="help" data-cursor>$ help</button>
-              <button class="term-chip" type="button" data-cmd="tasks" data-cursor>$ freertos -t</button>
-              <button class="term-chip" type="button" data-cmd="tinyml" data-cursor>$ tinyml --infer</button>
-              <button class="term-chip" type="button" data-cmd="fpga" data-cursor>$ fpga --fsm</button>
-              <button class="term-chip" type="button" data-cmd="clear" data-cursor>$ clear</button>
+
+            <div class="term-body">
+              <div class="term-corners" aria-hidden="true">
+                <span class="tc tl"></span><span class="tc tr"></span>
+                <span class="tc bl"></span><span class="tc br"></span>
+              </div>
+
+              <div class="hero-kicker">
+                <p class="hero-greet mono">
+                  <span class="greet-prompt" aria-hidden="true">&gt;_</span>
+                  <span data-i18n="hero.greet">Hello, I am</span>
+                </p>
+              </div>
+
+              <div class="hero-identity">
+                <h1 class="hero-name" data-i18n="hero.name">Nguyen Van Sang</h1>
+                <p class="hero-role">
+                  <span class="hero-role-bar" aria-hidden="true"></span>
+                  <span class="hero-role-title" data-i18n="hero.status">I'm looking for a Fresher Embedded Software Engineer role</span>
+                </p>
+                <p class="hero-lead" data-i18n="hero.tagline">
+                  Building deterministic FreeRTOS firmware, on-device TinyML inference, and Verilog FPGA systems — from hardware peripherals to IoT platforms.
+                </p>
+              </div>
+
+              <ul class="hero-pillars" aria-label="Core focus areas" data-i18n-aria-label="a11y.focusAreas">
+                <li class="hero-pillar">
+                  <span class="pillar-ic" aria-hidden="true"><svg class="ic"><use href="#i-chip" /></svg></span>
+                  <span class="pillar-text">
+                    <b class="mono">ESP32-S3 · RTOS</b>
+                    <small data-i18n="hero.p1.sub">Concurrent firmware</small>
+                  </span>
+                </li>
+                <li class="hero-pillar">
+                  <span class="pillar-ic" aria-hidden="true"><svg class="ic"><use href="#i-sparkle" /></svg></span>
+                  <span class="pillar-text">
+                    <b class="mono">TinyML · INT8</b>
+                    <small data-i18n="hero.p2.sub">On-device AI</small>
+                  </span>
+                </li>
+                <li class="hero-pillar">
+                  <span class="pillar-ic" aria-hidden="true"><svg class="ic"><use href="#i-cpu" /></svg></span>
+                  <span class="pillar-text">
+                    <b class="mono">FPGA · Verilog</b>
+                    <small data-i18n="hero.p3.sub">RTL &amp; LCD FSM</small>
+                  </span>
+                </li>
+                <li class="hero-pillar">
+                  <span class="pillar-ic" aria-hidden="true"><svg class="ic"><use href="#i-server" /></svg></span>
+                  <span class="pillar-text">
+                    <b class="mono">IoT · Backend</b>
+                    <small data-i18n="hero.p4.sub">WebSocket &amp; API</small>
+                  </span>
+                </li>
+              </ul>
             </div>
           </div>
+        </div>
 
-          <p class="hero-tagline reveal" style="--d:.3s" data-i18n="hero.tagline">Computer Engineering student at HCMUT. I work on ESP32-S3 firmware with FreeRTOS and TinyML, Verilog RTL for an FPGA vending prototype, and IoT backends that store sensor history.</p>
-
-          <div class="hero-cta reveal" style="--d:.35s">
-            <a href="#projects" class="btn btn-primary" data-cursor>
-              <span data-i18n="hero.cta1">View projects</span>
-              <svg class="ic">
-                <use href="#i-arrow" />
-              </svg>
-            </a>
-            <a href="#contact" class="btn btn-ghost" data-cursor>
-              <span data-i18n="hero.cta2">Contact me</span>
-            </a>
-          </div>
-
-          <div class="stats reveal" style="--d:.4s" id="stats">
-            <div class="stat">
-              <b class="count" data-to="3">3</b>
-              <span data-i18n="stats.s1">Projects on GitHub</span>
-            </div>
-            <div class="stat">
-              <b class="count" data-to="7">7</b>
-              <span data-i18n="stats.s2">Application tasks on ESP32-S3</span>
-            </div>
-            <div class="stat">
-              <b class="count" data-to="16800">16,800</b>
-              <span data-i18n="stats.s3">Simulated training episodes</span>
-            </div>
-            <div class="stat">
-              <b>30 s</b>
-              <span data-i18n="stats.s4">Forecast horizon</span>
-            </div>
-          </div>
+        <div class="hero-cta reveal" style="--d:.25s">
+          <a href="#projects" class="btn btn-primary">
+            <span data-i18n="hero.cta1">View projects</span>
+            <svg class="ic">
+              <use href="#i-arrow" />
+            </svg>
+          </a>
+          <a href="#contact" class="btn btn-ghost">
+            <span data-i18n="hero.cta2">Contact me</span>
+          </a>
         </div>
 
         <!-- Hero portrait card -->
@@ -429,7 +448,7 @@
                 </div>
               </div>
               <div class="chat-foot" id="chatFoot">
-                <button class="regen mono" id="regenBtn" type="button" data-cursor>
+                <button class="regen mono" id="regenBtn" type="button">
                   <svg class="ic">
                     <use href="#i-refresh" />
                   </svg>
@@ -508,7 +527,6 @@
               <div class="pv-metrics">
                 <div><b>7</b><span data-i18n="proj.m1">FreeRTOS tasks</span></div>
                 <div><b>5 s</b><span data-i18n="proj.m2">Sampling interval</span></div>
-                <div><b>30 s</b><span data-i18n="proj.m3">Forecast horizon</span></div>
               </div>
               <div class="pv-flow mono" aria-hidden="true">
                 <span class="pv-node">DHT20<small>I2C</small></span>
@@ -522,7 +540,7 @@
               <div class="pcard-icon"><svg class="ic">
                   <use href="#i-chip" />
                 </svg></div>
-              <span class="pill glow mono" data-i18n="proj.p1.context">Jul – Nov 2026 · Individual project</span>
+              <span class="pill amber mono" data-i18n="proj.p1.context">Jul – Nov 2026 · Individual project</span>
             </div>
             <h3 data-i18n="proj.p1.title">Smart Environmental Monitoring System</h3>
             <ul>
@@ -556,14 +574,14 @@
               </div>
             </div>
             <div class="pcard-foot">
-              <button class="btn btn-ghost btn-sm btn-inspect mono" type="button" data-modal="modal-proj1" data-cursor>
+              <button class="btn btn-ghost btn-sm btn-inspect mono" type="button" data-modal="modal-proj1">
                 <svg class="ic">
                   <use href="#i-layers" />
                 </svg>
                 <span data-i18n="proj.inspect">System architecture</span>
               </button>
               <a href="https://github.com/SangNguyen-232/IoT-Env-Monitor" target="_blank" rel="noopener"
-                class="pcard-link" data-cursor>
+                class="pcard-link">
                 <svg class="ic">
                   <use href="#i-github" />
                 </svg>
@@ -605,14 +623,14 @@
               </div>
             </div>
             <div class="pcard-foot">
-              <button class="btn btn-ghost btn-sm btn-inspect mono" type="button" data-modal="modal-proj2" data-cursor>
+              <button class="btn btn-ghost btn-sm btn-inspect mono" type="button" data-modal="modal-proj2">
                 <svg class="ic">
                   <use href="#i-cpu" />
                 </svg>
                 <span data-i18n="proj.inspectFSM">RTL &amp; LCD controller</span>
               </button>
               <a href="https://github.com/SangNguyen-232/FPGA-Vending-System" target="_blank" rel="noopener"
-                class="pcard-link" data-cursor>
+                class="pcard-link">
                 <svg class="ic">
                   <use href="#i-github" />
                 </svg>
@@ -649,14 +667,13 @@
               </div>
             </div>
             <div class="pcard-foot">
-              <button class="btn btn-ghost btn-sm btn-inspect mono" type="button" data-modal="modal-proj3" data-cursor>
+              <button class="btn btn-ghost btn-sm btn-inspect mono" type="button" data-modal="modal-proj3">
                 <svg class="ic">
                   <use href="#i-server" />
                 </svg>
                 <span data-i18n="proj.p3.inspect">Process flow</span>
               </button>
-              <a href="https://github.com/SangNguyen-232/ParkWise" target="_blank" rel="noopener" class="pcard-link"
-                data-cursor>
+              <a href="https://github.com/SangNguyen-232/ParkWise" target="_blank" rel="noopener" class="pcard-link">
                 <svg class="ic">
                   <use href="#i-github" />
                 </svg>
@@ -669,13 +686,100 @@
       </div>
     </section>
 
+    <section id="education" class="section" aria-labelledby="education-title">
+      <div class="container">
+        <div class="sec-head reveal">
+          <div>
+            <h2 class="sec-title" id="education-title" data-tag="EDUCATION" data-i18n="edu.sectionTitle">Education &amp; Certification</h2>
+          </div>
+        </div>
+
+        <div class="education-shell glass spot">
+          <section class="education-panel" aria-labelledby="education-details-title">
+            <div class="sec-head reveal">
+
+              <div>
+                <h3 class="sec-title" id="education-details-title" data-i18n="edu.title">Education</h3>
+                <p class="sec-sub" data-i18n="edu.sub">Where I study</p>
+              </div>
+            </div>
+
+            <div class="edu-grid single">
+              <!-- University Degree Card -->
+              <div class="edu glass spot reveal">
+                <div class="edu-icon"><svg class="ic">
+                    <use href="#i-cap" />
+                  </svg></div>
+                <h3 data-i18n="edu.school">Ho Chi Minh City University of Technology — VNU-HCM</h3>
+                <p class="edu-degree grad-text" data-i18n="edu.degree">Bachelor of Computer Engineering</p>
+                <p class="muted small" data-i18n="edu.period">Sep 2022 – Nov 2027 • Ho Chi Minh City, Vietnam</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="certification" class="section education-certification education-panel" aria-labelledby="certification-title">
+            <div class="sec-head reveal">
+
+              <div>
+                <h3 class="sec-title" id="certification-title" data-i18n="cert.secTitle">Languages &amp; Certification</h3>
+                <p class="sec-sub" data-i18n="cert.secSub">English level and upcoming TOEIC test</p>
+              </div>
+            </div>
+
+            <div class="edu-grid single">
+              <!-- Language Certification Card -->
+              <div class="edu glass spot reveal">
+                <div class="edu-icon"><svg class="ic">
+                    <use href="#i-award" />
+                  </svg></div>
+                <h3 data-i18n="cert.title">Language Certification</h3>
+                <p class="muted small" data-i18n="cert.sub">Listening and Reading</p>
+
+                <div class="certs">
+                  <div class="cert">
+                    <div class="cert-ic"><svg class="ic">
+                        <use href="#i-award" />
+                      </svg></div>
+                    <div>
+                      <b data-i18n="cert.c1.name">TOEIC (Listening &amp; Reading)</b>
+                      <span data-i18n="cert.c1.date">Test scheduled for Dec 2026 • ETS</span>
+                    </div>
+                    <span class="pill mono" data-i18n="cert.scheduled">Scheduled (Aim 600+)</span>
+                  </div>
+                </div>
+                <!-- Language proficiency -->
+                <div class="langs">
+                  <h4 data-i18n="edu.langsTitle">Language Proficiency</h4>
+                  <div class="lang-row">
+                    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+                      <span data-i18n="edu.langEn">English</span>
+                      <span class="mono muted" data-i18n="lang.levelEn">B1 Intermediate</span>
+                    </div>
+                    <i style="--w:60%;"></i>
+                  </div>
+                  <div class="lang-row">
+                    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+                      <span data-i18n="edu.langVi">Vietnamese</span>
+                      <span class="mono muted" data-i18n="lang.levelVi">Native</span>
+                    </div>
+                    <i style="--w:100%;"></i>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </section>
+
     <section id="skills" class="section" aria-labelledby="skills-title">
       <div class="container">
         <div class="sec-head reveal">
 
           <div>
             <h2 class="sec-title" id="skills-title" data-tag="SKILLS" data-i18n="skills.title">Technical Skills</h2>
-            <p class="sec-sub" data-i18n="skills.sub">Tools and technologies I have used in the projects below</p>
+            <p class="sec-sub" data-i18n="skills.sub">Tools and technologies I have used in the projects above</p>
           </div>
         </div>
 
@@ -885,96 +989,6 @@
       </div>
     </section>
 
-    <section id="education" class="section" aria-labelledby="education-title">
-      <div class="container">
-        <div class="sec-head reveal">
-          <div>
-            <h2 class="sec-title" id="education-title" data-tag="EDUCATION" data-i18n="edu.sectionTitle">Education &amp; Certification</h2>
-          </div>
-        </div>
-
-        <div class="education-shell glass spot">
-          <section class="education-panel" aria-labelledby="education-details-title">
-            <div class="sec-head reveal">
-
-              <div>
-                <h3 class="sec-title" id="education-details-title" data-i18n="edu.title">Education</h3>
-                <p class="sec-sub" data-i18n="edu.sub">Where I study</p>
-              </div>
-            </div>
-
-            <div class="edu-grid single">
-              <!-- University Degree Card -->
-              <div class="edu glass spot reveal">
-                <div class="edu-icon"><svg class="ic">
-                    <use href="#i-cap" />
-                  </svg></div>
-                <h3 data-i18n="edu.school">Ho Chi Minh City University of Technology — VNU-HCM</h3>
-                <p class="edu-degree grad-text" data-i18n="edu.degree">Bachelor of Computer Engineering</p>
-                <p class="muted small" data-i18n="edu.period">Sep 2022 – Nov 2027 • Ho Chi Minh City, Vietnam</p>
-                <div class="pill glow mono" style="margin-top:16px;">
-                  <span>GPA: 2.8/4.0 (7.20/10)</span>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <section id="certification" class="section education-certification education-panel" aria-labelledby="certification-title">
-            <div class="sec-head reveal">
-
-              <div>
-                <h3 class="sec-title" id="certification-title" data-i18n="cert.secTitle">Languages &amp; Certification</h3>
-                <p class="sec-sub" data-i18n="cert.secSub">English level and upcoming TOEIC test</p>
-              </div>
-            </div>
-
-            <div class="edu-grid single">
-              <!-- Language Certification Card -->
-              <div class="edu glass spot reveal">
-                <div class="edu-icon"><svg class="ic">
-                    <use href="#i-award" />
-                  </svg></div>
-                <h3 data-i18n="cert.title">Language Certification</h3>
-                <p class="muted small" data-i18n="cert.sub">Listening and Reading</p>
-
-                <div class="certs">
-                  <div class="cert">
-                    <div class="cert-ic"><svg class="ic">
-                        <use href="#i-award" />
-                      </svg></div>
-                    <div>
-                      <b data-i18n="cert.c1.name">TOEIC (Listening &amp; Reading)</b>
-                      <span data-i18n="cert.c1.date">Test scheduled for Dec 2026 • ETS</span>
-                    </div>
-                    <span class="pill mono" data-i18n="cert.scheduled">Scheduled (Aim 600+)</span>
-                  </div>
-                </div>
-                <!-- Language proficiency -->
-                <div class="langs">
-                  <h4 data-i18n="edu.langsTitle">Language Proficiency</h4>
-                  <div class="lang-row">
-                    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;">
-                      <span data-i18n="edu.langEn">English</span>
-                      <span class="mono muted" data-i18n="lang.levelEn">B1 Intermediate</span>
-                    </div>
-                    <i style="--w:60%;"></i>
-                  </div>
-                  <div class="lang-row">
-                    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;">
-                      <span data-i18n="edu.langVi">Vietnamese</span>
-                      <span class="mono muted" data-i18n="lang.levelVi">Native</span>
-                    </div>
-                    <i style="--w:100%;"></i>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-          </section>
-        </div>
-      </div>
-    </section>
-
     <section id="contact" class="section contact" aria-labelledby="contact-title">
       <div class="container">
         <div class="contact-card glass spot reveal">
@@ -983,43 +997,29 @@
             <span data-i18n="contact.status">Open to fresher opportunities</span>
           </div>
           <h2 class="sec-title" id="contact-title" data-tag="CONTACT" data-i18n="contact.title">Let’s talk</h2>
-          <p class="sec-sub" style="max-width:54ch;" data-i18n="contact.desc">I’m looking for a Fresher Embedded Software Engineer role in Ho Chi Minh City or remote. You can reach me by email, phone or LinkedIn.</p>
+          <p class="sec-sub" style="max-width:54ch;" data-i18n="contact.desc">I am looking for an entry-level Embedded Software Engineer position in Ho Chi Minh City, surrounding areas, or a remote role. You can reach me by email, phone, or LinkedIn.</p>
 
-          <a href="mailto:sangnguyen230204@gmail.com" class="email" id="emailLink" data-cursor>
-            sangnguyen230204@<wbr>gmail.com
-          </a>
-
-          <div class="contact-actions">
-            <button class="btn btn-primary" id="copyEmailBtn" type="button" data-cursor>
-              <svg class="ic">
-                <use href="#i-copy" />
-              </svg>
-              <span data-i18n="contact.copy">Copy Email</span>
-            </button>
-            <a href="tel:0383589877" class="btn btn-ghost" data-cursor>
-              <svg class="ic">
+          <div class="contact-links">
+            <a class="cv-contact-item contact-chip" href="tel:0383589877" id="contactCopyPhone" data-copy="0383589877" data-copy-type="phone" title="Phone / Click to copy: 0383589877" aria-label="Phone: 0383 589 877">
+              <svg class="ic" aria-hidden="true">
                 <use href="#i-phone" />
               </svg>
-              <span>0383 589 877</span>
+              <span>Phone</span>
             </a>
-            <a href="assets/docs/CV.pdf" target="_blank" rel="noopener" class="btn btn-ghost" data-cursor>
+            <a class="cv-contact-item contact-chip" href="mailto:sangnguyen230204@gmail.com" id="contactCopyEmail" data-copy="sangnguyen230204@gmail.com" title="Email / Click to copy: sangnguyen230204@gmail.com" aria-label="Email: sangnguyen230204@gmail.com">
               <svg class="ic" aria-hidden="true">
-                <use href="#i-eye" />
+                <use href="#i-mail" />
               </svg>
-              <span data-i18n="nav.resume">View CV</span>
+              <span>Email</span>
             </a>
-          </div>
-
-          <div class="socials">
-            <a href="https://github.com/SangNguyen-232" target="_blank" rel="noopener" class="social" data-cursor>
-              <svg class="ic">
+            <a class="cv-contact-item contact-chip" href="https://github.com/SangNguyen-232" target="_blank" rel="noopener" title="GitHub: SangNguyen-232" aria-label="GitHub: SangNguyen-232">
+              <svg class="ic" aria-hidden="true">
                 <use href="#i-github" />
               </svg>
               <span>GitHub</span>
             </a>
-            <a href="https://www.linkedin.com/in/sangnguyen232/" target="_blank" rel="noopener" class="social"
-              data-cursor>
-              <svg class="ic">
+            <a class="cv-contact-item contact-chip" href="https://www.linkedin.com/in/sangnguyen232/" target="_blank" rel="noopener" title="LinkedIn: sangnguyen232" aria-label="LinkedIn: sangnguyen232">
+              <svg class="ic" aria-hidden="true">
                 <use href="#i-linkedin" />
               </svg>
               <span>LinkedIn</span>
@@ -1082,12 +1082,12 @@
       </div>
       <div class="modal-body" tabindex="0">
         <div class="shortcuts-grid mono">
-          <div class="shortcut-row"><kbd>L</kbd><span data-i18n="shortcut.language">Toggle Language (EN / VI)</span></div>
+          <div class="shortcut-row"><kbd>L</kbd><span data-i18n="shortcut.language">Toggle Language (EN/VI)</span></div>
           <div class="shortcut-row"><kbd>B</kbd><span data-i18n="shortcut.led">Toggle LED borders</span></div>
-          <div class="shortcut-row"><kbd>T</kbd><span data-i18n="shortcut.terminal">Jump &amp; Focus Firmware Terminal</span></div>
+          <div class="shortcut-row"><kbd>T</kbd><span data-i18n="shortcut.terminal">Jump to the introduction</span></div>
           <div class="shortcut-row"><kbd>P</kbd><span data-i18n="shortcut.projects">Navigate to Featured Projects</span></div>
           <div class="shortcut-row"><kbd>ESC</kbd><span data-i18n="shortcut.close">Close any Open Modal</span></div>
-          <div class="shortcut-row"><kbd>?</kbd><span data-i18n="shortcut.help">Show / Hide this Shortcuts Guide</span></div>
+          <div class="shortcut-row"><kbd>?</kbd><span data-i18n="shortcut.help">Show/Hide this Shortcuts Guide</span></div>
         </div>
       </div>
     </div>
@@ -1111,7 +1111,7 @@
           aria-label="Keyboard Shortcuts" data-i18n-aria-label="shortcuts.title" title="Keyboard Shortcuts [?]">
           <kbd>?</kbd><span data-i18n="shortcuts.helper">Shortcuts</span>
         </button>
-        <a href="#hero" class="totop mono" data-cursor aria-label="Back to top" data-i18n-aria-label="a11y.backTop">
+        <a href="#hero" class="totop mono" aria-label="Back to top" data-i18n-aria-label="a11y.backTop">
           <span data-i18n="footer.totop">Back to Top</span>
           <svg class="ic">
             <use href="#i-up" />
@@ -1126,6 +1126,7 @@
     <span id="toastMsg" data-i18n="toast.copied">Email copied to clipboard!</span>
   </div>
 
+  <script src="assets/js/iot-architecture.js"></script>
   <script src="assets/js/i18n.js"></script>
   <script src="assets/js/scope.js"></script>
   <script src="assets/js/terminal.js"></script>
