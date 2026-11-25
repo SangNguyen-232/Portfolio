@@ -144,7 +144,7 @@ npm start
 
 - Use the navigation links to move between the summary, projects, education, skills, experience, and contact sections. On narrower screens, open the navigation menu with its menu button.
 - Use the language button to switch between English and Vietnamese. Both interface translations are intentional. The browser stores the language preference when local storage is available.
-- Open **System architecture** on the IoT-Env-Monitor card. It displays the DHT20-to-relay diagram and all four design decisions fully expanded with links to their implementation.
+- Open **System architecture** on the IoT-Env-Monitor card. It displays the DHT20-to-relay diagram and all five design decisions (including the Docker, Cloudflare Tunnel, and Workers VPC remote deployment) fully expanded.
 - Open **RTL & LCD controller** on the FPGA card. It displays the worked purchase from the button inputs through the balance and stock registers to the LCD, along with the nine-state sequence, refresh timing and the supplied testbench's stopping point fully expanded.
 - Open **Process flow** on the ParkWise card to view all four sections covering account balance calculation, batch payment settlement, payment history filtering, and Vietnamese PDF receipt generation. Use the close button, click the backdrop, or press Escape to return to the page.
 - Use the assistant's regenerate button to replay its predefined profile text in the selected language. No account or API key is needed.
@@ -208,7 +208,7 @@ Portfolio/
 | --- | --- |
 | Page sections, links, metadata, and initial HTML content | `index.html` |
 | English/Vietnamese interface strings and FPGA/ParkWise dialogs | `assets/js/i18n.js` |
-| IoT control diagram, bilingual design decisions and source links | `assets/js/iot-architecture.js` |
+| IoT control diagram and bilingual design decisions | `assets/js/iot-architecture.js` |
 | Colors and shared design variables | `assets/css/variables.css` |
 | Layout and appearance | The relevant file in `assets/css/`; check the stylesheet order in `index.html`. |
 | Navigation, storage preferences, keyboard shortcuts, and dialogs | `assets/js/main.js` |
@@ -218,7 +218,7 @@ Portfolio/
 | CV content and layout | `assets/docs/CV.tex`, then rebuild `CV.pdf` |
 | Local HTTP serving behavior | `scripts/serve.mjs` |
 
-Keep code comments and documentation in English. Maintain both interface languages. For an element with a `data-i18n` attribute, update the English and Vietnamese values in `i18n.js` and the English fallback in `index.html`. Each design decision in `iot-architecture.js` has English and Vietnamese text and shares the same implementation links on the IoT project’s `project_linux` branch.
+Keep code comments and documentation in English. Maintain both interface languages. For an element with a `data-i18n` attribute, update the English and Vietnamese values in `i18n.js` and the English fallback in `index.html`. Each design decision in `iot-architecture.js` has English and Vietnamese text.
 
 For IoT-Env-Monitor, check the ESP32 task names and relay pin in the firmware and the model's inputs, data split and evaluation runtime in the manifest. Update the project card, architecture dialog and CV wherever they use a changed fact. The portfolio's model accuracy is measured on held-out synthetic episodes using the desktop interpreter. [Project source](https://github.com/SangNguyen-232/IoT-Env-Monitor/tree/project_linux) · [Model manifest](https://github.com/SangNguyen-232/IoT-Env-Monitor/blob/project_linux/ml/models/fan_model_manifest.json)
 

@@ -306,12 +306,6 @@
   color: var(--text);
 }
 
-.arch-card p a {
-  color: var(--mint);
-  text-decoration: underline;
-  text-underline-offset: 0.15em;
-}
-
 .arch-pipeline {
   display: flex;
   align-items: center;
@@ -418,7 +412,7 @@
 
 .iot-decision {
   border-top: 1px solid var(--border2);
-  padding-top: 14px;
+  padding: 14px 0 6px;
 }
 .iot-decision-title {
   margin: 0 0 8px;
@@ -427,15 +421,6 @@
   font-weight: 600;
 }
 .iot-decision p { margin: 0 0 10px; font-size: 15px; }
-.iot-sources {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 4px 12px;
-  padding: 2px 0 16px;
-  font-size: 13px;
-}
-.iot-sources a { color: var(--mint); text-decoration: underline; text-underline-offset: 3px; }
 @media (max-width: 540px) {
   .iot-inspector .modal-header, .iot-inspector .modal-footer { padding: 12px 16px; }
   .iot-flow { gap: 12px; }
@@ -456,7 +441,6 @@
 .fpga-story h4 { color: var(--text); font-size: clamp(19px, 3vw, 24px); }
 .fpga-story h5 { color: var(--pale); font-size: 16px; }
 .fpga-story p { margin: 5px 0 8px; font-size: 15px; }
-.fpga-story a { color: var(--mint); text-decoration: underline; text-underline-offset: 3px; font-size: 13px; }
 .fpga-flow {
   list-style: decimal;
   margin: 16px 0;

@@ -24,7 +24,7 @@ Deploy `index.html` and the `assets` directory together on a static host. Asset 
 
 The terminal-style panel introduces the candidate. The animated hardware graphics and the About section’s predefined profile text run locally in the browser. No physical board or external service is required.
 
-Open **System architecture** on the IoT-Env-Monitor card to trace a measurement from the DHT20 to the fan relay and follow links to the implementation. **RTL & LCD controller** traces an FPGA purchase, and **Process flow** shows how ParkWise settles parking fees and generates receipts. Scroll within each dialog to read all its sections.
+Open **System architecture** on the IoT-Env-Monitor card to trace a measurement from the DHT20 to the fan relay. **RTL & LCD controller** traces an FPGA purchase, and **Process flow** shows how ParkWise settles parking fees and generates receipts. Scroll within each dialog to read all its sections.
 
 ## CV source
 

@@ -122,7 +122,7 @@ window.PortfolioData = (() => {
       'cert.secSub': 'English level and upcoming TOEIC test',
       'edu.school': 'Ho Chi Minh City University of Technology — VNU-HCM',
       'edu.degree': 'Bachelor of Computer Engineering',
-      'edu.period': 'Sep 2022 – expected Nov 2027 • Ho Chi Minh City, Vietnam',
+      'edu.period': 'Sep 2022 – Nov 2027 • Ho Chi Minh City, Vietnam',
       'edu.langsTitle': 'Language Proficiency',
       'edu.langEn': 'English',
       'edu.langVi': 'Vietnamese',
@@ -259,7 +259,7 @@ window.PortfolioData = (() => {
       'cert.secSub': 'Trình độ tiếng Anh và kỳ thi TOEIC sắp tới',
       'edu.school': 'Trường Đại học Bách khoa – ĐHQG-HCM',
       'edu.degree': 'Cử nhân Kỹ thuật Máy tính',
-      'edu.period': 'Từ 09/2022, dự kiến tốt nghiệp 11/2027 • TP. Hồ Chí Minh, Việt Nam',
+      'edu.period': '09/2022 – 11/2027 • TP. Hồ Chí Minh, Việt Nam',
       'edu.langsTitle': 'Ngoại ngữ',
       'edu.langEn': 'Tiếng Anh',
       'edu.langVi': 'Tiếng Việt',
@@ -285,7 +285,6 @@ window.PortfolioData = (() => {
     }
   };
 
-  const fpgaSource = 'https://github.com/SangNguyen-232/FPGA-Vending-System/blob/main/sources_1/new/';
   const lcdStates = [
     'INIT', 'DISPLAY_ON', 'CLEAR_ON', 'SET_CURSOR1', 'WRITE_LINE1',
     'SET_CURSOR2', 'WRITE_LINE2', 'IDLE', 'CHECK_UPDATE'
@@ -303,8 +302,7 @@ window.PortfolioData = (() => {
       disclosure: '9 trạng thái và thời gian làm mới LCD',
       order: 'Thứ tự các trạng thái của LCD',
       refresh: 'Sau khi ghi 16 ký tự mỗi dòng, FSM vào <code>IDLE</code>, chuyển sang <code>CHECK_UPDATE</code> rồi chờ bộ đếm đạt 12.500.000 trước khi quay về <code>CLEAR_ON</code> để ghi lại hai dòng. Với ràng buộc xung 125 MHz trong XDC, riêng khoảng chờ này tương ứng khoảng 100 ms.',
-      test: 'Trong mô phỏng RTL riêng bằng Icarus Verilog ở 125 MHz, cả hai nhánh mua hàng cho số dư, tồn kho và thông báo đúng như ví dụ. FSM đi qua đủ 9 trạng thái. Trên bus LCD, mỗi dòng của khung hình đầu có 16 lượt ghi ký tự. Testbench đi kèm dự án dùng xung 100 MHz và dừng ở 1,01 µs, khi FSM còn ở INIT.',
-      bench: 'Testbench LCD'
+      test: 'Trong mô phỏng RTL riêng bằng Icarus Verilog ở 125 MHz, cả hai nhánh mua hàng cho số dư, tồn kho và thông báo đúng như ví dụ. FSM đi qua đủ 9 trạng thái. Trên bus LCD, mỗi dòng của khung hình đầu có 16 lượt ghi ký tự. Testbench đi kèm dự án dùng xung 100 MHz và dừng ở 1,01 µs, khi FSM còn ở INIT.'
     } : {
       title: 'Buying two units of product 1',
       setup: 'In Admin mode, set the unit price to 2 and stock to 3. Switch to User mode, deselect all products and press BTN1 to add 10 credits. Select product 1 again to start the purchase.',
@@ -316,21 +314,18 @@ window.PortfolioData = (() => {
       disclosure: 'Nine LCD states and refresh timing',
       order: 'LCD state sequence',
       refresh: 'After writing 16 characters per line, the FSM enters <code>IDLE</code> and then <code>CHECK_UPDATE</code>. When the counter reaches 12,500,000 it returns to <code>CLEAR_ON</code> to redraw both lines. At the 125 MHz clock specified in the XDC, this wait alone is about 100 ms.',
-      test: 'In a separate 125 MHz Icarus Verilog simulation, both purchase cases produced the expected balance, stock and message. The simulation visited all nine LCD states and recorded 16 character writes per line on the bus during the first frame. The repository’s 100 MHz LCD testbench stops at 1.01 µs, still in INIT.',
-      bench: 'LCD testbench'
+      test: 'In a separate 125 MHz Icarus Verilog simulation, both purchase cases produced the expected balance, stock and message. The simulation visited all nine LCD states and recorded 16 character writes per line on the bus during the first frame. The repository’s 100 MHz LCD testbench stops at 1.01 µs, still in INIT.'
     };
 
-    const sources = ['button_debounce.v', 'top_button_handler.v', 'LCD_display.v'];
     return `
       <article class="fpga-story">
         <h4>${story.title}</h4>
         <p>${story.setup}</p>
         <ol class="fpga-flow">
-          ${story.steps.map(([heading, description], i) => `
+          ${story.steps.map(([heading, description]) => `
             <li>
               <h5>${heading}</h5>
               <p>${description}</p>
-              <a href="${fpgaSource}${sources[i]}" target="_blank" rel="noopener">${sources[i]}</a>
             </li>`).join('')}
         </ol>
         <section class="fpga-fsm">
@@ -339,7 +334,7 @@ window.PortfolioData = (() => {
             ${lcdStates.map(state => `<li><code>${state}</code></li>`).join('')}
           </ol>
           <p>${story.refresh}</p>
-          <p>${story.test} <a href="${fpgaSource}test_lcd_display.v" target="_blank" rel="noopener">${story.bench}</a></p>
+          <p>${story.test}</p>
         </section>
       </article>`;
   }
@@ -394,7 +389,6 @@ window.PortfolioData = (() => {
           <div class="arch-card-title"><svg class="ic" style="width:16px;height:16px;color:var(--mint);"><use href="#i-layers"/></svg><span>Server-generated Vietnamese PDF receipts</span></div>
           <p class="small" style="color:var(--text2);margin:0 0 10px;">From the history screen, a row sends one ID to <code>GET /api/receipt</code>. A combined export sends the first ten filtered IDs. The receipt model selects matching paid sessions, caps the document at ten rows and totals only the fees included. Each row lists the session number, entry and exit times, license plate and fee.</p>
           <p class="small" style="color:var(--text2);margin:0;">The Node.js route returns the document as an <code>application/pdf</code> attachment. It uses <code>pdf-lib</code> and <code>@pdf-lib/fontkit</code> to embed a subset of Roboto, preserving Vietnamese diacritics in the downloaded receipt.</p>
-          <a href="https://github.com/qb-isme/btl_CNPM/blob/3beb2876ec67fcfdbf74aa8555a5e47278a0e37e/app/api/receipt/route.ts" target="_blank" rel="noopener">View the PDF receipt implementation</a>
         </div>
       `,
       body_vi: `
@@ -426,7 +420,6 @@ window.PortfolioData = (() => {
           <div class="arch-card-title"><svg class="ic" style="width:16px;height:16px;color:var(--mint);"><use href="#i-layers"/></svg><span>Tạo biên lai PDF tiếng Việt trên máy chủ</span></div>
           <p class="small" style="color:var(--text2);margin:0 0 10px;">Khi xuất biên lai từng dòng, trang lịch sử gửi một ID đến <code>GET /api/receipt</code>. Khi xuất gộp, trang gửi tối đa mười ID đầu tiên khớp bộ lọc. Mô hình biên lai chọn các lượt đã thanh toán có ID tương ứng, giới hạn mười dòng và chỉ cộng phí của các dòng được in. Mỗi dòng ghi số thứ tự lượt gửi xe, giờ vào và ra, biển số cùng mức phí.</p>
           <p class="small" style="color:var(--text2);margin:0;">API chạy trên Node.js trả về tệp đính kèm có kiểu <code>application/pdf</code>. Bộ tạo PDF dùng <code>pdf-lib</code> và <code>@pdf-lib/fontkit</code> để nhúng các ký tự Roboto cần dùng, giúp biên lai tải xuống hiển thị đúng dấu tiếng Việt.</p>
-          <a href="https://github.com/qb-isme/btl_CNPM/blob/3beb2876ec67fcfdbf74aa8555a5e47278a0e37e/app/api/receipt/route.ts" target="_blank" rel="noopener">Xem mã nguồn xuất biên lai PDF</a>
         </div>
       `
     }

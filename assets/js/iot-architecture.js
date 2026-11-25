@@ -1,19 +1,16 @@
 window.IoTArchitecture = (() => {
   'use strict';
 
-  const sourceRoot = 'https://github.com/SangNguyen-232/IoT-Env-Monitor/blob/project_linux/';
   const overview = {
     en: {
-      intro: 'The ESP32-S3 measures the air and controls ventilation on the board. A browser on the LAN can change its settings, and a separate service stores measurement history.',
+      intro: 'The ESP32-S3 measures the air and controls ventilation on the board. A browser on the LAN can change its settings, while a Dockerized backend deployed through Cloudflare Tunnel and Workers VPC stores measurement history for remote access.',
       loop: 'Local control loop',
-      stages: [['DHT20', 'Air temperature and humidity'], ['ESP32-S3', 'FreeRTOS and TinyML'], ['GPIO10', 'Fan relay command']],
-      sources: 'Implementation'
+      stages: [['DHT20', 'Air temperature and humidity'], ['ESP32-S3', 'FreeRTOS and TinyML'], ['GPIO10', 'Fan relay command']]
     },
     vi: {
-      intro: 'ESP32-S3 đo nhiệt độ, độ ẩm không khí và điều khiển thông gió ngay trên bo. Người dùng có thể đổi cấu hình từ trình duyệt trong mạng LAN. Một dịch vụ riêng lưu lịch sử đo.',
+      intro: 'ESP32-S3 đo nhiệt độ, độ ẩm không khí và điều khiển thông gió ngay trên bo. Người dùng có thể đổi cấu hình từ trình duyệt trong mạng LAN, còn backend đóng gói bằng Docker và triển khai qua Cloudflare Tunnel cùng Workers VPC lưu lịch sử đo để truy cập từ xa.',
       loop: 'Vòng điều khiển trên bo',
-      stages: [['DHT20', 'Nhiệt độ và độ ẩm không khí'], ['ESP32-S3', 'FreeRTOS và TinyML'], ['GPIO10', 'Lệnh điều khiển rơ-le quạt']],
-      sources: 'Mã nguồn'
+      stages: [['DHT20', 'Nhiệt độ và độ ẩm không khí'], ['ESP32-S3', 'FreeRTOS và TinyML'], ['GPIO10', 'Lệnh điều khiển rơ-le quạt']]
     }
   };
 
@@ -28,8 +25,7 @@ window.IoTArchitecture = (() => {
         'Một tác vụ FreeRTOS nắm quyền điều khiển rơ-le',
         'Cứ 5 giây, tác vụ cảm biến đọc DHT20 qua I2C và ghi lại lệnh quạt tại thời điểm đo. Việc lấy mẫu, suy luận và điều khiển chạy ở các tác vụ FreeRTOS riêng. Trong bảy tác vụ, chỉ task_fan được ghi GPIO10. Đầu dò độ ẩm đất dùng một ngõ ADC riêng để giám sát.',
         'Tác vụ suy luận chỉ giữ mutex trong lúc sao chép mẫu, rồi nhả khóa trước khi chạy mô hình. Khi có kết quả, tác vụ đối chiếu cả số thứ tự lẫn thời điểm lấy mẫu. Nếu đã có mẫu mới, kết quả cũ bị loại.'
-      ],
-      paths: ['firmware/src/main.cpp', 'firmware/src/environment_monitor.cpp', 'firmware/src/tinyml.cpp']
+      ]
     },
     {
       en: [
@@ -41,8 +37,7 @@ window.IoTArchitecture = (() => {
         'Hai ngưỡng đóng ngắt và quy tắc dự phòng bảo vệ rơ-le',
         'AUTO dùng ngưỡng bật và tắt riêng, giữ mỗi trạng thái ít nhất 10 giây để tránh đóng ngắt liên tục. Ở SHADOW, firmware ghi nhận dự báo còn quạt vẫn chạy theo ngưỡng. Trong các chế độ tự động, mẫu không khí lỗi hoặc cũ quá 15 giây buộc rơ-le tắt ngay.',
         'Trong vùng giữa hai ngưỡng, AI chỉ được yêu cầu bật sớm khi dự báo còn mới, khớp mẫu đo, cấu hình ngưỡng khớp với mô hình và điểm ON đạt ít nhất 0,80. Nếu mô hình không sẵn sàng, quạt vẫn chạy theo ngưỡng đã lưu. Lệnh bật thủ công hết hiệu lực sau 5 phút.'
-      ],
-      paths: ['firmware/include/fan_policy.h', 'firmware/src/fan.cpp']
+      ]
     },
     {
       en: [
@@ -54,21 +49,31 @@ window.IoTArchitecture = (() => {
         'Dự báo trước 30 giây với 4 KiB bộ nhớ tensor',
         'Từ bảy mẫu không khí liên tiếp và lệnh quạt lúc lấy mẫu, firmware tính tám đặc trưng cho mô hình INT8 dung lượng 5.536 byte. Với giả định lệnh quạt được giữ nguyên, mô hình dự báo vùng OFF, HOLD hoặc ON sau 30 giây. TensorFlow Lite Micro dùng vùng nhớ tensor cố định 4 KiB trên ESP32-S3.',
         'Ba chuỗi kiểm thử cùng kết thúc ở 28,5 °C và độ ẩm 71% khi quạt tắt. Mô hình dự báo ON với chuỗi tăng, OFF với chuỗi giảm và HOLD với chuỗi ổn định. Trên 3.600 kịch bản mô phỏng dành riêng cho kiểm thử, mô hình INT8 chạy trên máy tính đạt 87,28%, còn ngoại suy tuyến tính đạt 82,94%.'
-      ],
-      paths: ['firmware/include/temporal_window.h', 'firmware/include/fan_inference.h', 'ml/models/fan_model_manifest.json']
+      ]
     },
     {
       en: [
         'Local control continues through a backend outage',
-        'The board serves its own LAN dashboard. HTTP accepts control requests and WebSocket reports readings and applied relay commands. A separate task posts events to a Dockerized Express/PostgreSQL backend, deployed remotely through an outbound Cloudflare Tunnel (cloudflared) and a Cloudflare Worker VPC binding without exposing inbound ports.',
+        'The board serves its own LAN dashboard. HTTP accepts control requests and WebSocket reports readings and applied relay commands. A separate FreeRTOS task posts telemetry events over HTTPS to the remote Express/PostgreSQL backend.',
         'A six-message RAM queue buffers uploads. When it fills, the oldest message is dropped so sampling and control can continue. The boot ID, sample sequence and relay decision time let an operator trace a command back to its reading even if the upload arrived late.'
       ],
       vi: [
         'Bo vẫn điều khiển quạt khi mất kết nối với máy chủ',
-        'Bo phục vụ dashboard trong mạng LAN. HTTP nhận yêu cầu điều khiển, còn WebSocket trả về số đo và lệnh rơ-le đã thực thi. Một tác vụ riêng gửi sự kiện đến backend Express/PostgreSQL chạy trong Docker, được triển khai truy cập từ xa qua đường hầm Cloudflare hướng ra ngoài (cloudflared) và Cloudflare Worker VPC mà không cần mở cổng inbound.',
+        'Bo phục vụ dashboard trong mạng LAN. HTTP nhận yêu cầu điều khiển, còn WebSocket trả về số đo và lệnh rơ-le đã thực thi. Một tác vụ FreeRTOS riêng gửi các bản tin dữ liệu qua HTTPS lên backend Express/PostgreSQL từ xa.',
         'Hàng đợi trong RAM giữ tối đa sáu bản tin. Khi đầy, bản tin cũ nhất bị loại để việc đo và điều khiển vẫn tiếp tục. Dù bản tin đến muộn, người vận hành vẫn có thể đối chiếu lệnh quạt với số đo nhờ mã lần khởi động, số thứ tự mẫu và thời điểm ra quyết định.'
+      ]
+    },
+    {
+      en: [
+        'Remote deployment via Cloudflare Tunnel and Workers VPC',
+        'The Express/PostgreSQL telemetry service runs as a Docker Compose stack on a private bridge network alongside a cloudflared connector. PostgreSQL binds only to localhost, and the Express container exposes port 3000 solely inside Docker instead of opening inbound ports on the host or router.',
+        'cloudflared establishes an outbound-only Cloudflare Tunnel once the backend health check passes. A Cloudflare Worker edge gateway receives HTTPS requests from remote browsers and the ESP32-S3 telemetry client (authenticated with X-Device-Key), forwards them over a Workers VPC service binding to backend:3000 inside the Docker network, and returns HTTP 502 if the tunnel or backend is offline.'
       ],
-      paths: ['firmware/src/web_server.cpp', 'firmware/src/telemetry_client.cpp', 'services/backend/src/index.js', 'docker-compose.yml', 'services/gateway/src/index.js']
+      vi: [
+        'Triển khai từ xa qua Cloudflare Tunnel và Workers VPC',
+        'Dịch vụ lưu trữ Express/PostgreSQL chạy bằng Docker Compose trên mạng bridge nội bộ cùng container cloudflared. PostgreSQL chỉ gắn vào localhost, còn container Express chỉ mở cổng 3000 trong mạng Docker thay vì mở cổng inbound trên máy chủ hoặc router.',
+        'cloudflared thiết lập kết nối Cloudflare Tunnel một chiều hướng ra ngoài sau khi backend vượt qua kiểm tra sức khỏe. Cổng Cloudflare Worker ở biên mạng tiếp nhận yêu cầu HTTPS từ trình duyệt từ xa và tác vụ gửi dữ liệu trên ESP32-S3 (xác thực bằng X-Device-Key), chuyển tiếp qua liên kết dịch vụ Workers VPC tới backend:3000 trong mạng Docker và trả về mã 502 nếu tunnel hoặc backend ngoại tuyến.'
+      ]
     }
   ];
 
@@ -94,16 +99,6 @@ window.IoTArchitecture = (() => {
       const section = element('section', '', 'iot-decision');
       section.append(element('h4', title, 'iot-decision-title'));
       for (const paragraph of paragraphs) section.append(element('p', paragraph));
-      const sources = element('div', '', 'iot-sources');
-      sources.append(element('strong', labels.sources));
-      for (const path of decision.paths) {
-        const link = element('a', path.split('/').pop());
-        link.href = sourceRoot + path;
-        link.target = '_blank';
-        link.rel = 'noopener';
-        sources.append(link);
-      }
-      section.append(sources);
       return section;
     });
     body.replaceChildren(element('p', labels.intro, 'iot-intro'), flow, ...topics);
