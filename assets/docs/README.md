@@ -5,7 +5,7 @@
 With [Tectonic](https://tectonic-typesetting.github.io/book/latest/installation/) available on PATH, run the following command from the Portfolio root directory:
 
 ```powershell
-tectonic --untrusted --outdir .\assets\docs .\assets\docs\CV.tex
+tectonic --untrusted --outdir .\Portfolio\assets\docs .\Portfolio\assets\docs\CV.tex
 ```
 
 Tectonic downloads the required packages and fonts on its first run. If you use a portable version, replace `tectonic` with the path to the executable.

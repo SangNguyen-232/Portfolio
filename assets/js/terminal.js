@@ -72,7 +72,10 @@ window.TerminalEngine = (() => {
     const typing = document.getElementById('typing');
     const stream = document.getElementById('stream');
     if (typing) typing.classList.remove('on');
-    if (stream) stream.classList.remove('live');
+    if (stream) {
+      stream.classList.remove('live');
+      stream.classList.add('on');
+    }
   };
 
   return {

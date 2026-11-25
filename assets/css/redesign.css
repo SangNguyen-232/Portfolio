@@ -114,10 +114,11 @@ html { scrollbar-color: var(--border2) var(--bg); }
    5. ACCESSIBILITY: respect reduced motion for the remaining effects
    --------------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
-  .marquee .track { animation: none; flex-wrap: wrap; width: auto; }
+  .marquee { mask-image: none; }
+  .marquee .track { flex-wrap: wrap; width: auto; padding-inline-end: 0; }
+  .marquee [data-repeat-start], .marquee [data-repeat-start] ~ .mq { display: none; }
   .status-dot, .term-wave .wave-pulse,
   .typing i, .stream.live::after,
-  .eng-card-head::after, .tl-item.current .tl-dot,
-  .chat-head .dots i { animation: none; }
+  .eng-card-head::after, .tl-item.current .tl-dot { animation: none; }
   html { scroll-behavior: auto; }
 }

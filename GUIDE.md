@@ -23,7 +23,7 @@ This is a static website. HTML defines its content and structure, CSS controls i
 
 Node.js runs the small local HTTP server in `scripts/serve.mjs`. The server uses Node.js built-in modules and serves `index.html` and files under `assets/`. There are no npm dependencies to install and no frontend compilation step. The only npm script is `start`; `npm install`, `npm ci`, and `npm run build` are not setup steps for this project.
 
-The terminal-style panel displays the candidate’s introduction. The hardware graphics and the About section’s assistant text run locally in the browser.
+The terminal-style panel displays the candidate’s introduction. The hardware graphics and the About section’s predefined profile text run locally in the browser. The project dialogs describe other repositories. Viewing them requires no physical board, sensor, or running instance of those projects.
 
 ## 2. Install the required tools
 
@@ -38,7 +38,7 @@ The terminal-style panel displays the candidate’s introduction. The hardware g
 
 Install Git using the instructions for your operating system on the [official Git installation page](https://git-scm.com/install/). Install a maintained Node.js LTS release that satisfies the project's `>=20` requirement from the [official Node.js download page](https://nodejs.org/en/download). Choose the installer or installation method appropriate for your operating system and processor.
 
-Node.js 26.13.1 was used for the current local validation. The package's minimum of Node.js 20 is a compatibility requirement, not a recommendation to install an unsupported release.
+The supplied server was tested on Windows 11 with Node.js 20.0.0 and 26.13.1. The PowerShell setup was checked with Git 2.56.1 and npm 11.20.0. The macOS and Linux commands below use standard shell syntax and have not been exercised on those systems in this review.
 
 After installation, close and reopen the terminal so that updated executable paths take effect. In Windows PowerShell, check:
 
@@ -105,7 +105,7 @@ node scripts/serve.mjs
 
 Choose one of these commands. Keep its terminal open and visit [the local portfolio](http://127.0.0.1:4173) in your browser. The terminal should display `Portfolio: http://127.0.0.1:4173`. The server binds to the local computer only; it does not make the site accessible to other devices on your network.
 
-Press **Ctrl+C** in the server terminal to stop it. To use the project again later, open a terminal in the same `Portfolio` folder and run the same start command. You do not need to clone or install anything again.
+Press **Ctrl+C** in the server terminal to stop it. When using `npm.cmd` on Windows, enter `Y` if prompted with `Terminate batch job (Y/N)?`. To use the project again later, open a terminal in the same `Portfolio` folder and run the same start command.
 
 ### Use a different port
 
@@ -150,6 +150,7 @@ npm start
 - Use the assistant's regenerate button to replay its predefined profile text in the selected language. No account or API key is needed.
 - Move the mouse across the **about me** and **profile.json** cards to see them tilt slightly. The page uses the system cursor, and the cards settle when the pointer leaves. On touch-only devices or with reduced motion enabled, the cards stay level.
 - Use **View CV** to open `assets/docs/CV.pdf`. A browser may display it in a PDF viewer or offer a download according to its settings.
+- Select the phone number or email address in the contact cards to copy it. The page confirms a successful copy and provides a manual copy prompt if clipboard access is unavailable.
 
 The keyboard shortcuts are:
 
@@ -158,11 +159,13 @@ The keyboard shortcuts are:
 | `L` | Switch the interface language. |
 | `B` | Show or hide the pulsing LED borders and the light traces between sections. |
 | `T` | Move to and focus the introduction in the terminal-style panel. |
-| `P` | Move to the projects section. |
+| `P` | Move to and focus the projects section. |
 | `Escape` | Close an open dialog or the mobile menu. |
 | `?` | Open or close the shortcut guide. |
 
-Letter shortcuts are ignored while typing in a form field or editable content and while another dialog is open. The language and LED preferences use local storage; when storage is blocked, the code falls back to memory for the current page. The page also responds to the operating system/browser reduced-motion preference, so some animations may be shortened or absent.
+Single-character shortcuts are enabled by default. Open **Shortcuts** in the footer and clear **Enable single-character shortcuts** to disable `L`, `B`, `T`, `P` and `?`. Use the same footer button to enable them again. Tab and Escape work with either setting.
+
+The page ignores letter shortcuts while focus is in a form field, editable content or a dialog. Language, LED and shortcut preferences persist when browser storage is available. If storage is blocked, they last for the current page. The page also responds to the browser or operating system’s reduced-motion preference.
 
 Google Fonts is optional. If external font requests fail, the site uses its configured fallback fonts. External GitHub, LinkedIn, email, and telephone links depend on their destination or the applications configured on your device.
 
@@ -221,7 +224,7 @@ For IoT-Env-Monitor, check the ESP32 task names and relay pin in the firmware an
 
 Use the same engineering style for ParkWise as for the firmware and FPGA entries. In the project card and CV, connect a mechanism to its effect. For example, one balance deduction settles several parking visits, while a shared transaction reference keeps each visit traceable. In the project dialog, follow the data from the React screens through the Next.js routes and payment controller to the PDF receipt. Document the validation checks and prototype limits, and omit internal use-case labels.
 
-The technology list describes the team project. The PostgreSQL schema and seed scripts are standalone examples. The prototype uses browser storage and server memory at runtime. When updating receipt details, check the version of the payment and history screens that the entry describes. The team repository also contains a printable HTML receipt, while the version featured in the portfolio generates a PDF. See the [ParkWise repository](https://github.com/SangNguyen-232/ParkWise).
+The technology list describes the team project. The PostgreSQL schema and seed scripts are standalone examples. The prototype uses browser storage and server memory at runtime. The ParkWise fork's default branch serves a printable HTML receipt. The portfolio describes the team's `UC2` implementation, which generates a PDF with up to ten selected visits. Check the matching revision when updating the card, dialog, or CV. [ParkWise fork](https://github.com/SangNguyen-232/ParkWise) · [Featured PDF implementation](https://github.com/qb-isme/btl_CNPM/blob/3beb2876ec67fcfdbf74aa8555a5e47278a0e37e/lib/receipt-pdf.ts)
 
 Keep file names and capitalization consistent in all references. Use relative asset paths such as `assets/images/anh-the-trang.webp` rather than paths beginning with `/`; this allows the site to work beneath a project URL prefix.
 
@@ -345,4 +348,6 @@ curl --head http://127.0.0.1:4173/assets/docs/CV.pdf
 
 Both responses should begin with `HTTP/1.1 200 OK`. Replace `4173` in these commands if you selected another port. An HTTP success confirms that a file is served; use the browser checks above to assess interactive behavior and layout.
 
-The syntax checks passed under Node.js 26.13.1. The introduction, IoT-Env-Monitor card, architecture dialog and language switch were exercised in Chrome at desktop and mobile viewport sizes on Windows. Tectonic 0.17.0 rebuilt the one-page CV. The rendered page and its project repository link were checked.
+The JavaScript syntax checks passed under Node.js 20.0.0 and 26.13.1 on Windows. A clean clone served the page and its assets with the expected GET and HEAD responses. The server also passed checks for stopping, restarting, changing ports, and handling an invalid or occupied port.
+
+Browser checks on Windows covered both languages, all three project dialogs, keyboard navigation and the CV link under a local `/Portfolio/` hosting prefix. Chrome, Firefox and WebKit were tested at desktop and mobile viewport sizes. Edge was also tested with browser storage blocked and external fonts unavailable. Mobile checks used emulated viewports. Tectonic 0.17.0 rebuilt the single-page A4 CV, and its rendered page and eight link destinations were checked.

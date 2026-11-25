@@ -60,15 +60,15 @@ window.IoTArchitecture = (() => {
     {
       en: [
         'Local control continues through a backend outage',
-        'The board serves its own LAN dashboard. HTTP accepts control requests and WebSocket reports readings and applied relay commands. A separate task posts events to Express, which stores per-device history in PostgreSQL. An optional Cloudflare tunnel provides remote access to the backend.',
+        'The board serves its own LAN dashboard. HTTP accepts control requests and WebSocket reports readings and applied relay commands. A separate task posts events to a Dockerized Express/PostgreSQL backend, deployed remotely through an outbound Cloudflare Tunnel (cloudflared) and a Cloudflare Worker VPC binding without exposing inbound ports.',
         'A six-message RAM queue buffers uploads. When it fills, the oldest message is dropped so sampling and control can continue. The boot ID, sample sequence and relay decision time let an operator trace a command back to its reading even if the upload arrived late.'
       ],
       vi: [
         'Bo vẫn điều khiển quạt khi mất kết nối với máy chủ',
-        'Bo phục vụ dashboard trong mạng LAN. HTTP nhận yêu cầu điều khiển, còn WebSocket trả về số đo và lệnh rơ-le đã thực thi. Một tác vụ riêng gửi sự kiện đến Express để lưu lịch sử từng thiết bị vào PostgreSQL. Có thể truy cập backend từ xa qua đường hầm Cloudflare.',
+        'Bo phục vụ dashboard trong mạng LAN. HTTP nhận yêu cầu điều khiển, còn WebSocket trả về số đo và lệnh rơ-le đã thực thi. Một tác vụ riêng gửi sự kiện đến backend Express/PostgreSQL chạy trong Docker, được triển khai truy cập từ xa qua đường hầm Cloudflare hướng ra ngoài (cloudflared) và Cloudflare Worker VPC mà không cần mở cổng inbound.',
         'Hàng đợi trong RAM giữ tối đa sáu bản tin. Khi đầy, bản tin cũ nhất bị loại để việc đo và điều khiển vẫn tiếp tục. Dù bản tin đến muộn, người vận hành vẫn có thể đối chiếu lệnh quạt với số đo nhờ mã lần khởi động, số thứ tự mẫu và thời điểm ra quyết định.'
       ],
-      paths: ['firmware/src/web_server.cpp', 'firmware/src/telemetry_client.cpp', 'services/backend/src/index.js']
+      paths: ['firmware/src/web_server.cpp', 'firmware/src/telemetry_client.cpp', 'services/backend/src/index.js', 'docker-compose.yml', 'services/gateway/src/index.js']
     }
   ];
 

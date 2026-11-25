@@ -20,7 +20,7 @@
   <meta property="og:description"
     content="ESP32-S3 · FreeRTOS Multitasking · TinyML On-Device · FPGA Verilog · IoT Cloud">
   <link rel="icon"
-    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%235FE3C8'/%3E%3Cstop offset='1' stop-color='%23FFB547'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='%23061418'/%3E%3Crect x='14' y='14' width='36' height='36' rx='6' fill='none' stroke='url(%23g)' stroke-width='3'/%3E%3Ccircle cx='32' cy='32' r='7' fill='url(%23g)'/%3E%3Cpath d='M32 6v8M32 50v8M6 32h8M50 32h8M19 6v8M45 6v8M19 50v8M45 50v8' stroke='url(%23g)' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E">
+    href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Cdefs%3E%3ClinearGradient%20id='g'%20x1='0'%20y1='0'%20x2='1'%20y2='1'%3E%3Cstop%20offset='0'%20stop-color='%235FE3C8'/%3E%3Cstop%20offset='1'%20stop-color='%23FFB547'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect%20width='64'%20height='64'%20rx='14'%20fill='%23061418'/%3E%3Crect%20x='14'%20y='14'%20width='36'%20height='36'%20rx='6'%20fill='none'%20stroke='url(%23g)'%20stroke-width='3'/%3E%3Ccircle%20cx='32'%20cy='32'%20r='7'%20fill='url(%23g)'/%3E%3Cpath%20d='M32%206v8M32%2050v8M6%2032h8M50%2032h8M19%206v8M45%206v8M19%2050v8M45%2050v8'%20stroke='url(%23g)'%20stroke-width='2.5'%20stroke-linecap='round'/%3E%3C/svg%3E">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,7 +29,7 @@
     rel="stylesheet">
 
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"Person","name":"Nguyen Van Sang","jobTitle":"Embedded Software Engineer (Fresher)","email":"mailto:sangnguyen230204@gmail.com","telephone":"+84383589877","address":{"@type":"PostalAddress","addressLocality":"Ho Chi Minh City, Vietnam","addressCountry":"VN"},"alumniOf":"Ho Chi Minh City University of Technology — VNU-HCM","sameAs":["https://github.com/SangNguyen-232","https://www.linkedin.com/in/sangnguyen232/"]}
+  {"@context":"https://schema.org","@type":"Person","name":"Nguyen Van Sang","description":"Computer Engineering student seeking an entry-level embedded software engineering role","email":"sangnguyen230204@gmail.com","telephone":"+84383589877","address":{"@type":"PostalAddress","addressLocality":"Ho Chi Minh City","addressCountry":"VN"},"affiliation":{"@type":"CollegeOrUniversity","name":"Ho Chi Minh City University of Technology — VNU-HCM"},"sameAs":["https://github.com/SangNguyen-232","https://www.linkedin.com/in/sangnguyen232/"]}
   </script>
 
   <link rel="stylesheet" href="assets/css/variables.css">
@@ -141,7 +141,7 @@
     <div class="loader-inner">
       <svg class="loader-ready" viewBox="0 0 64 64" width="64" height="64" aria-hidden="true" focusable="false">
         <circle class="ready-track" cx="32" cy="32" r="26" />
-        <circle class="ready-ring" cx="32" cy="32" r="26" pathLength="1" transform="rotate(-90 32 32)" />
+        <path class="ready-ring" d="M32 6a26 26 0 1 1 0 52a26 26 0 1 1 0-52Z" pathLength="1" />
         <path class="ready-check" d="m20 32 8 8 16-17" pathLength="1" />
       </svg>
       <span class="loader-text" data-i18n="loader.text">Ready to explore</span>
@@ -158,11 +158,11 @@
   <!-- Header Navigation -->
   <header class="nav" id="nav">
     <div class="nav-inner">
-      <a href="#hero" class="logo" aria-label="Home" data-i18n-aria-label="a11y.home">
+      <a href="#hero" class="logo" aria-label="sang.dev — Home" data-i18n-aria-label="a11y.home">
         <span class="logo-mark"><i></i><i></i><i></i></span>
         <span class="logo-text">sang<b>.dev</b></span>
       </a>
-      <nav class="nav-links" aria-label="Primary">
+      <nav class="nav-links" aria-label="Primary navigation" data-i18n-aria-label="a11y.primaryNav">
         <a href="#about" data-i18n="nav.about">Professional Summary</a>
         <a href="#projects" data-i18n="nav.projects">Projects</a>
         <a href="#education" data-i18n="nav.education">Education &amp; Certification</a>
@@ -172,7 +172,7 @@
       </nav>
       <div class="nav-right">
         <!-- Language Switcher -->
-        <button class="lang" id="langToggle" type="button" aria-label="Switch language" data-i18n-aria-label="a11y.language">
+        <button class="lang" id="langToggle" type="button" aria-label="EN VI — Switch to Vietnamese" data-i18n-aria-label="a11y.language">
           <span class="lang-pill"></span>
           <span class="lang-opt" data-lang="en">EN</span>
           <span class="lang-opt" data-lang="vi">VI</span>
@@ -197,16 +197,16 @@
   </header>
 
   <!-- Contact Bar (Aligned with CV Header, Centered in Layout) -->
-  <aside class="recruiter-bar" id="recruiterBar" aria-label="Candidate Contact &amp; Profiles">
+  <aside class="recruiter-bar" id="recruiterBar" aria-label="Candidate contact details and profiles" data-i18n-aria-label="a11y.contacts">
     <div class="container recruiter-inner">
       <div class="cv-contact-bar">
-        <a class="cv-contact-item" href="tel:0383589877" id="quickCopyPhone" data-copy="0383589877" data-copy-type="phone" title="Phone / Click to copy: 0383589877">
+        <a class="cv-contact-item" href="tel:+84383589877" id="quickCopyPhone" data-copy="0383589877" data-copy-type="phone" title="Call 0383 589 877">
           <svg class="ic">
             <use href="#i-phone" />
           </svg>
           <span>0383 589 877</span>
         </a>
-        <a class="cv-contact-item" href="mailto:sangnguyen230204@gmail.com" id="quickCopyEmail" data-copy="sangnguyen230204@gmail.com" title="Email / Click to copy: sangnguyen230204@gmail.com">
+        <a class="cv-contact-item" href="mailto:sangnguyen230204@gmail.com" id="quickCopyEmail" data-copy="sangnguyen230204@gmail.com" title="Email sangnguyen230204@gmail.com">
           <svg class="ic">
             <use href="#i-mail" />
           </svg>
@@ -216,7 +216,7 @@
           <svg class="ic">
             <use href="#i-pin" />
           </svg>
-          <span>Ho Chi Minh City, Vietnam</span>
+          <span data-i18n="contact.location">Ho Chi Minh City, Vietnam</span>
         </span>
         <a class="cv-contact-item" href="https://github.com/SangNguyen-232" target="_blank" rel="noopener" title="GitHub: SangNguyen-232">
           <svg class="ic">
@@ -235,8 +235,8 @@
   </aside>
 
   <!-- Mobile Menu Overlay -->
-  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
-    <nav aria-label="Mobile">
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true" inert>
+    <nav aria-label="Mobile navigation" data-i18n-aria-label="a11y.mobileNav">
       <a href="#about" data-i18n="nav.about">Professional Summary</a>
       <a href="#projects" data-i18n="nav.projects">Projects</a>
       <a href="#education" data-i18n="nav.education">Education &amp; Certification</a>
@@ -245,7 +245,7 @@
       <a href="#contact" data-i18n="nav.contact">Contact</a>
       <a href="assets/docs/CV.pdf" target="_blank" rel="noopener" data-i18n="nav.resume">View CV</a>
       </nav>
-    <div class="mobile-socials">
+    <div class="mobile-socials" role="navigation" aria-label="Contact and profile links" data-i18n-aria-label="a11y.socialNav">
       <a href="https://github.com/SangNguyen-232" target="_blank" rel="noopener" aria-label="GitHub"><svg class="ic">
           <use href="#i-github" />
         </svg></a>
@@ -260,7 +260,7 @@
   </div>
 
   <!-- Table of contents (main section order) -->
-  <nav class="toc" id="toc" aria-label="Table of contents">
+  <nav class="toc" id="toc" aria-label="Table of contents" data-i18n-aria-label="a11y.toc">
     <svg class="toc-circuit" id="tocCircuit" aria-hidden="true">
       <defs>
         <linearGradient id="tocLaserGrad" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -337,7 +337,7 @@
                   <span class="hero-role-title" data-i18n="hero.status">I'm looking for a Fresher Embedded Software Engineer role</span>
                 </p>
                 <p class="hero-lead" data-i18n="hero.tagline">
-                  Building deterministic FreeRTOS firmware, on-device TinyML inference, and Verilog FPGA systems — from hardware peripherals to IoT platforms.
+                  I build FreeRTOS firmware for the ESP32-S3, run TinyML models on the device, and design FPGA controllers in Verilog.
                 </p>
               </div>
 
@@ -428,7 +428,7 @@
             <div class="chat glass spot reveal" id="chat">
               <div class="chat-head">
                 <div class="dots" aria-hidden="true"><i></i><i></i><i></i></div>
-                <span class="chat-title mono">about me</span>
+                <span class="chat-title mono" data-i18n="about.chatTitle">about me</span>
               </div>
               <div class="chat-body">
                 <div class="msg user on">
@@ -443,7 +443,7 @@
                     <div class="typing" id="typing" aria-hidden="true">
                       <i></i><i></i><i></i>
                     </div>
-                    <div class="stream on" id="stream">Nguyen Van Sang is a Computer Engineering student at Ho Chi Minh City University of Technology (HCMUT), focused on embedded systems and IoT. He has written FreeRTOS firmware for the ESP32-S3, integrated a TinyML forecast into its fan controller, developed Verilog RTL for an FPGA vending prototype with an LCD controller FSM, and built a backend that collects sensor data. In summer 2026 he interned on IoT sensor solutions at Viettel Dak Lak. He is looking for a Fresher Embedded Software Engineer role where he can learn from experienced engineers and ship firmware that runs on real hardware.</div>
+                    <div class="stream on" id="stream" data-i18n="about.streamText">Nguyen Van Sang is a Computer Engineering student at Ho Chi Minh City University of Technology (HCMUT), focused on embedded systems and IoT. He has written FreeRTOS firmware for the ESP32-S3, integrated a TinyML forecast into its fan controller, developed Verilog RTL for an FPGA vending prototype with an LCD controller FSM, and built a backend that collects sensor data. In summer 2026 he interned on IoT sensor solutions at Viettel Dak Lak. He is looking for a Fresher Embedded Software Engineer role where he can learn from experienced engineers and ship firmware that runs on real hardware.</div>
                   </div>
                 </div>
               </div>
@@ -471,7 +471,7 @@
 <span class="ln">  <span class="k">"level"</span>: <span class="s">"Fresher"</span>,</span>
 <span class="ln">  <span class="k">"education"</span>: <span class="s">"HCMUT - VNU-HCM"</span>,</span>
 <span class="ln">  <span class="k">"degree"</span>: <span class="s">"B.Eng in Computer Engineering"</span>,</span>
-<span class="ln">  <span class="k">"graduation"</span>: <span class="s">"Nov 2027"</span>,</span>
+<span class="ln">  <span class="k">"expectedGraduation"</span>: <span class="s">"Nov 2027"</span>,</span>
 <span class="ln">  <span class="k">"coreFocus"</span>:
   [</span>
 <span class="ln">    <span class="s">"Embedded Firmware"</span>,</span>
@@ -504,13 +504,13 @@
                   <use href="#i-cpu" />
                 </svg></div>
               <h3 data-i18n="do.d3.title">FPGA &amp; Digital Design</h3>
-              <p data-i18n="do.d3.desc">Verilog RTL for a vending prototype targeting Digilent Arty-Z7-20: User/Admin logic, an LCD controller state machine, button debounce and board pin/clock constraints for Vivado.</p>
+              <p data-i18n="do.d3.desc">Verilog RTL for a vending prototype targeting Digilent Arty Z7-20: User/Admin logic, an LCD controller state machine, button debounce and board pin/clock constraints for Vivado.</p>
             </div>
           </div>
         </div>
       </section>
 
-    <section id="projects" class="section" aria-labelledby="projects-title">
+    <section id="projects" tabindex="-1" class="section" aria-labelledby="projects-title">
       <div class="container">
         <div class="sec-head reveal">
 
@@ -546,7 +546,7 @@
             <ul>
               <li data-i18n="proj.p1.b1">Built ESP32-S3 firmware that samples air temperature and humidity every five seconds, displays the readings on an LCD and controls a ventilation fan. A separate probe measures soil moisture.</li>
               <li data-i18n="proj.p1.b2">Integrated an INT8 model that uses seven readings and the sampled fan command to forecast the OFF, HOLD or ON band 30 seconds ahead. In AI mode, a rising trend can trigger ventilation before a threshold is crossed.</li>
-              <li data-i18n="proj.p1.b3">Built a live WebSocket dashboard on the board and an Express API that stores HTTP uploads in PostgreSQL for multi-device history.</li>
+              <li data-i18n="proj.p1.b3">Built an on-device WebSocket dashboard and deployed a Dockerized Express/PostgreSQL telemetry API remotely through an outbound Cloudflare Tunnel and Workers VPC with no exposed inbound ports.</li>
             </ul>
             <div class="pcard-meta">
               <span><svg class="ic">
@@ -568,6 +568,7 @@
                 <span class="tag">ESP32-S3</span>
                 <span class="tag">TFLite Micro</span>
                 <span class="tag">Docker</span>
+                <span class="tag">Cloudflare Tunnel</span>
                 <span class="tag">PostgreSQL</span>
                 <span class="tag">Express</span>
                 <span class="tag">JavaScript</span>
@@ -585,7 +586,7 @@
                 <svg class="ic">
                   <use href="#i-github" />
                 </svg>
-                <span>GitHub Repo</span>
+                <span data-i18n="proj.repo">GitHub Repo</span>
               </a>
               <span class="pcard-period mono" data-i18n="proj.p1.stage">Embedded system</span>
             </div>
@@ -597,28 +598,28 @@
               <div class="pcard-icon"><svg class="ic">
                   <use href="#i-cpu" />
                 </svg></div>
-              <span class="pill glow mono" data-i18n="proj.p2.context">Oct 2024 – Dec 2024</span>
+              <span class="pill glow mono" data-i18n="proj.p2.context">Oct – Dec 2024 · Team of 5</span>
             </div>
             <h3 data-i18n="proj.p2.title">FPGA Vending Machine Prototype</h3>
             <ul>
-              <li data-i18n="proj.p2.b1">Developed Verilog RTL for a 4-product vending prototype targeting Digilent Arty-Z7-20, with separate User and Admin modes.</li>
+              <li data-i18n="proj.p2.b1">Developed Verilog RTL for a 4-product vending prototype targeting Digilent Arty Z7-20, with separate User and Admin modes.</li>
               <li data-i18n="proj.p2.b2">Implemented button-based credit (+5/+10), quantity selection, stock checks and balance deduction; Admin mode adjusts prices and restocks products.</li>
               <li data-i18n="proj.p2.b3">Added counter-based button debounce, an 8-bit 16×2 LCD interface with a 9-state controller FSM, and four 4-bit digit outputs for a 7-segment display interface.</li>
             </ul>
             <div class="pcard-meta">
               <span><svg class="ic">
                   <use href="#i-cpu" />
-                </svg><span data-i18n="proj.p2.hardware">Target: Digilent Arty-Z7-20 · XDC clock constraint: 125 MHz</span></span>
+                </svg><span data-i18n="proj.p2.hardware">Target: Digilent Arty Z7-20 · XDC clock constraint: 125 MHz</span></span>
               <span><svg class="ic">
                   <use href="#i-code" />
                 </svg><span data-i18n="proj.p2.design">Verilog RTL · User/Admin logic · LCD controller FSM</span></span>
             </div>
             <div class="stack">
-              <span class="lbl mono">Tech Stack:</span>
+              <span class="lbl mono" data-i18n="proj.p1.stack">Tech stack</span>
               <div class="tags">
                 <span class="tag">Verilog HDL</span>
                 <span class="tag">Xilinx Vivado</span>
-                <span class="tag">Arty-Z7-20</span>
+                <span class="tag">Arty Z7-20</span>
                 <span class="tag">Verilog Testbench</span>
               </div>
             </div>
@@ -634,7 +635,7 @@
                 <svg class="ic">
                   <use href="#i-github" />
                 </svg>
-                <span>GitHub Repo</span>
+                <span data-i18n="proj.repo">GitHub Repo</span>
               </a>
               <span class="pcard-period mono" data-i18n="proj.p2.stage">RTL prototype</span>
             </div>
@@ -646,11 +647,11 @@
               <div class="pcard-icon"><svg class="ic">
                   <use href="#i-server" />
                 </svg></div>
-              <span class="pill glow mono" data-i18n="proj.p3.context">Mar 2026 - May 2026</span>
+              <span class="pill glow mono" data-i18n="proj.p3.context">Mar – May 2026 · Team of 5</span>
             </div>
             <h3 data-i18n="proj.p3.title">ParkWise — Campus Parking Prototype</h3>
             <ul>
-              <li data-i18n="proj.p3.b1">The account API totals the fees due after discounts on unpaid parking sessions. The dashboard compares that total with the account balance and flags a shortfall before checkout.</li>
+              <li data-i18n="proj.p3.b1">I built the account balance and payment workflow. The account API totals unpaid parking fees after discounts, and the dashboard warns drivers when their balance is too low.</li>
               <li data-i18n="proj.p3.b2">A TypeScript payment controller settles multiple sessions through simulated BKPay. It debits the total once and records a shared payment reference on each paid session.</li>
               <li data-i18n="proj.p3.b3">Payment history filters paid sessions by check-in date and partial license plate. A Node.js route generates an itemized Vietnamese PDF for a single session or up to ten matching sessions.</li>
             </ul>
@@ -677,7 +678,7 @@
                 <svg class="ic">
                   <use href="#i-github" />
                 </svg>
-                <span>GitHub Repo</span>
+                <span data-i18n="proj.repo">GitHub Repo</span>
               </a>
               <span class="pcard-period mono" data-i18n="proj.p3.stage">Software prototype</span>
             </div>
@@ -712,7 +713,7 @@
                   </svg></div>
                 <h3 data-i18n="edu.school">Ho Chi Minh City University of Technology — VNU-HCM</h3>
                 <p class="edu-degree grad-text" data-i18n="edu.degree">Bachelor of Computer Engineering</p>
-                <p class="muted small" data-i18n="edu.period">Sep 2022 – Nov 2027 • Ho Chi Minh City, Vietnam</p>
+                <p class="muted small" data-i18n="edu.period">Sep 2022 – expected Nov 2027 • Ho Chi Minh City, Vietnam</p>
               </div>
             </div>
           </section>
@@ -844,7 +845,7 @@
               <span class="tag">Verilog HDL</span>
               <span class="tag">Xilinx Vivado</span>
               <span class="tag">Verilog Testbench</span>
-              <span class="tag">Arty-Z7-20 Target</span>
+              <span class="tag">Arty Z7-20 Target</span>
             </div>
           </div>
 
@@ -900,7 +901,7 @@
             <span class="mq"><i></i>Docker Containers</span>
             <span class="mq"><i></i>I2C &amp; UART Peripherals</span>
             <!-- Duplicate for seamless loop -->
-            <span class="mq"><i></i>ESP32-S3 Xtensa</span>
+            <span class="mq" data-repeat-start><i></i>ESP32-S3 Xtensa</span>
             <span class="mq"><i></i>FreeRTOS Kernel</span>
             <span class="mq"><i></i>TinyML TFLite Micro</span>
             <span class="mq"><i></i>Verilog HDL RTL</span>
@@ -915,7 +916,7 @@
 
         <div class="marquee reverse reveal" aria-hidden="true" style="margin-top:10px;">
           <div class="track">
-            <span class="mq"><i></i>Digilent Arty-Z7-20</span>
+            <span class="mq"><i></i>Digilent Arty Z7-20</span>
             <span class="mq"><i></i>Verilog Testbench</span>
             <span class="mq"><i></i>STM32CubeIDE</span>
             <span class="mq"><i></i>Node.js &amp; Express</span>
@@ -926,7 +927,7 @@
             <span class="mq"><i></i>LittleFS</span>
             <span class="mq"><i></i>WebSocket Streaming</span>
             <!-- Duplicate for seamless loop -->
-            <span class="mq"><i></i>Digilent Arty-Z7-20</span>
+            <span class="mq" data-repeat-start><i></i>Digilent Arty Z7-20</span>
             <span class="mq"><i></i>Verilog Testbench</span>
             <span class="mq"><i></i>STM32CubeIDE</span>
             <span class="mq"><i></i>Node.js &amp; Express</span>
@@ -965,7 +966,7 @@
                   </div>
                 </div>
                 <div class="tl-meta">
-                  <span class="pill glow mono">Jun 2026 – Aug 2026</span>
+                  <span class="pill glow mono" data-i18n="exp.period">Jun 2026 – Aug 2026</span>
                 </div>
               </div>
               <ul>
@@ -974,7 +975,7 @@
                 <li data-i18n="exp.b3">Built an IoT sensor solution that sends hardware readings to a cloud backend and logs them.</li>
               </ul>
               <div class="tl-stack">
-                <span class="lbl mono">Tech Stack:</span>
+                <span class="lbl mono" data-i18n="proj.p1.stack">Tech stack</span>
                 <div class="tags">
                   <span class="tag">ESP32</span>
                   <span class="tag">Sensors</span>
@@ -1000,13 +1001,13 @@
           <p class="sec-sub" style="max-width:54ch;" data-i18n="contact.desc">I am looking for an entry-level Embedded Software Engineer position in Ho Chi Minh City, surrounding areas, or a remote role. You can reach me by email, phone, or LinkedIn.</p>
 
           <div class="contact-links">
-            <a class="cv-contact-item contact-chip" href="tel:0383589877" id="contactCopyPhone" data-copy="0383589877" data-copy-type="phone" title="Phone / Click to copy: 0383589877" aria-label="Phone: 0383 589 877">
+            <a class="cv-contact-item contact-chip" href="tel:+84383589877" id="contactCopyPhone" data-copy="0383589877" data-copy-type="phone" title="Call 0383 589 877" aria-label="Phone: 0383 589 877">
               <svg class="ic" aria-hidden="true">
                 <use href="#i-phone" />
               </svg>
-              <span>Phone</span>
+              <span data-i18n="contact.phone">Phone</span>
             </a>
-            <a class="cv-contact-item contact-chip" href="mailto:sangnguyen230204@gmail.com" id="contactCopyEmail" data-copy="sangnguyen230204@gmail.com" title="Email / Click to copy: sangnguyen230204@gmail.com" aria-label="Email: sangnguyen230204@gmail.com">
+            <a class="cv-contact-item contact-chip" href="mailto:sangnguyen230204@gmail.com" id="contactCopyEmail" data-copy="sangnguyen230204@gmail.com" title="Email sangnguyen230204@gmail.com" aria-label="Email: sangnguyen230204@gmail.com">
               <svg class="ic" aria-hidden="true">
                 <use href="#i-mail" />
               </svg>
@@ -1031,7 +1032,7 @@
 </main>
 
   <!-- ===================== ARCHITECTURE INSPECTOR MODAL SYSTEM ===================== -->
-  <div class="modal-backdrop" id="modalBackdrop" aria-hidden="true">
+  <div class="modal-backdrop" id="modalBackdrop" aria-hidden="true" inert>
     <div class="modal-dialog glass" id="modalDialog" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalSub" tabindex="-1">
       <div class="modal-header">
         <div class="modal-title-wrap">
@@ -1043,7 +1044,7 @@
             <p class="modal-sub mono" id="modalSub">Hardware &amp; Firmware Deep-Dive</p>
           </div>
         </div>
-        <button class="modal-close" id="modalClose" type="button" aria-label="Close modal" data-i18n-aria-label="modal.close">
+        <button class="modal-close" id="modalClose" type="button" aria-label="Close" data-i18n-aria-label="modal.close">
           <svg class="ic">
             <use href="#i-close" />
           </svg>
@@ -1062,7 +1063,7 @@
   </div>
 
   <!-- ===================== KEYBOARD SHORTCUTS MODAL ===================== -->
-  <div class="modal-backdrop" id="shortcutsModal" aria-hidden="true">
+  <div class="modal-backdrop" id="shortcutsModal" aria-hidden="true" inert>
     <div class="modal-dialog glass shortcuts-dialog" role="dialog" aria-modal="true" aria-labelledby="shortcutsTitle" aria-describedby="shortcutsSub" tabindex="-1">
       <div class="modal-header">
         <div class="modal-title-wrap">
@@ -1074,7 +1075,7 @@
             <p class="modal-sub mono" id="shortcutsSub" data-i18n="shortcuts.sub">Quick navigation</p>
           </div>
         </div>
-        <button class="modal-close" id="shortcutsClose" type="button" aria-label="Close modal" data-i18n-aria-label="modal.close">
+        <button class="modal-close" id="shortcutsClose" type="button" aria-label="Close" data-i18n-aria-label="modal.close">
           <svg class="ic">
             <use href="#i-close" />
           </svg>
@@ -1082,6 +1083,10 @@
       </div>
       <div class="modal-body" tabindex="0">
         <div class="shortcuts-grid mono">
+          <label class="shortcut-row">
+            <span data-i18n="shortcuts.enable">Enable single-character shortcuts</span>
+            <input id="characterShortcuts" type="checkbox" checked>
+          </label>
           <div class="shortcut-row"><kbd>L</kbd><span data-i18n="shortcut.language">Toggle Language (EN/VI)</span></div>
           <div class="shortcut-row"><kbd>B</kbd><span data-i18n="shortcut.led">Toggle LED borders</span></div>
           <div class="shortcut-row"><kbd>T</kbd><span data-i18n="shortcut.terminal">Jump to the introduction</span></div>
@@ -1103,12 +1108,12 @@
           <svg class="ic" style="width:14px;height:14px;color:var(--mint);">
             <use href="#i-pin" />
           </svg>
-          Ho Chi Minh City, Vietnam
+          <span data-i18n="contact.location">Ho Chi Minh City, Vietnam</span>
         </span>
       </div>
       <div style="display:flex;align-items:center;gap:12px;">
         <button class="btn-shortcuts-helper mono small" id="shortcutsHelperBtn" type="button"
-          aria-label="Keyboard Shortcuts" data-i18n-aria-label="shortcuts.title" title="Keyboard Shortcuts [?]">
+          aria-label="Keyboard Shortcuts" data-i18n-aria-label="shortcuts.title" title="Keyboard Shortcuts" data-i18n-title="shortcuts.title">
           <kbd>?</kbd><span data-i18n="shortcuts.helper">Shortcuts</span>
         </button>
         <a href="#hero" class="totop mono" aria-label="Back to top" data-i18n-aria-label="a11y.backTop">
@@ -1123,7 +1128,7 @@
 
   <!-- Toast notification popup -->
   <div class="toast" id="toast" role="status" aria-live="polite">
-    <span id="toastMsg" data-i18n="toast.copied">Email copied to clipboard!</span>
+    <span id="toastMsg"></span>
   </div>
 
   <script src="assets/js/iot-architecture.js"></script>

@@ -44,6 +44,12 @@
   const scrollBehavior = () => prefersReducedMotion() ? 'auto' : 'smooth';
   let closeMobileMenu = () => {};
 
+  const isolateBackground = (...visibleElements) => {
+    const background = [...document.body.children].filter(el => !visibleElements.includes(el) && !el.inert);
+    background.forEach(el => { el.inert = true; });
+    return () => background.forEach(el => { el.inert = false; });
+  };
+
   /* =====================================================================
      1. PRELOADER & INITIALIZATION
      ===================================================================== */
@@ -306,7 +312,7 @@
       }
 
       // 4. Active Section Spy
-      let activeId = sections.length ? sections[0].id : '';
+      let activeId = '';
       const scrollPadding = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
       sections.forEach((sec) => {
         const scrollMargin = parseFloat(getComputedStyle(sec).scrollMarginTop) || 0;
@@ -437,25 +443,29 @@
     const shortcutsModal = document.getElementById('shortcutsModal');
     const shortcutsClose = document.getElementById('shortcutsClose');
     const helperBtn = document.getElementById('shortcutsHelperBtn');
+    const characterShortcuts = document.getElementById('characterShortcuts');
+    if (characterShortcuts) {
+      const shortcutKey = 'sang_portfolio_shortcuts';
+      characterShortcuts.checked = window.PortfolioStorage.getItem(shortcutKey) !== 'off';
+      characterShortcuts.addEventListener('change', () => {
+        window.PortfolioStorage.setItem(shortcutKey, characterShortcuts.checked ? 'on' : 'off');
+      });
+    }
 
     const shortcutsDialog = shortcutsModal && shortcutsModal.querySelector('[role="dialog"]');
     let activeModal = null;
     let previousOverflow = '';
-    const backgroundState = new Map();
+    let restoreBackground = () => {};
 
-    const restoreBackground = () => {
-      backgroundState.forEach((wasInert, el) => { el.inert = wasInert; });
-      backgroundState.clear();
-    };
-
-    const openDialog = (modalBackdrop, modalDialog) => {
+    const openDialog = (modalBackdrop, modalDialog, trigger) => {
       if (!modalBackdrop || !modalDialog) return;
       closeMobileMenu(false);
       const previousModal = activeModal;
-      const opener = previousModal ? previousModal.opener : document.activeElement;
+      const opener = previousModal ? previousModal.opener : (trigger || document.activeElement);
       if (!previousModal) previousOverflow = document.body.style.overflow;
       restoreBackground();
 
+      modalBackdrop.inert = false;
       modalBackdrop.classList.add('open');
       modalBackdrop.setAttribute('aria-hidden', 'false');
       modalDialog.style.visibility = 'visible';
@@ -464,15 +474,12 @@
       modalDialog.focus({ preventScroll: true });
 
       if (previousModal && previousModal.backdrop !== modalBackdrop) {
+        previousModal.backdrop.inert = true;
         previousModal.dialog.style.visibility = '';
         previousModal.backdrop.classList.remove('open');
         previousModal.backdrop.setAttribute('aria-hidden', 'true');
       }
-      [...document.body.children].forEach((el) => {
-        if (el === modalBackdrop) return;
-        backgroundState.set(el, el.inert);
-        el.inert = true;
-      });
+      restoreBackground = isolateBackground(modalBackdrop);
     };
 
     const closeDialog = () => {
@@ -480,17 +487,19 @@
       const closingModal = activeModal;
       activeModal = null;
       restoreBackground();
+      restoreBackground = () => {};
       document.body.style.overflow = previousOverflow;
       if (closingModal.opener && closingModal.opener.isConnected) {
         closingModal.opener.focus({ preventScroll: true });
       }
       if (closingModal.dialog.contains(document.activeElement)) document.activeElement.blur();
+      closingModal.backdrop.inert = true;
       closingModal.dialog.style.visibility = '';
       closingModal.backdrop.classList.remove('open');
       closingModal.backdrop.setAttribute('aria-hidden', 'true');
     };
 
-    const openModal = (modalKey) => {
+    const openModal = (modalKey, trigger) => {
       const data = window.PortfolioData && window.PortfolioData.modalContentData[modalKey];
       if (!data || !backdrop || !dialog || !body || !title || !sub) return;
       const isVi = document.documentElement.lang === 'vi';
@@ -506,23 +515,23 @@
         body.querySelectorAll('.arch-card').forEach((card) => { card.tabIndex = 0; });
       }
       body.scrollTop = 0;
-      openDialog(backdrop, dialog);
+      openDialog(backdrop, dialog, trigger);
     };
 
-    const toggleShortcutsModal = () => {
+    const toggleShortcutsModal = (trigger) => {
       if (activeModal && activeModal.backdrop === shortcutsModal) closeDialog();
-      else openDialog(shortcutsModal, shortcutsDialog);
+      else openDialog(shortcutsModal, shortcutsDialog, trigger);
     };
 
     inspectBtns.forEach((btn) => {
       btn.addEventListener('click', () => {
         const key = btn.getAttribute('data-modal');
-        if (key) openModal(key);
+        if (key) openModal(key, btn);
       });
     });
     if (closeBtn) closeBtn.addEventListener('click', closeDialog);
     if (footerClose) footerClose.addEventListener('click', closeDialog);
-    if (helperBtn) helperBtn.addEventListener('click', toggleShortcutsModal);
+    if (helperBtn) helperBtn.addEventListener('click', () => toggleShortcutsModal(helperBtn));
     if (shortcutsClose) shortcutsClose.addEventListener('click', closeDialog);
     [backdrop, shortcutsModal].filter(Boolean).forEach((modalBackdrop) => {
       modalBackdrop.addEventListener('click', (e) => {
@@ -573,7 +582,7 @@
         }
         return;
       }
-      if (e.ctrlKey || e.metaKey || e.altKey || e.repeat || e.isComposing) return;
+      if (characterShortcuts?.checked === false || e.ctrlKey || e.metaKey || e.altKey || e.repeat || e.isComposing) return;
       const focused = document.activeElement;
       if (focused && (['INPUT', 'TEXTAREA', 'SELECT'].includes(focused.tagName) || focused.isContentEditable)) return;
 
@@ -601,7 +610,10 @@
       } else if (e.key.toLowerCase() === 'p') {
         closeMobileMenu(false);
         const proj = document.getElementById('projects');
-        if (proj) proj.scrollIntoView({ behavior: scrollBehavior() });
+        if (proj) {
+          proj.scrollIntoView({ behavior: scrollBehavior() });
+          proj.focus({ preventScroll: true });
+        }
       }
     });
   };
@@ -625,13 +637,13 @@
   const initClipboard = () => {
     const copyLinks = document.querySelectorAll('[data-copy]');
 
-    const copyText = (text, successMsg) => {
+    const copyText = (text, successMsg, promptLabel) => {
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(text).then(() => {
           showToast(successMsg);
-        }).catch(() => window.prompt('Copy:', text));
+        }).catch(() => window.prompt(promptLabel, text));
       } else {
-        window.prompt('Copy:', text);
+        window.prompt(promptLabel, text);
       }
     };
 
@@ -644,7 +656,7 @@
         const msg = isPhone
           ? (isVi ? 'Đã sao chép số điện thoại: ' + value : 'Copied phone: ' + value)
           : (isVi ? 'Đã sao chép email: ' + value : 'Copied email: ' + value);
-        copyText(value, msg);
+        copyText(value, msg, isVi ? 'Sao chép:' : 'Copy:');
       });
     });
   };
@@ -655,9 +667,11 @@
   const initMobileMenu = () => {
     const burger = document.getElementById('burger');
     const mobileMenu = document.getElementById('mobileMenu');
-    if (!burger || !mobileMenu) return;
+    const header = document.getElementById('nav');
+    if (!burger || !mobileMenu || !header) return;
 
     let previousOverflow = '';
+    let restoreBackground = () => {};
     const updateLabel = () => {
       const isOpen = document.body.classList.contains('menu-open');
       const lang = document.documentElement.lang === 'vi' ? 'vi' : 'en';
@@ -667,7 +681,12 @@
     };
     const setMenu = (isOpen, restoreFocus = true) => {
       const wasOpen = document.body.classList.contains('menu-open');
-      if (isOpen && !wasOpen) previousOverflow = document.body.style.overflow;
+      if (isOpen && !wasOpen) {
+        previousOverflow = document.body.style.overflow;
+        restoreBackground = isolateBackground(header, mobileMenu);
+      } else if (!isOpen && wasOpen) {
+        restoreBackground();
+      }
       document.body.classList.toggle('menu-open', isOpen);
       burger.setAttribute('aria-expanded', String(isOpen));
       // Move focus before hiding the active menu subtree.
@@ -689,7 +708,7 @@
     setMenu(false, false);
     burger.addEventListener('click', () => setMenu(!document.body.classList.contains('menu-open')));
 
-    mobileMenu.querySelectorAll('a').forEach((link) => {
+    [...mobileMenu.querySelectorAll('a'), ...header.querySelectorAll('a')].forEach((link) => {
       link.addEventListener('click', () => closeMobileMenu(false));
     });
 
@@ -706,7 +725,9 @@
     });
     window.addEventListener('resize', () => {
       if (document.body.classList.contains('menu-open') && getComputedStyle(burger).display === 'none') {
+        const hadMenuFocus = mobileMenu.contains(document.activeElement) || document.activeElement === burger;
         closeMobileMenu(false);
+        if (hadMenuFocus) header.querySelector('.logo').focus({ preventScroll: true });
       }
     }, { passive: true });
     new MutationObserver(updateLabel).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
@@ -754,11 +775,8 @@
       langToggle.addEventListener('click', () => {
         const activeLang = document.documentElement.lang;
         const nextLang = activeLang === 'en' ? 'vi' : 'en';
+        window.TerminalEngine?.resetStream();
         window.PortfolioData.applyTranslations(nextLang);
-        if (window.TerminalEngine) {
-          window.TerminalEngine.resetStream();
-          window.TerminalEngine.startChatStream();
-        }
       });
     }
 
