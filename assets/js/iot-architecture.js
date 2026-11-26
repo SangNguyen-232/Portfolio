@@ -3,14 +3,14 @@ window.IoTArchitecture = (() => {
 
   const overview = {
     en: {
-      intro: 'The ESP32-S3 measures the air and controls ventilation on the board. A browser on the LAN can change its settings, while a Dockerized backend deployed through Cloudflare Tunnel and Workers VPC stores measurement history for remote access.',
+      intro: 'Developed, flashed and tested from an Ubuntu Linux VM, the Yolo Uno ESP32-S3 runs sensing, TinyML inference, relay actuation and its WebSocket dashboard locally on the board and Wi-Fi LAN. On the VM, PostgreSQL 18 stays private inside Docker while only the Express 5 API and central admin UI are published remotely through a Cloudflare Worker, Workers VPC and an outbound Cloudflare Tunnel.',
       loop: 'Local control loop',
-      stages: [['DHT20', 'Air temperature and humidity'], ['ESP32-S3', 'FreeRTOS and TinyML'], ['GPIO10', 'Fan relay command']]
+      stages: [['DHT20', 'I2C air temperature & humidity'], ['ESP32-S3', '7 FreeRTOS tasks & INT8 TinyML'], ['GPIO10', 'Active-high fan relay command']]
     },
     vi: {
-      intro: 'ESP32-S3 đo nhiệt độ, độ ẩm không khí và điều khiển thông gió ngay trên bo. Người dùng có thể đổi cấu hình từ trình duyệt trong mạng LAN, còn backend đóng gói bằng Docker và triển khai qua Cloudflare Tunnel cùng Workers VPC lưu lịch sử đo để truy cập từ xa.',
+      intro: 'Được phát triển, nạp firmware và kiểm thử trên máy ảo Ubuntu Linux, bo Yolo Uno ESP32-S3 thực hiện đọc cảm biến, suy luận TinyML, đóng ngắt rơ-le và phục vụ dashboard WebSocket trực tiếp trên bo trong mạng Wi-Fi LAN. Trên máy ảo, PostgreSQL 18 giữ riêng tư trong Docker, chỉ API Express 5 và trang quản trị trung tâm được mở truy cập từ xa qua Cloudflare Worker, Workers VPC và Cloudflare Tunnel chiều đi ra.',
       loop: 'Vòng điều khiển trên bo',
-      stages: [['DHT20', 'Nhiệt độ và độ ẩm không khí'], ['ESP32-S3', 'FreeRTOS và TinyML'], ['GPIO10', 'Lệnh điều khiển rơ-le quạt']]
+      stages: [['DHT20', 'Nhiệt độ & độ ẩm không khí (I2C)'], ['ESP32-S3', '7 tác vụ FreeRTOS & TinyML INT8'], ['GPIO10', 'Lệnh rơ-le quạt mức cao']]
     }
   };
 
@@ -18,61 +18,61 @@ window.IoTArchitecture = (() => {
     {
       en: [
         'One FreeRTOS task owns the relay',
-        'Every five seconds the sensor task reads the DHT20 over I2C and records the fan command at acquisition. Sampling, inference and actuation run in separate FreeRTOS tasks. Of the seven application tasks, only task_fan writes GPIO10. A separate ADC input monitors soil moisture.',
-        'The inference task copies the sample under a mutex, then releases the lock before running the model. It publishes the result only if the sequence number and acquisition time still match. A late prediction is discarded as soon as a newer sample has arrived.'
+        'Every five seconds temp_humi_monitor reads the DHT20 over I2C (GPIO11/12), records the active fan command, updates the 16×2 I2C LCD and signals GPIO48 and WS2812B (GPIO45) risk LEDs. A separate GPIO2 ADC channel monitors soil moisture without affecting air-risk or fan logic. Of the seven priority-2 FreeRTOS tasks, only task_fan writes GPIO10.',
+        'tiny_ml_task copies each sample snapshot under mutexContext and releases the lock before running TensorFlow Lite Micro. It publishes the forecast and notifies task_fan only if the sample sequence and acquisition timestamp still match, discarding stale predictions immediately.'
       ],
       vi: [
-        'Một tác vụ FreeRTOS nắm quyền điều khiển rơ-le',
-        'Cứ 5 giây, tác vụ cảm biến đọc DHT20 qua I2C và ghi lại lệnh quạt tại thời điểm đo. Việc lấy mẫu, suy luận và điều khiển chạy ở các tác vụ FreeRTOS riêng. Trong bảy tác vụ, chỉ task_fan được ghi GPIO10. Đầu dò độ ẩm đất dùng một ngõ ADC riêng để giám sát.',
-        'Tác vụ suy luận chỉ giữ mutex trong lúc sao chép mẫu, rồi nhả khóa trước khi chạy mô hình. Khi có kết quả, tác vụ đối chiếu cả số thứ tự lẫn thời điểm lấy mẫu. Nếu đã có mẫu mới, kết quả cũ bị loại.'
+        'Một tác vụ FreeRTOS duy nhất nắm quyền ghi rơ-le',
+        'Cứ mỗi 5 giây, temp_humi_monitor đọc DHT20 qua I2C (GPIO11/12), ghi nhận lệnh quạt tại thời điểm lấy mẫu, cập nhật LCD 16×2 I2C và báo mức rủi ro qua LED GPIO48 cùng WS2812B (GPIO45). Kênh ADC GPIO2 đo độ ẩm đất độc lập, tách biệt khỏi logic đánh giá không khí và điều khiển quạt. Trong bảy tác vụ FreeRTOS mức ưu tiên 2, chỉ task_fan được phép ghi GPIO10.',
+        'tiny_ml_task sao chép bản chụp mẫu dưới khóa mutexContext rồi nhả khóa trước khi chạy TensorFlow Lite Micro. Tác vụ chỉ công bố dự báo và đánh thức task_fan khi số thứ tự mẫu cùng thời điểm lấy mẫu còn khớp, loại bỏ ngay kết quả trễ khi đã có mẫu mới.'
       ]
     },
     {
       en: [
-        'Hysteresis and a fallback protect the relay',
-        'AUTO uses separate ON and OFF thresholds and a 10-second minimum in each state to avoid rapid switching. SHADOW records the forecast while the same rules drive the fan. In automatic modes, an invalid air reading or one over 15 seconds old forces the relay off immediately.',
-        'AI can request an early start between thresholds only with a fresh forecast for the same sample, a matching threshold profile and an ON score of at least 0.80. If the model is unavailable, the saved thresholds still govern the fan. A manual ON command expires after five minutes.'
+        'Hysteresis, profile checks and a fallback protect the relay',
+        'At first boot without saved thresholds, AUTO keeps GPIO10 off and rejects SHADOW or AI with HTTP 409. Once configured with OR or AND thresholds, AUTO enforces separate ON/OFF limits and a 10-second minimum dwell per state, while SHADOW logs forecasts alongside rule-driven actuation. Invalid or stale air readings (> 15 s) force immediate shutoff.',
+        'AI mode requires the matching OR reference profile (30/28 °C and 75/70% RH), in-domain air readings (5–50 °C, 20–100% RH), a fresh forecast for the current sample and a peak score of at least 0.80 to start ventilation early inside the hysteresis band. Otherwise it falls back to the saved AUTO rules. Manual ON runs time out after five minutes.'
       ],
       vi: [
-        'Hai ngưỡng đóng ngắt và quy tắc dự phòng bảo vệ rơ-le',
-        'AUTO dùng ngưỡng bật và tắt riêng, giữ mỗi trạng thái ít nhất 10 giây để tránh đóng ngắt liên tục. Ở SHADOW, firmware ghi nhận dự báo còn quạt vẫn chạy theo ngưỡng. Trong các chế độ tự động, mẫu không khí lỗi hoặc cũ quá 15 giây buộc rơ-le tắt ngay.',
-        'Trong vùng giữa hai ngưỡng, AI chỉ được yêu cầu bật sớm khi dự báo còn mới, khớp mẫu đo, cấu hình ngưỡng khớp với mô hình và điểm ON đạt ít nhất 0,80. Nếu mô hình không sẵn sàng, quạt vẫn chạy theo ngưỡng đã lưu. Lệnh bật thủ công hết hiệu lực sau 5 phút.'
+        'Trễ đóng ngắt, kiểm tra cấu hình và cơ chế dự phòng bảo vệ rơ-le',
+        'Khi mới khởi động mà chưa lưu ngưỡng, AUTO giữ GPIO10 tắt và từ chối chuyển sang SHADOW hoặc AI với mã HTTP 409. Sau khi cấu hình ngưỡng theo logic OR hoặc AND, AUTO áp dụng ngưỡng bật/tắt riêng kèm thời gian giữ trạng thái tối thiểu 10 giây, còn SHADOW ghi nhận dự báo song song với luật ngưỡng. Mẫu đọc lỗi hoặc cũ quá 15 giây buộc rơ-le ngắt tức thì.',
+        'Chế độ AI chỉ bật quạt sớm trong vùng trễ khi cấu hình khớp bộ ngưỡng chuẩn OR (30/28 °C và 75/70% RH), số đo nằm trong miền hợp lệ (5–50 °C, 20–100% RH), dự báo khớp mẫu hiện tại và điểm cực đại đạt ít nhất 0,80; nếu không sẽ tự động quay về luật AUTO đã lưu. Lệnh bật MANUAL tự ngắt sau 5 phút.'
       ]
     },
     {
       en: [
-        'A 30-second forecast in a 4 KiB tensor arena',
-        'Seven consecutive air readings and the sampled fan command yield eight features for a 5,536-byte INT8 model. Assuming the command stays the same, it forecasts the OFF, HOLD or ON band 30 seconds ahead. TensorFlow Lite Micro uses a fixed 4 KiB tensor arena on the ESP32-S3.',
-        'Three test traces end at 28.5 °C and 71% relative humidity with the fan off. The rising trace predicts ON, the falling trace OFF, and the steady trace HOLD. On 3,600 held-out synthetic episodes, the desktop INT8 model scored 87.28% against 82.94% for linear extrapolation.'
+        'A 30-second INT8 forecast in a 4 KiB tensor arena',
+        'Trained and quantized offline in Python 3.12 on the Ubuntu Linux VM, the 5,536-byte INT8 network ([8, 64, 32, 3]) compiles directly into firmware and runs inside a static 4 KiB tensor arena. Seven consecutive valid samples (restarting on gaps > 8 s) plus the sampled fan state produce eight trend features to forecast the OFF, HOLD or ON band 30 seconds ahead.',
+        'Three verification traces ending at 28.5 °C and 71% RH with the fan off separate cleanly into ON (rising), OFF (falling) and HOLD (steady). Across 3,600 held-out synthetic test episodes, the desktop INT8 model reached 87.28% accuracy versus 82.94% for 30-second linear extrapolation and 71.03% for the static current-band rule.'
       ],
       vi: [
-        'Dự báo trước 30 giây với 4 KiB bộ nhớ tensor',
-        'Từ bảy mẫu không khí liên tiếp và lệnh quạt lúc lấy mẫu, firmware tính tám đặc trưng cho mô hình INT8 dung lượng 5.536 byte. Với giả định lệnh quạt được giữ nguyên, mô hình dự báo vùng OFF, HOLD hoặc ON sau 30 giây. TensorFlow Lite Micro dùng vùng nhớ tensor cố định 4 KiB trên ESP32-S3.',
-        'Ba chuỗi kiểm thử cùng kết thúc ở 28,5 °C và độ ẩm 71% khi quạt tắt. Mô hình dự báo ON với chuỗi tăng, OFF với chuỗi giảm và HOLD với chuỗi ổn định. Trên 3.600 kịch bản mô phỏng dành riêng cho kiểm thử, mô hình INT8 chạy trên máy tính đạt 87,28%, còn ngoại suy tuyến tính đạt 82,94%.'
+        'Dự báo INT8 trước 30 giây trong vùng nhớ tensor tĩnh 4 KiB',
+        'Được huấn luyện và lượng tử hóa ngoại tuyến bằng Python 3.12 trên máy ảo Ubuntu Linux, mạng INT8 dung lượng 5.536 byte ([8, 64, 32, 3]) được biên dịch thẳng vào firmware và chạy trên vùng nhớ tensor tĩnh 4 KiB. Bảy mẫu hợp lệ liên tiếp (khởi tạo lại nếu giãn cách > 8 giây) cùng trạng thái quạt lúc lấy mẫu tạo thành tám đặc trưng xu hướng để dự báo vùng OFF, HOLD hoặc ON sau 30 giây.',
+        'Ba chuỗi kiểm chứng cùng kết thúc tại 28,5 °C và 71% RH khi quạt tắt phân tách rõ thành ON (xu hướng tăng), OFF (xu hướng giảm) và HOLD (ổn định). Trên 3.600 kịch bản kiểm thử mô phỏng độc lập, mô hình INT8 trên máy tính đạt độ chính xác 87,28%, vượt mức 82,94% của ngoại suy tuyến tính 30 giây và 71,03% của quy tắc ngưỡng tĩnh tức thời.'
       ]
     },
     {
       en: [
-        'Local control continues through a backend outage',
-        'The board serves its own LAN dashboard. HTTP accepts control requests and WebSocket reports readings and applied relay commands. A separate FreeRTOS task posts telemetry events over HTTPS to the remote Express/PostgreSQL backend.',
-        'A six-message RAM queue buffers uploads. When it fills, the oldest message is dropped so sampling and control can continue. The boot ID, sample sequence and relay decision time let an operator trace a command back to its reading even if the upload arrived late.'
+        'LAN-only device web server and resilient telemetry buffering',
+        'Port 80 on the ESP32-S3 serves the LittleFS dashboard, one-time-token WebSocket stream (/ws) and ElegantOTA (/update) strictly on the local Wi-Fi LAN or setup AP (192.168.4.1)—never through Cloudflare. Opening a board from /admin/ issues a five-minute HMAC-SHA256 ticket bound to its MAC and LAN IP for direct LAN sign-in.',
+        'After SNTP sync, task_database posts HTTPS /sensor events with 200 ms per-source debounce and fan-event priority. A six-payload RAM queue drops the oldest entry when full so local sensing and control never stall during network outages, while boot_id, sample_seq and decision timestamps keep readings and relay commits traceable.'
       ],
       vi: [
-        'Bo vẫn điều khiển quạt khi mất kết nối với máy chủ',
-        'Bo phục vụ dashboard trong mạng LAN. HTTP nhận yêu cầu điều khiển, còn WebSocket trả về số đo và lệnh rơ-le đã thực thi. Một tác vụ FreeRTOS riêng gửi các bản tin dữ liệu qua HTTPS lên backend Express/PostgreSQL từ xa.',
-        'Hàng đợi trong RAM giữ tối đa sáu bản tin. Khi đầy, bản tin cũ nhất bị loại để việc đo và điều khiển vẫn tiếp tục. Dù bản tin đến muộn, người vận hành vẫn có thể đối chiếu lệnh quạt với số đo nhờ mã lần khởi động, số thứ tự mẫu và thời điểm ra quyết định.'
+        'Web server nội bộ mạng LAN trên bo và đệm gửi dữ liệu chịu lỗi mạng',
+        'Cổng 80 trên ESP32-S3 phục vụ dashboard LittleFS, luồng WebSocket xác thực bằng token dùng một lần (/ws) và ElegantOTA (/update) hoàn toàn trong mạng Wi-Fi LAN hoặc AP cài đặt (192.168.4.1)—không đi qua Cloudflare. Khi mở thiết bị từ /admin/, hệ thống cấp vé HMAC-SHA256 hiệu lực 5 phút gắn với địa chỉ MAC và IP LAN để trình duyệt kết nối thẳng trong mạng nội bộ.',
+        'Sau khi đồng bộ giờ SNTP, task_database gửi bản tin HTTPS /sensor với chống dội 200 ms theo từng nguồn và ưu tiên sự kiện quạt. Hàng đợi RAM 6 bản tin tự bỏ bản cũ nhất khi đầy để việc đo và điều khiển tại chỗ không bị nghẽn khi đứt mạng; boot_id, sample_seq và mốc thời gian quyết định giúp truy vết chính xác từng lệnh đóng ngắt.'
       ]
     },
     {
       en: [
-        'Remote deployment via Cloudflare Tunnel and Workers VPC',
-        'The Express/PostgreSQL telemetry service runs as a Docker Compose stack on a private bridge network alongside a cloudflared connector. PostgreSQL binds only to localhost, and the Express container exposes port 3000 solely inside Docker instead of opening inbound ports on the host or router.',
-        'cloudflared establishes an outbound-only Cloudflare Tunnel once the backend health check passes. A Cloudflare Worker edge gateway receives HTTPS requests from remote browsers and the ESP32-S3 telemetry client (authenticated with X-Device-Key), forwards them over a Workers VPC service binding to backend:3000 inside the Docker network, and returns HTTP 502 if the tunnel or backend is offline.'
+        'Ubuntu Linux VM stack and selective Cloudflare Workers VPC exposure',
+        'Docker Compose on the Ubuntu Linux VM runs iot_postgres (PostgreSQL 18), iot_backend (Express 5) and iot_cloudflared on an internal bridge network. PostgreSQL binds only to Docker and VM loopback (127.0.0.1:5433) and is never exposed to Cloudflare, while Express exposes port 3000 solely inside Docker with no open inbound host or router ports.',
+        'iot_cloudflared maintains an outbound Cloudflare Tunnel with a single Workers VPC route (no public tunnel hostname) to http://backend:3000. Public Cloudflare Workers (*.workers.dev, deployed via Wrangler) accept HTTPS requests from remote operators (/login, /admin/*, RBAC and JSONL export) and ESP32-S3 telemetry (X-Device-Key), forwarding them over the IOT_BACKEND VPC binding and returning HTTP 502 if the origin is offline.'
       ],
       vi: [
-        'Triển khai từ xa qua Cloudflare Tunnel và Workers VPC',
-        'Dịch vụ lưu trữ Express/PostgreSQL chạy bằng Docker Compose trên mạng bridge nội bộ cùng container cloudflared. PostgreSQL chỉ gắn vào localhost, còn container Express chỉ mở cổng 3000 trong mạng Docker thay vì mở cổng inbound trên máy chủ hoặc router.',
-        'cloudflared thiết lập kết nối Cloudflare Tunnel một chiều hướng ra ngoài sau khi backend vượt qua kiểm tra sức khỏe. Cổng Cloudflare Worker ở biên mạng tiếp nhận yêu cầu HTTPS từ trình duyệt từ xa và tác vụ gửi dữ liệu trên ESP32-S3 (xác thực bằng X-Device-Key), chuyển tiếp qua liên kết dịch vụ Workers VPC tới backend:3000 trong mạng Docker và trả về mã 502 nếu tunnel hoặc backend ngoại tuyến.'
+        'Hạ tầng Docker trên máy ảo Ubuntu Linux và phạm vi triển khai chọn lọc qua Cloudflare Workers VPC',
+        'Docker Compose trên máy ảo Ubuntu Linux vận hành iot_postgres (PostgreSQL 18), iot_backend (Express 5) và iot_cloudflared trên mạng bridge nội bộ. PostgreSQL chỉ gắn vào mạng Docker và loopback của máy ảo (127.0.0.1:5433), tuyệt đối không đưa lên Cloudflare; container Express chỉ mở cổng 3000 trong nội bộ Docker, không mở bất kỳ cổng inbound nào trên máy chủ hay router.',
+        'iot_cloudflared duy trì Cloudflare Tunnel chiều đi ra với duy nhất một tuyến Workers VPC (không mở tên miền tunnel công khai) nối tới http://backend:3000. Cổng Cloudflare Workers ở biên mạng (*.workers.dev, triển khai qua Wrangler) nhận yêu cầu HTTPS từ người vận hành từ xa (/login, /admin/*, phân quyền RBAC, xuất JSONL) và dữ liệu ESP32-S3 (X-Device-Key), chuyển tiếp qua liên kết VPC IOT_BACKEND và trả mã HTTP 502 nếu backend ngoại tuyến.'
       ]
     }
   ];

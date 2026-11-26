@@ -109,6 +109,14 @@
   gap: 10px;
 }
 
+.nav-right .resume-btn {
+  min-height: 36px;
+  padding: 7px 16px;
+  line-height: 1.2;
+  border-radius: 10px;
+  white-space: nowrap;
+}
+
 /* Language Switcher Button */
 .lang {
   display: inline-flex;
@@ -213,6 +221,18 @@ body.menu-open .mobile-menu {
   color: var(--mint);
 }
 
+.mobile-menu nav a.mobile-resume-btn {
+  align-self: flex-start;
+  margin-top: 8px;
+  font-family: var(--font);
+  font-size: 15px;
+  color: #061418;
+}
+
+.mobile-menu nav a.mobile-resume-btn:hover {
+  color: #061418;
+}
+
 .mobile-socials {
   display: flex;
   gap: 16px;
@@ -236,13 +256,13 @@ body.menu-open .mobile-menu {
   border-color: var(--mint);
 }
 
-@media (max-width: 1180px) {
-  .nav-right .resume-btn { display: none; }
-}
-
 @media (max-width: 1080px) {
   .nav-links { display: none; }
   .burger { display: grid; }
+}
+
+@media (max-width: 440px) {
+  .nav-right .resume-btn { display: none; }
 }
 
 /* =====================================================================
@@ -1373,7 +1393,7 @@ a.cv-contact-item:hover .ic {
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .marquee .track { animation: marqueeScroll 36s linear infinite; }
+  .marquee .track { animation: marqueeScroll 52s linear infinite; }
   .marquee.reverse .track { animation-direction: reverse; }
 }
 

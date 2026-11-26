@@ -177,7 +177,7 @@
           <span class="lang-opt" data-lang="en">EN</span>
           <span class="lang-opt" data-lang="vi">VI</span>
         </button>
-        <a class="btn btn-ghost btn-sm resume-btn" id="resumeBtn" href="assets/docs/CV.pdf" target="_blank" rel="noopener">
+        <a class="btn btn-primary btn-sm resume-btn" id="resumeBtn" href="assets/docs/CV.pdf" target="_blank" rel="noopener">
           <svg class="ic" aria-hidden="true">
             <use href="#i-eye" />
           </svg>
@@ -243,7 +243,12 @@
       <a href="#skills" data-i18n="nav.skills">Skills</a>
       <a href="#experience" data-i18n="nav.experience">Experience</a>
       <a href="#contact" data-i18n="nav.contact">Contact</a>
-      <a href="assets/docs/CV.pdf" target="_blank" rel="noopener" data-i18n="nav.resume">View CV</a>
+      <a class="btn btn-primary mobile-resume-btn" href="assets/docs/CV.pdf" target="_blank" rel="noopener">
+        <svg class="ic" aria-hidden="true">
+          <use href="#i-eye" />
+        </svg>
+        <span data-i18n="nav.resume">View CV</span>
+      </a>
       </nav>
     <div class="mobile-socials" role="navigation" aria-label="Contact and profile links" data-i18n-aria-label="a11y.socialNav">
       <a href="https://github.com/SangNguyen-232" target="_blank" rel="noopener" aria-label="GitHub"><svg class="ic">
@@ -544,34 +549,39 @@
             </div>
             <h3 data-i18n="proj.p1.title">Smart Environmental Monitoring System</h3>
             <ul>
-              <li data-i18n="proj.p1.b1">Built ESP32-S3 firmware that samples air temperature and humidity every five seconds, displays the readings on an LCD and controls a ventilation fan. A separate probe measures soil moisture.</li>
-              <li data-i18n="proj.p1.b2">Integrated an INT8 model that uses seven readings and the sampled fan command to forecast the OFF, HOLD or ON band 30 seconds ahead. In AI mode, a rising trend can trigger ventilation before a threshold is crossed.</li>
-              <li data-i18n="proj.p1.b3">Built an on-device WebSocket dashboard and deployed a Dockerized Express/PostgreSQL telemetry API remotely through an outbound Cloudflare Tunnel and Workers VPC with no exposed inbound ports.</li>
+              <li data-i18n="proj.p1.b1">Built ESP32-S3 firmware with seven FreeRTOS tasks that reads a DHT20 over I2C every 5 s, updates a 16×2 LCD and risk LEDs, drives a GPIO10 fan relay across AUTO, SHADOW, AI and MANUAL modes, and monitors soil moisture on an independent ADC channel.</li>
+              <li data-i18n="proj.p1.b2">Integrated an INT8 TFLite Micro model (4 KiB arena) that extracts eight trend features from seven readings and the sampled fan command to forecast the OFF, HOLD or ON band 30 s ahead, triggering early ventilation in AI mode (score ≥ 0.80) with 10 s dwell and fault shutoff.</li>
+              <li data-i18n="proj.p1.b3">Served a LAN-only WebSocket dashboard and OTA updater on the board, and ran Dockerized Express 5 and private PostgreSQL 18 on an Ubuntu Linux VM—bridging only Express outbound via Cloudflare Tunnel and Workers VPC behind a Cloudflare Worker with no open inbound ports.</li>
             </ul>
             <div class="pcard-meta">
               <span><svg class="ic">
                   <use href="#i-layers" />
-                </svg><span data-i18n="proj.p1.metaModel">INT8 model · 5,536 bytes</span></span>
+                </svg><span data-i18n="proj.p1.metaModel">INT8 model · 5,536 bytes · 4 KiB tensor arena</span></span>
               <span><svg class="ic">
                   <use href="#i-sparkle" />
-                </svg><span data-i18n="proj.p1.metaScore">87.28% accuracy on 3,600 synthetic test episodes</span></span>
+                </svg><span data-i18n="proj.p1.metaScore">87.28% desktop INT8 accuracy on 3,600 synthetic test episodes (vs. 82.94% linear baseline)</span></span>
             </div>
             <div class="stack">
-              <span class="lbl mono" data-i18n="proj.p1.stack">Tech stack</span>
+              <span class="lbl mono" data-i18n="proj.p1.stack">Tech Stack:</span>
               <div class="tags">
+                <span class="tag">ESP32-S3</span>
                 <span class="tag">C/C++</span>
-                <span class="tag">Python</span>
+                <span class="tag">FreeRTOS</span>
+                <span class="tag">TFLite Micro</span>
                 <span class="tag">I2C</span>
                 <span class="tag">GPIO</span>
                 <span class="tag">ADC</span>
-                <span class="tag">FreeRTOS</span>
-                <span class="tag">ESP32-S3</span>
-                <span class="tag">TFLite Micro</span>
-                <span class="tag">Docker</span>
-                <span class="tag">Cloudflare Tunnel</span>
-                <span class="tag">PostgreSQL</span>
-                <span class="tag">Express</span>
+                <span class="tag">Python</span>
                 <span class="tag">JavaScript</span>
+                <span class="tag">Node.js</span>
+                <span class="tag">Express.js</span>
+                <span class="tag">WebSocket</span>
+                <span class="tag">PostgreSQL</span>
+                <span class="tag">Docker</span>
+                <span class="tag">Linux (Ubuntu VM)</span>
+                <span class="tag">Cloudflare Workers</span>
+                <span class="tag">Workers VPC</span>
+                <span class="tag">Cloudflare Tunnel</span>
               </div>
             </div>
             <div class="pcard-foot">
@@ -615,7 +625,7 @@
                 </svg><span data-i18n="proj.p2.design">Verilog RTL · User/Admin logic · LCD controller FSM</span></span>
             </div>
             <div class="stack">
-              <span class="lbl mono" data-i18n="proj.p1.stack">Tech stack</span>
+              <span class="lbl mono" data-i18n="proj.p1.stack">Tech Stack:</span>
               <div class="tags">
                 <span class="tag">Verilog HDL</span>
                 <span class="tag">Xilinx Vivado</span>
@@ -862,7 +872,7 @@
             <div class="tags">
               <span class="tag">PlatformIO</span>
               <span class="tag">STM32CubeIDE</span>
-              <span class="tag">Linux</span>
+              <span class="tag">Linux (Ubuntu VM)</span>
               <span class="tag">Git</span>
               <span class="tag">GitHub</span>
               <span class="tag">Docker</span>
@@ -888,6 +898,7 @@
               <span class="tag">CSS</span>
               <span class="tag">WebSocket</span>
               <span class="tag">PostgreSQL</span>
+              <span class="tag">Cloudflare Workers</span>
             </div>
           </div>
         </div>
@@ -895,53 +906,93 @@
         <!-- Infinite Marquee Running Tracks -->
         <div class="marquee reveal" aria-hidden="true">
           <div class="track">
-            <span class="mq"><i></i>ESP32-S3 Xtensa</span>
-            <span class="mq"><i></i>FreeRTOS Kernel</span>
-            <span class="mq"><i></i>TinyML TFLite Micro</span>
-            <span class="mq"><i></i>Verilog HDL RTL</span>
-            <span class="mq"><i></i>Embedded C/C++</span>
+            <span class="mq"><i></i>C</span>
+            <span class="mq"><i></i>C++</span>
+            <span class="mq"><i></i>Python</span>
+            <span class="mq"><i></i>TypeScript</span>
+            <span class="mq"><i></i>JavaScript</span>
+            <span class="mq"><i></i>ESP32</span>
+            <span class="mq"><i></i>ESP32-S3</span>
+            <span class="mq"><i></i>FreeRTOS</span>
+            <span class="mq"><i></i>GPIO</span>
+            <span class="mq"><i></i>ADC</span>
+            <span class="mq"><i></i>I2C</span>
+            <span class="mq"><i></i>UART</span>
+            <span class="mq"><i></i>Sensors</span>
+            <span class="mq"><i></i>TensorFlow Lite for Microcontrollers</span>
+            <span class="mq"><i></i>On-Device Inference</span>
+            <span class="mq"><i></i>Model Quantization</span>
+            <span class="mq"><i></i>Verilog HDL</span>
             <span class="mq"><i></i>Xilinx Vivado</span>
-            <span class="mq"><i></i>PlatformIO</span>
-            <span class="mq"><i></i>PostgreSQL Schema</span>
-            <span class="mq"><i></i>Docker Containers</span>
-            <span class="mq"><i></i>I2C &amp; UART Peripherals</span>
+            <span class="mq"><i></i>Cadence Xcelium</span>
+            <span class="mq"><i></i>Arty Z7-20</span>
             <!-- Duplicate for seamless loop -->
-            <span class="mq" data-repeat-start><i></i>ESP32-S3 Xtensa</span>
-            <span class="mq"><i></i>FreeRTOS Kernel</span>
-            <span class="mq"><i></i>TinyML TFLite Micro</span>
-            <span class="mq"><i></i>Verilog HDL RTL</span>
-            <span class="mq"><i></i>Embedded C/C++</span>
+            <span class="mq" data-repeat-start><i></i>C</span>
+            <span class="mq"><i></i>C++</span>
+            <span class="mq"><i></i>Python</span>
+            <span class="mq"><i></i>TypeScript</span>
+            <span class="mq"><i></i>JavaScript</span>
+            <span class="mq"><i></i>ESP32</span>
+            <span class="mq"><i></i>ESP32-S3</span>
+            <span class="mq"><i></i>FreeRTOS</span>
+            <span class="mq"><i></i>GPIO</span>
+            <span class="mq"><i></i>ADC</span>
+            <span class="mq"><i></i>I2C</span>
+            <span class="mq"><i></i>UART</span>
+            <span class="mq"><i></i>Sensors</span>
+            <span class="mq"><i></i>TensorFlow Lite for Microcontrollers</span>
+            <span class="mq"><i></i>On-Device Inference</span>
+            <span class="mq"><i></i>Model Quantization</span>
+            <span class="mq"><i></i>Verilog HDL</span>
             <span class="mq"><i></i>Xilinx Vivado</span>
-            <span class="mq"><i></i>PlatformIO</span>
-            <span class="mq"><i></i>PostgreSQL Schema</span>
-            <span class="mq"><i></i>Docker Containers</span>
-            <span class="mq"><i></i>I2C &amp; UART Peripherals</span>
+            <span class="mq"><i></i>Cadence Xcelium</span>
+            <span class="mq"><i></i>Arty Z7-20</span>
           </div>
         </div>
 
         <div class="marquee reverse reveal" aria-hidden="true" style="margin-top:10px;">
           <div class="track">
-            <span class="mq"><i></i>Digilent Arty Z7-20</span>
             <span class="mq"><i></i>Verilog Testbench</span>
+            <span class="mq"><i></i>PlatformIO</span>
             <span class="mq"><i></i>STM32CubeIDE</span>
-            <span class="mq"><i></i>Node.js &amp; Express</span>
+            <span class="mq"><i></i>Linux (Ubuntu VM)</span>
+            <span class="mq"><i></i>Git</span>
+            <span class="mq"><i></i>GitHub</span>
+            <span class="mq"><i></i>Docker</span>
+            <span class="mq"><i></i>Cloudflare Workers</span>
+            <span class="mq"><i></i>Workers VPC</span>
+            <span class="mq"><i></i>Cloudflare Tunnel</span>
+            <span class="mq"><i></i>Node.js</span>
+            <span class="mq"><i></i>Express.js</span>
+            <span class="mq"><i></i>PostgreSQL</span>
+            <span class="mq"><i></i>WebSocket</span>
+            <span class="mq"><i></i>REST APIs</span>
             <span class="mq"><i></i>Next.js</span>
-            <span class="mq"><i></i>Linux Ubuntu</span>
-            <span class="mq"><i></i>Git &amp; GitHub</span>
-            <span class="mq"><i></i>React &amp; TypeScript</span>
-            <span class="mq"><i></i>LittleFS</span>
-            <span class="mq"><i></i>WebSocket Streaming</span>
+            <span class="mq"><i></i>React</span>
+            <span class="mq"><i></i>Tailwind CSS</span>
+            <span class="mq"><i></i>HTML</span>
+            <span class="mq"><i></i>CSS</span>
             <!-- Duplicate for seamless loop -->
-            <span class="mq" data-repeat-start><i></i>Digilent Arty Z7-20</span>
-            <span class="mq"><i></i>Verilog Testbench</span>
+            <span class="mq" data-repeat-start><i></i>Verilog Testbench</span>
+            <span class="mq"><i></i>PlatformIO</span>
             <span class="mq"><i></i>STM32CubeIDE</span>
-            <span class="mq"><i></i>Node.js &amp; Express</span>
+            <span class="mq"><i></i>Linux (Ubuntu VM)</span>
+            <span class="mq"><i></i>Git</span>
+            <span class="mq"><i></i>GitHub</span>
+            <span class="mq"><i></i>Docker</span>
+            <span class="mq"><i></i>Cloudflare Workers</span>
+            <span class="mq"><i></i>Workers VPC</span>
+            <span class="mq"><i></i>Cloudflare Tunnel</span>
+            <span class="mq"><i></i>Node.js</span>
+            <span class="mq"><i></i>Express.js</span>
+            <span class="mq"><i></i>PostgreSQL</span>
+            <span class="mq"><i></i>WebSocket</span>
+            <span class="mq"><i></i>REST APIs</span>
             <span class="mq"><i></i>Next.js</span>
-            <span class="mq"><i></i>Linux Ubuntu</span>
-            <span class="mq"><i></i>Git &amp; GitHub</span>
-            <span class="mq"><i></i>React &amp; TypeScript</span>
-            <span class="mq"><i></i>LittleFS</span>
-            <span class="mq"><i></i>WebSocket Streaming</span>
+            <span class="mq"><i></i>React</span>
+            <span class="mq"><i></i>Tailwind CSS</span>
+            <span class="mq"><i></i>HTML</span>
+            <span class="mq"><i></i>CSS</span>
           </div>
         </div>
       </div>
@@ -980,7 +1031,7 @@
                 <li data-i18n="exp.b3">Built an IoT sensor solution that sends hardware readings to a cloud backend and logs them.</li>
               </ul>
               <div class="tl-stack">
-                <span class="lbl mono" data-i18n="proj.p1.stack">Tech stack</span>
+                <span class="lbl mono" data-i18n="proj.p1.stack">Tech Stack:</span>
                 <div class="tags">
                   <span class="tag">ESP32</span>
                   <span class="tag">Sensors</span>
