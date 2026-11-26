@@ -26,7 +26,7 @@
 }
 
 \pagestyle{empty}
-\setstretch{1.055}
+\setstretch{1.075}
 \setlength{\parindent}{0pt}
 
 % Section formatting
@@ -101,11 +101,10 @@ Final-year Computer Engineering student at Ho Chi Minh City University of Techno
 \textbf{Smart Environmental Monitoring System} \,|\, Individual project \,|\, \faGithub\ \href{https://github.com/SangNguyen-232/IoT-Env-Monitor}{GitHub Repo} \hfill \textit{Jul 2026 -- Nov 2026} \\
 \textbf{Stack:} ESP32-S3, C/C++, FreeRTOS, TFLite Micro, Python, Express, PostgreSQL, Docker, Cloudflare Tunnel
 \begin{itemize}
-    \item Built ESP32-S3 firmware with seven FreeRTOS tasks reading a DHT20 over I2C every 5\,s, updating a $16\times2$ LCD and risk LEDs, and sampling soil moisture on an independent ADC channel.
-    \item Copied readings under a mutex, ran TinyML inference unlocked, and discarded results if the sample had changed.
-    \item Trained a 5,536-byte INT8 model (4\,KiB arena) on an Ubuntu Linux VM for 30\,s OFF/HOLD/ON forecasts, reaching 87.28\% accuracy on 3,600 held-out synthetic episodes versus 82.94\% for linear extrapolation.
-    \item Enforced 10\,s relay hysteresis across AUTO, SHADOW, AI and MANUAL modes; ON forecasts ($\ge$0.80) trigger early starts in AI mode, while invalid or stale air readings ($>$15\,s) force automatic shutoff.
-    \item Served a LAN-only WebSocket/OTA dashboard for offline control; ran Express 5 and private PostgreSQL 18 in Docker on the Ubuntu VM, exposing only Express via Cloudflare Workers, VPC and Tunnel (no inbound ports).
+    \item Built ESP32-S3 firmware with seven FreeRTOS tasks: DHT20 sampling over I2C every 5\,s, a $16\times2$ LCD with LED indicators, and soil-moisture sampling on a separate ADC channel.
+    \item Integrated a 5,536-byte INT8 TFLite Micro model (4\,KiB arena) forecasting the OFF/HOLD/ON band 30\,s ahead; trained and evaluated on simulated data, scoring 87.28\% on held-out episodes in desktop tests.
+    \item Designed relay control across AUTO, SHADOW, AI and MANUAL modes with hysteresis, 10\,s minimum dwell and fail-safe shutoff on invalid or stale readings; ran inference outside the mutex and discarded outdated results.
+    \item Developed and tested on an Ubuntu VM; deployed a Dockerized Express/PostgreSQL API through Cloudflare Tunnel and Workers VPC with no inbound ports, while a LAN WebSocket dashboard keeps fan control working offline.
 \end{itemize}
 
 \vspace{1.5pt}
@@ -116,7 +115,7 @@ Final-year Computer Engineering student at Ho Chi Minh City University of Techno
 \begin{itemize}
     \item Co-designed four-product vending RTL with one-hot selection, admin price and stock controls, and credit checks before each purchase. A successful sale updates both balance and inventory.
     \item Used two-stage synchronizers and debounce counters on four pushbuttons. Built a nine-state FSM to drive a $16\times2$ character LCD over an 8-bit parallel bus.
-    \item RTL simulation checked credit and stock for accepted and rejected purchases and traced 32 character writes in the first LCD frame.
+    \item Verified accepted and rejected purchases in RTL simulation with Icarus Verilog, checking credit, stock and LCD output.
 \end{itemize}
 
 \vspace{1.5pt}
